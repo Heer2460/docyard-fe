@@ -1,0 +1,11 @@
+.mixin-transition(@duration: 0.3s) {
+    transition: all @duration ease-in-out;
+    -o-transition: all @duration ease-in-out;
+    -moz-transition: all @duration ease-in-out;
+    -webkit-transition: all @duration ease-in-out;
+}
+
+.mixin-transform(@transform) {
+    transform: @transform;
+    -ms-transform: @transform; /* IE 9 */
+}

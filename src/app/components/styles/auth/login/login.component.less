@@ -1,0 +1,112 @@
+@import "../../../../../assets/less/_vars";
+
+.main-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    .left {
+        width: 50%;
+        min-height: 100vh;
+        background-image: url("../../../../../assets/images/svg/login-bg.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .right {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        .right-container {
+            max-width: 420px;
+            width: 100%;
+        }
+
+    }
+
+}
+
+.main-logo {
+    margin-bottom: 40px;
+}
+
+a:not([href]):not([class]), a:not([href]):not([class]):hover {
+    color: @color-blue-01;
+}
+
+hr {
+    margin: 40px 0;
+}
+
+p {
+    color: @color-blue-06;
+
+    a {
+        text-decoration: none;
+        color: @color-blue-01;
+    }
+
+}
+
+
+@media screen and (max-width: 1600px) {
+
+    .main-wrapper {
+
+        .left {
+
+            img {
+                max-width: 400px;
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 1024px) {
+
+    .main-wrapper {
+
+        .left {
+
+            img {
+                max-width: 300px;
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+    .main-wrapper {
+
+        .left {
+            display: none;
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+
+    .main-wrapper {
+        margin: 0 15px;
+    }
+
+}
