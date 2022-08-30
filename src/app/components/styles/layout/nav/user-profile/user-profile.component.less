@@ -7,4 +7,52 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 15px 30px;
+}
+
+img {
+    margin-right: 15px;
+}
+
+.user-details-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .user-details {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: @color-white;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: @color-green-04;
+        }
+
+    }
+
+    .btn-user-settings {
+        background-color: @color-green-06;
+        color: @color-white;
+        font-size: 20px;
+
+        &:active,
+        &:focus,
+        &:hover {
+            background-color: @color-green-01;
+            border-color: @color-green-04;
+        }
+
+    }
+
 }

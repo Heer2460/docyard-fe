@@ -5,11 +5,14 @@ import { BannerUpgradeComponent } from './banner-upgrade/banner-upgrade.componen
 
 
 @NgModule({
-  declarations: [
-    BannerUpgradeComponent
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [
+        BannerUpgradeComponent
+    ],
+    exports: [
+        BannerUpgradeComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class BannerModule { }

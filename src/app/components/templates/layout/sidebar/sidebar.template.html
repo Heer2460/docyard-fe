@@ -1,5 +1,5 @@
 <sidebar-header-component></sidebar-header-component>
-<div class="routes-container">
+<div class="main-container">
     <ul>
         <ng-container *ngFor="let route of routes">
             <li [ngClass]="route.active ? 'active' : ''">
@@ -13,4 +13,8 @@
             </li>
         </ng-container>
     </ul>
+    <div class="banners-container">
+        <storage-viewer-component></storage-viewer-component>
+        <banner-upgrade-component></banner-upgrade-component>
+    </div>
 </div>
