@@ -25,81 +25,96 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
 
-.form-floating > .form-control, .form-floating > .form-control-plaintext {
-    height: 40px;
-    padding: 10px;
-    border-radius: 0;
-    border-color: @color-blue-05;
-    background-color: @color-white-02;
-    border-right: none;
-    .mixin-transition();
-}
+    .form-control {
 
-.form-control:focus {
-    box-shadow: none;
-}
+        &:focus {
+            box-shadow: none;
+        }
 
-.form-floating > .form-control, .form-floating > .form-control-plaintext {
-    padding: 10px;
-}
+    }
 
-.form-floating > label {
-    padding: 10px;
-    line-height: 14px;
-    color: @color-blue-06;
-    width: initial;
-    height: initial;
-    .mixin-transition();
-}
+    > .form-control,
+    > .form-control-plaintext {
+        height: 40px;
+        padding: 10px;
+        border-radius: 0;
+        border-color: @color-blue-05;
+        background-color: @color-white-02;
+        border-right: none;
+        .mixin-transition();
+    }
 
-.form-floating > .form-control-plaintext ~ label,
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label,
-.form-floating > .form-select ~ label {
-    transform: scale(0.85) translateY(-11px) translateX(10px);
-    background-color: #f8fbfb;
-    padding: 0 5px;
-    line-height: initial;
-    color: @color-blue-01;
-    opacity: 1;
-    font-size: 12px;
-}
+    > label {
+        padding: 10px;
+        line-height: 14px;
+        color: @color-blue-06;
+        width: initial;
+        height: initial;
+        .mixin-transition();
+    }
 
-.form-floating > .form-control-plaintext:focus, .form-floating > .form-control-plaintext:not(:placeholder-shown), .form-floating > .form-control:focus, .form-floating > .form-control:not(:placeholder-shown) {
-    background-color: transparent;
-    border-color: @color-blue-01;
-    padding: 10px;
-}
+    > .form-control-plaintext,
+    > .form-control:focus,
+    > .form-control:not(:placeholder-shown),
+    > .form-select {
 
+        ~ label {
+            transform: scale(0.85) translateY(-11px) translateX(10px);
+            background-color: #f8fbfb;
+            padding: 0 5px;
+            line-height: initial;
+            color: @color-blue-01;
+            opacity: 1;
+            font-size: 12px;
+        }
+
+    }
+
+    > .form-control-plaintext:focus,
+    > .form-control-plaintext:not(:placeholder-shown),
+    > .form-control:focus,
+    > .form-control:not(:placeholder-shown) {
+        background-color: transparent;
+        border-color: @color-blue-01;
+        padding: 10px;
+    }
+
+    > .form-control-plaintext,
+    > .form-control:focus,
+    > .form-control:not(:placeholder-shown),
+    > .form-select {
+
+        ~ .input-group-text {
+            background-color: transparent;
+            border-color: @color-blue-01;
+            color: @color-blue-01;
+        }
+
+    }
+
+}
 
 /*---------------------------------------------
                 Input group
 ---------------------------------------------*/
+.input-group {
 
-.input-group .input-group-text {
-    background-color: @color-white-02;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: none;
-    border-right-color: @color-blue-05;
-    color: @color-blue-06;
-    font-size: 22px;
-    padding: 5px;
-    height: 40px;
-    .mixin-transition();
-}
+    .input-group-text {
+        background-color: @color-white-02;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+        border-right-color: @color-blue-05;
+        color: @color-blue-06;
+        font-size: 22px;
+        padding: 5px;
+        height: 40px;
+        .mixin-transition();
+    }
 
-.form-floating > .form-control-plaintext ~ .input-group-text,
-.form-floating > .form-control:focus ~ .input-group-text,
-.form-floating > .form-control:not(:placeholder-shown) ~ .input-group-text,
-.form-floating > .form-select ~ .input-group-text {
-    background-color: transparent;
-    border-color: @color-blue-01;
-    color: @color-blue-01;
 }
 
 /*=======================================================
@@ -131,45 +146,58 @@ body {
 /*====================================================
         Checkboxes
 ====================================================*/
-.form-check input[type="checkbox"] {
-    display: none;
-}
+.form-check {
 
-.form-check label {
-    position: relative;
-    cursor: pointer;
-    color: @color-blue-01;
-}
+    input[type="checkbox"] {
+        display: none;
 
-.form-check label:before,
-.form-check label:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 14px;
-    height: 14px;
-    .mixin-transform( translate(-24px, calc(-50% + 1px)) );
-    .mixin-transition();
-}
+        &:checked {
 
-.form-check label:before {
-    border: 1px solid @color-blue-01;
-}
+            ~ label {
 
-.form-check label:after {
-    background-image: url("./assets/images/svg/check.svg");
-    background-color: @color-blue-01;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 12px 9px;
-    opacity: 0;
-}
+                &:after {
+                    opacity: 1;
+                }
 
-.form-check input[type="checkbox"]:checked ~ label:after {
-    opacity: 1;
-}
+            }
 
+        }
+
+    }
+
+    label {
+        position: relative;
+        cursor: pointer;
+        color: @color-blue-01;
+
+        &:before,
+        &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 14px;
+            height: 14px;
+            .mixin-transform(translate(-24px, calc(-50% + 1px)));
+            .mixin-transition();
+        }
+
+        &:before {
+            border: 1px solid @color-blue-01;
+        }
+
+        &:after {
+            background-image: url("./assets/images/svg/check.svg");
+            background-color: @color-blue-01;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12px 9px;
+            opacity: 0;
+        }
+
+    }
+
+}
 
 /*====================================================
         Utilities
@@ -185,4 +213,5 @@ hr {
     border-image-repeat: round;
     opacity: 1;
 }
+
 /*--------------- End Utilities --------------------*/
