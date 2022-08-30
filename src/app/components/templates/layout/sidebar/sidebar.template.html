@@ -1,1 +1,16 @@
-<p>sidebar works!</p>
+<sidebar-header-component></sidebar-header-component>
+<div class="routes-container">
+    <ul>
+        <ng-container *ngFor="let route of routes">
+            <li [ngClass]="route.active ? 'active' : ''">
+                <a role="button" [routerLink]="route.route">
+                    <span class="icon-holder">
+                        <i [attr.class]=" 'default ' + route.icon"></i>
+                        <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
+                    </span>
+                    <span>{{route.label}}</span>
+                </a>
+            </li>
+        </ng-container>
+    </ul>
+</div>

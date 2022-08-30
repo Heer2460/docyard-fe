@@ -1,0 +1,107 @@
+@import "../../../../../assets/less/_vars";
+@import "../../../../../assets/less/_mixin";
+
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: @color-blue-01;
+    width: 300px;
+}
+
+ul {
+    margin: 0;
+    padding: 15px 30px;
+    border-bottom: 1px dashed @color-blue-04;
+
+    li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .mixin-transition();
+
+        &.active,
+        &:hover {
+            background-color: @color-blue-02;
+
+            a {
+
+                span {
+
+                    &.icon-holder {
+
+                        i {
+
+                            &.default {
+                                opacity: 0;
+                            }
+
+                            &.filled {
+                                opacity: 1;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        a {
+            color: @color-white;
+            text-decoration: none;
+            padding: 15px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+
+            span {
+
+                &.icon-holder {
+                    position: relative;
+                    margin-right: 15px;
+                    width: 18px;
+                    height: 18px;
+
+                    i {
+                        font-size: 18px;
+                        .mixin-transition();
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+
+                        &.default {
+                            opacity: 1;
+                        }
+
+                        &.filled {
+                            opacity: 0;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+.fade-in {
+    .mixin-transition(@duration: 250ms);
+    opacity: 1;
+}
+
+.fade-out {
+    .mixin-transition(@duration: 250ms);
+    opacity: 0;
+}
