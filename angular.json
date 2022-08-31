@@ -1,19 +1,13 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "cda1ffdd-5169-4247-b7f5-dd5f6ca53741"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "docyard-fe": {
+    "my-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "less"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -23,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/docyard-fe",
+            "outputPath": "dist/my-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -34,12 +28,10 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/icons/icomoon/style.css",
-              "src/assets/less/_fonts.less",
               "src/styles.less"
             ],
             "scripts": []
@@ -81,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "docyard-fe:build:production"
+              "browserTarget": "my-app:build:production"
             },
             "development": {
-              "browserTarget": "docyard-fe:build:development"
+              "browserTarget": "my-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "docyard-fe:build"
+            "browserTarget": "my-app:build"
           }
         },
         "test": {
@@ -116,5 +108,7 @@
       }
     }
   },
-  "defaultProject": "docyard-fe"
+  "cli": {
+    "analytics": "bc078de7-cdab-45ea-8dd1-7f80541e5102"
+  }
 }
