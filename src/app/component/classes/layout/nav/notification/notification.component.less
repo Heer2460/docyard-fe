@@ -1,0 +1,43 @@
+@import "../../../../../../assets/less/_vars";
+
+.btn {
+	background-color: @color-green-01;
+	color: @color-white;
+	padding-right: 0;
+	border: none;
+	
+	&:hover {
+		
+		i {
+			
+			&:before {
+				content: "\e912";
+			}
+			
+		}
+		
+	}
+	
+	&:active,
+	&:focus {
+		border: none;
+		box-shadow: none;
+	}
+	
+	i {
+		position: relative;
+		
+		&:after {
+			content: "";
+			width: 5px;
+			height: 5px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: @color-blue-01;
+			border-radius: 50%;
+			transform: translate(2px, -2px);
+		}
+	}
+	
+}

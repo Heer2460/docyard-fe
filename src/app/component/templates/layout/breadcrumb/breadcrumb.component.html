@@ -1,0 +1,19 @@
+<ng-container *ngIf="title">
+    <h3 class="title">{{title}}</h3>
+</ng-container>
+
+<ng-container *ngIf="description">
+    <p class="desc">{{description}}</p>
+</ng-container>
+
+<ng-container *ngIf="breadcrumbs.length > 0">
+    <ol class="breadcrumb">
+        <ng-container *ngFor="let breadcrumb of breadcrumbs">
+            <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                <a type="button" [routerLink]="breadcrumb.route">
+                    {{breadcrumb.label}}
+                </a>
+            </li>
+        </ng-container>
+    </ol>
+</ng-container>

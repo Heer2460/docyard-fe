@@ -12,6 +12,7 @@ body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     --bs-body-font-family: "Lato", sans-serif;
+    color: @color-blue-01;
 }
 
 /*====================================================
@@ -205,6 +206,13 @@ body {
 /*====================================================
         Utilities
 ====================================================*/
+h2 {
+    font-size: 18px;
+    color: @color-blue-01;
+    font-weight: 700;
+    line-height: 18px;
+}
+
 p {
     margin-bottom: 0;
 }
@@ -217,6 +225,33 @@ hr {
     opacity: 1;
 }
 
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+    
+    [class^="col"] {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+}
+
+.btn-tiered-menu-vertical {
+    padding: 5px;
+    
+    &:hover {
+        border-color: transparent;
+        background-color: transparent;
+    }
+    
+    &:active,
+    &:focus {
+        border-style: dashed;
+        border-color: @color-blue-05;
+    }
+    
+}
+
 /*--------------- End Utilities --------------------*/
 
 /*====================================================
@@ -226,36 +261,280 @@ hr {
     font-family: "Lato", sans-serif;;
 }
 
-.p-tieredmenu .p-menu-separator {
-    margin: 0;
+.p-tieredmenu {
+    
+    .p-menu-separator {
+        margin: 0;
+    }
+    
+    &.p-tieredmenu-overlay {
+        padding: 0;
+        border-radius: 0;
+        color: @color-blue-01;
+        background: @color-white;
+    }
+    
+    .p-menuitem {
+        
+        &.p-menuitem-active {
+    
+            > .p-menuitem-link {
+                background-color: @color-blue-04;
+    
+                .p-menuitem-icon,
+                .p-submenu-icon {
+                    color: @color-white;
+                    font-size: 12px;
+    
+                    &.icon-bell {
+        
+                        &:before {
+                            content: "\e912";
+                        }
+        
+                    }
+                    
+                }
+                
+                .p-menuitem-text {
+                    color: @color-white;
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    .p-menuitem-link {
+        font-size: 12px;
+        padding: 10px 15px;
+    
+        &:focus {
+            box-shadow: inset 0 0 0 0.15rem @color-blue-05;
+        }
+        
+    }
+    
 }
 
-.p-tieredmenu.p-tieredmenu-overlay {
-    padding: 0;
+/*=====================================================
+                    Cards
+=====================================================*/
+.card {
+    background-color: @color-white;
     border-radius: 0;
-    color: @color-blue-01;
-    background: @color-white;
+    box-shadow: none;
+    border-color: @color-grey-02;
 }
 
-.p-tieredmenu .p-menuitem-link {
-    font-size: 12px;
-    padding: 10px 15px;
+/*=====================================================
+                    Page Header
+=====================================================*/
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
-    background-color: @color-blue-04;
+.page-body {
+    margin-top: 30px;
 }
 
-.p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text {
-    color: @color-white;
+/*=====================================================
+                    File Card
+=====================================================*/
+.file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: @color-green-05;
+    position: relative;
+    .mixin-transition();
+    
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    
+    &:before {
+        border-top: 1px dashed @color-blue-05;
+        border-bottom: 1px dashed @color-blue-05;
+        border-image-source: url("src/assets/images/svg/border-image-blue-05.svg");
+        border-image-slice: 30;
+        border-image-repeat: repeat;
+    }
+    
+    &:after {
+        border-left: 1px dashed @color-blue-05;
+        border-right: 1px dashed @color-blue-05;
+        border-image-source: url("src/assets/images/svg/border-image-blue-05-horizontal.svg");
+        border-image-slice: 15;
+        border-image-repeat: repeat;
+    }
+    
+    &:hover {
+        background-color: @color-green-02;
+        
+        .file-details {
+            
+            p {
+                color: @color-blue-06;
+            }
+            
+        }
+        
+    }
+    
+    .icon-thumbnail {
+        width: 40px;
+        height: 40px;
+        
+        img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+        
+    }
+    
+    .file-details {
+        width: 100%;
+        margin-left: 5px;
+        position: relative;
+        z-index: 1;
+        
+        p {
+            color: @color-blue-06;
+            font-size: 12px;
+            line-height: 16px;
+            .mixin-transition();
+            
+            &.title {
+                color: @color-blue-01;
+            }
+            
+            &.date-and-author {
+                
+                a {
+                    color: @color-green-01;
+                    text-decoration: none;
+                    font-style: italic;
+                    
+                    &:hover {
+                        color: @color-green-03;
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    .btn-tiered-menu-vertical {
+        position: relative;
+        z-index: 1;
+    }
+    
 }
 
-.p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-icon,
-.p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-submenu-icon {
-    color: @color-white;
-    font-size: 12px;
+@media (-webkit-device-pixel-ratio: 1.25) {
+    
+    h2 {
+        font-size: 16px;
+        line-height: 16px;
+    }
+    
+    .btn {
+        font-size: 13px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        height: 30px;
+    }
+    
+    .form-control {
+        height: 30px;
+        padding: 5px;
+        line-height: 30px;
+        font-size: 12px;
+    }
+    
+    .input-group {
+    
+        .input-group-text {
+            height: 30px;
+        }
+        
+    }
+    
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+    
+        [class^="col"] {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+    }
+    
+    .page-body {
+        margin-top: 20px;
+    }
+    
 }
 
-.p-tieredmenu .p-menuitem-link:focus {
-    box-shadow: inset 0 0 0 0.15rem @color-blue-05;
+@media screen and (max-width: 1440px) {
+    
+    h2 {
+        font-size: 16px;
+        line-height: 16px;
+    }
+    
+    .btn {
+        font-size: 13px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        height: 30px;
+    }
+    
+    .form-control {
+        height: 30px;
+        padding: 5px;
+        line-height: 30px;
+        font-size: 12px;
+    }
+    
+    .input-group {
+        
+        .input-group-text {
+            height: 30px;
+        }
+        
+    }
+    
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+        
+        [class^="col"] {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+    }
+    
+    .page-body {
+        margin-top: 20px;
+    }
+    
 }

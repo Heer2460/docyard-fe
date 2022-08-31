@@ -1,0 +1,11 @@
+<div class="layout-wrapper" [ngClass]="[toggleMenuState ? 'expended' : '', toggleRightPaneState ? 'right-pane-expended' : '']">
+    <sidebar-component [ngClass]="toggleMenuState ? 'expended' : ''"></sidebar-component>
+    <div class="content-wrapper">
+        <nav-component></nav-component>
+        <section class="main-page-wrapper">
+            <router-outlet></router-outlet>
+        </section>
+    </div>
+    <right-pane-component [ngClass]="toggleRightPaneState ? 'expended' : ''"></right-pane-component>
+</div>
+
