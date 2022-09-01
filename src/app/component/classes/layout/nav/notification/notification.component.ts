@@ -15,10 +15,15 @@ export class NotificationComponent implements OnInit {
 			command: () => {
 			}
 		},
-		{separator: true},
 		{
 			label: 'Upload finished!',
 			icon: 'icon-bell',
+			command: () => {
+			}
+		},
+		{separator: true},
+		{
+			label: 'Clear all',
 			command: () => {
 			}
 		}

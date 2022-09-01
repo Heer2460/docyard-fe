@@ -23,10 +23,15 @@ export class UserProfileComponent implements OnInit {
                 icon: 'icon-cog',
                 command: () => {}
             },
-            {separator:true},
             {
                 label: 'Setting 2',
                 icon: 'icon-cog',
+                command: () => {}
+            },
+            {separator:true},
+            {
+                label: 'Logout',
+                icon: 'pi pi-sign-out',
                 command: () => {}
             }
         ];
