@@ -5,6 +5,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import {TieredMenuModule} from "primeng/tieredmenu";
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NotificationComponent } from './notification/notification.component';
+import {DialogModule} from "primeng/dialog";
 
 
 
@@ -21,7 +22,8 @@ import { NotificationComponent } from './notification/notification.component';
     ],
     imports: [
         CommonModule,
-        TieredMenuModule
+        TieredMenuModule,
+        DialogModule
     ]
 })
 export class NavModule { }

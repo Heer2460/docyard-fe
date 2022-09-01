@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../../../../service/app.service";
 
@@ -11,6 +11,7 @@ export class UserProfileComponent implements OnInit {
     
     toggleRightPaneStatus: boolean = false;
     items: MenuItem[] = [];
+    @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
     
     constructor(public appService: AppService) {
     }
@@ -29,7 +30,7 @@ export class UserProfileComponent implements OnInit {
                 command: () => {}
             }
         ];
-        
+        this.addUserProfileMenuItems();
         this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
             this.toggleRightPaneStatus = value;
         });
@@ -38,6 +39,10 @@ export class UserProfileComponent implements OnInit {
     setToggleRightPaneState() {
         this.toggleRightPaneStatus = !this.toggleRightPaneStatus;
         this.appService.setToggleRightPaneSubject(this.toggleRightPaneStatus);
+    }
+    
+    addUserProfileMenuItems() {
+        this.userProfileMenuItemsEvent.emit(this.items);
     }
 
 }

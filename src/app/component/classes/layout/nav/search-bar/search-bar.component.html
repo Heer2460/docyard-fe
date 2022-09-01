@@ -6,3 +6,18 @@
     </div>
     <input type="text" class="form-control" placeholder="Search here">
 </div>
+
+<button class="btn btn-search-popup" (click)="showSearchBarDialog()">
+    <i class="icon-search"></i>
+</button>
+
+<p-dialog [(visible)]="searchBarToggle" [modal]="true">
+    <ng-template pTemplate="header">
+        Search here
+    </ng-template>
+    <input type="text" class="form-control">
+    <ng-template pTemplate="footer">
+        <button class="btn btn-danger me-2" (click)="hideSearchBarDialog()">Close</button>
+        <button class="btn btn-primary">Search</button>
+    </ng-template>
+</p-dialog>

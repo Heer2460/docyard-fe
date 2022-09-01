@@ -65,6 +65,19 @@
 	
 }
 
+.btn-search-popup {
+	display: none;
+	border: none;
+	color: @color-white;
+	
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: transparent;
+	}
+	
+}
+
 @media (-webkit-device-pixel-ratio: 1.25) {
 	
 	.input-group {
@@ -81,7 +94,6 @@
 	
 }
 
-
 @media screen and (max-width: 1440px) {
 	
 	.input-group {
@@ -94,6 +106,22 @@
 			
 		}
 		
+	}
+	
+}
+
+@media screen and (max-width: 1024PX) {
+	
+	:host {
+		justify-content: flex-end;
+	}
+	
+	.input-group {
+		display: none;
+	}
+	
+	.btn-search-popup {
+		display: block;
 	}
 	
 }

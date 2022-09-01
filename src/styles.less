@@ -23,6 +23,12 @@ body {
     height: 40px;
     padding: 10px;
     border-radius: 0;
+    
+    &:focus {
+        border-color: @color-blue-01;
+        box-shadow: 0 0 0 .25rem fade(@color-blue-01, 25%);
+    }
+    
 }
 
 .form-floating {
@@ -133,8 +139,8 @@ body {
     --bs-btn-bg: @color-blue-01;
     --bs-btn-border-color: @color-blue-01;
 
-    --bs-btn-hover-bg: @color-blue-01;
-    --bs-btn-hover-border-color: @color-blue-01;
+    --bs-btn-hover-bg: @color-blue-07;
+    --bs-btn-hover-border-color: @color-blue-07;
 
     --bs-btn-focus-shadow-rgb: none;
 
@@ -145,6 +151,23 @@ body {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: @color-blue-01;
     --bs-btn-disabled-border-color: @color-blue-01;
+}
+
+.btn-danger {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: @color-red-01;
+    --bs-btn-border-color: @color-red-01;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: @color-red-02;
+    --bs-btn-hover-border-color: @color-red-02;
+    --bs-btn-focus-shadow-rgb: 225,83,97;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: @color-red-02;
+    --bs-btn-active-border-color: @color-red-02;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: @color-red-01;
+    --bs-btn-disabled-border-color: @color-red-01;
 }
 
 /*====================================================
@@ -493,6 +516,86 @@ hr {
     
 }
 
+/*==============================================
+            User profile menu pane
+==============================================*/
+p-menu.user-profile-menu-pane {
+    
+    .p-menu {
+        width: 100%;
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+        border: none;
+    
+        .p-menuitem-link {
+    
+            .p-menuitem-icon,
+            .p-menuitem-text {
+                color: @color-white;
+            }
+    
+            &:not(.p-disabled) {
+                
+                &:hover {
+                    background-color: @color-white;
+                    color: @color-blue-01;
+                }
+                
+            }
+            
+        }
+    
+        .p-menu-separator {
+            margin: 0;
+        }
+        
+    }
+    
+}
+
+/*==============================================
+                Search popup
+==============================================*/
+.p-dialog {
+    box-shadow: none;
+    background-color: @color-white;
+    min-width: 450px;
+    
+    .p-dialog-header {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+        background-color: @color-white;
+        padding: 15px 15px 0 15px;
+    
+        .p-dialog-header-icon {
+            color: @color-blue-01;
+        }
+        
+    }
+    
+    .p-dialog-content {
+        padding: 15px;
+        background-color: @color-white;
+    }
+    
+    .p-dialog-footer {
+        background-color: @color-white;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: 0 15px 15px 15px;
+        
+        .btn {
+            margin-right: 0;
+        }
+        
+    }
+    
+}
+
+/*==============================================
+                Responsive style
+==============================================*/
 @media screen and (max-width: 1440px) {
     
     h2 {
@@ -535,6 +638,15 @@ hr {
     
     .page-body {
         margin-top: 20px;
+    }
+    
+}
+
+@media screen and (max-width: 500px) {
+    
+    .p-dialog {
+        width: calc(100% - 30px);
+        min-width: initial;
     }
     
 }
