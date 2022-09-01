@@ -21,6 +21,16 @@ const routes: Routes = [
                 loadChildren: () => import('./component/classes/home/home.module').then(m => m.HomeModule)
             }
         ]
+    },
+    {
+        path: 'doc-lib',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/classes/doc-lib/doc-lib.module').then(m => m.DocLibModule)
+            }
+        ]
     }
 ];
 

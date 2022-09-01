@@ -17,7 +17,7 @@ export class AppService {
 		},
 		{
 			label: 'Document Library',
-			route: '/document-library',
+			route: '/doc-lib',
 			icon: 'icon-cloud',
 			active: false
 		},

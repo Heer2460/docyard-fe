@@ -1,17 +1,40 @@
 @import "../../../../../assets/less/_vars";
 
 .breadcrumb {
-	margin-bottom: 20px;
+	margin: 0;
 	
 	.breadcrumb-item {
+		display: flex;
+		align-items: center;
+		
+		+ .breadcrumb-item {
+			
+			&:before {
+				content: "\e914";
+				font-family: 'icomoon' !important;
+				speak: never;
+				font-style: normal;
+				font-weight: normal;
+				font-feature-settings: normal;
+				font-variant: normal;
+				text-transform: none;
+				line-height: 10px;
+				font-size: 10px;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				position: relative;
+				top: 2px;
+			}
+			
+		}
 		
 		a {
-			text-transform: uppercase;
-			font-size: 18px;
+			text-transform: capitalize;
+			font-size: 16px;
+			line-height: 16px;
 			color: @color-blue-01;
 			text-decoration: none;
-			font-weight: 700;
-			line-height: 18px;
+			font-weight: 400;
 		}
 		
 	}
