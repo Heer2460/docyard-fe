@@ -1,10 +1,15 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AppService {
+
+	userInfo: any = {};
+	permissions: any = [];
 	
 	public toggleMenuBSubject = new BehaviorSubject(false);
 	public toggleRightPaneSubject = new BehaviorSubject(false);
@@ -47,7 +52,7 @@ export class AppService {
 		},
 	];
 	
-	constructor() {
+	constructor(private toastService: ToastrService, private router: Router) {
 	}
 	
 	getRoutes() {
@@ -61,5 +66,37 @@ export class AppService {
 	setToggleRightPaneSubject(state: boolean) {
 		this.toggleRightPaneSubject.next(state);
 	}
-	
+
+	handleError(error: any, title: string, fromLogin?: boolean) {
+		if (error.status === 400) {
+			this.toastService.error(error.error.message, title);
+		} else if (error.status === 404) {
+			this.toastService.error(error.error.message, title);
+		} else if (error.status === 401) {
+			this.tokenExpired(error.error.error, fromLogin);
+		} else if (error.status === 406) {
+			this.tokenExpired(error.error.error, fromLogin);
+		} else if (error.status === 409) {
+			this.toastService.error(error.error.message, title);
+		} else if (error.status === 423) {
+			this.toastService.error('User is locked due to multiple unsuccessful login attempts, please contact administrator.', title);
+		} else if (error.status === 203) {
+			this.toastService.error(error.error.message, title);
+		} else {
+			this.toastService.error(error.error.message, title);
+		}
+	}
+
+	tokenExpired(response: string, fromLogout?: boolean) {
+		if (response === 'invalid_token') {
+			localStorage.removeItem(window.btoa('access_token'));
+			localStorage.removeItem(window.btoa('refresh_token'));
+			localStorage.removeItem(window.btoa('expire_in'));
+
+			if (fromLogout && !fromLogout) {
+				this.toastService.info('Your session has been expired.', 'Session Expired');
+			}
+			this.router.navigate(['/auth/login']);
+		}
+	}
 }
