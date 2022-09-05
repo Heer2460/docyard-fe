@@ -7,45 +7,55 @@
             <div class="text-center main-logo">
                 <img src="./assets/images/login-logo.png" alt="Brand logo">
             </div>
-            <div class="input-group mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="businessCode" placeholder="Business code">
-                    <label for="businessCode">Business code</label>
-                    <div class="input-group-text">
-                        <i class="icon-qr-code"></i>
+            <form (ngSubmit)="login(loginFrom.value)" [formGroup]="loginFrom">
+                <div class="input-group">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="businessCode" placeholder="Business code">
+                        <label for="businessCode">Business code</label>
+                        <div class="input-group-text">
+                            <i class="icon-qr-code"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="input-group mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="username" placeholder="Username">
-                    <label for="username">Username</label>
-                    <div class="input-group-text">
-                        <i class="icon-at"></i>
+                <div class="input-group mt-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" formControlName="username" placeholder="Username">
+                        <label for="username">Username</label>
+                        <div class="input-group-text">
+                            <i class="icon-at"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="input-group mb-1">
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                    <label for="password">Password</label>
-                    <div class="input-group-text">
-                        <i class="icon-lock"></i>
+                <small *ngIf="loginFrom.get('username')?.errors && loginFrom.get('username')?.touched"
+                       class="error-msg">
+                    Enter username
+                </small>
+                <div class="input-group mt-3">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" formControlName="password" autocomplete="new-password" id="password" placeholder="Password">
+                        <label for="password">Password</label>
+                        <div class="input-group-text">
+                            <i class="icon-lock"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-3 d-flex align-items-center justify-content-between">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Remember me
-                    </label>
+                <small *ngIf="loginFrom.get('password')?.errors && loginFrom.get('password')?.touched"
+                       class="error-msg">
+                    Enter password
+                </small>
+                <div class="my-3 d-flex align-items-center justify-content-between">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Remember me
+                        </label>
+                    </div>
+                    <a role="button">Forgot Password</a>
                 </div>
-                <a role="button">Forgot Password</a>
-            </div>
-            <div class="d-grid">
-                <button class="btn btn-primary" (click)="login()">Login</button>
-            </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary" (click)="login(loginFrom.value)" [disabled]="loginFrom.invalid">Login</button>
+                </div>
+            </form>
             <hr>
             <p class="text-center">
                 Don’t have an account yet?
