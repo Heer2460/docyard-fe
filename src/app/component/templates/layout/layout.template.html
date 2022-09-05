@@ -3,7 +3,13 @@
     <div class="content-wrapper">
         <nav-component></nav-component>
         <section class="main-page-wrapper">
-            <router-outlet></router-outlet>
+            <header class="page-header">
+                <breadcrumb-component></breadcrumb-component>
+                <ng-content select=[actionItems]></ng-content>
+            </header>
+            <div class="page-body">
+                <ng-content select=[pageBody]></ng-content>
+            </div>
         </section>
     </div>
     <right-pane-component [ngClass]="toggleRightPaneState ? 'expended' : ''"></right-pane-component>

@@ -1,157 +1,155 @@
-<header class="page-header">
-    <breadcrumb-component></breadcrumb-component>
-</header>
-<div class="page-body">
-    <div class="row">
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="card card-green">
-                <div class="card-body">
-                    <img src="./assets/images/svg/image.svg" alt="Image files">
-                    <div class="content-details">
-                        <h6>Images</h6>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+<layout-component>
+    <ng-container pageBody>
+        <div class="row">
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="card card-green">
+                    <div class="card-body">
+                        <img src="./assets/images/svg/image.svg" alt="Image files">
+                        <div class="content-details">
+                            <h6>Images</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>
+                                <span>840.2 MB</span>
+                                <span>14 GB</span>
+                            </p>
                         </div>
-                        <p>
-                            <span>840.2 MB</span>
-                            <span>14 GB</span>
-                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="card card-blue">
+                    <div class="card-body">
+                        <img src="./assets/images/svg/video.svg" alt="Video files">
+                        <div class="content-details">
+                            <h6>Videos</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>
+                                <span>840.2 MB</span>
+                                <span>14 GB</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="card card-yellow">
+                    <div class="card-body">
+                        <img src="./assets/images/svg/document.svg" alt="Document files">
+                        <div class="content-details">
+                            <h6>Documents</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>
+                                <span>840.2 MB</span>
+                                <span>14 GB</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="card card-red">
+                    <div class="card-body">
+                        <img src="./assets/images/svg/directory.svg" alt="Other files">
+                        <div class="content-details">
+                            <h6>Others</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>
+                                <span>840.2 MB</span>
+                                <span>14 GB</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="card card-blue">
-                <div class="card-body">
-                    <img src="./assets/images/svg/video.svg" alt="Video files">
-                    <div class="content-details">
-                        <h6>Videos</h6>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>
-                            <span>840.2 MB</span>
-                            <span>14 GB</span>
-                        </p>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="home-h2">Recent Documents</h2>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="file-card">
+                    <div class="icon-thumbnail">
+                        <img src="./assets/images/image.png" alt="Image">
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="card card-yellow">
-                <div class="card-body">
-                    <img src="./assets/images/svg/document.svg" alt="Document files">
-                    <div class="content-details">
-                        <h6>Documents</h6>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>
-                            <span>840.2 MB</span>
-                            <span>14 GB</span>
+                    <div class="file-details">
+                        <p class="title">tour-pic.jpeg</p>
+                        <p class="date-and-author">
+                            <span>Aug 24, 2022 by </span>
+                            <a role="button" routerLink="/link">Umar Farooq</a>
                         </p>
+                        <p class="file-size">333.35 KB</p>
                     </div>
+                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
+                        <i class="icon-menu-vertical"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="card card-red">
-                <div class="card-body">
-                    <img src="./assets/images/svg/directory.svg" alt="Other files">
-                    <div class="content-details">
-                        <h6>Others</h6>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>
-                            <span>840.2 MB</span>
-                            <span>14 GB</span>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="file-card">
+                    <div class="icon-thumbnail">
+                        <img src="./assets/images/svg/docx.svg" alt="Image">
+                    </div>
+                    <div class="file-details">
+                        <p class="title">tour-pic.jpeg</p>
+                        <p class="date-and-author">
+                            <span>Aug 24, 2022 by </span>
+                            <a role="button" routerLink="/link">Umar Farooq</a>
                         </p>
+                        <p class="file-size">333.35 KB</p>
                     </div>
+                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
+                        <i class="icon-menu-vertical"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="file-card">
+                    <div class="icon-thumbnail">
+                        <img src="./assets/images/image.png" alt="Image">
+                    </div>
+                    <div class="file-details">
+                        <p class="title">tour-pic.jpeg</p>
+                        <p class="date-and-author">
+                            <span>Aug 24, 2022 by </span>
+                            <a role="button" routerLink="/link">Umar Farooq</a>
+                        </p>
+                        <p class="file-size">333.35 KB</p>
+                    </div>
+                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
+                        <i class="icon-menu-vertical"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="file-card">
+                    <div class="icon-thumbnail">
+                        <img src="./assets/images/image.png" alt="Image">
+                    </div>
+                    <div class="file-details">
+                        <p class="title">tour-pic.jpeg</p>
+                        <p class="date-and-author">
+                            <span>Aug 24, 2022 by </span>
+                            <a role="button" routerLink="/link">Umar Farooq</a>
+                        </p>
+                        <p class="file-size">333.35 KB</p>
+                    </div>
+                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
+                        <i class="icon-menu-vertical"></i>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <h2 class="home-h2">Recent Documents</h2>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="file-card">
-                <div class="icon-thumbnail">
-                    <img src="./assets/images/image.png" alt="Image">
-                </div>
-                <div class="file-details">
-                    <p class="title">tour-pic.jpeg</p>
-                    <p class="date-and-author">
-                        <span>Aug 24, 2022 by </span>
-                        <a role="button" routerLink="/link">Umar Farooq</a>
-                    </p>
-                    <p class="file-size">333.35 KB</p>
-                </div>
-                <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                    <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                    <i class="icon-menu-vertical"></i>
-                </button>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="file-card">
-                <div class="icon-thumbnail">
-                    <img src="./assets/images/svg/docx.svg" alt="Image">
-                </div>
-                <div class="file-details">
-                    <p class="title">tour-pic.jpeg</p>
-                    <p class="date-and-author">
-                        <span>Aug 24, 2022 by </span>
-                        <a role="button" routerLink="/link">Umar Farooq</a>
-                    </p>
-                    <p class="file-size">333.35 KB</p>
-                </div>
-                <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                    <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                    <i class="icon-menu-vertical"></i>
-                </button>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="file-card">
-                <div class="icon-thumbnail">
-                    <img src="./assets/images/image.png" alt="Image">
-                </div>
-                <div class="file-details">
-                    <p class="title">tour-pic.jpeg</p>
-                    <p class="date-and-author">
-                        <span>Aug 24, 2022 by </span>
-                        <a role="button" routerLink="/link">Umar Farooq</a>
-                    </p>
-                    <p class="file-size">333.35 KB</p>
-                </div>
-                <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                    <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                    <i class="icon-menu-vertical"></i>
-                </button>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-3">
-            <div class="file-card">
-                <div class="icon-thumbnail">
-                    <img src="./assets/images/image.png" alt="Image">
-                </div>
-                <div class="file-details">
-                    <p class="title">tour-pic.jpeg</p>
-                    <p class="date-and-author">
-                        <span>Aug 24, 2022 by </span>
-                        <a role="button" routerLink="/link">Umar Farooq</a>
-                    </p>
-                    <p class="file-size">333.35 KB</p>
-                </div>
-                <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                    <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                    <i class="icon-menu-vertical"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
+    </ng-container>
+</layout-component>

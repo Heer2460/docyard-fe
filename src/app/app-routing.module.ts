@@ -14,7 +14,6 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        component: LayoutComponent,
         children: [
             {
                 path: '',
@@ -24,7 +23,6 @@ const routes: Routes = [
     },
     {
         path: 'doc-lib',
-        component: LayoutComponent,
         children: [
             {
                 path: '',
