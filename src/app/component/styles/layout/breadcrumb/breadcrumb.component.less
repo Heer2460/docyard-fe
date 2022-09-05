@@ -1,40 +1,82 @@
 @import "../../../../../assets/less/_vars";
 
-.breadcrumb {
-	margin: 0;
+:host {
+	display: block;
+	width: 100%;
+}
+
+.container-breadcrumb-and-list-view {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	
-	.breadcrumb-item {
-		display: flex;
-		align-items: center;
+	.breadcrumb {
+		margin: 0;
 		
-		+ .breadcrumb-item {
+		.breadcrumb-item {
+			display: flex;
+			align-items: center;
 			
-			&:before {
-				content: "\e914";
-				font-family: 'icomoon' !important;
-				speak: never;
-				font-style: normal;
-				font-weight: normal;
-				font-feature-settings: normal;
-				font-variant: normal;
-				text-transform: none;
-				line-height: 10px;
-				font-size: 10px;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-				position: relative;
-				top: 2px;
+			+ .breadcrumb-item {
+				
+				&:before {
+					content: "\e914";
+					font-family: 'icomoon' !important;
+					speak: never;
+					font-style: normal;
+					font-weight: normal;
+					font-feature-settings: normal;
+					font-variant: normal;
+					text-transform: none;
+					line-height: 10px;
+					font-size: 10px;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
+					position: relative;
+					top: 2px;
+				}
+				
+			}
+			
+			a {
+				text-transform: capitalize;
+				font-size: 16px;
+				line-height: 16px;
+				color: @color-blue-01;
+				text-decoration: none;
+				font-weight: 400;
 			}
 			
 		}
 		
-		a {
-			text-transform: capitalize;
-			font-size: 16px;
-			line-height: 16px;
+	}
+	
+	.input-group-display-listing {
+		
+		.btn {
+			width: 22px;
+			height: 22px;
+			padding: 0;
+			font-size: 12px;
+			line-height: 12px;
+			background-color: @color-green-02;
+			border-color: @color-blue-05;
 			color: @color-blue-01;
-			text-decoration: none;
-			font-weight: 400;
+			
+			&.active,
+			&:focus,
+			&:active,
+			&:hover {
+				background-color: @color-blue-01;
+				border-color: @color-blue-01;
+				color: @color-white;
+			}
+			
+			&:first-child {
+				margin-right: 10px;
+			}
+			
+			
 		}
 		
 	}
@@ -44,6 +86,16 @@
 p {
 	margin: 0;
 	font-size: 16px;
+	line-height: 16px;
+	margin-top: 26px;
+}
+
+.title-and-action-items {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .title {
@@ -52,7 +104,7 @@ p {
 	color: @color-blue-01;
 	font-weight: 700;
 	line-height: 18px;
-	margin-bottom: 20px;
+	margin-bottom: 0;
 }
 
 .description {

@@ -178,9 +178,27 @@ form {
     --bs-btn-active-border-color: @color-blue-01;
     --bs-btn-active-shadow: none;
 
-    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-color: @color-white;
     --bs-btn-disabled-bg: @color-blue-01;
     --bs-btn-disabled-border-color: @color-blue-01;
+}
+
+.btn-secondary {
+    --bs-btn-bg: @color-blue-03;
+    --bs-btn-border-color: @color-blue-03;
+    
+    --bs-btn-hover-bg: @color-blue-08;
+    --bs-btn-hover-border-color: @color-blue-08;
+    
+    --bs-btn-focus-shadow-rgb: none;
+    
+    --bs-btn-active-bg: @color-blue-03;
+    --bs-btn-active-border-color: @color-blue-03;
+    --bs-btn-active-shadow: none;
+    
+    --bs-btn-disabled-color: @color-white;
+    --bs-btn-disabled-bg: @color-blue-03;
+    --bs-btn-disabled-border-color: @color-blue-03;
 }
 
 .btn-danger {
@@ -256,6 +274,26 @@ form {
 
 }
 
+.form-check-only {
+    min-height: initial;
+    margin-bottom: 0;
+    width: 16px;
+    height: 16px;
+    padding-left: 0;
+    
+    label {
+        width: 16px;
+        height: 16px;
+    
+        &:before,
+        &:after {
+            .mixin-transform(translate(0, -50%));
+        }
+        
+    }
+    
+}
+
 /*====================================================
         Utilities
 ====================================================*/
@@ -305,6 +343,49 @@ hr {
     
 }
 
+.form-check-star {
+    
+     label {
+         
+         &:before,
+         &:after {
+             font-family: 'icomoon' !important;
+             speak: never;
+             font-style: normal;
+             font-weight: normal;
+             font-feature-settings: normal;
+             font-variant: normal;
+             text-transform: none;
+             line-height: 1;
+             -webkit-font-smoothing: antialiased;
+             -moz-osx-font-smoothing: grayscale;
+             border: none;
+             background-color: transparent;
+         }
+    
+         &:before {
+             content: "\e90c";
+         }
+    
+         &:after {
+             content: "\e90d";
+         }
+         
+     }
+    
+}
+
+.btn-tiered-menu {
+    padding: 5px;
+    
+    &:active,
+    &:focus,
+    &:hover {
+        border-color: transparent;
+    }
+    
+}
+
 /*--------------- End Utilities --------------------*/
 
 /*====================================================
@@ -324,7 +405,8 @@ hr {
         padding: 0;
         border-radius: 0;
         color: @color-blue-01;
-        background: @color-white;
+        background: @color-green-05;
+        border: 1px solid @color-blue-05;
     }
     
     .p-menuitem {
@@ -662,6 +744,106 @@ p-menu.user-profile-menu-pane {
         
         .btn {
             margin-right: 0;
+        }
+        
+    }
+    
+}
+
+/*==============================================
+                Data table
+==============================================*/
+.p-datatable .p-datatable-thead > tr {
+    border-bottom: 1px dashed @color-blue-05;
+    background: transparent;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    padding: 8px 16px;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+    background: transparent;
+}
+
+.p-datatable .p-datatable-thead > tr > th:first-child {
+    width: 48px;
+}
+
+.p-datatable .p-datatable-thead > tr > th:last-child {
+    width: 60px
+}
+
+.p-datatable .p-sortable-column:not(.p-highlight):hover {
+    background: @color-green-02;
+    color: @color-blue-01;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover,
+.p-datatable .p-sortable-column:not(.p-highlight):hover,
+.p-datatable .p-sortable-column.p-highlight {
+    background: fade(@color-green-01, 20%);
+    color: @color-blue-01;
+}
+
+.p-datatable .p-sortable-column:focus {
+    box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    border-bottom: 1px dashed @color-blue-05;
+    background: transparent;
+    .mixin-transition();
+}
+
+.p-datatable .p-datatable-tbody > tr:focus {
+    box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
+    outline: none;
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight,
+.p-datatable .p-datatable-tbody > tr:hover {
+    background-color: @color-green-02;
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight td,
+.p-datatable .p-datatable-tbody > tr:hover td {
+    color: @color-blue-01;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    padding: 10px 16px;
+    border: none;
+}
+
+.p-datatable .p-datatable-tbody > tr > td a.author {
+    color: @color-green-01;
+    text-decoration: none;
+}
+
+.p-datatable .p-datatable-tbody > tr > td a.author:hover {
+    color: @color-blue-03;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon,
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+    color: @color-blue-01;
+}
+
+/*==============================================
+                App Breadcrumb
+==============================================*/
+breadcrumb-component {
+    
+    .action-items {
+        
+        .btn {
+            
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+            
         }
         
     }

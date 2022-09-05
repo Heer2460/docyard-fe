@@ -3,12 +3,20 @@
     <div class="content-wrapper">
         <nav-component></nav-component>
         <section class="main-page-wrapper">
-            <header class="page-header">
-                <breadcrumb-component></breadcrumb-component>
-                <ng-content select=[actionItems]></ng-content>
-            </header>
-            <div class="page-body">
-                <ng-content select=[pageBody]></ng-content>
+            <div class="left">
+                <header class="page-header">
+                    <breadcrumb-component>
+                        <ng-container actionItems>
+                            <ng-content select=[actionItems]></ng-content>
+                        </ng-container>
+                    </breadcrumb-component>
+                </header>
+                <div class="page-body">
+                    <ng-content select=[pageBody]></ng-content>
+                </div>
+            </div>
+            <div class="right">
+                <ng-content select=[docInfoPane]></ng-content>
             </div>
         </section>
     </div>

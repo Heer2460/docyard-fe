@@ -13,6 +13,7 @@ export class AppService {
 	
 	public toggleMenuBSubject = new BehaviorSubject(false);
 	public toggleRightPaneSubject = new BehaviorSubject(false);
+	public docInfoPaneSubject = new BehaviorSubject(null);
 	routes: any[] = [
 		{
 			label: 'Home',
@@ -64,6 +65,10 @@ export class AppService {
 	}
 	
 	setToggleRightPaneSubject(state: boolean) {
+		this.toggleRightPaneSubject.next(state);
+	}
+	
+	setDocInfoPaneSubjectState(state: any) {
 		this.toggleRightPaneSubject.next(state);
 	}
 

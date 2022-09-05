@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../../service/app.service";
 import {Router} from "@angular/router";
 
@@ -13,6 +13,8 @@ export class BreadcrumbComponent implements OnInit {
     description: string = '';
     breadcrumbs: any[] = [];
     currentRouteUrl: string = '';
+    titleAndDescOnly: boolean = false;
+    isGridDisplay: boolean = false;
     
     constructor(public appService: AppService, private router: Router) {
         this.currentRouteUrl = this.router.url;
@@ -38,6 +40,7 @@ export class BreadcrumbComponent implements OnInit {
             case '/home':
                 this.title = 'Home';
                 this.description = 'Hello Umar, Welcome back!';
+                this.titleAndDescOnly = true;
                 break;
             case '/doc-lib':
                 this.title = 'Document Library';

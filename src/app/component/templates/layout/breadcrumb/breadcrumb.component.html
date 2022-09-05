@@ -1,19 +1,49 @@
-<ng-container *ngIf="title">
-    <h3 class="title">{{title}}</h3>
-</ng-container>
-
-<ng-container *ngIf="description">
-    <p class="desc">{{description}}</p>
-</ng-container>
-
-<ng-container *ngIf="breadcrumbs.length > 0">
-    <ol class="breadcrumb">
-        <ng-container *ngFor="let breadcrumb of breadcrumbs">
-            <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
-                <a type="button" [routerLink]="breadcrumb.route">
-                    {{breadcrumb.label}}
-                </a>
-            </li>
+<ng-container [ngSwitch]="titleAndDescOnly">
+    <ng-container *ngSwitchCase="true">
+        <ng-container *ngIf="title">
+            <h3 class="title">{{title}}</h3>
         </ng-container>
-    </ol>
+        <ng-container *ngIf="description">
+            <p class="desc">{{description}}</p>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="false">
+        <div class="title-and-action-items">
+            <ng-container *ngIf="title">
+                <h3 class="title">{{title}}</h3>
+            </ng-container>
+            <div class="action-items">
+                <ng-content select=[actionItems]></ng-content>
+            </div>
+        </div>
+        <div class="container-breadcrumb-and-list-view">
+            <ng-container *ngIf="breadcrumbs.length > 0">
+                <ol class="breadcrumb">
+                    <ng-container *ngFor="let breadcrumb of breadcrumbs">
+                        <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                            <a type="button" [routerLink]="breadcrumb.route">
+                                {{breadcrumb.label}}
+                            </a>
+                        </li>
+                    </ng-container>
+                </ol>
+                <div class="btn-group input-group-display-listing">
+                    <button class="btn btn-primary" [ngClass]="isGridDisplay ? 'active': ''">
+                        <i class="icon-display-grid"></i>
+                    </button>
+                    <button class="btn btn-primary" [ngClass]="isGridDisplay ? '': 'active'">
+                        <i class="icon-display-listing"></i>
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+
 </ng-container>
+
+
+
+
+
+
