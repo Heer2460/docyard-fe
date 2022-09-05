@@ -17,15 +17,32 @@ body {
 
 form {
     small {
-        color: #ff4b4b !important;
+        color: @color-error;
         font-size: 10px;
     }
     span {
         &.required {
-            color: #ff4b4b !important;
+            color: @color-error;
             margin-left: 2px;
         }
     }
+}
+
+.form-control {
+
+    &.ng-touched {
+
+        &.ng-invalid {
+            border-color: @color-error;
+
+            ~ .input-group-text {
+                border-color: @color-error;
+            }
+
+        }
+
+    }
+
 }
 
 /*====================================================
