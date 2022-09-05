@@ -511,7 +511,8 @@ hr {
     }
     
     .btn {
-        font-size: 13px;
+        font-size: 14px;
+        line-height: 14px;
         padding-top: 5px;
         padding-bottom: 5px;
         height: 30px;
@@ -522,6 +523,47 @@ hr {
         padding: 5px;
         line-height: 30px;
         font-size: 12px;
+    }
+    
+    .form-floating {
+    
+        .form-control,
+        > .form-control-plaintext:focus,
+        > .form-control-plaintext:not(:placeholder-shown),
+        > .form-control:focus,
+        > .form-control:not(:placeholder-shown) {
+            height: 30px;
+            padding: 5px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+    
+        > .form-control-plaintext,
+        > .form-control:focus,
+        > .form-control:not(:placeholder-shown),
+        > .form-select {
+        
+            ~ label {
+                padding: 0 5px;
+                line-height: 12px;
+                opacity: 1;
+                font-size: 12px;
+                height: initial;
+                top: 2px;
+            }
+        
+        }
+    
+        .input-group-text {
+            font-size: 14px;
+        }
+        
+        label {
+            padding: 5px;
+            line-height: 18px;
+            font-size: 12px;
+        }
+        
     }
     
     .input-group {
