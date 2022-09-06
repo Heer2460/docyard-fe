@@ -1,57 +1,71 @@
-<p-table [value]="dataRows" selectionMode="multiple" (onRowSelect)="onRowSelected($event)" (onRowUnselect)="onRowUnSelected($event)">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>
-                <div class="form-check form-check-only">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault"></label>
+<ng-container *ngIf="isGridDisplay">
+    <div class="grid-view-container">
+        <div class="row">
+            <ng-container *ngFor="let item of dataRows">
+                <div class="col-sm-6 col-lg-6 col-xl-3">
+                    <grid-item-component [gridItem]="item" [menuItem]="actionItems"></grid-item-component>
                 </div>
-            </th>
-            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="updated">Updated <p-sortIcon field="updated"></p-sortIcon></th>
-            <th pSortableColumn="size">Size <p-sortIcon field="size"></p-sortIcon></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-row>
-        <tr [pSelectableRow]="row">
-            <td>
-                <div class="form-check form-check-only">
-                    <input class="form-check-input" type="checkbox" [checked]="row.selected" [attr.id]="'checkbox-' + row.id">
-                    <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
-                </div>
-            </td>
-            <td>
-                <div class="file-types">
-                    <ng-container [ngSwitch]="row.fileType">
-                        <ng-container *ngSwitchCase="'directory'">
-                            <img *ngIf="row.shared" src="./assets/images/svg/directory-shared.svg" alt="Shared Directory">
-                            <img *ngIf="!row.shared" src="./assets/images/svg/directory-blue-01.svg" alt="Directory">
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="!isGridDisplay">
+    <p-table [value]="dataRows" selectionMode="multiple" (onRowSelect)="onRowSelected($event)" (onRowUnselect)="onRowUnSelected($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    <div class="form-check form-check-only">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault"></label>
+                    </div>
+                </th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="updated">Updated <p-sortIcon field="updated"></p-sortIcon></th>
+                <th pSortableColumn="size">Size <p-sortIcon field="size"></p-sortIcon></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+            <tr [pSelectableRow]="row" [ngClass]="row.selected ? 'p-highlight' : ''">
+                <td>
+                    <div class="form-check form-check-only">
+                        <input class="form-check-input" type="checkbox" [checked]="row.selected" [attr.id]="'checkbox-' + row.id">
+                        <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="file-types">
+                        <ng-container [ngSwitch]="row.fileType">
+                            <ng-container *ngSwitchCase="'directory'">
+                                <img *ngIf="row.shared" src="./assets/images/svg/directory-shared.svg" alt="Shared Directory">
+                                <img *ngIf="!row.shared" src="./assets/images/svg/directory-blue-01.svg" alt="Directory">
+                            </ng-container>
+                            <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="Directory">
+                            <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="Directory">
                         </ng-container>
-                        <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="Directory">
-                        <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="Directory">
-                    </ng-container>
-                    <span>{{row.name}}</span>
-                </div>
-            </td>
-            <td>
-                <span>{{row.updatedAt}} by </span>
-                <a role="button" class="author">{{row.user.username}}</a>
-            </td>
-            <td>{{row.size}}</td>
-            <td>
-                <div class="form-check form-check-only form-check-star">
-                    <input class="form-check-input" type="checkbox" [checked]="row.stared" [attr.id]="'stared-' + row.id">
-                    <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
-                </div>
-            </td>
-            <td>
-                <button class="btn btn-tiered-menu" (click)="menu.toggle($event)">
-                    <p-tieredMenu appendTo="body" #menu [model]="actionItems" [popup]="true"></p-tieredMenu>
-                    <i class="icon-menu-horizontal"></i>
-                </button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+                        <span>{{row.name}}</span>
+                    </div>
+                </td>
+                <td>
+                    <span>{{row.updatedAt}} by </span>
+                    <a role="button" class="author">{{row.user.username}}</a>
+                </td>
+                <td>{{row.size}}</td>
+                <td>
+                    <div class="form-check form-check-only form-check-star">
+                        <input class="form-check-input" type="checkbox" [checked]="row.stared" [attr.id]="'stared-' + row.id">
+                        <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event)">
+                        <p-tieredMenu appendTo="body" #menu [model]="actionItems" [popup]="true"></p-tieredMenu>
+                        <i class="icon-menu-horizontal"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-container>
+

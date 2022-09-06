@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {AppService} from "../../../service/app.service";
 
 @Component({
     selector: 'doc-lib-component',
@@ -71,8 +72,12 @@ export class DocLibComponent implements OnInit {
             shared: false,
         }
     ];
+    docInfoPane: boolean = false;
     
-    constructor() {
+    constructor(public appService: AppService) {
+        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.docInfoPane = value;
+        });
     }
     
     ngOnInit(): void {

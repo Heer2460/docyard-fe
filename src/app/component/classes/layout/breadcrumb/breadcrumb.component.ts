@@ -30,6 +30,7 @@ export class BreadcrumbComponent implements OnInit {
                 return route;
             }
             if (route.route == this.currentRouteUrl) {
+                route.active = true;
                 return route;
             }
         });
@@ -47,6 +48,16 @@ export class BreadcrumbComponent implements OnInit {
                 this.getCurrentBreadcrumb();
                 break;
         }
+    }
+    
+    setGridDisplay() {
+        this.isGridDisplay = true;
+        this.appService.setGridDisplaySubject(this.isGridDisplay);
+    }
+    
+    setListDisplay() {
+        this.isGridDisplay = false;
+        this.appService.setGridDisplaySubject(this.isGridDisplay);
     }
     
 }

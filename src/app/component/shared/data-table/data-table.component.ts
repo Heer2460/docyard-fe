@@ -11,20 +11,21 @@ export class DataTableComponent implements OnInit {
     
     @Input() dataRows: any[] = [];
     @Input() actionItems: MenuItem[] = [];
+    isGridDisplay: boolean = false;
     
-    constructor(public appService: AppService) {}
+    constructor(public appService: AppService) {
+    }
     
     ngOnInit(): void {
+        this.appService.isGridDisplaySubject.subscribe((value: boolean) => {
+            this.isGridDisplay = value;
+        });
     }
     
     onRowSelected(event: any) {
-        event.data.selected = true;
-        this.appService.setDocInfoPaneSubjectState(event.data);
     }
     
     onRowUnSelected(event: any) {
-        event.data.selected = false;
-        this.appService.setDocInfoPaneSubjectState(null);
     }
     
 }

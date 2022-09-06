@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <nav-component></nav-component>
         <section class="main-page-wrapper">
-            <div class="left">
+            <div class="left" [ngClass]="docInfoPane ? 'collapsed' : ''">
                 <header class="page-header">
                     <breadcrumb-component>
                         <ng-container actionItems>
@@ -15,9 +15,7 @@
                     <ng-content select=[pageBody]></ng-content>
                 </div>
             </div>
-            <div class="right">
-                <ng-content select=[docInfoPane]></ng-content>
-            </div>
+            <ng-content select=[docInfoPane]></ng-content>
         </section>
     </div>
     <right-pane-component [ngClass]="toggleRightPaneState ? 'expended' : ''"></right-pane-component>

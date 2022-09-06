@@ -1,0 +1,25 @@
+<div class="file-card">
+    <div class="icon-thumbnail">
+        <ng-container [ngSwitch]="gridItem.fileType">
+            <ng-container *ngSwitchCase="'directory'">
+                <img *ngIf="gridItem.shared" src="./assets/images/svg/directory-shared.svg" alt="Shared Directory">
+                <img *ngIf="!gridItem.shared" src="./assets/images/svg/directory-blue-01.svg" alt="Directory">
+            </ng-container>
+            <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="pdf">
+            <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="docx">
+            <img *ngSwitchDefault src="{{gridItem?.fileThumbnail}}" alt="Image">
+        </ng-container>
+    </div>
+    <div class="file-details">
+        <p class="title">{{gridItem?.name}}</p>
+        <p class="date-and-author">
+            <span>{{gridItem?.updatedAt}} by </span>
+            <a role="button" routerLink="/link">{{gridItem?.user?.username}}</a>
+        </p>
+        <p class="file-size">{{gridItem?.size}}</p>
+    </div>
+    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+        <p-tieredMenu #menu [model]="menuItem" appendTo="body" [popup]="true"></p-tieredMenu>
+        <i class="icon-menu-vertical"></i>
+    </button>
+</div>

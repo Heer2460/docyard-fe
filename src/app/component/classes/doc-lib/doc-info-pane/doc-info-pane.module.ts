@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DocInfoPaneComponent} from './doc-info-pane.component';
+import {AccordionModule} from "primeng/accordion";
 
 @NgModule({
     declarations: [
@@ -10,7 +11,8 @@ import {DocInfoPaneComponent} from './doc-info-pane.component';
         DocInfoPaneComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        AccordionModule
     ]
 })
 export class DocInfoPaneModule {

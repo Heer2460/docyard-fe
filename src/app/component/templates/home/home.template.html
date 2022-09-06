@@ -74,82 +74,11 @@
             <div class="col-12">
                 <h2 class="home-h2">Recent Documents</h2>
             </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3">
-                <div class="file-card">
-                    <div class="icon-thumbnail">
-                        <img src="./assets/images/image.png" alt="Image">
-                    </div>
-                    <div class="file-details">
-                        <p class="title">tour-pic.jpeg</p>
-                        <p class="date-and-author">
-                            <span>Aug 24, 2022 by </span>
-                            <a role="button" routerLink="/link">Umar Farooq</a>
-                        </p>
-                        <p class="file-size">333.35 KB</p>
-                    </div>
-                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                        <i class="icon-menu-vertical"></i>
-                    </button>
+            <ng-container *ngFor="let gridItem of gridItems">
+                <div class="col-sm-6 col-lg-6 col-xl-3">
+                    <grid-item-component [gridItem]="gridItem" [menuItem]="items"></grid-item-component>
                 </div>
-            </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3">
-                <div class="file-card">
-                    <div class="icon-thumbnail">
-                        <img src="./assets/images/svg/docx.svg" alt="Image">
-                    </div>
-                    <div class="file-details">
-                        <p class="title">tour-pic.jpeg</p>
-                        <p class="date-and-author">
-                            <span>Aug 24, 2022 by </span>
-                            <a role="button" routerLink="/link">Umar Farooq</a>
-                        </p>
-                        <p class="file-size">333.35 KB</p>
-                    </div>
-                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                        <i class="icon-menu-vertical"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3">
-                <div class="file-card">
-                    <div class="icon-thumbnail">
-                        <img src="./assets/images/image.png" alt="Image">
-                    </div>
-                    <div class="file-details">
-                        <p class="title">tour-pic.jpeg</p>
-                        <p class="date-and-author">
-                            <span>Aug 24, 2022 by </span>
-                            <a role="button" routerLink="/link">Umar Farooq</a>
-                        </p>
-                        <p class="file-size">333.35 KB</p>
-                    </div>
-                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                        <i class="icon-menu-vertical"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3">
-                <div class="file-card">
-                    <div class="icon-thumbnail">
-                        <img src="./assets/images/image.png" alt="Image">
-                    </div>
-                    <div class="file-details">
-                        <p class="title">tour-pic.jpeg</p>
-                        <p class="date-and-author">
-                            <span>Aug 24, 2022 by </span>
-                            <a role="button" routerLink="/link">Umar Farooq</a>
-                        </p>
-                        <p class="file-size">333.35 KB</p>
-                    </div>
-                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                        <p-tieredMenu #menu [model]="items" appendTo="body" [popup]="true"></p-tieredMenu>
-                        <i class="icon-menu-vertical"></i>
-                    </button>
-                </div>
-            </div>
+            </ng-container>
         </div>
     </ng-container>
 </layout-component>

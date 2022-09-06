@@ -11,6 +11,7 @@ export class LayoutComponent implements OnInit {
 	
 	toggleMenuState: boolean = false;
 	toggleRightPaneState: boolean = false;
+	docInfoPane: boolean = false;
 	
 	constructor(public appService: AppService) {
 	}
@@ -22,6 +23,10 @@ export class LayoutComponent implements OnInit {
 		
 		this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
 			this.toggleRightPaneState = value;
+		});
+		
+		this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
+			this.docInfoPane = value;
 		});
 	}
 	

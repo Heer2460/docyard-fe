@@ -5,6 +5,7 @@ import {HomeComponent} from "./home.component";
 import {BreadcrumbModule} from "../layout/breadcrumb/breadcrumb.module";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
+import {GridItemModule} from "../../shared/grid-item/grid-item.module";
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {LayoutModule} from "../layout/layout.module";
         HomeRoutingModule,
         BreadcrumbModule,
         TieredMenuModule,
-        LayoutModule
+        LayoutModule,
+        GridItemModule
     ]
 })
 export class HomeModule {

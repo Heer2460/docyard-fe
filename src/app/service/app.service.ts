@@ -8,18 +8,18 @@ import {Router} from "@angular/router";
 })
 export class AppService {
 
-	userInfo: any = {};
 	permissions: any = [];
 	
 	public toggleMenuBSubject = new BehaviorSubject(false);
 	public toggleRightPaneSubject = new BehaviorSubject(false);
-	public docInfoPaneSubject = new BehaviorSubject(null);
+	public toggleDocInfoPaneSubject = new BehaviorSubject(false);
+	public isGridDisplaySubject = new BehaviorSubject(false);
 	routes: any[] = [
 		{
 			label: 'Home',
 			route: '/home',
 			icon: 'icon-home',
-			active: true
+			active: false
 		},
 		{
 			label: 'Document Library',
@@ -68,8 +68,12 @@ export class AppService {
 		this.toggleRightPaneSubject.next(state);
 	}
 	
-	setDocInfoPaneSubjectState(state: any) {
-		this.toggleRightPaneSubject.next(state);
+	setToggleDocInfoPaneSubject(state: boolean) {
+		this.toggleDocInfoPaneSubject.next(state);
+	}
+	
+	setGridDisplaySubject(state: boolean) {
+		this.isGridDisplaySubject.next(state);
 	}
 
 	handleError(error: any, title: string, fromLogin?: boolean) {

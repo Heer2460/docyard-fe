@@ -19,16 +19,16 @@ export class UserProfileComponent implements OnInit {
     ngOnInit(): void {
         this.items = [
             {
-                label: 'Setting 1',
-                icon: 'icon-cog',
-                command: () => {}
-            },
-            {
-                label: 'Setting 2',
+                label: 'Settings',
                 icon: 'icon-cog',
                 command: () => {}
             },
             {separator:true},
+            {
+                label: 'Profile',
+                icon: 'icon-cog',
+                command: () => {}
+            },
             {
                 label: 'Logout',
                 icon: 'pi pi-sign-out',

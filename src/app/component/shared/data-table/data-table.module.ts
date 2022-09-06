@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {DataTableComponent} from "./data-table.component";
 import {TableModule} from "primeng/table";
 import {TieredMenuModule} from "primeng/tieredmenu";
+import {GridItemModule} from "../grid-item/grid-item.module";
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import {TieredMenuModule} from "primeng/tieredmenu";
     imports: [
         CommonModule,
         TableModule,
-        TieredMenuModule
+        TieredMenuModule,
+        GridItemModule
     ]
 })
 export class DataTableModule {

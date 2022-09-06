@@ -1,1 +1,87 @@
-<img class="img-file-type" src="./assets/images/svg/directory-blue-01.svg" alt="">
+<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()">
+    <i class="icon-pane-toggle"></i>
+</button>
+
+<div class="pane-wrapper">
+    <img class="img-file-type" src="./assets/images/svg/directory-blue-01.svg" alt="">
+    <p-accordion>
+        <p-accordionTab [selected]="true">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-properties"></i>
+                    <span>Properties</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Saved in</th>
+                        <td>home/document library</td>
+                    </tr>
+                    <tr>
+                        <th>Size</th>
+                        <td>200 KB</td>
+                    </tr>
+                    <tr>
+                        <th>Modified</th>
+                        <td>19/4/2022 6:18 pm</td>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <td>Directory</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Personal folder</td>
+                    </tr>
+                    <tr>
+                        <th>Copyright</th>
+                        <td>Copyright (c) 2022 Infotech/Lahore No use without permission.</td>
+                    </tr>
+                    <tr>
+                        <th>Keywords</th>
+                        <td>Family, Pictures, Photos</td>
+                    </tr>
+                    <ng-container *ngIf="toggleShowAll">
+                        <tr>
+                            <th>Property 1</th>
+                            <td>description</td>
+                        </tr>
+                        <tr>
+                            <th>Property 2</th>
+                            <td>description</td>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <th colspan="2">
+                            <button class="btn btn-show-all" (click)="toggleShowAllAction()">
+                                <span *ngIf="!toggleShowAll">Show all</span>
+                                <span *ngIf="toggleShowAll">Show less</span>
+                            </button>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </p-accordionTab>
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-comments"></i>
+                    <span>Comments</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">Body Content</ng-template>
+        </p-accordionTab>
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-share"></i>
+                    <span>Sharing</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">Body Content</ng-template>
+        </p-accordionTab>
+    </p-accordion>
+</div>
