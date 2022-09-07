@@ -1,0 +1,172 @@
+@import "../../../../../assets/less/_vars";
+
+:host {
+    background-color: @color-green-03;
+    min-width: 450px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+}
+
+img {
+    margin-right: 15px;
+}
+
+.user-details-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .user-details {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: @color-white;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: @color-green-04;
+        }
+
+    }
+
+    .btn-user-settings {
+        background-color: @color-green-06;
+        color: @color-white;
+        font-size: 20px;
+
+        &:active,
+        &:focus,
+        &:hover {
+            background-color: @color-green-01;
+            border-color: @color-green-04;
+        }
+
+    }
+    
+    .btn-right-pane {
+        display: none;
+    }
+
+}
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+    
+    :host {
+        min-width: 340px;
+        padding: 10px 20px;
+    }
+    
+    img {
+        margin-right: 10px;
+    }
+    
+    .user-details-container {
+    
+        .user-details {
+    
+            h4 {
+                font-size: 14px;
+            }
+            
+            p {
+                font-size: 12px;
+            }
+            
+        }
+    
+        .btn-user-settings {
+            font-size: 14px;
+            padding: 5px 8px;
+        }
+        
+    }
+    
+}
+
+@media screen and (max-width: 1440px) {
+    
+    :host {
+        min-width: 340px;
+        padding: 10px 20px;
+    }
+    
+    img {
+        margin-right: 10px;
+    }
+    
+    .user-details-container {
+        
+        .user-details {
+            
+            h4 {
+                font-size: 14px;
+            }
+            
+            p {
+                font-size: 12px;
+            }
+            
+        }
+        
+        .btn-user-settings {
+            font-size: 14px;
+            padding: 5px 8px;
+        }
+        
+    }
+    
+}
+
+@media screen and (max-width: 1280px) {
+    
+    :host {
+        min-width: 300px;
+    }
+    
+}
+
+@media screen and (max-width: 1024px) {
+    
+    :host {
+        min-width: initial;
+        width: 100%;
+        padding: 15px;
+        height: 54px;
+    }
+    
+    .user-details-container {
+        
+        .btn-user-settings {
+            display: none;
+        }
+    
+        .btn-right-pane {
+            display: block;
+            background-color: transparent;
+            color: @color-white;
+            margin-right: -15px;
+            
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: transparent;
+                background-color: transparent;
+            }
+        
+        }
+        
+    }
+    
+}

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?ry1l0s');
-  src:  url('fonts/icomoon.eot?ry1l0s#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?ry1l0s') format('truetype'),
-    url('fonts/icomoon.woff?ry1l0s') format('woff'),
-    url('fonts/icomoon.svg?ry1l0s#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?xn5wti');
+  src:  url('fonts/icomoon.eot?xn5wti#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?xn5wti') format('truetype'),
+    url('fonts/icomoon.woff?xn5wti') format('woff'),
+    url('fonts/icomoon.svg?xn5wti#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,57 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-plus:before {
+  content: "\e91b";
+}
+.icon-user:before {
+  content: "\e92a";
+}
+.icon-users-filled:before {
+  content: "\e927";
+}
+.icon-group-filled:before {
+  content: "\e925";
+}
+.icon-permission-filled:before {
+  content: "\e926";
+}
+.icon-role-filled:before {
+  content: "\e928";
+}
+.icon-um-filled:before {
+  content: "\e929";
+}
+.icon-group:before {
+  content: "\e924";
+}
+.icon-logout:before {
+  content: "\e91f";
+}
+.icon-permission:before {
+  content: "\e920";
+}
+.icon-users:before {
+  content: "\e921";
+}
+.icon-role:before {
+  content: "\e922";
+}
+.icon-um:before {
+  content: "\e923";
+}
+.icon-arrow-left:before {
+  content: "\e91e";
+}
+.icon-upload:before {
+  content: "\e91a";
+}
+.icon-manage:before {
+  content: "\e91c";
+}
+.icon-arrow-down:before {
+  content: "\e91d";
+}
 .icon-share:before {
   content: "\e919";
 }

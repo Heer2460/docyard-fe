@@ -670,82 +670,116 @@ p-menu.user-profile-menu-pane {
 /*==============================================
                 Data table
 ==============================================*/
-.p-datatable .p-datatable-thead > tr {
-	border-bottom: 1px dashed @color-blue-05;
-	background: transparent;
-}
 
-.p-datatable .p-datatable-thead > tr > th {
-	padding: 8px 16px;
-	text-transform: uppercase;
-	font-size: 14px;
-	letter-spacing: 0.4px;
-	font-weight: 400;
-	background: transparent;
-}
-
-.p-datatable .p-datatable-thead > tr > th:first-child {
-	width: 48px;
-}
-
-.p-datatable .p-datatable-thead > tr > th:last-child {
-	width: 60px
-}
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-	background: @color-green-02;
-	color: @color-blue-01;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover,
-.p-datatable .p-sortable-column:not(.p-highlight):hover,
-.p-datatable .p-sortable-column.p-highlight {
-	background: fade(@color-green-01, 20%);
-	color: @color-blue-01;
-}
-
-.p-datatable .p-sortable-column:focus {
-	box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
-}
-
-.p-datatable .p-datatable-tbody > tr {
-	border-bottom: 1px dashed @color-blue-05;
-	background: transparent;
-	.mixin-transition();
-}
-
-.p-datatable .p-datatable-tbody > tr:focus {
-	box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
-	outline: none;
-}
-
-.p-datatable .p-datatable-tbody > tr.p-highlight,
-.p-datatable .p-datatable-tbody > tr:hover {
-	background-color: @color-green-02;
-}
-
-.p-datatable .p-datatable-tbody > tr.p-highlight td,
-.p-datatable .p-datatable-tbody > tr:hover td {
-	color: @color-blue-01;
-}
-
-.p-datatable .p-datatable-tbody > tr > td {
-	padding: 10px 16px;
-	border: none;
-}
-
-.p-datatable .p-datatable-tbody > tr > td a.author {
-	color: @color-green-01;
-	text-decoration: none;
-}
-
-.p-datatable .p-datatable-tbody > tr > td a.author:hover {
-	color: @color-blue-03;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon,
-.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
-	color: @color-blue-01;
+.p-datatable {
+	
+	.p-datatable-thead {
+		
+		> tr {
+			border-bottom: 1px dashed @color-blue-05;
+			background: transparent;
+			
+			> th {
+				padding: 8px 16px;
+				text-transform: uppercase;
+				font-size: 14px;
+				letter-spacing: 0.4px;
+				font-weight: 400;
+				background: transparent;
+				
+				&:first-child {
+					width: 48px;
+				}
+				
+				&:last-child {
+					width: 60px
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.p-sortable-column {
+		
+		&:not(.p-highlight) {
+			
+			&:hover {
+				background: fade(@color-green-01, 20%);
+				color: @color-blue-01;
+			}
+			
+		}
+		
+		&.p-highlight {
+			background: fade(@color-green-01, 20%);
+			color: @color-blue-01;
+			
+			&:hover {
+				background: fade(@color-green-01, 20%);
+				color: @color-blue-01;
+			}
+			
+			&:hover .p-sortable-column-icon,
+			.p-sortable-column-icon {
+				color: @color-blue-01;
+			}
+			
+		}
+		
+		&:focus {
+			box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
+		}
+		
+	}
+	
+	.p-datatable-tbody {
+		
+		> tr {
+			border-bottom: 1px dashed @color-blue-05;
+			background: transparent;
+			.mixin-transition();
+			
+			&:focus {
+				box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
+				outline: none;
+			}
+			
+			&.p-highlight,
+			&:hover {
+				background-color: @color-green-02;
+			}
+			
+			&.p-highlight td,
+			&:hover td {
+				color: @color-blue-01;
+			}
+			
+			> td {
+				padding: 10px 16px;
+				border: none;
+				
+				a {
+					
+					&.author {
+						color: @color-green-01;
+						text-decoration: none;
+						
+						&:hover {
+							color: @color-blue-03;
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
 }
 
 /*==============================================
@@ -759,6 +793,17 @@ breadcrumb-component {
 			
 			&:not(:last-child) {
 				margin-right: 10px;
+			}
+			
+			i {
+				
+				&:first-of-type {
+					margin-right: 5px;
+				}
+				
+				&.icon-arrow-down {
+					font-size: 10px;
+				}
 			}
 			
 		}
@@ -1102,7 +1147,7 @@ doc-info-pane-component {
 		
 	}
 	
-	.form-check {
+	.form-check-only {
 		
 		label {
 			width: 14px;

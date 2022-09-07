@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {RoutesDTO} from "../model/routes.dto";
+import {AppConstants} from "../util/app.constants";
 
 @Injectable({
 	providedIn: 'root'
@@ -14,50 +16,86 @@ export class AppService {
 	public toggleRightPaneSubject = new BehaviorSubject(false);
 	public toggleDocInfoPaneSubject = new BehaviorSubject(false);
 	public isGridDisplaySubject = new BehaviorSubject(false);
-	routes: any[] = [
+	routes: RoutesDTO[] = [];
+	
+	appRoutes: RoutesDTO[] = [
 		{
 			label: 'Home',
 			route: '/home',
 			icon: 'icon-home',
-			active: false
 		},
 		{
 			label: 'Document Library',
 			route: '/doc-lib',
 			icon: 'icon-cloud',
-			active: false
 		},
 		{
 			label: 'Shared by Me',
 			route: '/shared-by-me',
 			icon: 'icon-shared-by-me',
-			active: false
 		},
 		{
 			label: 'Shared with Me',
 			route: '/shared-with-me',
 			icon: 'icon-shared-with-me',
-			active: false
 		},
 		{
 			label: 'Favourite',
 			route: '/favourite',
 			icon: 'icon-star',
-			active: false
 		},
 		{
 			label: 'Trash',
 			route: '/trash',
 			icon: 'icon-trash',
-			active: false
 		},
+	];
+	settingRoutes: RoutesDTO[] = [
+		{
+			label: 'Home',
+			route: '/home',
+			icon: 'icon-home',
+		},
+		{
+			label: 'User Management',
+			route: '/um',
+			icon: 'icon-um',
+			children: [
+				{
+					label: 'User',
+					route: '/setting/user',
+					icon: 'icon-users',
+				},
+				{
+					label: 'Role',
+					route: '/setting/role',
+					icon: 'icon-role',
+				},
+				{
+					label: 'Group',
+					route: '/setting/group',
+					icon: 'icon-group',
+				},
+				{
+					label: 'Assign Permission',
+					route: '/setting/ap',
+					icon: 'icon-permission',
+				},
+			]
+		}
 	];
 	
 	constructor(private toastService: ToastrService, private router: Router) {
 	}
 	
+	setRoutes(routes: RoutesDTO[]) {
+		localStorage.removeItem(AppConstants.APP_ROUTES);
+		localStorage.setItem(AppConstants.APP_ROUTES, JSON.stringify(routes));
+	}
+	
 	getRoutes() {
-		return this.routes;
+		const routes: any = localStorage.getItem(AppConstants.APP_ROUTES)
+		return JSON.parse(routes);
 	}
 	
 	setToggleMenuBSubject(state: boolean) {

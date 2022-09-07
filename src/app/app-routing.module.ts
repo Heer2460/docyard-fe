@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LayoutComponent} from "./component/classes/layout/layout.component";
+import {LayoutComponent} from "./component/layout/layout.component";
 
 const routes: Routes = [
     {
@@ -8,7 +8,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./component/classes/auth/auth.module').then(m => m.AuthModule)
+                loadChildren: () => import('./component/auth/auth.module').then(m => m.AuthModule)
             }
         ]
     },
@@ -17,7 +17,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./component/classes/home/home.module').then(m => m.HomeModule)
+                loadChildren: () => import('./component/home/home.module').then(m => m.HomeModule)
             }
         ]
     },
@@ -26,7 +26,16 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./component/classes/doc-lib/doc-lib.module').then(m => m.DocLibModule)
+                loadChildren: () => import('./component/doc-lib/doc-lib.module').then(m => m.DocLibModule)
+            }
+        ]
+    },
+    {
+        path: 'setting',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/setting/setting.module').then(m => m.SettingModule)
             }
         ]
     }

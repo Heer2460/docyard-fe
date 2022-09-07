@@ -1,0 +1,50 @@
+<sidebar-header-component></sidebar-header-component>
+<div class="main-container">
+    <ul>
+        <ng-container *ngFor="let route of routes">
+            <ng-container *ngIf="!route?.children">
+                <li [ngClass]="route.route === currentRoute ? 'active' : ''">
+                    <a role="button" [routerLink]="route.route">
+                        <span class="icon-holder">
+                            <i [attr.class]=" 'default ' + route.icon"></i>
+                            <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
+                        </span>
+                        <span>{{route.label}}</span>
+                    </a>
+                </li>
+            </ng-container>
+
+            <ng-container *ngIf="route?.children?.length > 0">
+                <li class="has-children" [ngClass]="[route.route === currentRoute ? 'active' : '', route.active ? 'expended' : '']">
+                    <a role="button" (click)="toggleDropdown(route)">
+                        <span class="icon-holder">
+                            <i [attr.class]=" 'default ' + route.icon"></i>
+                            <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
+                        </span>
+                        <span>
+                            <span>{{route.label}}</span>
+                            <i class="icon-arrow-left"></i>
+                        </span>
+                    </a>
+
+                    <ul [ngClass]="route.active ? 'show' : ''">
+                        <li *ngFor="let child of route.children">
+                            <a role="button" [routerLink]="child.route">
+                                <span class="icon-holder">
+                                    <i [attr.class]=" 'default ' + child.icon"></i>
+                                    <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
+                                </span>
+                                <span>{{child.label}}</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ng-container>
+        </ng-container>
+    </ul>
+    <div class="banners-container">
+        <storage-viewer-component></storage-viewer-component>
+        <banner-upgrade-component></banner-upgrade-component>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<img src="../../../../../assets/images/svg/user-image-placeholder.svg" alt="Default user image placeholder">
+<div class="user-details-container">
+    <div class="user-details">
+        <h4 class="user-name">Umar Farooq</h4>
+        <p class="user-email">umar.bwn@gmail.com</p>
+    </div>
+    <button class="btn btn-user-settings" (click)="menu.toggle($event)">
+        <p-tieredMenu appendTo="body" #menu [model]="items" [popup]="true"></p-tieredMenu>
+        <i class="icon-cog"></i>
+    </button>
+
+    <button class="btn btn-right-pane" (click)="setToggleRightPaneState()">
+        <i class="icon-pane-toggle"></i>
+    </button>
+</div>

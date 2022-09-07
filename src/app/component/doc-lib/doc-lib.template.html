@@ -1,0 +1,31 @@
+<layout-component [showDisplayButtons]="true">
+    <ng-container actionItems>
+        <button class="btn btn-sm btn-secondary" (click)="uploadMenu.toggle($event)">
+            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems" [popup]="true"></p-tieredMenu>
+            <i class="icon-upload"></i>
+            Upload
+            <i class="icon-arrow-down"></i>
+        </button>
+        <button class="btn btn-sm btn-primary" (click)="createMenu.toggle($event)">
+            <p-tieredMenu appendTo="body" #createMenu [model]="uploadMenuItems" [popup]="true"></p-tieredMenu>
+            <i class="icon-plus"></i>
+            Create
+            <i class="icon-arrow-down"></i>
+        </button>
+        <button class="btn btn-sm btn-primary">
+            <i class="icon-manage"></i>
+            Manage
+        </button>
+        <button class="btn btn-sm btn-primary">
+            <i class="icon-share"></i>
+            Share
+        </button>
+    </ng-container>
+    <ng-container pageBody>
+        <data-table-component [actionItems]="menuItems" [dataRows]="rows"></data-table-component>
+    </ng-container>
+    <ng-container docInfoPane>
+        <doc-info-pane-component [ngClass]="docInfoPane ? 'collapsed': ''"></doc-info-pane-component>
+    </ng-container>
+</layout-component>
+

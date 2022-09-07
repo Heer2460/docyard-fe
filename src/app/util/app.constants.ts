@@ -8,6 +8,7 @@ export class AppConstants {
   public static AUTH_USER_INFO = 'user_info';
   public static AUTH_USER_ID = 'loggedInUserId';
   public static AUTH_PERMISSIONS = 'permissions';
+  public static APP_ROUTES = 'app_routes';
 
   //Frequently used route
 

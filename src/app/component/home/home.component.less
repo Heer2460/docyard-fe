@@ -1,0 +1,236 @@
+@import "../../../assets/less/_vars";
+
+.card {
+	min-height: 260px;
+	
+	&.card-green {
+		background-color: @color-green-01;
+	}
+	
+	&.card-blue {
+		background-color: @color-blue-01;
+		
+		.card-body {
+			
+			.content-details {
+				
+				.progress {
+					background-color: @color-blue-04;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	&.card-yellow {
+		background-color: @color-yellow-01;
+		
+		.card-body {
+			
+			.content-details {
+				
+				.progress {
+					background-color: @color-yellow-02;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	&.card-red {
+		background-color: @color-red-01;
+		
+		.card-body {
+			
+			.content-details {
+				
+				.progress {
+					background-color: @color-red-02;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.card-body {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+		
+		.content-details {
+			width: 100%;
+			
+			h6 {
+				color: @color-white;
+				font-size: 22px;
+				font-weight: 700;
+				margin: 0 0 10px 0;
+			}
+			
+			.progress {
+				--bs-progress-height: 8px;
+				--bs-progress-bg: @color-green-07;
+				
+				.progress-bar {
+					background-color: @color-white;
+					border-top-right-radius: 10px;
+					border-bottom-right-radius: 10px;
+				}
+				
+			}
+			
+			p {
+				font-size: 16px;
+				text-transform: uppercase;
+				font-weight: 400;
+				color: @color-white;
+				margin: 10px 0 0 0;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			
+		}
+		
+	}
+	
+}
+
+.home-h2 {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+	
+	.card {
+		min-height: 200px;
+		
+		.card-body {
+			
+			img {
+				max-width: 40px;
+			}
+			
+			.content-details {
+				
+				h6 {
+					font-size: 16px;
+					margin: 0 0 8px 0;
+				}
+				
+				.progress {
+					--bs-progress-height: 6px;
+				}
+				
+				p {
+					font-size: 12px;
+					margin: 6px 0 0 0;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.home-h2 {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	
+}
+
+@media screen and (max-width: 1440px) {
+	
+	.card {
+		min-height: 200px;
+		
+		.card-body {
+			
+			img {
+				max-width: 40px;
+			}
+			
+			.content-details {
+				
+				h6 {
+					font-size: 16px;
+					margin: 0 0 8px 0;
+				}
+				
+				.progress {
+					--bs-progress-height: 6px;
+				}
+				
+				p {
+					font-size: 12px;
+					margin: 6px 0 0 0;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.home-h2 {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	
+}
+
+@media screen and (max-width: 1280px) {
+	
+	.card {
+		min-height: 180px;
+	}
+	
+}
+
+@media screen and (max-width: 1199px) {
+	
+	.col-lg-6:nth-child(1),
+	.col-lg-6:nth-child(2) {
+		margin-bottom: 20px;
+	}
+	
+	.card {
+		min-height: initial;
+		
+		.card-body {
+			flex-direction: row;
+			align-items: center;
+			
+			img {
+				max-width: 50px;
+				margin-right: 15px;
+			}
+			
+		}
+		
+	}
+	
+}
+
+@media screen and (max-width: 575px) {
+	
+	.row {
+		
+		.col-sm-6:not(:last-of-type) {
+			margin-bottom: 15px;
+		}
+		
+	}
+	
+	
+}
+
