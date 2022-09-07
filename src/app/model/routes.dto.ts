@@ -3,5 +3,6 @@ export class RoutesDTO {
     route: string = '';
     icon: string = '';
     children?: RoutesDTO[] = [];
-    active?: boolean = false
+    expended: boolean = false
+    active: boolean = false
 }

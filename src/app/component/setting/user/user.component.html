@@ -1,7 +1,12 @@
 <layout-component>
     <ng-container actionItems>
-        <button class="btn btn-sm btn-primary"><i class="icon-plus"></i> Add</button>
-        <button class="btn btn-sm btn-secondary"><i class="icon-search"></i> Search</button>
+        <button class="btn btn-sm btn-primary" routerLink="/setting/user/add">
+            <i class="icon-plus"></i>
+            Add
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="showSearchPopupAction()">
+            <i class="icon-search"></i> Search
+        </button>
     </ng-container>
     <ng-container pageBody>
         <p-table [value]="dataRows" selectionMode="multiple">
@@ -70,3 +75,17 @@
         </p-table>
     </ng-container>
 </layout-component>
+
+<p-dialog [(visible)]="searchPopupToggle" [modal]="true">
+    <ng-template pTemplate="header">
+        Search here
+    </ng-template>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="street" placeholder="Street">
+        <label for="street">Street</label>
+    </div>
+    <ng-template pTemplate="footer">
+        <button class="btn btn-sm btn-danger me-2" (click)="hideSearchPopupAction()">Close</button>
+        <button class="btn btn-sm btn-primary">Search</button>
+    </ng-template>
+</p-dialog>

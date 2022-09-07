@@ -5,6 +5,7 @@ import {UserRoutingModule} from "./user-routing.module";
 import {LayoutModule} from "../../layout/layout.module";
 import {TableModule} from "primeng/table";
 import {TieredMenuModule} from "primeng/tieredmenu";
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {TieredMenuModule} from "primeng/tieredmenu";
         UserRoutingModule,
         LayoutModule,
         TableModule,
-        TieredMenuModule
+        TieredMenuModule,
+        DialogModule
     ]
 })
 export class UserModule {

@@ -55,7 +55,7 @@ export class LayoutComponent implements OnInit {
                 return route;
             } else if (route.route == this.currentRouteUrl) {
                 if(parent) {
-                    parent.active = true;
+                    parent.expended = true;
                 }
                 route.active = true;
                 return route;

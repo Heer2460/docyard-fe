@@ -6,6 +6,15 @@ const routes: Routes = [
     {
         path: '',
         component: UserComponent
+    },
+    {
+        path: 'add',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./add-user/add-user.module').then(m => m.AddUserModule)
+            }
+        ]
     }
 ];
 

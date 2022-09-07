@@ -42,7 +42,7 @@ export class BreadcrumbComponent implements OnInit {
                 return route;
             } else if (route.route == this.currentRouteUrl) {
                 if(parent) {
-                    parent.active = true;
+                    parent.expended = true;
                     this.breadcrumbs.push(parent);
                 }
                 this.breadcrumbs.push(route);
@@ -76,6 +76,29 @@ export class BreadcrumbComponent implements OnInit {
             
             if (mainRoute[2] == 'user') {
                 this.title = 'User';
+    
+                if (mainRoute[3] == 'add') {
+                    this.title = 'Add User';
+                    this.breadcrumbs = [
+                        ...this.breadcrumbs,
+                        {
+                            label: 'User Management',
+                            route: '/setting/um',
+                            active: false
+                        },
+                        {
+                            label: 'User',
+                            route: '/setting/user',
+                            active: false
+                        },
+                        {
+                            label: 'Add',
+                            route: '/setting/user/add',
+                            active: true
+                        }
+                    ]
+                }
+    
             } else {
                 this.title = 'Setting';
                 this.breadcrumbs.splice(1, 0, {

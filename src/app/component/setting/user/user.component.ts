@@ -8,6 +8,7 @@ import {MenuItem} from "primeng/api";
 })
 export class UserComponent implements OnInit {
     
+    searchPopupToggle: boolean = false;
     dataRows: any[] = [];
     actionItems: MenuItem[] = [
         {
@@ -22,6 +23,14 @@ export class UserComponent implements OnInit {
     }
     
     ngOnInit(): void {
+    }
+    
+    showSearchPopupAction() {
+        this.searchPopupToggle = true;
+    }
+    
+    hideSearchPopupAction() {
+        this.searchPopupToggle = false;
     }
     
 }

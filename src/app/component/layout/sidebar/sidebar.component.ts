@@ -25,7 +25,10 @@ export class SidebarComponent implements OnInit {
     }
     
     toggleDropdown(route: any) {
-        route.active = !route.active;
+        this.routes.map((route: any) => {
+            route.expended = false;
+        });
+        route.expended = !route.expended;
     }
 
 }

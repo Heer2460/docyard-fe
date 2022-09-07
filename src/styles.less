@@ -49,6 +49,48 @@ form {
 /*====================================================
         Form controls
 ====================================================*/
+fieldset {
+	border: 1px dashed @color-blue-05;
+	border-top: none;
+	padding: 15px;
+	position: relative;
+	
+	> header {
+		position: absolute;
+		top: -3px;
+		left: 0;
+		transform: translate(0, -50%);
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+		white-space: nowrap;
+		
+		&:before,
+		&:after {
+			width: 100%;
+			position: relative;
+			top: 2px;
+		}
+		
+		&:before {
+			content: "";
+			border-top: 1px dashed @color-blue-05;
+			width: 10px;
+			margin-right: 5px;
+		}
+		
+		&:after {
+			content: "";
+			border-top: 1px dashed @color-blue-05;
+			margin-left: 5px;
+		}
+		
+	}
+	
+}
+
 .form-control {
 	color: @color-blue-01;
 	height: 40px;
@@ -82,7 +124,6 @@ form {
 		border-radius: 0;
 		border-color: @color-blue-05;
 		background-color: @color-white-02;
-		border-right: none;
 		.mixin-transition();
 	}
 	
@@ -107,7 +148,7 @@ form {
 			line-height: initial;
 			color: @color-blue-01;
 			opacity: 1;
-			font-size: 12px;
+			font-size: 14px;
 		}
 		
 	}
@@ -154,6 +195,14 @@ form {
 		padding: 5px;
 		height: 40px;
 		.mixin-transition();
+	}
+	
+	.form-floating {
+		
+		> .form-control {
+			border-right: none;
+		}
+		
 	}
 	
 }
@@ -387,6 +436,10 @@ hr {
 	
 }
 
+.mt-30px {
+	margin-top: 30px;
+}
+
 /*--------------- End Utilities --------------------*/
 
 /*====================================================
@@ -442,11 +495,11 @@ hr {
 	}
 	
 	.p-menuitem-link {
-		font-size: 12px;
+		font-size: 14px;
 		padding: 10px 15px;
 		
 		.pi {
-			font-size: 12px;
+			font-size: 14px;
 		}
 		
 		&:focus {
@@ -478,6 +531,20 @@ hr {
 
 .page-body {
 	margin-top: 30px;
+}
+
+.page-footer {
+	margin-top: 15px;
+	text-align: right;
+	
+	.btn {
+		
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+		
+	}
+	
 }
 
 /*=====================================================
@@ -635,15 +702,28 @@ p-menu.user-profile-menu-pane {
 	box-shadow: none;
 	background-color: @color-white;
 	min-width: 450px;
+	border-radius: 0;
 	
 	.p-dialog-header {
 		border-top-right-radius: 0;
 		border-top-left-radius: 0;
-		background-color: @color-white;
-		padding: 15px 15px 0 15px;
+		background-color: fade(@color-blue-05, 50%);
+		padding: 10px 15px;
+		font-weight: 700;
+		font-size: 18px;
+		color: @color-blue-01;
+		border-bottom: 1px solid @color-blue-05;
 		
 		.p-dialog-header-icon {
 			color: @color-blue-01;
+			padding: 0;
+			width: initial;
+			height: initial;
+			
+			&:enabled:hover {
+				background-color: transparent;
+			}
+			
 		}
 		
 	}
@@ -654,10 +734,11 @@ p-menu.user-profile-menu-pane {
 	}
 	
 	.p-dialog-footer {
-		background-color: @color-white;
+		background-color: fade(@color-blue-05, 50%);
 		border-bottom-right-radius: 0;
 		border-bottom-left-radius: 0;
-		padding: 0 15px 15px 15px;
+		padding: 10px 15px;
+		border-top: 1px solid @color-blue-05;
 		
 		.btn {
 			margin-right: 0;

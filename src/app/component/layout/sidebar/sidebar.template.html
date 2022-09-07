@@ -15,7 +15,7 @@
             </ng-container>
 
             <ng-container *ngIf="route?.children">
-                <li class="has-children" [ngClass]="[route.active ? 'expended active' : '']">
+                <li class="has-children" [ngClass]="[route.expended ? 'expended active' : '']">
                     <a role="button" (click)="toggleDropdown(route)">
                         <span class="icon-holder">
                             <i [attr.class]=" 'default ' + route.icon"></i>
@@ -27,7 +27,7 @@
                         </span>
                     </a>
 
-                    <ul [ngClass]="route.active ? 'show' : ''">
+                    <ul [ngClass]="route.expended ? 'show' : ''">
                         <li *ngFor="let child of route.children" [ngClass]="child.active ? 'active' : ''">
                             <a role="button" [routerLink]="child.route">
                                 <span class="icon-holder">

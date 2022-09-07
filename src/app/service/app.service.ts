@@ -23,36 +23,42 @@ export class AppService {
 			label: 'Home',
 			route: '/home',
 			icon: 'icon-home',
+			expended: false,
 			active: false
 		},
 		{
 			label: 'Document Library',
 			route: '/doc-lib',
 			icon: 'icon-cloud',
+			expended: false,
 			active: false
 		},
 		{
 			label: 'Shared by Me',
 			route: '/shared-by-me',
 			icon: 'icon-shared-by-me',
+			expended: false,
 			active: false
 		},
 		{
 			label: 'Shared with Me',
 			route: '/shared-with-me',
 			icon: 'icon-shared-with-me',
+			expended: false,
 			active: false
 		},
 		{
 			label: 'Favourite',
 			route: '/favourite',
 			icon: 'icon-star',
+			expended: false,
 			active: false
 		},
 		{
 			label: 'Trash',
 			route: '/trash',
 			icon: 'icon-trash',
+			expended: false,
 			active: false
 		},
 	];
@@ -61,38 +67,60 @@ export class AppService {
 			label: 'Home',
 			route: '/home',
 			icon: 'icon-home',
-			active: false
+			expended: false,
+			active: false,
 		},
 		{
 			label: 'User Management',
 			route: '/um',
 			icon: 'icon-um',
+			expended: false,
 			active: false,
 			children: [
 				{
 					label: 'User',
 					route: '/setting/user',
 					icon: 'icon-users',
+					expended: false,
 					active: false
 				},
 				{
 					label: 'Role',
 					route: '/setting/role',
 					icon: 'icon-role',
+					expended: false,
 					active: false
 				},
 				{
 					label: 'Group',
 					route: '/setting/group',
 					icon: 'icon-group',
+					expended: false,
 					active: false
 				},
 				{
 					label: 'Assign Permission',
 					route: '/setting/ap',
 					icon: 'icon-permission',
+					expended: false,
 					active: false
 				},
+			]
+		},
+		{
+			label: 'Reference',
+			route: '/reference',
+			icon: 'icon-um',
+			expended: false,
+			active: false,
+			children: [
+				{
+					label: 'Department',
+					route: '/setting/reference/dept',
+					icon: 'icon-users',
+					expended: false,
+					active: false
+				}
 			]
 		}
 	];
