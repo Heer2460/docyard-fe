@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {NavigationEnd, Router} from "@angular/router";
+import {RoutesDTO} from "../../../model/routes.dto";
 
 @Component({
     selector: 'sidebar-component',
@@ -9,7 +10,7 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class SidebarComponent implements OnInit {
 
-    @Input() routes: any[] = [];
+    @Input() routes: RoutesDTO[] = [];
     currentRoute: string = '';
     
     constructor(public appService: AppService, private router: Router) {

@@ -41,7 +41,10 @@ export class BreadcrumbComponent implements OnInit {
                 this.breadcrumbs.push(route);
                 return route;
             } else if (route.route == this.currentRouteUrl) {
-                if(parent) this.breadcrumbs.push(parent);
+                if(parent) {
+                    parent.active = true;
+                    this.breadcrumbs.push(parent);
+                }
                 this.breadcrumbs.push(route);
                 route.active = true;
                 return route;
