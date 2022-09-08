@@ -10,7 +10,7 @@ import {RoutesDTO} from "../../model/routes.dto";
 })
 export class HomeComponent implements OnInit {
     
-    items: MenuItem[] = [];
+    menuItems: MenuItem[] = [];
     gridItems: any[] = [
         {
             id: 1,
@@ -78,17 +78,28 @@ export class HomeComponent implements OnInit {
     }
     
     ngOnInit(): void {
-        this.items = [
+        this.menuItems = [
             {
-                label: 'Setting 1',
-                icon: 'icon-cog',
+                label: 'Share',
+                icon: 'icon-share',
                 command: () => {
                 }
             },
-            {separator: true},
             {
-                label: 'Setting 2',
-                icon: 'icon-cog',
+                label: 'Download',
+                icon: 'icon-download',
+                command: () => {
+                }
+            },
+            {
+                label: 'Delete',
+                icon: 'icon-trash',
+                command: () => {
+                }
+            },
+            {
+                label: 'Rename',
+                icon: 'icon-edit',
                 command: () => {
                 }
             }

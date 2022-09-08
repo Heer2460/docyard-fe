@@ -9,6 +9,22 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
 import {AppUtility} from "./util/app.utility";
+import {
+    NgxUiLoaderConfig, NgxUiLoaderHttpModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderRouterModule,
+    PB_DIRECTION,
+    POSITION,
+    SPINNER
+} from "ngx-ui-loader";
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+    fgsSize: 0,
+    overlayColor: 'transparent',
+    pbColor: '#ee0f0f',
+    pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+    pbThickness: 5, // progress bar thickness
+};
 
 @NgModule({
     declarations: [
@@ -27,6 +43,10 @@ import {AppUtility} from "./util/app.utility";
             timeOut: 5000,
             closeButton: true
         }),
+        NgxUiLoaderModule,
+        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+        NgxUiLoaderRouterModule,
+        NgxUiLoaderHttpModule
     ],
     providers: [
         AppUtility

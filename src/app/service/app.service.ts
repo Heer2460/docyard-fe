@@ -110,14 +110,14 @@ export class AppService {
 		{
 			label: 'Reference',
 			route: '/reference',
-			icon: 'icon-um',
+			icon: 'icon-link',
 			expended: false,
 			active: false,
 			children: [
 				{
 					label: 'Department',
 					route: '/setting/reference/dept',
-					icon: 'icon-users',
+					icon: 'icon-building',
 					expended: false,
 					active: false
 				}

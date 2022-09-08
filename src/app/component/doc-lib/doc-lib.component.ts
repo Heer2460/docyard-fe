@@ -90,25 +90,25 @@ export class DocLibComponent implements OnInit {
         this.menuItems = [
             {
                 label: 'Share',
-                icon: 'icon-cog',
+                icon: 'icon-share',
                 command: () => {
                 }
             },
             {
                 label: 'Download',
-                icon: 'icon-cog',
+                icon: 'icon-download',
                 command: () => {
                 }
             },
             {
                 label: 'Delete',
-                icon: 'pi pi-sign-out',
+                icon: 'icon-trash',
                 command: () => {
                 }
             },
             {
                 label: 'Rename',
-                icon: 'pi pi-sign-out',
+                icon: 'icon-edit',
                 command: () => {
                 }
             }
