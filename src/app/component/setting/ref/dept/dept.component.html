@@ -196,3 +196,16 @@
         <button class="btn btn-sm btn-primary">Search</button>
     </ng-template>
 </p-dialog>
+
+<p-confirmDialog #cd styleClass="dialog-danger">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Delete department</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button class="btn btn-sm btn-danger me-2" (click)="cd.reject()">Cancel</button>
+        <button class="btn btn-sm btn-primary" (click)="onItemDeleteAction()">Delete</button>
+    </ng-template>
+</p-confirmDialog>

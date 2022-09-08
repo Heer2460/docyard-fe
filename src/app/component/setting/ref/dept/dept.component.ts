@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from "primeng/api";
+import {ConfirmationService, MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 
 @Component({
@@ -31,12 +31,11 @@ export class DeptComponent implements OnInit {
         {
             label: 'Delete',
             icon: 'icon-trash',
-            command: () => {
-            }
+            command: () => this.onItemDeleteAction()
         }
     ];
     
-    constructor(private router: Router) {
+    constructor(private router: Router, private confirmationService: ConfirmationService) {
     }
     
     ngOnInit(): void {
@@ -56,6 +55,15 @@ export class DeptComponent implements OnInit {
     
     hideViewPopupAction() {
         this.viewPopupToggle = false;
+    }
+    
+    onItemDeleteAction() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to perform this action?',
+            accept: () => {
+                //Actual logic to perform a confirmation
+            }
+        });
     }
     
 }

@@ -17,6 +17,7 @@ import {
     POSITION,
     SPINNER
 } from "ngx-ui-loader";
+import {ConfirmationService} from "primeng/api";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsSize: 100,
@@ -51,7 +52,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderHttpModule
     ],
     providers: [
-        AppUtility
+        AppUtility,
+        ConfirmationService
     ],
     bootstrap: [AppComponent]
 })

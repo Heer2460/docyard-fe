@@ -6,6 +6,7 @@ import {TableModule} from "primeng/table";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {DialogModule} from "primeng/dialog";
 import {LayoutModule} from "../../../layout/layout.module";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import {LayoutModule} from "../../../layout/layout.module";
         LayoutModule,
         TableModule,
         TieredMenuModule,
-        DialogModule
+        DialogModule,
+        ConfirmDialogModule
     ]
 })
 export class DeptModule {
