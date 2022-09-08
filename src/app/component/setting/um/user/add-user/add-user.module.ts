@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddUserComponent } from './add-user.component';
-import {LayoutModule} from "../../../layout/layout.module";
 import {AddUserRoutingModule} from "./add-user-routing.module";
+import {LayoutModule} from "../../../../layout/layout.module";
 
 
 

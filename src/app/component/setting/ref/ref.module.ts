@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {UmRoutingModule} from "./um-routing.module";
-import {UmComponent} from './um.component';
+import {RefComponent} from './ref.component';
+import {RefRoutingModule} from "./ref-routing.module";
 import {LayoutModule} from "../../layout/layout.module";
 
 
 @NgModule({
     declarations: [
-        UmComponent
+        RefComponent
     ],
     imports: [
         CommonModule,
-        UmRoutingModule,
+        RefRoutingModule,
         LayoutModule
     ]
 })
-export class UmModule {
+export class RefModule {
 }

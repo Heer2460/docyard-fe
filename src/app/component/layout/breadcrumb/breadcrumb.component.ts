@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {RoutesDTO} from "../../../model/routes.dto";
+import {AppBreadcrumbConstants} from "../../../util/app.breadcrumb.constants";
 
 @Component({
     selector: 'breadcrumb-component',
@@ -16,17 +16,15 @@ export class BreadcrumbComponent implements OnInit {
     currentRouteUrl: string = '';
     titleAndDescOnly: boolean = false;
     isGridDisplay: boolean = false;
+    appBreadcrumbs: any = AppBreadcrumbConstants;
     
-    routes: RoutesDTO[] = [];
     @Input() showDisplayButtons: boolean = false;
     
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
             if (route instanceof NavigationEnd) {
-                this.routes = appService.getRoutes();
                 this.currentRouteUrl = this.router.url;
-                this.getCurrentBreadcrumb(null, this.routes);
-                this.getPageTitle();
+                this.setPageTitleAndBreadcrumb();
             }
         });
         
@@ -35,78 +33,51 @@ export class BreadcrumbComponent implements OnInit {
     ngOnInit(): void {
     }
     
-    getCurrentBreadcrumb(parent: any = null, routes: RoutesDTO[]) {
-        return routes.filter((route: any) => {
-            if (route.route == '/home') {
-                this.breadcrumbs.push(route);
-                return route;
-            } else if (route.route == this.currentRouteUrl) {
-                if(parent) {
-                    parent.expended = true;
-                    this.breadcrumbs.push(parent);
+    setPageTitleAndBreadcrumb() {
+        switch (this.currentRouteUrl) {
+            case '/home':
+                this.title = this.appBreadcrumbs.home.title;
+                this.description = 'Hello User, Welcome back!';
+                this.titleAndDescOnly = true;
+                break;
+            case '/doc-lib':
+                this.title = this.appBreadcrumbs.docLib.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.docLib.breadCrumb];
+                break;
+            case '/setting':
+                this.title = this.appBreadcrumbs.setting.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.setting.breadCrumb];
+                break;
+            case '/setting/um':
+                this.title = this.appBreadcrumbs.um.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.um.breadCrumb];
+                break;
+            case '/setting/um/user':
+                this.title = this.appBreadcrumbs.user.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.user.breadCrumb];
+                break;
+            case '/setting/um/user/add':
+                this.title = this.appBreadcrumbs.addUser.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.addUser.breadCrumb];
+                break;
+            case '/setting/ref':
+                this.title = this.appBreadcrumbs.ref.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.ref.breadCrumb];
+                break;
+            case '/setting/ref/dept':
+                this.title = this.appBreadcrumbs.dept.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.dept.breadCrumb];
+                break;
+            case '/setting/ref/dept/add':
+                this.title = this.appBreadcrumbs.addDept.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.addDept.breadCrumb];
+                break;
+            default:
+                if (this.currentRouteUrl.indexOf('/setting/ref/dept/edit') > -1) {
+                    this.title = this.appBreadcrumbs.editDept.title;
+                    this.breadcrumbs = [...this.appBreadcrumbs.editDept.breadCrumb];
                 }
-                this.breadcrumbs.push(route);
-                route.active = true;
-                return route;
-            } else if (route?.children?.length > 0) {
-                const routes: any = this.getCurrentBreadcrumb(route, route.children);
-                if (routes) {
-                    return routes;
-                }
-            }
-        });
-    }
-    
-    getPageTitle() {
-        const mainRoute: string[] = this.currentRouteUrl.split('/');
-        if (mainRoute[1] == 'home') {
-            this.title = 'Home';
-            this.description = 'Hello Umar, Welcome back!';
-            this.titleAndDescOnly = true;
-        } else if (mainRoute[1] == 'doc-lib') {
-            this.title = 'Document Library';
-        } else if (mainRoute[1] == 'setting') {
-            if(mainRoute.length > 2) {
-                this.breadcrumbs.splice(1, 0, {
-                    route: '/setting',
-                    active: false,
-                    label: 'Setting'
-                })
-            }
-            
-            if (mainRoute[2] == 'user') {
-                this.title = 'User';
-    
-                if (mainRoute[3] == 'add') {
-                    this.title = 'Add User';
-                    this.breadcrumbs = [
-                        ...this.breadcrumbs,
-                        {
-                            label: 'User Management',
-                            route: '/setting/um',
-                            active: false
-                        },
-                        {
-                            label: 'User',
-                            route: '/setting/user',
-                            active: false
-                        },
-                        {
-                            label: 'Add',
-                            route: '/setting/user/add',
-                            active: true
-                        }
-                    ]
-                }
-    
-            } else {
-                this.title = 'Setting';
-                this.breadcrumbs.splice(1, 0, {
-                    route: '/setting',
-                    active: true,
-                    label: 'Setting'
-                })
-            }
+                break;
         }
         
     }

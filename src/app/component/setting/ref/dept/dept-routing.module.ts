@@ -1,27 +1,27 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SettingComponent} from "./setting.component";
+import {DeptComponent} from "./dept.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: SettingComponent
+        component: DeptComponent
     },
     {
-        path: 'um',
+        path: 'add',
         children: [
             {
                 path: '',
-                loadChildren: () => import('./um/um.module').then(m => m.UmModule)
+                loadChildren: () => import('./add-dept/add-dept.module').then(m => m.AddDeptModule)
             }
         ]
     },
     {
-        path: 'ref',
+        path: 'edit',
         children: [
             {
                 path: '',
-                loadChildren: () => import('./ref/ref.module').then(m => m.RefModule)
+                loadChildren: () => import('./edit-dept/edit-dept.module').then(m => m.EditDeptModule)
             }
         ]
     }
@@ -31,5 +31,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class SettingRoutingModule {
+export class DeptRoutingModule {
 }

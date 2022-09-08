@@ -22,7 +22,7 @@ export class AppSettingComponent implements OnInit {
             {
                 label: 'Settings',
                 icon: 'icon-cog',
-                command: () => this.router.navigate(['setting/user'])
+                command: () => this.router.navigate(['setting/um/user'])
             },
             {separator:true},
             {

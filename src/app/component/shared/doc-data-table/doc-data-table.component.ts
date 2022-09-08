@@ -4,10 +4,10 @@ import {AppService} from "../../../service/app.service";
 
 @Component({
     selector: 'data-table-component',
-    templateUrl: './data-table.component.html',
-    styleUrls: ['./data-table.component.less']
+    templateUrl: './doc-data-table.component.html',
+    styleUrls: ['./doc-data-table.component.less']
 })
-export class DataTableComponent implements OnInit {
+export class DocDataTableComponent implements OnInit {
     
     @Input() dataRows: any[] = [];
     @Input() actionItems: MenuItem[] = [];

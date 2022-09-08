@@ -105,6 +105,19 @@ fieldset {
 			box-shadow: none;
 		}
 		
+		&[disabled] {
+			background-color: transparent;
+			border-color: fade(@color-blue-01, 20%);
+			color: fade(@color-blue-01, 50%);
+			padding: 10px;
+			line-height: 40px;
+			cursor: no-drop;
+		}
+		
+		&[disabled] ~ label {
+			color: fade(@color-blue-01, 50%) !important;
+		}
+		
 	}
 	
 	> .form-control,
@@ -146,7 +159,8 @@ fieldset {
 	> .form-control-plaintext:focus,
 	> .form-control-plaintext:not(:placeholder-shown),
 	> .form-control:focus,
-	> .form-control:not(:placeholder-shown) {
+	> .form-control:not(:placeholder-shown)
+	> .form-control:not([disabled]) {
 		background-color: transparent;
 		border-color: @color-blue-01;
 		padding: 10px;
@@ -779,12 +793,82 @@ p-menu.user-profile-menu-pane {
 				font-weight: 700;
 				background: transparent;
 				
-				&:first-child {
-					width: 48px;
+				&:last-child {
+					width: 100px;
 				}
 				
+			}
+			
+		}
+		
+	}
+	
+	.p-datatable-tbody {
+		
+		> tr {
+			border-bottom: 1px dashed @color-blue-05;
+			background: transparent;
+			.mixin-transition();
+			
+			&:focus {
+				box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
+				outline: none;
+			}
+			
+			&.p-highlight,
+			&:hover {
+				background-color: @color-green-02;
+			}
+			
+			&.p-highlight td,
+			&:hover td {
+				color: @color-blue-01;
+			}
+			
+			> td {
+				padding: 10px 16px;
+				border: none;
+				
 				&:last-child {
-					width: 60px
+					text-align: center;
+				}
+				
+				a {
+					
+					&.author {
+						color: @color-green-01;
+						text-decoration: none;
+						
+						&:hover {
+							color: @color-blue-03;
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	&.doc-data-table {
+		
+		.p-datatable-thead {
+			
+			> tr {
+				
+				> th {
+					
+					&:first-child {
+						width: 48px;
+					}
+					
+					&:last-child {
+						width: 60px
+					}
+					
 				}
 				
 			}
@@ -822,52 +906,6 @@ p-menu.user-profile-menu-pane {
 		
 		&:focus {
 			box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
-		}
-		
-	}
-	
-	.p-datatable-tbody {
-		
-		> tr {
-			border-bottom: 1px dashed @color-blue-05;
-			background: transparent;
-			.mixin-transition();
-			
-			&:focus {
-				box-shadow: inset 0 0 0 0.15rem fade(@color-green-01, 50%);
-				outline: none;
-			}
-			
-			&.p-highlight,
-			&:hover {
-				background-color: @color-green-02;
-			}
-			
-			&.p-highlight td,
-			&:hover td {
-				color: @color-blue-01;
-			}
-			
-			> td {
-				padding: 10px 16px;
-				border: none;
-				
-				a {
-					
-					&.author {
-						color: @color-green-01;
-						text-decoration: none;
-						
-						&:hover {
-							color: @color-blue-03;
-						}
-						
-					}
-					
-				}
-				
-			}
-			
 		}
 		
 	}

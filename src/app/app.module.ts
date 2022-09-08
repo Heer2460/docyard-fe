@@ -19,8 +19,10 @@ import {
 } from "ngx-ui-loader";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-    fgsSize: 0,
-    overlayColor: 'transparent',
+    fgsSize: 100,
+    fgsColor: '#67A352',
+    fgsType: "ball-scale-multiple",
+    overlayColor: 'rgba(80, 127, 148, 30%)',
     pbColor: '#ee0f0f',
     pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
     pbThickness: 5, // progress bar thickness

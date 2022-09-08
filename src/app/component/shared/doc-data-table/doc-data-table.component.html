@@ -10,7 +10,7 @@
     </div>
 </ng-container>
 <ng-container *ngIf="!isGridDisplay">
-    <p-table [value]="dataRows" selectionMode="multiple" (onRowSelect)="onRowSelected($event)" (onRowUnselect)="onRowUnSelected($event)">
+    <p-table styleClass="doc-data-table" [value]="dataRows" selectionMode="multiple" (onRowSelect)="onRowSelected($event)" (onRowUnselect)="onRowUnSelected($event)">
         <ng-template pTemplate="header">
             <tr>
                 <th>

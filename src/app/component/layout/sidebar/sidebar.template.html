@@ -3,7 +3,7 @@
     <ul>
         <ng-container *ngFor="let route of routes">
             <ng-container *ngIf="!route.children">
-                <li [ngClass]="route.route === currentRoute ? 'active' : ''">
+                <li [ngClass]="route.active ? 'active' : ''">
                     <a role="button" [routerLink]="route.route">
                         <span class="icon-holder">
                             <i [attr.class]=" 'default ' + route.icon"></i>

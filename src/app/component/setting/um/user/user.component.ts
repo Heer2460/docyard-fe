@@ -9,11 +9,29 @@ import {MenuItem} from "primeng/api";
 export class UserComponent implements OnInit {
     
     searchPopupToggle: boolean = false;
-    dataRows: any[] = [];
+    dataRows: any[] = [
+        {
+            name: 'Umar farooq',
+            username: 'umar',
+            address: 'street #01, johar town'
+        }
+    ];
     actionItems: MenuItem[] = [
         {
             label: 'View',
-            icon: 'icon-view',
+            icon: 'icon-eye',
+            command: () => {
+            }
+        },
+        {
+            label: 'Edit',
+            icon: 'icon-edit',
+            command: () => {
+            }
+        },
+        {
+            label: 'Delete',
+            icon: 'icon-trash',
             command: () => {
             }
         }

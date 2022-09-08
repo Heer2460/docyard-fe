@@ -5,7 +5,7 @@ import {DocLibComponent} from "./doc-lib.component";
 import {BreadcrumbModule} from "../layout/breadcrumb/breadcrumb.module";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
-import {DataTableModule} from "../shared/data-table/data-table.module";
+import {DocDataTableModule} from "../shared/doc-data-table/doc-data-table.module";
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 
 @NgModule({
@@ -18,7 +18,7 @@ import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
         BreadcrumbModule,
         TieredMenuModule,
         LayoutModule,
-        DataTableModule,
+        DocDataTableModule,
         DocInfoPaneModule
     ]
 })
