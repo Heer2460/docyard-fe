@@ -17,13 +17,13 @@ body {
 
 form {
 	small {
-		color: @color-error;
+		color: @color-red-01;
 		font-size: 10px;
 	}
 	
 	span {
 		&.required {
-			color: @color-error;
+			color: @color-red-01;
 			margin-left: 2px;
 		}
 	}
@@ -34,10 +34,11 @@ form {
 	&.ng-touched {
 		
 		&.ng-invalid {
-			border-color: @color-error;
+			border-color: @color-red-01;
 			
 			~ .input-group-text {
-				border-color: @color-error;
+				border-color: @color-red-01;
+				color: @color-red-01;
 			}
 			
 		}
@@ -50,41 +51,28 @@ form {
         Form controls
 ====================================================*/
 fieldset {
-	border: 1px dashed @color-blue-05;
-	border-top: none;
-	padding: 15px;
 	position: relative;
 	
 	> header {
-		position: absolute;
-		top: -3px;
-		left: 0;
-		transform: translate(0, -50%);
 		font-weight: 700;
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
 		width: 100%;
 		white-space: nowrap;
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-start;
+		flex-direction: column;
+		margin-bottom: 20px;
+		font-size: 18px;
+		color: @color-blue-01;
 		
-		&:before,
 		&:after {
+			content: "";
 			width: 100%;
-			position: relative;
-			top: 2px;
-		}
-		
-		&:before {
-			content: "";
-			border-top: 1px dashed @color-blue-05;
-			width: 10px;
-			margin-right: 5px;
-		}
-		
-		&:after {
-			content: "";
-			border-top: 1px dashed @color-blue-05;
-			margin-left: 5px;
+			border-top: 1px dashed #1E4B6C;
+			border-image-source: url(./assets/images/svg/border-image-blue-04.svg);
+			border-image-slice: 2;
+			border-image-repeat: round;
+			opacity: 0.5;
 		}
 		
 	}
@@ -96,6 +84,8 @@ fieldset {
 	height: 40px;
 	padding: 10px;
 	border-radius: 0;
+	line-height: 40px;
+	background-color: @color-green-05;
 	
 	&:focus {
 		border-color: @color-blue-01;
@@ -129,7 +119,7 @@ fieldset {
 	
 	> label {
 		padding: 10px;
-		line-height: 14px;
+		line-height: 18px;
 		color: @color-blue-06;
 		width: initial;
 		height: initial;
@@ -440,6 +430,10 @@ hr {
 	margin-top: 30px;
 }
 
+.mt-20px {
+	margin-top: 20px;
+}
+
 /*--------------- End Utilities --------------------*/
 
 /*====================================================
@@ -704,6 +698,10 @@ p-menu.user-profile-menu-pane {
 	min-width: 450px;
 	border-radius: 0;
 	
+	&.p-dialog-lg {
+		max-width: 50vw;
+	}
+	
 	.p-dialog-header {
 		border-top-right-radius: 0;
 		border-top-left-radius: 0;
@@ -711,8 +709,21 @@ p-menu.user-profile-menu-pane {
 		padding: 10px 15px;
 		font-weight: 700;
 		font-size: 18px;
+		line-height: 18px;
 		color: @color-blue-01;
 		border-bottom: 1px solid @color-blue-05;
+		justify-content: space-between;
+		align-items: center;
+		
+		.header-title {
+			display: flex;
+			align-items: center;
+			
+			i {
+				margin-right: 5px;
+			}
+			
+		}
 		
 		.p-dialog-header-icon {
 			color: @color-blue-01;
@@ -765,7 +776,7 @@ p-menu.user-profile-menu-pane {
 				text-transform: uppercase;
 				font-size: 14px;
 				letter-spacing: 0.4px;
-				font-weight: 400;
+				font-weight: 700;
 				background: transparent;
 				
 				&:first-child {
@@ -1055,6 +1066,10 @@ doc-info-pane-component {
 //This ratio is equal to 1440px
 @media (-webkit-device-pixel-ratio: 1.25) {
 	
+	body {
+		font-size: 14px;
+	}
+	
 	h2 {
 		font-size: 16px;
 		line-height: 16px;
@@ -1094,6 +1109,7 @@ doc-info-pane-component {
 		> .form-select {
 			
 			~ label {
+				.mixin-transform(scale(0.85) translateY(-11px) translateX(5px));
 				padding: 0 5px;
 				line-height: 12px;
 				opacity: 1;
@@ -1240,6 +1256,15 @@ doc-info-pane-component {
 				height: 12px;
 			}
 			
+		}
+		
+	}
+	
+	fieldset {
+		
+		> header {
+			font-size: 14px;
+			margin-bottom: 15px;
 		}
 		
 	}
