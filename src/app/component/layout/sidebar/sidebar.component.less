@@ -4,7 +4,7 @@
 :host {
 	display: block;
 	min-height: 100vh;
-	background-color: @color-blue-01;
+	background-color:hsl(var(--color-blue-01));
 	width: 300px;
 }
 
@@ -19,7 +19,7 @@
 	ul {
 		margin: 0;
 		padding: 15px 30px;
-		border-bottom: 1px dashed @color-blue-04;
+		border-bottom: 1px dashed hsl(var(--color-blue-04));
 		width: 100%;
 		
 		li {
@@ -36,7 +36,7 @@
 			&:hover {
 				
 				> a {
-					background-color: @color-blue-02;
+					background-color: hsl(var(--color-blue-02));
 					
 					span {
 						
@@ -167,7 +167,7 @@
 						&.active {
 							
 							a {
-								background-color: fade(@color-blue-02, 50%);
+								background-color: hsla(var(--color-blue-02), 50%);
 							}
 							
 						}
@@ -175,7 +175,7 @@
 						a {
 							
 							&:hover {
-								background-color: fade(@color-blue-02, 50%);
+								background-color: hsla(var(--color-blue-02), 50%);
 							}
 							
 							span {

@@ -2,20 +2,21 @@
 
 .card {
 	min-height: 260px;
+	border-color: transparent;
 	
 	&.card-green {
-		background-color: @color-green-01;
+		background-color: hsl(var(--color-green-01));
 	}
 	
 	&.card-blue {
-		background-color: @color-blue-01;
+		background-color: hsl(var(--color-blue-01));
 		
 		.card-body {
 			
 			.content-details {
 				
 				.progress {
-					background-color: @color-blue-04;
+					background-color: hsl(var(--color-blue-04));
 				}
 				
 			}
@@ -76,7 +77,7 @@
 			
 			.progress {
 				--bs-progress-height: 8px;
-				--bs-progress-bg: @color-green-07;
+				--bs-progress-bg: hsl(var(--color-green-07));
 				
 				.progress-bar {
 					background-color: @color-white;

@@ -10,7 +10,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: @color-green-02;
+    background-color: hsl(var(--color-green-02));
     position: relative;
     padding: 70px 15px 15px 15px;
 
@@ -25,16 +25,16 @@
     }
 
     &:before {
-        border-top: 1px dashed @color-green-01;
-        border-bottom: 1px dashed @color-green-01;
+        border-top: 1px dashed hsl(var(--color-green-01));
+        border-bottom: 1px dashed hsl(var(--color-green-01));
         border-image-source: url("../../../../../assets/images/svg/border-image-green-01.svg");
         border-image-slice: 30;
         border-image-repeat: repeat;
     }
 
     &:after {
-        border-left: 1px dashed @color-green-01;
-        border-right: 1px dashed @color-green-01;
+        border-left: 1px dashed hsl(var(--color-green-01));
+        border-right: 1px dashed hsl(var(--color-green-01));
         border-image-source: url("../../../../../assets/images/svg/border-image-green-01-horizontal.svg");
         border-image-slice: 15;
         border-image-repeat: repeat;
@@ -53,7 +53,7 @@
     }
 
     .btn {
-        background-color: @color-green-01;
+        background-color: hsl(var(--color-green-01));
         color: @color-white;
         letter-spacing: -0.32px;
         height: 40px;
@@ -65,8 +65,8 @@
         &:focus,
         &:active
         {
-            background-color: @color-green-03;
-            border-color: @color-green-03;
+            background-color: hsl(var(--color-green-03));
+            border-color: hsl(var(--color-green-03));
         }
 
     }

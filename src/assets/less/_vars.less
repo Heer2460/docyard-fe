@@ -1,22 +1,36 @@
 @color-white: #F8FBFB;
 @color-white-02: #EFF6F4;
 
-@color-blue-01: #1E4B6C;
-@color-blue-02: #19405C;
-@color-blue-03: #1694CE;
-@color-blue-04: #507F94;
-@color-blue-05: #D5DFE7;
-@color-blue-06: #94AFC2;
-@color-blue-07: #132F44;
-@color-blue-08: #1174A1;
+@h-of-hsl-primary: 205;
+@s-of-hsl-primary: 57%;
+@l-of-hsl-primary: 27%;
 
-@color-green-01: #67A352;
-@color-green-02: #E9F1DA;
-@color-green-03: #5C9249;
-@color-green-04: #97C497;
-@color-green-05: #F2F8F3;
-@color-green-06: #568844;
-@color-green-07: #548443;
+@color-blue-01: hsl(@h-of-hsl-primary, @s-of-hsl-primary, @l-of-hsl-primary);
+@color-blue-02: hsl(@h-of-hsl-primary, @s-of-hsl-primary, calc(@l-of-hsl-primary - 4%));
+
+@color-blue-06: hsl(@h-of-hsl-primary, calc(@s-of-hsl-primary - 30%), calc(@l-of-hsl-primary - 40%));
+
+@color-blue-07: hsl(calc(@h-of-hsl-primary + 1), calc(@s-of-hsl-primary - 1%), calc(@l-of-hsl-primary - 10%));
+
+@color-blue-05: hsl(calc(@h-of-hsl-primary + 2), calc(@s-of-hsl-primary - 30%), calc(@l-of-hsl-primary + 60%));
+
+@color-blue-08: hsl(calc(@h-of-hsl-primary - 6), calc(@s-of-hsl-primary + 24%), calc(@l-of-hsl-primary + 8%));
+@color-blue-04: hsl(calc(@h-of-hsl-primary - 6), calc(@s-of-hsl-primary - 27%), calc(@l-of-hsl-primary + 18%));
+@color-blue-03: hsl(calc(@h-of-hsl-primary - 6), calc(@s-of-hsl-primary + 24%), calc(@l-of-hsl-primary + 18%));
+
+@h-of-hsl-secondary: 104;
+@s-of-hsl-secondary: 33%;
+@l-of-hsl-secondary: 48%;
+
+@color-green-01: hsl(@h-of-hsl-secondary, @s-of-hsl-secondary, @l-of-hsl-secondary);
+@color-green-03: hsl(@h-of-hsl-secondary, @s-of-hsl-secondary, calc(@l-of-hsl-secondary - 5%));
+@color-green-06: hsl(@h-of-hsl-secondary, @s-of-hsl-secondary, calc(@l-of-hsl-secondary - 8%));
+@color-green-07: hsl(@h-of-hsl-secondary, @s-of-hsl-secondary, calc(@l-of-hsl-secondary - 9%));
+
+@color-green-02: hsl(calc(@h-of-hsl-secondary - 23), calc(@s-of-hsl-secondary + 12%), calc(@l-of-hsl-secondary + 42%));
+
+@color-green-04: hsl(calc(@h-of-hsl-secondary + 16), calc(@s-of-hsl-secondary - 5%), calc(@l-of-hsl-secondary + 20%));
+@color-green-05: hsl(calc(@h-of-hsl-secondary + 26), calc(@s-of-hsl-secondary - 3%), calc(@l-of-hsl-secondary + 48%));
 
 @color-grey-01: #4D4D4D;
 @color-grey-02: #A5ACB1;

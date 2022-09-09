@@ -8,7 +8,7 @@
 
 .input-group {
 	width: 100%;
-	background-color: @color-green-03;
+	background-color: hsl(var(--color-green-03));
 	
 	.input-group-text {
 		background-color: transparent;
@@ -16,7 +16,7 @@
 		border-radius: 0;
 		
 		.btn {
-			--bs-btn-color: @color-green-04;
+			--bs-btn-color: hsl(var(--color-green-04));
 			
 			--bs-btn-border-color: transparent;
 			
@@ -26,7 +26,7 @@
 			
 			--bs-btn-focus-shadow-rgb: none;
 			
-			--bs-btn-active-color: @color-green-04;
+			--bs-btn-active-color: hsl(var(--color-green-04));
 			--bs-btn-active-bg: transparent;
 			--bs-btn-active-border-color: transparent;
 			--bs-btn-active-shadow: none;
@@ -45,20 +45,20 @@
 		
 		&:focus {
 			border: none;
-			box-shadow: 0 0 0 0.25rem @color-green-04;
+			box-shadow: 0 0 0 0.25rem hsl(var(--color-green-04));
 		}
 		
 		&::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-			color: @color-green-04;
+			color: hsl(var(--color-green-04));
 			opacity: 1; /* Firefox */
 		}
 		
 		&:-ms-input-placeholder { /* Internet Explorer 10-11 */
-			color: @color-green-04;
+			color: hsl(var(--color-green-04));
 		}
 		
 		&::-ms-input-placeholder { /* Microsoft Edge */
-			color: @color-green-04;
+			color: hsl(var(--color-green-04));
 		}
 		
 	}

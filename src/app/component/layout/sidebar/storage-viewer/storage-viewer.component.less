@@ -7,7 +7,7 @@
     .storage-container-inner {
         position: relative;
         padding: 15px;
-        background-color: @color-blue-02;
+        background-color: hsl(var(--color-blue-02));
 
         &:before,
         &:after {
@@ -20,16 +20,16 @@
         }
 
         &:before {
-            border-top: 1px dashed @color-blue-04;
-            border-bottom: 1px dashed @color-blue-04;
+            border-top: 1px dashed hsl(var(--color-blue-04));
+            border-bottom: 1px dashed hsl(var(--color-blue-04));
             border-image-source: url("../../../../../assets/images/svg/border-image-blue-04.svg");
             border-image-slice: 30;
             border-image-repeat: repeat;
         }
 
         &:after {
-            border-left: 1px dashed @color-blue-04;
-            border-right: 1px dashed @color-blue-04;
+            border-left: 1px dashed hsl(var(--color-blue-04));
+            border-right: 1px dashed hsl(var(--color-blue-04));
             border-image-source: url("../../../../../assets/images/svg/border-image-blue-04-horizontal.svg");
             border-image-slice: 15;
             border-image-repeat: repeat;
@@ -62,13 +62,13 @@
 
         .progress {
             --bs-progress-height: 4px;
-            --bs-progress-bg: @color-blue-04;
+            --bs-progress-bg: hsl(var(--color-blue-04));
             margin: 5px 0;
 
             .progress-bar {
 
                 &.bg-light {
-                    background-color: @color-blue-05;
+                    background-color: hsl(var(--color-blue-05));
                 }
 
             }
@@ -76,7 +76,7 @@
         }
 
         .btn {
-            background-color: @color-blue-03;
+            background-color: hsl(var(--color-blue-03));
             position: relative;
             z-index: 99;
             color: @color-white;
@@ -88,8 +88,8 @@
             &:focus,
             &:active
             {
-                background-color: fade(@color-blue-03, 70%);
-                border-color: fade(@color-blue-03, 70%);
+                background-color: hsla(var(--color-blue-03), 70%);
+                border-color: hsla(var(--color-blue-03), 70%);
             }
 
         }

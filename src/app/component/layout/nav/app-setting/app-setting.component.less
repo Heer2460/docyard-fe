@@ -1,7 +1,7 @@
 @import "../../../../../assets/less/_vars";
 
 :host {
-    background-color: @color-green-03;
+    background-color: hsl(var(--color-green-03));
     min-width: 450px;
     height: 100%;
     display: flex;
@@ -36,21 +36,21 @@ img {
         p {
             margin: 0;
             font-size: 14px;
-            color: @color-green-04;
+            color: hsl(var(--color-green-04));
         }
 
     }
 
     .btn-user-settings {
-        background-color: @color-green-06;
+        background-color: hsl(var(--color-green-06));
         color: @color-white;
         font-size: 20px;
 
         &:active,
         &:focus,
         &:hover {
-            background-color: @color-green-01;
-            border-color: @color-green-04;
+            background-color: hsl(var(--color-green-01));
+            border-color: hsl(var(--color-green-04));
         }
 
     }

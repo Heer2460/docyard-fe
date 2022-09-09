@@ -44,7 +44,7 @@
 			&.active {
 				
 				a {
-					color: @color-blue-03;
+					color: hsl(var(--color-blue-03));
 				}
 				
 			}
@@ -53,7 +53,7 @@
 				text-transform: capitalize;
 				font-size: 16px;
 				line-height: 16px;
-				color: @color-blue-01;
+				color:hsl(var(--color-blue-01));
 				text-decoration: none;
 				font-weight: 400;
 			}
@@ -70,16 +70,16 @@
 			padding: 0;
 			font-size: 12px;
 			line-height: 12px;
-			background-color: @color-green-02;
-			border-color: @color-blue-05;
-			color: @color-blue-01;
+			background-color: hsl(var(--color-green-02));
+			border-color: hsl(var(--color-blue-05));
+			color:hsl(var(--color-blue-01));
 			
 			&.active,
 			&:focus,
 			&:active,
 			&:hover {
-				background-color: @color-blue-01;
-				border-color: @color-blue-01;
+				background-color:hsl(var(--color-blue-01));
+				border-color:hsl(var(--color-blue-01));
 				color: @color-white;
 			}
 			
@@ -110,7 +110,7 @@ p {
 .title {
 	text-transform: uppercase;
 	font-size: 18px;
-	color: @color-blue-01;
+	color:hsl(var(--color-blue-01));
 	font-weight: 700;
 	line-height: 18px;
 	margin: 0;

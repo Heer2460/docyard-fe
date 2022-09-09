@@ -24,17 +24,19 @@ export class AppSettingComponent implements OnInit {
                 icon: 'icon-cog',
                 command: () => this.router.navigate(['setting/um/user'])
             },
-            {separator:true},
+            {separator: true},
             {
                 label: 'Profile',
                 icon: 'icon-user',
-                command: () => {}
+                command: () => {
+                }
             },
             {
                 label: 'Logout',
                 icon: 'icon-logout',
-                command: () => {}
+                command: () => this.logoutUser()
             }
+        
         ];
         this.addUserProfileMenuItems();
         this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
@@ -50,5 +52,9 @@ export class AppSettingComponent implements OnInit {
     addUserProfileMenuItems() {
         this.userProfileMenuItemsEvent.emit(this.items);
     }
-
+    
+    logoutUser() {
+        this.router.navigate(['/login']);
+    }
+    
 }

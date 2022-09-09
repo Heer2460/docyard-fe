@@ -10,7 +10,7 @@
     </div>
 </ng-container>
 <ng-container *ngIf="!isGridDisplay">
-    <p-table styleClass="doc-data-table" [value]="dataRows" selectionMode="multiple" (onRowSelect)="onRowSelected($event)" (onRowUnselect)="onRowUnSelected($event)">
+    <p-table styleClass="doc-data-table" [value]="dataRows">
         <ng-template pTemplate="header">
             <tr>
                 <th>
@@ -27,7 +27,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-row>
-            <tr [pSelectableRow]="row" [ngClass]="row.selected ? 'p-highlight' : ''">
+            <tr>
                 <td>
                     <div class="form-check form-check-only">
                         <input class="form-check-input" type="checkbox" [checked]="row.selected" [attr.id]="'checkbox-' + row.id">
