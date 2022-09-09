@@ -72,6 +72,10 @@ export class BreadcrumbComponent implements OnInit {
                 this.title = this.appBreadcrumbs.addDept.title;
                 this.breadcrumbs = [...this.appBreadcrumbs.addDept.breadCrumb];
                 break;
+            case '/setting/theme':
+                this.title = this.appBreadcrumbs.theme.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.theme.breadCrumb];
+                break;
             default:
                 if (this.currentRouteUrl.indexOf('/setting/ref/dept/edit') > -1) {
                     this.title = this.appBreadcrumbs.editDept.title;

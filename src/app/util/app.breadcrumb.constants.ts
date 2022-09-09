@@ -195,5 +195,21 @@ export class AppBreadcrumbConstants {
         ]
     };
     
+    public static theme: any = {
+        title: 'Theme',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'Theme',
+                route: '/setting/theme',
+                active: true,
+            }
+        ]
+    };
+    
     
 }

@@ -112,7 +112,14 @@ export class AppRouteConstants {
                     active: false
                 }
             ]
-        }
+        },
+        /*{
+            label: 'Theme',
+            route: '/setting/theme',
+            icon: 'icon-link',
+            expended: false,
+            active: false,
+        }*/
     ];
 }
 

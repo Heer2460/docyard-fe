@@ -24,7 +24,16 @@ const routes: Routes = [
                 loadChildren: () => import('./ref/ref.module').then(m => m.RefModule)
             }
         ]
-    }
+    },
+    /*{
+        path: 'theme',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./theme/theme.module').then(m => m.ThemeModule)
+            }
+        ]
+    }*/
 ];
 
 @NgModule({

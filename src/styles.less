@@ -19,8 +19,8 @@
 	--color-blue-04: calc(var(--h-of-hsl-primary) - 6), calc(var(--s-of-hsl-primary) - 27%), calc(var(--l-of-hsl-primary) + 18%);
 	--color-blue-03: calc(var(--h-of-hsl-primary) - 6), calc(var(--s-of-hsl-primary) + 24%), calc(var(--l-of-hsl-primary) + 18%);
 	
-	--h-of-hsl-secondary: 104;
-	--s-of-hsl-secondary: 33%;
+	--h-of-hsl-secondary: 187;
+	--s-of-hsl-secondary: 53%;
 	--l-of-hsl-secondary: 48%;
 	
 	--color-green-01: var(--h-of-hsl-secondary), var(--s-of-hsl-secondary), var(--l-of-hsl-secondary);
@@ -30,7 +30,7 @@
 	
 	--color-green-02: calc(var(--h-of-hsl-secondary) - 23), calc(var(--s-of-hsl-secondary) + 12%), calc(var(--l-of-hsl-secondary) + 42%);
 	
-	--color-green-04: calc(var(--h-of-hsl-secondary) + 16), calc(var(--s-of-hsl-secondary) - 5%), calc(var(--l-of-hsl-secondary) + 20%);
+	--color-green-04: var(--h-of-hsl-secondary), calc(var(--s-of-hsl-secondary) - 5%), calc(var(--l-of-hsl-secondary) + 20%);
 	--color-green-05: calc(var(--h-of-hsl-secondary) + 26), calc(var(--s-of-hsl-secondary) - 3%), calc(var(--l-of-hsl-secondary) + 48%);
 }
 
@@ -602,7 +602,7 @@ hr {
 	}
 	
 	&:hover {
-		background-color: @color-green-02;
+		background-color: hsl(var(--color-green-02));
 		
 		.file-details {
 			
@@ -844,7 +844,7 @@ p-menu.user-profile-menu-pane {
 			
 			&.p-highlight,
 			&:hover {
-				background-color: @color-green-02;
+				background-color: hsl(var(--color-green-02));
 			}
 			
 			&.p-highlight td,

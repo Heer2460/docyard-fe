@@ -1,0 +1,14 @@
+<layout-component>
+    <ng-container pageBody>
+        <div class="row">
+            <div class="col-6">
+                <label for="primaryColorRange" class="form-label">Update primary color</label>
+                <input type="range" class="form-range" min="0" max="360" id="primaryColorRange" step="1" (input)="updatePrimaryHueRangeAction($event)">
+            </div>
+            <div class="col-6">
+                <label for="secondaryColorRange" class="form-label">Update secondary color</label>
+                <input type="range" class="form-range" min="0" max="360" id="secondaryColorRange" step="1" (input)="updateSecondaryHueRangeAction($event)">
+            </div>
+        </div>
+    </ng-container>
+</layout-component>
