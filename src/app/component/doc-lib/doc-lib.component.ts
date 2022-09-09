@@ -119,13 +119,13 @@ export class DocLibComponent implements OnInit {
         this.uploadMenuItems = [
             {
                 label: 'File',
-                icon: 'icon-file',
+                icon: 'icon-file-plus',
                 command: () => {
                 }
             },
             {
                 label: 'Folder',
-                icon: 'icon-folder',
+                icon: 'icon-folder-plus',
                 command: () => {
                 }
             }

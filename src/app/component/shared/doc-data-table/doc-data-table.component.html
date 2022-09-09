@@ -38,8 +38,8 @@
                     <div class="file-types">
                         <ng-container [ngSwitch]="row.fileType">
                             <ng-container *ngSwitchCase="'directory'">
-                                <img *ngIf="row.shared" src="./assets/images/svg/directory-shared.svg" alt="Shared Directory">
-                                <img *ngIf="!row.shared" src="./assets/images/svg/directory-blue-01.svg" alt="Directory">
+                                <i *ngIf="row.shared" class="icon-folder-shared-filled"></i>
+                                <i *ngIf="!row.shared" class="icon-folder-filled"></i>
                             </ng-container>
                             <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="Directory">
                             <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="Directory">
