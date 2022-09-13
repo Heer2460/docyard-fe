@@ -83,6 +83,7 @@ form {
 			~ .input-group-text {
 				border-color: @color-red-01;
 				color: @color-red-01;
+				background-color: transparent;
 			}
 			
 		}
@@ -141,8 +142,9 @@ fieldset {
 
 .form-floating {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
+	flex-direction: column;
 	
 	> label {
 		padding: 10px;
@@ -196,6 +198,24 @@ fieldset {
 			
 		}
 		
+	}
+	
+	.input-group-text {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 40px;
+		width: 40px;
+		border-radius: 0;
+		border-left: none;
+		background-color: hsl(var(--color-green-05));
+		border-color: hsl(var(--color-blue-05));
+		color: hsl(var(--color-blue-06));
+		font-size: 22px;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	
 }
@@ -516,6 +536,14 @@ hr {
 	margin-top: 20px;
 }
 
+.ngx-foreground-spinner {
+	color: hsl(var(--color-green-01)) !important;
+}
+
+.error-msg {
+
+}
+
 /*--------------- End Utilities --------------------*/
 
 /*====================================================
@@ -792,7 +820,14 @@ p-menu.user-profile-menu-pane {
 	border-radius: 0;
 	
 	&.p-dialog-lg {
+		max-width: 70vw;
+		min-width: 70vw;
+	}
+	
+	&.p-dialog-md {
 		max-width: 50vw;
+		min-width: 50vw;
+		min-height: 300px;
 	}
 	
 	.p-dialog-header {
@@ -1462,6 +1497,8 @@ doc-info-pane-component {
 		
 		> .input-group-text {
 			font-size: 14px;
+			width: 30px;
+			height: 30px;
 		}
 		
 	}
@@ -1658,7 +1695,7 @@ doc-info-pane-component {
 		}
 		
 	}
-
+	
 	.p-dropdown-panel {
 		
 		.p-dropdown-items {
@@ -1746,6 +1783,10 @@ doc-info-pane-component {
 			
 		}
 		
+	}
+	
+	.error-msg {
+		font-size: 8px
 	}
 	
 }
