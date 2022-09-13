@@ -1,24 +1,103 @@
 @import "../../../assets/less/_vars";
 
 .card {
-	min-height: 260px;
 	border-color: transparent;
 	
-	&.card-green {
-		background-color: hsl(var(--color-green-01));
+	.card-body {
+		min-height: 120px;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
+		padding: 15px;
+		
+		> div {
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+			color: @color-white;
+			
+			h6 {
+				font-size: 22px;
+				font-weight: 700;
+				margin: 0;
+			}
+			
+			i {
+				width: 60px;
+				height: 60px;
+				font-size: 60px;
+				line-height: 60px;
+				opacity: 50%;
+			}
+			
+		}
+		
+		p {
+			font-size: 16px;
+			color: @color-white;
+			
+			span {
+				
+				&:first-child {
+					
+					&:after {
+						content: "/";
+						margin: 0 5px;
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.card-footer {
+		border-radius: 0;
+		padding: 10px 15px;
+		
+		.progress {
+			--bs-progress-height: 8px;
+			border-radius: 10px;
+			
+			.progress-bar {
+				border-radius: 10px;
+				background-color: @color-white;
+			}
+			
+		}
+		
+	}
+	
+	&.card-aqua {
+		
+		.card-body {
+			background: linear-gradient(180deg, #3AABBB 0%, #2C8490 100%);
+		}
+		
+		.card-footer {
+			background: #13545E;
+			
+			.progress {
+				background: #349AA8;
+			}
+			
+		}
+		
 	}
 	
 	&.card-blue {
-		background-color: hsl(var(--color-blue-01));
 		
 		.card-body {
+			background: linear-gradient(180deg, #3882B7 0%, #2C6790 94.68%);
+		}
+		
+		.card-footer {
+			background: #133E5E;
 			
-			.content-details {
-				
-				.progress {
-					background-color: hsl(var(--color-blue-04));
-				}
-				
+			.progress {
+				background: #3477A8;
 			}
 			
 		}
@@ -26,16 +105,16 @@
 	}
 	
 	&.card-yellow {
-		background-color: @color-yellow-01;
 		
 		.card-body {
+			background: linear-gradient(360deg, #90862C 0%, #B7AB38 100%);
+		}
+		
+		.card-footer {
+			background: #5E5613;
 			
-			.content-details {
-				
-				.progress {
-					background-color: @color-yellow-02;
-				}
-				
+			.progress {
+				background: #A89C34;
 			}
 			
 		}
@@ -43,70 +122,22 @@
 	}
 	
 	&.card-red {
-		background-color: @color-red-01;
 		
 		.card-body {
+			background: linear-gradient(360deg, #902C2C 0%, #B73838 100%);
+		}
+		
+		.card-footer {
+			background: #5E1313;
 			
-			.content-details {
-				
-				.progress {
-					background-color: @color-red-02;
-				}
-				
+			.progress {
+				background: #A83434;
 			}
 			
 		}
 		
 	}
 	
-	.card-body {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: space-between;
-		
-		i {
-			font-size: 70px;
-			line-height: 70px;
-			color: @color-white;
-		}
-		
-		.content-details {
-			width: 100%;
-			
-			h6 {
-				color: @color-white;
-				font-size: 22px;
-				font-weight: 700;
-				margin: 0 0 10px 0;
-			}
-			
-			.progress {
-				--bs-progress-height: 8px;
-				--bs-progress-bg: hsl(var(--color-green-07));
-				
-				.progress-bar {
-					background-color: @color-white;
-					border-top-right-radius: 10px;
-					border-bottom-right-radius: 10px;
-				}
-				
-			}
-			
-			p {
-				font-size: 16px;
-				text-transform: uppercase;
-				font-weight: 400;
-				color: @color-white;
-				margin: 10px 0 0 0;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-			}
-			
-		}
-		
-	}
 	
 }
 
@@ -118,30 +149,16 @@
 @media (-webkit-device-pixel-ratio: 1.25) {
 	
 	.card {
-		min-height: 200px;
 		
 		.card-body {
+			min-height: 100px;
 			
-			img {
-				max-width: 40px;
+			> div h6 {
+				font-size: 18px;
 			}
 			
-			.content-details {
-				
-				h6 {
-					font-size: 16px;
-					margin: 0 0 8px 0;
-				}
-				
-				.progress {
-					--bs-progress-height: 6px;
-				}
-				
-				p {
-					font-size: 12px;
-					margin: 6px 0 0 0;
-				}
-				
+			p {
+				font-size: 14px;
 			}
 			
 		}
@@ -158,30 +175,16 @@
 @media screen and (max-width: 1440px) {
 	
 	.card {
-		min-height: 200px;
 		
 		.card-body {
+			min-height: 100px;
 			
-			img {
-				max-width: 40px;
+			> div h6 {
+				font-size: 18px;
 			}
 			
-			.content-details {
-				
-				h6 {
-					font-size: 16px;
-					margin: 0 0 8px 0;
-				}
-				
-				.progress {
-					--bs-progress-height: 6px;
-				}
-				
-				p {
-					font-size: 12px;
-					margin: 6px 0 0 0;
-				}
-				
+			p {
+				font-size: 14px;
 			}
 			
 		}
@@ -195,35 +198,11 @@
 	
 }
 
-@media screen and (max-width: 1280px) {
-	
-	.card {
-		min-height: 180px;
-	}
-	
-}
-
 @media screen and (max-width: 1199px) {
 	
 	.col-lg-6:nth-child(1),
 	.col-lg-6:nth-child(2) {
 		margin-bottom: 20px;
-	}
-	
-	.card {
-		min-height: initial;
-		
-		.card-body {
-			flex-direction: row;
-			align-items: center;
-			
-			img {
-				max-width: 50px;
-				margin-right: 15px;
-			}
-			
-		}
-		
 	}
 	
 }

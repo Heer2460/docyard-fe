@@ -12,7 +12,7 @@ import { AppUtility } from "../../../../util/app.utility";
 import { ReferencesStatuses } from "../../../../util/references.statuses";
 
 @Component({
-    selector: 'app-user',
+    selector: 'app-dept',
     templateUrl: './dept.component.html',
     styleUrls: ['./dept.component.less']
 })
