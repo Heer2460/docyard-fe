@@ -8,7 +8,7 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <p-table [value]="departments">
+        <p-table [value]="roles">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="code">Code
@@ -38,7 +38,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td [attr.colspan]="5" class="text-center">
+                    <td [attr.colspan]="4" class="text-center">
                         {{message}}
                     </td>
                 </tr>
@@ -51,17 +51,17 @@
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Search Department</span>
+            <span>Search Role</span>
         </div>
     </ng-template>
-    <form [formGroup]="searchDepartmentForm">
+    <form [formGroup]="searchRoleForm">
         <div class="row">
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
                     <label>Code</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(searchDepartmentForm, 'code', 'code', 'required')">
+                <small *ngIf="appUtility.getFormError(searchRoleForm, 'code', 'code', 'required')">
                     {{ appUtility.makeErrorMessage('Code', 'required') }}
                 </small>
             </div>
@@ -81,32 +81,32 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideSearchPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="searchDepartments()" class="btn btn-sm btn-primary" type="button">Search</button>
+        <button (click)="searchRoles()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-lg">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>View Department</span>
+            <span>View Role</span>
         </div>
     </ng-template>
     <div class="row">
         <div class="col-12">
             <table class="table table-bordered">
                 <tbody>
-                    <tr>
-                        <th>Code</th>
-                        <td>{{selectedDepartment.code}}</td>
-                    </tr>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{selectedDepartment.name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td>{{selectedDepartment.status}}</td>
-                    </tr>
+                <tr>
+                    <th>Code</th>
+                    <td>{{selectedRole.code}}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{selectedRole.name}}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{selectedRole.status}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -119,20 +119,20 @@
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Add Department</span>
+            <span>Add Role</span>
         </div>
     </ng-template>
-    <form [formGroup]="addDepartmentForm">
+    <form [formGroup]="addRoleForm">
         <div class="row">
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
                     <label>Code</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(addDepartmentForm, 'code', 'code', 'required')">
+                <small *ngIf="appUtility.getFormError(addRoleForm, 'code', 'code', 'required')">
                     {{ appUtility.makeErrorMessage('Code', 'required') }}
                 </small>
-                <small *ngIf="appUtility.getFormError(addDepartmentForm, 'code', 'code', 'maxlength')">
+                <small *ngIf="appUtility.getFormError(addRoleForm, 'code', 'code', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
             </div>
@@ -141,10 +141,10 @@
                     <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(addDepartmentForm, 'name', 'name', 'required')">
+                <small *ngIf="appUtility.getFormError(addRoleForm, 'name', 'name', 'required')">
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
                 </small>
-                <small *ngIf="appUtility.getFormError(addDepartmentForm, 'name', 'name', 'maxlength')">
+                <small *ngIf="appUtility.getFormError(addRoleForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                 </small>
             </div>
@@ -152,7 +152,7 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideAddPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="createDepartment()" [disabled]="addDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Add
+        <button (click)="createRole()" [disabled]="addRoleForm.invalid" class="btn btn-sm btn-primary" type="button">Add
         </button>
     </ng-template>
 </p-dialog>
@@ -160,20 +160,20 @@
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Update Department</span>
+            <span>Update Role</span>
         </div>
     </ng-template>
-    <form [formGroup]="updateDepartmentForm">
+    <form [formGroup]="updateRoleForm">
         <div class="row">
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
                     <label>Code</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'code', 'code', 'required')">
+                <small *ngIf="appUtility.getFormError(updateRoleForm, 'code', 'code', 'required')">
                     {{ appUtility.makeErrorMessage('Code', 'required') }}
                 </small>
-                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'code', 'code', 'maxlength')">
+                <small *ngIf="appUtility.getFormError(updateRoleForm, 'code', 'code', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
             </div>
@@ -182,10 +182,10 @@
                     <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'name', 'name', 'required')">
+                <small *ngIf="appUtility.getFormError(updateRoleForm, 'name', 'name', 'required')">
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
                 </small>
-                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'name', 'name', 'maxlength')">
+                <small *ngIf="appUtility.getFormError(updateRoleForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                 </small>
             </div>
@@ -200,7 +200,7 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideUpdatePopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="updateDepartment()" [disabled]="updateDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Update
+        <button (click)="updateRole()" [disabled]="updateRoleForm.invalid" class="btn btn-sm btn-primary" type="button">Update
         </button>
     </ng-template>
 </p-dialog>

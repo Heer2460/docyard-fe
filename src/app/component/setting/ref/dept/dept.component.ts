@@ -67,15 +67,15 @@ export class DeptComponent implements OnInit {
         });
 
         this.addDepartmentForm = this.fb.group({
-            code: [null, Validators.required],
-            name: [null, Validators.required],
+            code: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(50)]],
             status: ['Active'],
         });
 
         this.updateDepartmentForm = this.fb.group({
             id: [null, Validators.required],
-            code: [null, Validators.required],
-            name: [null, Validators.required],
+            code: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(50)]],
             status: [null, Validators.required],
         });
     }
@@ -156,7 +156,7 @@ export class DeptComponent implements OnInit {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'delete-passenger-manifest');
+                    this.appService.handleError(error, 'Delete Department');
                 }
             });
         } else {

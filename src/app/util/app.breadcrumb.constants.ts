@@ -210,6 +210,26 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
+    public static role: any = {
+        title: 'Role',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'User Management',
+                route: '/setting/um',
+                active: false,
+            },
+            {
+                label: 'Role',
+                route: '/setting/um/role',
+                active: true,
+            }
+        ]
+    };
     
 }

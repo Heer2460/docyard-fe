@@ -9,7 +9,7 @@ import {AppBreadcrumbConstants} from "../../../util/app.breadcrumb.constants";
     styleUrls: ['./breadcrumb.component.less']
 })
 export class BreadcrumbComponent implements OnInit {
-    
+
     title: string = '';
     description: string = '';
     breadcrumbs: any[] = [];
@@ -17,9 +17,9 @@ export class BreadcrumbComponent implements OnInit {
     titleAndDescOnly: boolean = false;
     isGridDisplay: boolean = false;
     appBreadcrumbs: any = AppBreadcrumbConstants;
-    
+
     @Input() showDisplayButtons: boolean = false;
-    
+
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
             if (route instanceof NavigationEnd) {
@@ -27,12 +27,12 @@ export class BreadcrumbComponent implements OnInit {
                 this.setPageTitleAndBreadcrumb();
             }
         });
-        
+
     }
-    
+
     ngOnInit(): void {
     }
-    
+
     setPageTitleAndBreadcrumb() {
         switch (this.currentRouteUrl) {
             case '/home':
@@ -76,6 +76,10 @@ export class BreadcrumbComponent implements OnInit {
                 this.title = this.appBreadcrumbs.theme.title;
                 this.breadcrumbs = [...this.appBreadcrumbs.theme.breadCrumb];
                 break;
+            case '/setting/um/role':
+                this.title = this.appBreadcrumbs.role.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.role.breadCrumb];
+                break;
             default:
                 if (this.currentRouteUrl.indexOf('/setting/ref/dept/edit') > -1) {
                     this.title = this.appBreadcrumbs.editDept.title;
@@ -83,17 +87,17 @@ export class BreadcrumbComponent implements OnInit {
                 }
                 break;
         }
-        
+
     }
-    
+
     setGridDisplay() {
         this.isGridDisplay = true;
         this.appService.setGridDisplaySubject(this.isGridDisplay);
     }
-    
+
     setListDisplay() {
         this.isGridDisplay = false;
         this.appService.setGridDisplaySubject(this.isGridDisplay);
     }
-    
+
 }
