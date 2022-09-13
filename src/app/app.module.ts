@@ -1,23 +1,21 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {RouterModule} from "@angular/router";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CommonModule} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {ToastrModule} from "ngx-toastr";
-import {AppUtility} from "./util/app.utility";
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { ToastrModule } from "ngx-toastr";
 import {
     NgxUiLoaderConfig, NgxUiLoaderHttpModule,
     NgxUiLoaderModule,
     NgxUiLoaderRouterModule,
-    PB_DIRECTION,
-    POSITION,
-    SPINNER
+    PB_DIRECTION
 } from "ngx-ui-loader";
-import {ConfirmationService} from "primeng/api";
+import { ConfirmationService } from "primeng/api";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AppUtility } from "./util/app.utility";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsSize: 100,
@@ -49,7 +47,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderRouterModule,
-        NgxUiLoaderHttpModule
+        NgxUiLoaderHttpModule.forRoot({ showForeground: true })
     ],
     providers: [
         AppUtility,

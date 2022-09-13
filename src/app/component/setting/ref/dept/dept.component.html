@@ -72,13 +72,10 @@
                 </div>
             </div>
             <div class="col-6 mb-3">
-                <label class="d-block">Status</label>
-                <p-dropdown
-                        [options]="statuses"
-                        formControlName="status" appendTo="body"
-                        optionLabel="value" optionValue="value"
-                        [filter]="false">
-                </p-dropdown>
+                <span class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label for="status">Status</label>
+                </span>
             </div>
         </div>
     </form>
@@ -98,10 +95,10 @@
         <div class="col-12">
             <table class="table table-bordered">
                 <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{{selectedDepartment.name}}</td>
-                </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{selectedDepartment.name}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -141,8 +138,7 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideAddPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="createDepartment()" [disabled]="addDepartmentForm.invalid" class="btn btn-sm btn-primary"
-                type="button">Add
+        <button (click)="createDepartment()" [disabled]="addDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Add
         </button>
     </ng-template>
 </p-dialog>
@@ -176,11 +172,7 @@
             <div class="col-6 mb-3">
                 <div class="">
                     <label class="d-block">Name</label>
-                    <p-dropdown
-                            [options]="statuses"
-                            formControlName="status" appendTo="body"
-                            optionLabel="value" optionValue="value"
-                            [filter]="false">
+                    <p-dropdown [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
                     </p-dropdown>
                 </div>
             </div>
@@ -188,8 +180,7 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideUpdatePopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="updateDepartment()" [disabled]="updateDepartmentForm.invalid" class="btn btn-sm btn-primary"
-                type="button">Update
+        <button (click)="updateDepartment()" [disabled]="updateDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Update
         </button>
     </ng-template>
 </p-dialog>

@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MenuItem} from "primeng/api";
-import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RequestService} from "../../../../service/request.service";
-import {AppService} from "../../../../service/app.service";
-import {DepartmentDTO} from "../../../../model/settings/ref/department/department.dto";
-import {ApiUrlConstants} from "../../../../util/api.url.constants";
-import {HttpResponse} from "@angular/common/http";
-import {AppUtility} from "../../../../util/app.utility";
-import {ReferencesStatuses} from "../../../../util/references.statuses";
-import {ToastrService} from "ngx-toastr";
+import { HttpResponse } from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { ConfirmationService, MenuItem } from "primeng/api";
+import { DepartmentDTO } from "../../../../model/settings/ref/department/department.dto";
+import { AppService } from "../../../../service/app.service";
+import { RequestService } from "../../../../service/request.service";
+import { ApiUrlConstants } from "../../../../util/api.url.constants";
+import { AppUtility } from "../../../../util/app.utility";
+import { ReferencesStatuses } from "../../../../util/references.statuses";
 
 @Component({
     selector: 'app-user',
