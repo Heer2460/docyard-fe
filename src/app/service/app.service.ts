@@ -79,4 +79,16 @@ export class AppService {
 			this.router.navigate(['/auth/login']);
 		}
 	}
+
+	successAddMessage(title: string): void {
+		this.toastService.success('Added Successfully', title);
+	}
+
+	successUpdateMessage(title: string): void {
+		this.toastService.success('Updated Successfully', title);
+	}
+
+	successDeleteMessage(title: string): void {
+		this.toastService.success('Deleted Successfully', title);
+	}
 }

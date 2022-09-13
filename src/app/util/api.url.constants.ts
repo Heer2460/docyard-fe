@@ -10,4 +10,6 @@ export class ApiUrlConstants {
     // User API URL
     public static USER_API_URL = '/user/';
 
+    // Department API URL
+    public static DEPARTMENT_API_URL = '/um/department/';
 }
