@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {AppService} from "../../service/app.service";
-import {RoutesDTO} from "../../model/routes.dto";
 
 @Component({
-    selector: 'dashboard-component',
+    selector: 'home-component',
     templateUrl: './home.template.html',
     styleUrls: ['./home.component.less']
 })
