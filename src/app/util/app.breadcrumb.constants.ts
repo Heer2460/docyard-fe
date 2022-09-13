@@ -210,6 +210,78 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
+    public static role: any = {
+        title: 'Role',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'User Management',
+                route: '/setting/um',
+                active: false,
+            },
+            {
+                label: 'Role',
+                route: '/setting/um/role',
+                active: true,
+            }
+        ]
+    };
+
+    public static addRole: any = {
+        title: 'Add Role',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'User Management',
+                route: '/setting/um',
+                active: false,
+            },
+            {
+                label: 'Role',
+                route: '/setting/um/role',
+                active: false,
+            },
+            {
+                label: 'Add',
+                route: '/setting/um/user/edit',
+                active: true,
+            }
+        ]
+    };
+
+    public static editRole: any = {
+        title: 'Edit Role',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'User Management',
+                route: '/setting/um',
+                active: false,
+            },
+            {
+                label: 'Role',
+                route: '/setting/um/role',
+                active: false,
+            },
+            {
+                label: 'Edit',
+                route: '/setting/um/user/edit',
+                active: true,
+            }
+        ]
+    };
     
 }
