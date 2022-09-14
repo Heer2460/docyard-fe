@@ -53,7 +53,7 @@ export class GroupComponent implements OnInit {
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,
                 private appService: AppService, public appUtility: AppUtility,
-                private toastService: ToastrService, Roles: any[]
+                private toastService: ToastrService,
     ) {
     }
 
@@ -65,7 +65,7 @@ export class GroupComponent implements OnInit {
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.roles = response.body.data;
-                        console.log(this.roles);
+
                     } else {
                         this.roles = [];
                         this.message = 'No role found.';
