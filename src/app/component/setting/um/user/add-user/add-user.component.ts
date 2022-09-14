@@ -37,7 +37,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
         const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
@@ -64,14 +64,12 @@ export class AddUserComponent implements OnInit, OnDestroy {
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
             phoneNumber: [null, [Validators.required, Validators.maxLength(32)]],
             mobileNumber: [null, [Validators.required, Validators.maxLength(32)]],
-
             passwords: this.fb.group({
                 password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
                 confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
             }, {validators: CustomValidations.passwordConfirming}),
-
-            group: [null, Validators.required],
-            department: [null],
+            groupId: [null, Validators.required],
+            departmentId: [null],
             address: [null, Validators.maxLength(256)],
             status: ['Active'],
         });

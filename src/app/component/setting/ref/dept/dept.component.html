@@ -84,35 +84,31 @@
         <button (click)="searchDepartments()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-md">
+<p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-md p-dialog-view">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
             <span>View Department</span>
         </div>
     </ng-template>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>Code</th>
-                        <td>{{selectedDepartment.code}}</td>
-                    </tr>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{selectedDepartment.name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td>{{selectedDepartment.status}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-data-view">
+        <tbody>
+        <tr>
+            <th>Code</th>
+            <td>{{selectedDepartment.code}}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{selectedDepartment.name}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{selectedDepartment.status}}</td>
+        </tr>
+        </tbody>
+    </table>
     <ng-template pTemplate="footer">
-        <button (click)="hideViewPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button (click)="hideViewPopupAction()" class="btn btn-sm btn-danger">Close</button>
     </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="addDialog" [modal]="true" styleClass="p-dialog-md">

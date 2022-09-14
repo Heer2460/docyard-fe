@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AddUserComponent } from './add-user.component';
 import {AddUserRoutingModule} from "./add-user-routing.module";
 import {LayoutModule} from "../../../../layout/layout.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
 
 
 
@@ -13,7 +15,9 @@ import {LayoutModule} from "../../../../layout/layout.module";
     imports: [
         CommonModule,
         AddUserRoutingModule,
-        LayoutModule
+        LayoutModule,
+        ReactiveFormsModule,
+        DropdownModule
     ]
 })
 export class AddUserModule { }
