@@ -1,31 +1,45 @@
 <layout-component>
     <ng-container actionItems>
-        <a role="button" class="btn btn-sm btn-primary" routerLink="/setting/um/user/add">
+        <a class="btn btn-sm btn-primary" role="button" routerLink="/setting/um/user/add">
             <i class="icon-plus"></i>
             Add
         </a>
-        <button class="btn btn-sm btn-secondary" (click)="showSearchPopupAction()">
+        <button (click)="showSearchPopupAction()" class="btn btn-sm btn-secondary">
             <i class="icon-search"></i> Search
         </button>
     </ng-container>
     <ng-container pageBody>
-        <p-table [value]="dataRows" selectionMode="multiple">
+        <p-table [value]="users">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="username">Username <p-sortIcon field="username"></p-sortIcon></th>
-                    <th pSortableColumn="address">Address <p-sortIcon field="address"></p-sortIcon></th>
+                    <th pSortableColumn="username">Username
+                        <p-sortIcon field="username"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="group">group
+                        <p-sortIcon field="group"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="department">Department
+                        <p-sortIcon field="department"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status">Status
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
                     <th class="actions">Actions</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-row>
-                <tr [pSelectableRow]="row" [ngClass]="row.selected ? 'p-highlight' : ''">
-                    <td>{{row.name}}</td>
+            <ng-template let-row pTemplate="body">
+                <tr>
                     <td>{{row.username}}</td>
-                    <td>{{row.address}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.group}}</td>
+                    <td>{{row.department}}</td>
+                    <td>{{row.status}}</td>
                     <td>
-                        <button class="btn btn-tiered-menu" (click)="menu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #menu [model]="actionItems" [popup]="true"></p-tieredMenu>
+                        <button (click)="menu.toggle($event);onMenuClicked($event)" class="btn btn-tiered-menu">
+                            <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
                             <i class="icon-menu-horizontal"></i>
                         </button>
                     </td>
@@ -49,74 +63,42 @@
             <span>Search User</span>
         </div>
     </ng-template>
-    <div class="row">
-        <div class="col-6">
-            <fieldset>
-                <header>Fieldset 1</header>
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field1" placeholder="Field 1">
-                            <label for="field1">Field 1</label>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field2" placeholder="Field 2">
-                            <label for="field2">Field 2</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field3" placeholder="Field 3">
-                            <label for="field3">Field 3</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field4" placeholder="Field 4">
-                            <label for="field4">Field 4</label>
-                        </div>
-                    </div>
-
+    <form [formGroup]="searchUserForm">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" id="username" placeholder="Username" type="text">
+                    <label for="username">Username</label>
                 </div>
-            </fieldset>
-        </div>
-        <div class="col-6">
-            <fieldset>
-                <header>Fieldset 2</header>
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field5" placeholder="Field 1">
-                            <label for="field5">Field 1</label>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field6" placeholder="Field 2">
-                            <label for="field6">Field 2</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field7" placeholder="Field 3">
-                            <label for="field7">Field 3</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="field8" placeholder="Field 4">
-                            <label for="field8">Field 4</label>
-                        </div>
-                    </div>
-
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" id="name" placeholder="Name" type="text">
+                    <label for="name">Name</label>
                 </div>
-            </fieldset>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-dropdown inputId="group" [options]="groups" formControlName="group" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label>Group</label>
+                </span>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-dropdown inputId="department" [options]="departments" formControlName="department" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label>Department</label>
+                </span>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label>Status</label>
+                </span>
+            </div>
         </div>
-    </div>
+    </form>
     <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideSearchPopupAction()">Close</button>
-        <button class="btn btn-sm btn-primary">Search</button>
+        <button (click)="hideSearchPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button class="btn btn-sm btn-primary" type="button" (click)="searchUsers()">Search</button>
     </ng-template>
 </p-dialog>
