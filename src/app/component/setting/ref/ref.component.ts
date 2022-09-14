@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-reference',
-  templateUrl: './ref.component.html',
+  selector: 'ref-component',
+  templateUrl: './ref.template.html',
   styleUrls: ['./ref.component.less']
 })
 export class RefComponent implements OnInit {

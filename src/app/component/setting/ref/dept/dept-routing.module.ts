@@ -6,24 +6,6 @@ const routes: Routes = [
     {
         path: '',
         component: DeptComponent
-    },
-    {
-        path: 'add',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./add-dept/add-dept.module').then(m => m.AddDeptModule)
-            }
-        ]
-    },
-    {
-        path: 'edit',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./edit-dept/edit-dept.module').then(m => m.EditDeptModule)
-            }
-        ]
     }
 ];
 

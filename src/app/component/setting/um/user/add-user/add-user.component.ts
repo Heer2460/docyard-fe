@@ -12,8 +12,8 @@ import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'app-add-user',
-    templateUrl: './add-user.component.html',
+    selector: 'add-user-component',
+    templateUrl: './add-user.template.html',
     styleUrls: ['./add-user.component.less']
 })
 export class AddUserComponent implements OnInit, OnDestroy {

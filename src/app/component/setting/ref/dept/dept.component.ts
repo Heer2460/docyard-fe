@@ -12,8 +12,8 @@ import { AppUtility } from "../../../../util/app.utility";
 import { ReferencesStatuses } from "../../../../util/references.statuses";
 
 @Component({
-    selector: 'app-dept',
-    templateUrl: './dept.component.html',
+    selector: 'dept-component',
+    templateUrl: './dept.template.html',
     styleUrls: ['./dept.component.less']
 })
 export class DeptComponent implements OnInit {

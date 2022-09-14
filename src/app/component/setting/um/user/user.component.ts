@@ -11,8 +11,8 @@ import {HttpResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-    selector: 'app-user',
-    templateUrl: './user.component.html',
+    selector: 'user-component',
+    templateUrl: './user.template.html',
     styleUrls: ['./user.component.less']
 })
 export class UserComponent implements OnInit {

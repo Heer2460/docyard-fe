@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edit-role',
-  templateUrl: './edit-role.component.html',
+  selector: 'edit-role-component',
+  templateUrl: './edit-role.template.html',
   styleUrls: ['./edit-role.component.less']
 })
 export class EditRoleComponent implements OnInit {

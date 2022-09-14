@@ -3,7 +3,7 @@ import {MenuItem} from "primeng/api";
 
 @Component({
 	selector: 'notification-component',
-	templateUrl: './notification.component.html',
+	templateUrl: './notification.template.html',
 	styleUrls: ['./notification.component.less']
 })
 export class NotificationComponent implements OnInit {
