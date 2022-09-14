@@ -56,6 +56,9 @@ export class EditUserComponent implements OnInit {
                         }
                         if (response[1].status === 200) {
                             this.departments = response[1].body.data;
+                            if (this.userId) {
+                                this.getUserById(this.userId);
+                            }
                         }
                     },
                     error: (error: any) => {
@@ -74,8 +77,8 @@ export class EditUserComponent implements OnInit {
             passwords: this.fb.group({
                 password: [null],
             }),
-            group: [null, Validators.required],
-            department: [null],
+            groupId: [null, Validators.required],
+            departmentId: [null],
             address: [null, Validators.maxLength(256)],
             status: ['Active'],
         });
@@ -87,7 +90,7 @@ export class EditUserComponent implements OnInit {
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.selectedUser = response.body.data;
-                        // this.populateUserForm(response.body.data);
+                        this.populateUserForm(response.body.data);
                     }
                 }, error: (error: any) => {
                     this.appService.handleError(error, 'User');
@@ -95,7 +98,38 @@ export class EditUserComponent implements OnInit {
             });
     }
 
+    populateUserForm(userDto: UserDTO) {
+        this.editUserForm.get('userId')?.setValue(userDto.id);
+        this.editUserForm.get('username')?.setValue(userDto.username);
+        this.editUserForm.get('name')?.setValue(userDto.name);
+        this.editUserForm.get('email')?.setValue(userDto.email);
+        this.editUserForm.get('phoneNumber')?.setValue(userDto.phoneNumber);
+        this.editUserForm.get('mobileNumber')?.setValue(userDto.mobileNumber);
+        this.editUserForm.get('group')?.setValue(userDto.groupId);
+        this.editUserForm.get('department')?.setValue(userDto.departmentId);
+        this.editUserForm.get('address')?.setValue(userDto?.address);
+        this.editUserForm.get('status')?.setValue(userDto.status);
+        this.editUserForm.markAllAsTouched();
+    }
 
+    updateUser() {
+        if (this.editUserForm.invalid) {
+            return;
+        }
+        let userDTO: UserDTO = new UserDTO();
+        userDTO.convertToDTO(this.editUserForm.value);
+        this.requestsService.putRequest(ApiUrlConstants.USER_API_URL, userDTO)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.appService.successUpdateMessage('User');
+                        this.router.navigate(['setting/um/user']);
+                    }
+                }, error: (error: any) => {
+                    this.appService.handleError(error, 'User');
+                }
+            });
+    }
 
     ngOnDestroy() {
         this.destroy.next(true);

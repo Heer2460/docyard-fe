@@ -7,6 +7,7 @@ export class UserDTO extends BaseDTO {
     name: string | undefined;
     email: string | undefined;
     phoneNumber: string | undefined;
+    mobileNumber: string | undefined;
     groupId: null | undefined;
     departmentId: null | undefined;
     address: string | undefined;
@@ -22,6 +23,7 @@ export class UserDTO extends BaseDTO {
         this.name = data.name;
         this.email = data.email;
         this.phoneNumber = data.phoneNumber;
+        this.mobileNumber = data.mobileNumber;
         this.groupId = data.groupId;
         this.departmentId = data.departmentId;
         this.address = data.address;
