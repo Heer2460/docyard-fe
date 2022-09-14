@@ -68,8 +68,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
                 password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
                 confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
             }, {validators: CustomValidations.passwordConfirming}),
-            group: [null, Validators.required],
-            department: [null],
+            groupId: [null, Validators.required],
+            departmentId: [null],
             address: [null, Validators.maxLength(256)],
             status: ['Active'],
         });

@@ -122,23 +122,23 @@
                 </div>
             </fieldset>
             <fieldset class="mt-30px">
-                <header>Address</header>
+                <header>Others</header>
                 <div class="row">
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown [options]="groups" appendTo="body" formControlName="group" id="group"
+                            <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
                                         optionLabel="value" optionValue="value"></p-dropdown>
-                            <label for="group">Group</label>
-                            <small *ngIf="appUtility.getFormError(addUserForm, 'group', 'group', 'required')">
+                            <label for="groupId">Group</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
                             </small>
                         </span>
                     </div>
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown [options]="departments" appendTo="body" formControlName="department" id="department"
+                            <p-dropdown [options]="departments" appendTo="body" formControlName="departmentId" id="departmentId"
                                         optionLabel="value" optionValue="value"></p-dropdown>
-                            <label for="department">Department</label>
+                            <label for="departmentId">Department</label>
                         </span>
                     </div>
                     <div class="col-3 mb-3">
