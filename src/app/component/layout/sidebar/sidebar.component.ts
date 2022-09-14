@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
 
     @Input() routes: RoutesDTO[] = [];
     currentRoute: string = '';
-    
+
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
             if(route instanceof NavigationEnd) {
@@ -26,7 +26,7 @@ export class SidebarComponent implements OnInit {
     ngOnInit(): void {
         this.setActiveRoute();
     }
-    
+
     setActiveRoute() {
         switch (this.currentRoute) {
             case '/home':
@@ -40,6 +40,9 @@ export class SidebarComponent implements OnInit {
                 break;
             case '/setting/um/user/add':
                 this.setCurrentRoute(null, this.routes, '/setting/um/user');
+                break;
+            case '/setting/um/group':
+                this.setCurrentRoute(null, this.routes, '/setting/um/group');
                 break;
             case '/setting/ref/dept':
                 this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
@@ -57,7 +60,7 @@ export class SidebarComponent implements OnInit {
                 break;
         }
     }
-    
+
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
             if (route.route == currentRouteUrl) {
@@ -74,14 +77,14 @@ export class SidebarComponent implements OnInit {
             }
         });
     }
-    
+
     toggleDropdown(route: any) {
         this.routes.map((route: any) => {
             route.expended = false;
         });
         route.expended = !route.expended;
     }
-    
+
     switchRouteTypes() {
         if (this.router.url.split('/')[1] == 'setting') {
             this.appService.setRoutes(AppRouteConstants.settingRoutes);

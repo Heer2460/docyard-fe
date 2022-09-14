@@ -1,5 +1,5 @@
 export class AppBreadcrumbConstants {
-    
+
     public static home: any = {
         title: 'Home',
         breadCrumb: [
@@ -10,7 +10,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static docLib: any = {
         title: 'Document Library',
         breadCrumb: [
@@ -26,7 +26,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static setting: any = {
         title: 'Setting',
         breadCrumb: [
@@ -42,7 +42,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static um: any = {
         title: 'User Management',
         breadCrumb: [
@@ -58,7 +58,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static user: any = {
         title: 'User',
         breadCrumb: [
@@ -79,7 +79,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static addUser: any = {
         title: 'Add User',
         breadCrumb: [
@@ -105,7 +105,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static ref: any = {
         title: 'Reference',
         breadCrumb: [
@@ -121,7 +121,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static dept: any = {
         title: 'Department',
         breadCrumb: [
@@ -142,7 +142,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static addDept: any = {
         title: 'Add Department',
         breadCrumb: [
@@ -168,7 +168,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static editDept: any = {
         title: 'Edit Department',
         breadCrumb: [
@@ -194,7 +194,7 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
     public static theme: any = {
         title: 'Theme',
         breadCrumb: [
@@ -231,5 +231,26 @@ export class AppBreadcrumbConstants {
             }
         ]
     };
-    
+
+    public static group: any = {
+        title: 'Group',
+        breadCrumb: [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false,
+            },
+            {
+                label: 'Setting',
+                route: '/setting',
+                active: false,
+            },
+            {
+                label: 'Group',
+                route: '/setting/um/group',
+                active: true,
+            }
+        ]
+    };
+
 }

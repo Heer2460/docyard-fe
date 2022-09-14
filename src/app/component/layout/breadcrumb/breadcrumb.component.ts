@@ -27,7 +27,6 @@ export class BreadcrumbComponent implements OnInit {
                 this.setPageTitleAndBreadcrumb();
             }
         });
-
     }
 
     ngOnInit(): void {
@@ -59,6 +58,10 @@ export class BreadcrumbComponent implements OnInit {
             case '/setting/um/user/add':
                 this.title = this.appBreadcrumbs.addUser.title;
                 this.breadcrumbs = [...this.appBreadcrumbs.addUser.breadCrumb];
+                break;
+            case '/setting/um/group':
+                this.title = this.appBreadcrumbs.group.title;
+                this.breadcrumbs = [...this.appBreadcrumbs.group.breadCrumb];
                 break;
             case '/setting/ref':
                 this.title = this.appBreadcrumbs.ref.title;
