@@ -11,6 +11,7 @@ import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
 
+
 @Component({
     selector: 'group-component',
     templateUrl: './group.template.html'
@@ -20,13 +21,15 @@ export class GroupComponent implements OnInit {
     updateGroupForm: FormGroup = new FormGroup({});
     searchGroupForm: FormGroup = new FormGroup({});
     groups: any[] = [];
+    roles: any[] = [];
+    selectedRoles = '';
     message: string = 'Click search to get groups.';
     visibleSearchGroupDialog: boolean = false;
     visibleAddGroupDialog: boolean = false;
     visibleUpdateGroupDialog: boolean = false;
     visibleViewGroupDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
-    Roles = ReferencesStatuses.roles;
+
     selectedGroup: GroupDTO = new GroupDTO();
 
     actionItems: MenuItem[] = [
@@ -50,12 +53,35 @@ export class GroupComponent implements OnInit {
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,
                 private appService: AppService, public appUtility: AppUtility,
-                private toastService: ToastrService) {
+                private toastService: ToastrService, Roles: any[]
+    ) {
+    }
+
+    searchRoles() {
+        let url = ApiUrlConstants.ROLE_API_URL + 'search' + '?code=' + this.searchGroupForm.value.code +
+            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status;
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.roles = response.body.data;
+                        console.log(this.roles);
+                    } else {
+                        this.roles = [];
+                        this.message = 'No role found.';
+                    }
+                    this.hideSearchPopupAction();
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Role');
+                }
+            });
     }
 
     ngOnInit(): void {
         this.buildForms();
         this.searchGroup();
+        this.searchRoles();
     }
 
     buildForms() {
@@ -63,7 +89,7 @@ export class GroupComponent implements OnInit {
             code: [null, [Validators.maxLength(17)]],
             name: [null, [Validators.maxLength(35)]],
             status: ['Active'],
-            role: []
+            roles: []
         });
 
         this.addGroupForm = this.fb.group({
@@ -71,7 +97,7 @@ export class GroupComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.required, Validators.maxLength(256)]],
             status: ['Active'],
-            role: []
+            roles: []
         });
 
         this.updateGroupForm = this.fb.group({
@@ -79,7 +105,7 @@ export class GroupComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: [null, Validators.required],
-            role: []
+            roles: []
         });
     }
 

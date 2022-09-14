@@ -13,9 +13,9 @@ export class ReferencesStatuses {
         {name: 'Suspend', value: 'Suspend'}
     ];
     public static roles = [
-        {name: 'Role1', value: 'Role1'},
-        {name: 'Role2', value: 'Role2'},
-        {name: 'Role3', value: 'Role3'},
-        {name: 'Role4', value: 'Role4'},
+        {name: 'Role1', code: 'Role1'},
+        {name: 'Role2', code: 'Role2'},
+        {name: 'Role3', code: 'Role3'},
+        {name: 'Role4', code: 'Role4'},
     ];
 }

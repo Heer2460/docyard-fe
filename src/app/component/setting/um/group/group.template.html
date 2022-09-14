@@ -74,8 +74,9 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-<!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
-                    <label for="status">Role</label>
+<!--                <p-dropdown inputId="roles" [options]="roles" formControlName="roles" appendTo="body" optionLabel="name" optionValue="name"></p-dropdown>-->
+                    <p-multiSelect [options]="roles" [(ngModel)]="selectedRoles" formControlName="roles" optionLabel="name" optionValue="name"></p-multiSelect>
+                    <label >Roles</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
