@@ -65,6 +65,12 @@ export class BreadcrumbComponent implements OnInit {
             active: false,
         },
         {
+            label: 'Group',
+            route: '/setting/um/group',
+            slug: 'group',
+            active: false,
+        },
+        {
             label: 'Add',
             route: '',
             slug: 'add',
@@ -94,7 +100,7 @@ export class BreadcrumbComponent implements OnInit {
 
     setPageTitleAndBreadcrumb() {
         const routesArray = this.currentRouteUrl.split('/');
-    
+
         if(this.currentRouteUrl == '/home') {
             this.title = this.breadcrumbObj[0].label;
             this.description = 'Hello User, Welcome back!';

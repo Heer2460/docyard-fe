@@ -14,8 +14,8 @@
                     <th pSortableColumn="code">Code
                         <p-sortIcon field="code"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="name">Group Name
-                        <p-sortIcon field="groupName"></p-sortIcon>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
                     </th>
                     <th pSortableColumn="status">Status
                         <p-sortIcon field="status"></p-sortIcon>
@@ -27,7 +27,7 @@
                 </tr>
             </ng-template>
             <ng-template let-row pTemplate="body">
-                <tr [ngClass]="row.selected ? 'p-highlight' : ''" [pSelectableRow]="row">
+                <tr>
                     <td>{{row.code}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.status}}</td>
@@ -68,13 +68,13 @@
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
-                    <input class="form-control" formControlName="groupName" placeholder="Name" type="text">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="roles" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >
+<!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                     <label for="status">Role</label>
                 </span>
             </div>
@@ -173,7 +173,7 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >
+<!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                     <label for="status">Role</label>
                 </span>
             </div>
@@ -218,10 +218,10 @@
                     <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(updateGroupForm, 'groupName', 'groupName', 'required')">
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'required')">
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
                 </small>
-                <small *ngIf="appUtility.getFormError(updateGroupForm, 'groupName', 'groupName', 'maxlength')">
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                 </small>
             </div>

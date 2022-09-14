@@ -55,6 +55,7 @@ export class GroupComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
+        this.searchGroup();
     }
 
     buildForms() {
@@ -62,7 +63,7 @@ export class GroupComponent implements OnInit {
             code: [null, [Validators.maxLength(17)]],
             name: [null, [Validators.maxLength(35)]],
             status: ['Active'],
-            roles: []
+            role: []
         });
 
         this.addGroupForm = this.fb.group({
@@ -70,7 +71,7 @@ export class GroupComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.required, Validators.maxLength(256)]],
             status: ['Active'],
-            roles: []
+            role: []
         });
 
         this.updateGroupForm = this.fb.group({
@@ -78,12 +79,12 @@ export class GroupComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: [null, Validators.required],
-            roles: []
+            role: []
         });
     }
 
     searchGroup() {
-        let url = ApiUrlConstants.GROUP_API_URL + '?code=' + this.searchGroupForm.value.code +
+        let url = ApiUrlConstants.GROUP_API_URL + 'search?code=' + this.searchGroupForm.value.code +
             '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status;
         this.requestsService.getRequest(url)
             .subscribe({
@@ -150,7 +151,7 @@ export class GroupComponent implements OnInit {
 
     deleteGroup(id: any) {
         if (id) {
-            this.requestsService.deleteRequest(ApiUrlConstants.GROUP_DELETE_API_URL + id).subscribe({
+            this.requestsService.deleteRequest(ApiUrlConstants.GROUP_API_URL + id).subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status == 200) {
                         this.appService.successDeleteMessage('Group');
