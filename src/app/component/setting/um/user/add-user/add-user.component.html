@@ -1,66 +1,158 @@
 <layout-component>
     <ng-container pageBody>
-        <fieldset>
-            <header>Personal information</header>
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="name" placeholder="Name">
-                        <label for="name">Name</label>
+        <form [formGroup]="addUserForm">
+            <fieldset>
+                <header>Personal information</header>
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                            <label for="name">Name</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'name', 'name', 'required')">
+                                {{ appUtility.makeErrorMessage("Name", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'name', 'name', 'maxlength')">
+                                {{ appUtility.makeErrorMessage("Name", 'maxlength', 70) }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="form-floating">
+                            <input autocomplete="new-password" class="form-control" formControlName="username" id="username"
+                                   placeholder="Username" type="text">
+                            <label for="username">Username</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'required')">
+                                {{ appUtility.makeErrorMessage("Username", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'maxlength')">
+                                {{ appUtility.makeErrorMessage("Username", 'maxlength', 35) }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" formControlName="email" id="email" placeholder="Email"
+                                   type="email">
+                            <label for="email">Email</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'email', 'email', 'required')">
+                                {{ appUtility.makeErrorMessage("Email", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'email', 'email', 'email')">
+                                {{ 'Invalid Email.' }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'email', 'email', 'pattern')">
+                                {{ appUtility.makeErrorMessage("Email", 'pattern', 'formatted') }}
+                            </small>
+                        </div>
+                    </div>
+                    <ng-container formGroupName="passwords">
+                        <div class="col-3 mb-3">
+                            <div class="form-floating">
+                                <input autocomplete="new-password" class="form-control" formControlName="password"
+                                       id="password"
+                                       placeholder="Password"
+                                       type="password">
+                                <label for="password">Password</label>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'required', 'password')">
+                                    {{ appUtility.makeErrorMessage("Password", 'required') }}
+                                </small>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'maxlength', 'password')">
+                                    {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
+                                </small>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'minlength', 'password')">
+                                    {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-3 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
+                                       placeholder="Confirm Password" type="password">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'required', 'password')">
+                                    {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
+                                </small>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
+                                    {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
+                                </small>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
+                                    {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
+                                </small>
+                                <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
+                                    {{ 'Password & Confirm Password does not match' }}
+                                </small>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="col-3 mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
+                                   placeholder="Phone Number" type="text">
+                            <label for="name">Phone Number</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'required')">
+                                {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
+                                {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
+                                   placeholder="Mobile Number" type="text">
+                            <label for="mobileNumber">Mobile Number</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'required')">
+                                {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
+                                {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <textarea type="text" class="form-control" formControlName="address" id="address"></textarea>
+                            <label for="address">Address</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
+                                {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
+                            </small>
+                        </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="username" placeholder="Username">
-                        <label for="username">Username</label>
+            </fieldset>
+            <fieldset class="mt-30px">
+                <header>Address</header>
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <span class="p-float-label">
+                            <p-dropdown [options]="groups" appendTo="body" formControlName="group" id="group"
+                                        optionLabel="value" optionValue="value"></p-dropdown>
+                            <label for="group">Group</label>
+                            <small *ngIf="appUtility.getFormError(addUserForm, 'group', 'group', 'required')">
+                                {{ appUtility.makeErrorMessage("Group", 'required') }}
+                            </small>
+                        </span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span class="p-float-label">
+                            <p-dropdown [options]="departments" appendTo="body" formControlName="department" id="department"
+                                        optionLabel="value" optionValue="value"></p-dropdown>
+                            <label for="department">Department</label>
+                        </span>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <span class="p-float-label">
+                            <p-dropdown inputId="status" [options]="statuses" id="status" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                            <label for="status">Status</label>
+                        </span>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="email" placeholder="Email">
-                        <label for="email">Email</label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="email" placeholder="Email">
-                        <label for="email">Email</label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        <fieldset class="mt-30px">
-            <header>Address</header>
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="street" placeholder="Street">
-                        <label for="street">Street</label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="city" placeholder="City">
-                        <label for="city">City</label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="country" placeholder="Country">
-                        <label for="country">Country</label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="postalCode" placeholder="Postal code">
-                        <label for="postalCode">Postal code</label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+            </fieldset>
+        </form>
     </ng-container>
     <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger">Cancel</button>
-        <button class="btn btn-sm btn-primary">Add User</button>
+        <button class="btn btn-sm btn-danger" routerLink="setting/um/user">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="addUserForm.invalid" (click)="createUser()">Add User</button>
     </ng-container>
 </layout-component>
