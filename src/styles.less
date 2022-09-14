@@ -344,8 +344,8 @@ fieldset {
 			position: absolute;
 			top: 50%;
 			left: 0;
-			width: 14px;
-			height: 14px;
+			width: 16px;
+			height: 16px;
 			.mixin-transform(translate(-24px, -50%));
 			.mixin-transition();
 		}
@@ -380,7 +380,7 @@ fieldset {
 		
 		&:before,
 		&:after {
-			.mixin-transform(translate(0, -50%));
+			.mixin-transform(translate(0, calc(-50% - 2px) ));
 		}
 		
 	}
@@ -1491,6 +1491,11 @@ doc-info-pane-component {
 			th {
 				color: hsl(var(--color-blue-01));
 				
+				&:first-child {
+					width: 32px;
+					vertical-align: middle;
+				}
+				
 				&:not(:first-child) {
 					text-align: center;
 				}
@@ -1568,6 +1573,10 @@ doc-info-pane-component {
 				vertical-align: middle;
 				border-style: dashed;
 				border-color: hsl(var(--color-blue-05));
+				
+				&:first-child {
+					vertical-align: middle;
+				}
 				
 				i {
 					color: @color-white;
