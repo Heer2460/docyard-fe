@@ -61,9 +61,9 @@
 
         <fieldset class="mt-30px">
             <header>Permissions</header>
-            <p-accordion>
+            <p-accordion styleClass="mb-3">
                 <p-accordionTab header="User Management" [selected]="true">
-                    <table class="table table-permissions">
+                    <table class="table table-striped table-permissions">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -176,11 +176,232 @@
                         </tbody>
                     </table>
                 </p-accordionTab>
+                <p-accordionTab header="Permissions">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Link Permissions</th>
+                            <th>Modify Permissions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-permission"></i>
+                                <span>Permissions</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="perm1">
+                                    <label class="form-check-label" for="perm1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="perm2">
+                                    <label class="form-check-label" for="perm2"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+                <p-accordionTab header="Reference">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-link-filled"></i>
+                                <span>Reference Tables</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref1">
+                                    <label class="form-check-label" for="ref1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref2">
+                                    <label class="form-check-label" for="ref2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref3">
+                                    <label class="form-check-label" for="ref3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref4">
+                                    <label class="form-check-label" for="ref4"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+                <p-accordionTab header="Document Operations">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Delete</th>
+                            <th>Upload</th>
+                            <th>Add</th>
+                            <th>Star</th>
+                            <th>Share</th>
+                            <th>Convert</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-folder"></i>
+                                <span>Folder</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder1">
+                                    <label class="form-check-label" for="folder1"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder2">
+                                    <label class="form-check-label" for="folder2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder3">
+                                    <label class="form-check-label" for="folder3"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder4">
+                                    <label class="form-check-label" for="folder4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-file"></i>
+                                <span>File</span>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file1">
+                                    <label class="form-check-label" for="file1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file2">
+                                    <label class="form-check-label" for="file2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file3">
+                                    <label class="form-check-label" for="file3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file4">
+                                    <label class="form-check-label" for="file4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file5">
+                                    <label class="form-check-label" for="file5"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file6">
+                                    <label class="form-check-label" for="file6"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file7">
+                                    <label class="form-check-label" for="file7"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-comments"></i>
+                                <span>Comments</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="comments">
+                                    <label class="form-check-label" for="comments"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-properties"></i>
+                                <span>Tags</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="tags">
+                                    <label class="form-check-label" for="tags"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
             </p-accordion>
         </fieldset>
     </ng-container>
     <ng-container pageFooter>
         <button class="btn btn-sm btn-danger">Cancel</button>
-        <button class="btn btn-sm btn-primary">Add User</button>
+        <button class="btn btn-sm btn-primary">Add Role</button>
     </ng-container>
 </layout-component>

@@ -1545,8 +1545,21 @@ doc-info-pane-component {
 				
 			}
 			
+			&:nth-of-type(odd) {
+				
+				td {
+					--bs-table-accent-bg: transparent;
+					background-color: hsl(var(--color-green-05));
+					color: hsl(var(--color-blue-01));
+				}
+			}
+			
 			&:hover {
-				background-color: hsl(var(--color-green-02));
+				
+				td {
+					background-color: hsl(var(--color-green-02));
+				}
+				
 			}
 			
 			td {
