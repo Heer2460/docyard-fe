@@ -10,7 +10,6 @@ import {ToastrService} from "ngx-toastr";
 import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
-import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
     selector: 'group-component',
