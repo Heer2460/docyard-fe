@@ -28,45 +28,12 @@ export class SidebarComponent implements OnInit {
     }
 
     setActiveRoute() {
-        switch (this.currentRoute) {
-            case '/home':
-                this.setCurrentRoute(null, this.routes, '/home');
-                break;
-            case '/doc-lib':
-                this.setCurrentRoute(null, this.routes, '/doc-lib');
-                break;
-            case '/setting/um/user':
-                this.setCurrentRoute(null, this.routes, '/setting/um/user');
-                break;
-            case '/setting/um/user/add':
-                this.setCurrentRoute(null, this.routes, '/setting/um/user');
-                break;
-            case '/setting/um/group':
-                this.setCurrentRoute(null, this.routes, '/setting/um/group');
-                break;
-            case '/setting/ref/dept':
-                this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
-                break;
-            case '/setting/ref':
-                this.setCurrentRoute(null, this.routes, '/setting/ref');
-                break;
-            case '/setting/ref/dept/add':
-                this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
-                break;
-            case '/setting/um/role/add':
-                this.setCurrentRoute(null, this.routes, '/setting/um/role');
-                break;
-            default:
-                if (this.currentRoute.indexOf('/setting/ref/dept/edit') > -1) {
-                    this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
-                }
-                break;
-        }
+        this.setCurrentRoute(null, this.routes, this.currentRoute);
     }
 
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
-            if (route.route == currentRouteUrl) {
+            if (route.route.indexOf(currentRouteUrl) > -1 ) {
                 if(parent) {
                     parent.expended = true;
                 }
