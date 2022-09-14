@@ -15,4 +15,11 @@ export class ApiUrlConstants {
 
     // Role API URL
     public static ROLE_API_URL = '/role/';
+
+    // Group Api url
+    public static GROUP_API_URL = '/group/search';
+
+    // Group Delete Api url
+    public static GROUP_DELETE_API_URL = '/group/id';
+
 }

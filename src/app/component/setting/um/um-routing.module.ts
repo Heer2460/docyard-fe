@@ -24,6 +24,15 @@ const routes: Routes = [
                 loadChildren: () => import('./role/role.module').then(m => m.RoleModule)
             }
         ]
+    },
+    {
+        path: 'group',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./group/group.module').then(m => m.GroupModule)
+            }
+        ]
     }
 ];
 
