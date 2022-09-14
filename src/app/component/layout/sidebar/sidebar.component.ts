@@ -50,6 +50,9 @@ export class SidebarComponent implements OnInit {
             case '/setting/ref/dept/add':
                 this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
                 break;
+            case '/setting/um/role/add':
+                this.setCurrentRoute(null, this.routes, '/setting/um/role');
+                break;
             default:
                 if (this.currentRoute.indexOf('/setting/ref/dept/edit') > -1) {
                     this.setCurrentRoute(null, this.routes, '/setting/ref/dept');
