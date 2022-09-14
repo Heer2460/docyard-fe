@@ -898,6 +898,48 @@ p-menu.user-profile-menu-pane {
 		
 	}
 	
+	&.p-dialog-view {
+		
+		.p-dialog-content {
+			padding: 0;
+			
+			.table {
+				table-layout: fixed;
+				
+				tr {
+					border-left: none;
+					border-right: none;
+					border-bottom: 1px dashed hsl(var(--color-blue-05));
+					
+					&:hover {
+						background-color: hsl(var(--color-green-02));
+					}
+					
+					&:not(:hover):nth-child(odd) {
+						background-color: hsla(var(--color-blue-05), 20%);
+					}
+					
+					td,
+					th {
+						border: none;
+					}
+					
+					th {
+						padding-left: 15px;
+					}
+					
+					th {
+						padding-right: 15px;
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
 }
 
 /*==============================================
