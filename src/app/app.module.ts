@@ -16,6 +16,7 @@ import { ConfirmationService } from "primeng/api";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppUtility } from "./util/app.utility";
+import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsSize: 100,
@@ -30,6 +31,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 @NgModule({
     declarations: [
         AppComponent,
+        PageNotFoundComponent,
     ],
     imports: [
         RouterModule,
