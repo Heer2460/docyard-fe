@@ -47,7 +47,7 @@
     </ng-container>
 </layout-component>
 
-<p-dialog [(visible)]="searchDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="searchDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -84,7 +84,7 @@
         <button (click)="searchRoles()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -115,96 +115,6 @@
         <button (click)="hideViewPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="addDialog" [modal]="true" styleClass="p-dialog-lg">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-building"></i>
-            <span>Add Role</span>
-        </div>
-    </ng-template>
-    <form [formGroup]="addRoleForm">
-        <div class="row">
-            <div class="col-6 mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="code" placeholder="Code" type="text">
-                    <label>Code</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(addRoleForm, 'code', 'code', 'required')">
-                    {{ appUtility.makeErrorMessage('Code', 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(addRoleForm, 'code', 'code', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
-                </small>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
-                    <label>Name</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(addRoleForm, 'name', 'name', 'required')">
-                    {{ appUtility.makeErrorMessage("Name", 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(addRoleForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
-                </small>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button (click)="hideAddPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="createRole()" [disabled]="addRoleForm.invalid" class="btn btn-sm btn-primary" type="button">Add
-        </button>
-    </ng-template>
-</p-dialog>
-<p-dialog [(visible)]="updateDialog" [modal]="true" styleClass="p-dialog-lg">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-building"></i>
-            <span>Update Role</span>
-        </div>
-    </ng-template>
-    <form [formGroup]="updateRoleForm">
-        <div class="row">
-            <div class="col-6 mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="code" placeholder="Code" type="text">
-                    <label>Code</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(updateRoleForm, 'code', 'code', 'required')">
-                    {{ appUtility.makeErrorMessage('Code', 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(updateRoleForm, 'code', 'code', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
-                </small>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
-                    <label>Name</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(updateRoleForm, 'name', 'name', 'required')">
-                    {{ appUtility.makeErrorMessage("Name", 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(updateRoleForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
-                </small>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="">
-                    <label class="d-block">Name</label>
-                    <p-dropdown [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
-                    </p-dropdown>
-                </div>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button (click)="hideUpdatePopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="updateRole()" [disabled]="updateRoleForm.invalid" class="btn btn-sm btn-primary" type="button">Update
-        </button>
-    </ng-template>
-</p-dialog>
-
 
 <p-confirmDialog #cd styleClass="dialog-danger">
     <ng-template pTemplate="header">
