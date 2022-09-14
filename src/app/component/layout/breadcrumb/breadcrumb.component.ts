@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {AppBreadcrumbConstants} from "../../../util/app.breadcrumb.constants";
 
 @Component({
     selector: 'breadcrumb-component',
@@ -16,7 +15,68 @@ export class BreadcrumbComponent implements OnInit {
     currentRouteUrl: string = '';
     titleAndDescOnly: boolean = false;
     isGridDisplay: boolean = false;
-    appBreadcrumbs: any = AppBreadcrumbConstants;
+    breadcrumbObj: any = [
+        {
+            label: 'Home',
+            route: '/home',
+            slug: 'home',
+            active: false,
+        },
+        {
+            label: 'Document Library',
+            route: '/doc-lib',
+            slug: 'doc-lib',
+            active: false,
+        },
+        {
+            label: 'Setting',
+            route: '/setting',
+            slug: 'setting',
+            active: false,
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            slug: 'um',
+            active: false,
+        },
+        {
+            label: 'User',
+            route: '/setting/um/user',
+            slug: 'user',
+            active: false,
+        },
+        {
+            label: 'Reference',
+            route: '/setting/ref',
+            slug: 'ref',
+            active: false,
+        },
+        {
+            label: 'Department',
+            route: '/setting/ref/dept',
+            slug: 'dept',
+            active: false,
+        },
+        {
+            label: 'Role',
+            route: '/setting/um/role',
+            slug: 'role',
+            active: false,
+        },
+        {
+            label: 'Add',
+            route: '',
+            slug: 'add',
+            active: false,
+        },
+        {
+            label: 'Edit',
+            route: '',
+            slug: 'edit',
+            active: false,
+        },
+    ];
 
     @Input() showDisplayButtons: boolean = false;
 
@@ -33,6 +93,7 @@ export class BreadcrumbComponent implements OnInit {
     }
 
     setPageTitleAndBreadcrumb() {
+<<<<<<< HEAD
         switch (this.currentRouteUrl) {
             case '/home':
                 this.title = this.appBreadcrumbs.home.title;
@@ -89,7 +150,31 @@ export class BreadcrumbComponent implements OnInit {
                     this.breadcrumbs = [...this.appBreadcrumbs.editDept.breadCrumb];
                 }
                 break;
+=======
+        const routesArray = this.currentRouteUrl.split('/');
+    
+        if(this.currentRouteUrl == '/home') {
+            this.title = this.breadcrumbObj[0].label;
+            this.description = 'Hello User, Welcome back!';
+            this.titleAndDescOnly = true;
+            return;
+>>>>>>> 29de2b02bb84394ac62967234b5638bf19166e5d
         }
+        
+        for(const route of routesArray) {
+            const breadcrumbItem = this.breadcrumbObj.find((item: any) => {
+                if(item.slug == route) {
+                    return item;
+                }
+            });
+            if(breadcrumbItem) {
+                this.breadcrumbs.push(breadcrumbItem);
+            }
+        }
+        
+        this.breadcrumbs = [this.breadcrumbObj[0], ...this.breadcrumbs];
+        this.title = this.breadcrumbs[this.breadcrumbs.length-1].label;
+        this.breadcrumbs[this.breadcrumbs.length-1].active = true;
 
     }
 

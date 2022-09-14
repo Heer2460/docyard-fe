@@ -18,14 +18,10 @@ import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
 })
 export class RoleComponent implements OnInit {
 
-    addRoleForm: FormGroup = new FormGroup({});
-    updateRoleForm: FormGroup = new FormGroup({});
     searchRoleForm: FormGroup = new FormGroup({});
     roles: any[] = [];
     message: string = 'Click search to get roles.';
     searchDialog: boolean = false;
-    addDialog: boolean = false;
-    updateDialog: boolean = false;
     viewDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
     selectedRole: RoleDTO = new RoleDTO();
@@ -65,21 +61,6 @@ export class RoleComponent implements OnInit {
             name: [''],
             status: ['']
         });
-
-        this.addRoleForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
-            remarks: [null, Validators.maxLength(256)],
-            status: ['Active'],
-        });
-
-        this.updateRoleForm = this.fb.group({
-            id: [null, Validators.required],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
-            remarks: [null, Validators.maxLength(256)],
-            status: [null, Validators.required],
-        });
     }
 
     searchRoles() {
@@ -100,52 +81,6 @@ export class RoleComponent implements OnInit {
                     this.appService.handleError(error, 'Role');
                 }
             });
-    }
-
-    createRole() {
-        if (this.addRoleForm.invalid) {
-            return;
-        }
-        let roleDTO: RoleDTO = new RoleDTO();
-        roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);
-        if (roleDTO) {
-            this.requestsService.postRequest(ApiUrlConstants.ROLE_API_URL, roleDTO)
-                .subscribe({
-                    next: (response: HttpResponse<any>) => {
-                        if (response.status === 200) {
-                            this.appService.successAddMessage('Role');
-                            this.searchRoles();
-                            this.hideAddPopupAction();
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Role');
-                    }
-                });
-        }
-    }
-
-    updateRole() {
-        if (this.updateRoleForm.invalid) {
-            return;
-        }
-        let roleDTO: RoleDTO = new RoleDTO();
-        roleDTO.convertToDTO(this.updateRoleForm.value);
-        if (roleDTO) {
-            this.requestsService.putRequest(ApiUrlConstants.ROLE_API_URL, roleDTO)
-                .subscribe({
-                    next: (response: HttpResponse<any>) => {
-                        if (response.status === 200) {
-                            this.appService.successUpdateMessage('Role');
-                            this.searchRoles();
-                            this.hideUpdatePopupAction();
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Role');
-                    }
-                });
-        }
     }
 
     deleteRole(id: any) {
@@ -175,14 +110,7 @@ export class RoleComponent implements OnInit {
     }
 
     onEditOptionSelected(data: any) {
-        this.showUpdatePopupAction();
-        this.updateRoleForm.patchValue({
-            id: data.id,
-            code: data.code,
-            name: data.name,
-            status: data.status,
-            remarks: data.remarks,
-        });
+        this.router.navigate(['/setting/um/role/edit']);
     }
 
     showSearchPopupAction() {
@@ -204,36 +132,6 @@ export class RoleComponent implements OnInit {
 
     hideViewPopupAction() {
         this.viewDialog = false;
-    }
-
-    showAddPopupAction() {
-        this.addRoleForm.patchValue({
-            code: '',
-            name: '',
-            remarks: '',
-            status: 'Active',
-        });
-        this.addRoleForm.markAsUntouched();
-        this.addDialog = true;
-    }
-
-    hideAddPopupAction() {
-        this.addDialog = false;
-    }
-
-    showUpdatePopupAction() {
-        this.updateRoleForm.patchValue({
-            code: '',
-            name: '',
-            status: '',
-            remarks: '',
-        });
-        this.updateRoleForm.markAsUntouched();
-        this.updateDialog = true;
-    }
-
-    hideUpdatePopupAction() {
-        this.updateDialog = false;
     }
 
     onItemDeleteAction(data: any) {

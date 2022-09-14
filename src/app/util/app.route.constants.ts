@@ -88,13 +88,6 @@ export class AppRouteConstants {
                     expended: false,
                     active: false
                 },
-                {
-                    label: 'Assign Permission',
-                    route: '/setting/um/ap',
-                    icon: 'icon-permission',
-                    expended: false,
-                    active: false
-                },
             ]
         },
         {
