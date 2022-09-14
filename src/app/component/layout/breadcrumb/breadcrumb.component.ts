@@ -4,7 +4,7 @@ import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
     selector: 'breadcrumb-component',
-    templateUrl: './breadcrumb.component.html',
+    templateUrl: './breadcrumb.template.html',
     styleUrls: ['./breadcrumb.component.less']
 })
 export class BreadcrumbComponent implements OnInit {

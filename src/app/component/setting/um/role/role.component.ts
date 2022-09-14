@@ -12,8 +12,8 @@ import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
 
 @Component({
-    selector: 'app-role',
-    templateUrl: './role.component.html',
+    selector: 'role-component',
+    templateUrl: './role.template.html',
     styleUrls: ['./role.component.less']
 })
 export class RoleComponent implements OnInit {

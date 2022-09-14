@@ -11,8 +11,8 @@ import {HttpResponse} from "@angular/common/http";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 
 @Component({
-    selector: 'app-edit-user',
-    templateUrl: './edit-user.component.html',
+    selector: 'edit-user-component',
+    templateUrl: './edit-user.template.html',
     styleUrls: ['./edit-user.component.less']
 })
 export class EditUserComponent implements OnInit {

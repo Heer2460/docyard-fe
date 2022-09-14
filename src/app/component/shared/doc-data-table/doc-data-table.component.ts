@@ -4,7 +4,7 @@ import {AppService} from "../../../service/app.service";
 
 @Component({
     selector: 'data-table-component',
-    templateUrl: './doc-data-table.component.html',
+    templateUrl: './doc-data-table.template.html',
     styleUrls: ['./doc-data-table.component.less']
 })
 export class DocDataTableComponent implements OnInit {
