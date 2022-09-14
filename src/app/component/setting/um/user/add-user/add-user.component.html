@@ -112,7 +112,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-floating">
-                            <textarea type="text" class="form-control" formControlName="address" id="address"></textarea>
+                            <textarea class="form-control" formControlName="address" id="address" placeholder="Address" id="floatingTextarea"></textarea>
                             <label for="address">Address</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}

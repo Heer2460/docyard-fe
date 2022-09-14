@@ -82,6 +82,12 @@ export class BreadcrumbComponent implements OnInit {
             slug: 'edit',
             active: false,
         },
+        {
+            label: 'View',
+            route: '',
+            slug: 'view',
+            active: false,
+        },
     ];
 
     @Input() showDisplayButtons: boolean = false;

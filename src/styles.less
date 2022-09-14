@@ -73,25 +73,6 @@ form {
 	}
 }
 
-.form-control {
-	
-	&.ng-touched {
-		
-		&.ng-invalid {
-			border-color: @color-red-01;
-			
-			~ .input-group-text {
-				border-color: @color-red-01;
-				color: @color-red-01;
-				background-color: transparent;
-			}
-			
-		}
-		
-	}
-	
-}
-
 /*====================================================
         Form controls
 ====================================================*/
@@ -133,9 +114,37 @@ fieldset {
 	background-color: hsl(var(--color-green-05));
 	border-color: hsl(var(--color-blue-05));
 	
+	&:not(textarea) {
+		.mixin-transition();
+	}
+	
 	&:focus {
 		border-color: hsl(var(--color-blue-01));
 		box-shadow: 0 0 0 .25rem hsla(var(--color-blue-01), 25%);
+	}
+	
+	&.ng-invalid {
+		
+		&.ng-touched {
+			border-color: @color-red-01 !important;
+			
+			&:focus,
+			&:not(:placeholder-shown) {
+				
+				~ label {
+					color: @color-red-01 !important;
+				}
+				
+			}
+			
+			~ .input-group-text {
+				border-color: @color-red-01;
+				color: @color-red-01;
+				background-color: transparent;
+			}
+			
+		}
+		
 	}
 	
 }
@@ -200,6 +209,11 @@ fieldset {
 		
 	}
 	
+	> textarea.form-control {
+		line-height: 14px;
+		min-height: initial;
+	}
+	
 	.input-group-text {
 		position: absolute;
 		top: 0;
@@ -216,6 +230,36 @@ fieldset {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	
+}
+
+//------Prime NG ----------
+.p-element {
+	
+	&.ng-invalid {
+		
+		&.ng-touched {
+			
+			.p-component {
+				border-color: @color-red-01;
+				
+				&.p-inputwrapper-focus {
+					
+					label {
+						color: @color-red-01;
+					}
+					
+				}
+				
+				.p-dropdown-trigger {
+					color: @color-red-01;
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 }
@@ -902,40 +946,6 @@ p-menu.user-profile-menu-pane {
 		
 		.p-dialog-content {
 			padding: 0;
-			
-			.table {
-				table-layout: fixed;
-				
-				tr {
-					border-left: none;
-					border-right: none;
-					border-bottom: 1px dashed hsl(var(--color-blue-05));
-					
-					&:hover {
-						background-color: hsl(var(--color-green-02));
-					}
-					
-					&:not(:hover):nth-child(odd) {
-						background-color: hsla(var(--color-blue-05), 20%);
-					}
-					
-					td,
-					th {
-						border: none;
-					}
-					
-					th {
-						padding-left: 15px;
-					}
-					
-					th {
-						padding-right: 15px;
-					}
-					
-				}
-				
-			}
-			
 		}
 		
 	}
@@ -1075,6 +1085,40 @@ p-menu.user-profile-menu-pane {
 		
 		&:focus {
 			box-shadow: inset 0 0 0 0.15rem hsla(var(--color-green-01), 50%);
+		}
+		
+	}
+	
+}
+
+//------- Bootstrap Table ----------
+.table.table-data-view {
+	table-layout: fixed;
+	
+	tr {
+		border-left: none;
+		border-right: none;
+		border-bottom: 1px dashed hsl(var(--color-blue-05));
+		
+		&:hover {
+			background-color: hsl(var(--color-green-02));
+		}
+		
+		&:not(:hover):nth-child(odd) {
+			background-color: hsla(var(--color-blue-05), 20%);
+		}
+		
+		td,
+		th {
+			border: none;
+		}
+		
+		th {
+			padding-left: 15px;
+		}
+		
+		th {
+			padding-right: 15px;
 		}
 		
 	}
@@ -1319,27 +1363,51 @@ doc-info-pane-component {
 }
 
 .p-float-label {
+	display: flex;
+	flex-direction: column;
+	
+	> .ng-invalid {
+		
+		&.ng-dirty {
+		
+		+ label {
+			color: hsl(var(--color-blue-06));
+		}
+		
+		}
+		
+	}
 	
 	> label {
 		color: hsl(var(--color-blue-06));
+		width: 100%;
+		height: 40px;
+		top: 0;
+		left: 0;
+		margin: 0;
+		line-height: 20px;
+		padding: 10px;
 	}
 	
-}
-
-.p-float-label input:focus,
-.p-float-label input.p-filled,
-.p-float-label textarea:focus,
-.p-float-label textarea.p-filled,
-.p-float-label .p-inputwrapper-focus,
-.p-float-label .p-inputwrapper-filled {
-	
-	~ label {
-		top: 0;
-		font-size: 14px;
-		color: hsl(var(--color-blue-01));
-		background-color: @color-white;
-		padding: 0 5px;
-		font-weight: 600;
+	input:focus,
+	input.p-filled,
+	textarea:focus,
+	textarea.p-filled,
+	.p-inputwrapper-focus,
+	.p-inputwrapper-filled {
+		
+		~ label {
+			top: 0;
+			font-size: 14px;
+			color: hsl(var(--color-blue-01));
+			background-color: @color-white;
+			padding: 0 5px;
+			font-weight: 600;
+			width: initial;
+			height: initial;
+			transform: scale(0.85) translateY(calc(-50% - 2px)) translateX(5px);
+		}
+		
 	}
 	
 }
@@ -1699,6 +1767,7 @@ doc-info-pane-component {
 		height: 30px;
 	}
 	
+	textarea.form-control,
 	.form-control {
 		height: 30px;
 		padding: 5px;
@@ -1898,19 +1967,19 @@ doc-info-pane-component {
 			left: 6px;
 		}
 		
-	}
-	
-	.p-float-label input:focus,
-	.p-float-label input.p-filled,
-	.p-float-label textarea:focus,
-	.p-float-label textarea.p-filled,
-	.p-float-label .p-inputwrapper-focus,
-	.p-float-label .p-inputwrapper-filled {
-		
-		~ label {
-			top: 3px;
-			font-size: 10px;
+		input:focus,
+		input.p-filled,
+		textarea:focus,
+		textarea.p-filled,
+		.p-inputwrapper-focus,
+		.p-inputwrapper-filled {
+			
+			~ label {
+				top: 3px;
+				font-size: 10px;
+			}
 		}
+		
 	}
 	
 	.p-dropdown {
