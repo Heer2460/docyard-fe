@@ -1,1 +1,407 @@
-<p>add-role works!</p>
+<layout-component>
+    <ng-container pageBody>
+        <fieldset>
+            <header>Personal information</header>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <label for="name">Name</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mt-30px">
+            <header>Address</header>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="street" placeholder="Street">
+                        <label for="street">Street</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="city" placeholder="City">
+                        <label for="city">City</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="country" placeholder="Country">
+                        <label for="country">Country</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="postalCode" placeholder="Postal code">
+                        <label for="postalCode">Postal code</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="mt-30px">
+            <header>Permissions</header>
+            <p-accordion styleClass="mb-3">
+                <p-accordionTab header="User Management" [selected]="true">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Delete</th>
+                            <th>Lock/Unlock</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-user"></i>
+                                <span>User</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="check1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="check2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="check3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="check4"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="check5">
+                                    <label class="form-check-label" for="check5"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-role"></i>
+                                <span>Roles</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="role1">
+                                    <label class="form-check-label" for="role1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="role2">
+                                    <label class="form-check-label" for="role2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="role3">
+                                    <label class="form-check-label" for="role3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="role4">
+                                    <label class="form-check-label" for="role4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-role"></i>
+                                <span>Groups</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="group1">
+                                    <label class="form-check-label" for="group1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="group2">
+                                    <label class="form-check-label" for="group2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="group3">
+                                    <label class="form-check-label" for="group3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="group4">
+                                    <label class="form-check-label" for="group4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+                <p-accordionTab header="Permissions">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Link Permissions</th>
+                            <th>Modify Permissions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-permission"></i>
+                                <span>Permissions</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="perm1">
+                                    <label class="form-check-label" for="perm1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="perm2">
+                                    <label class="form-check-label" for="perm2"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+                <p-accordionTab header="Reference">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-link-filled"></i>
+                                <span>Reference Tables</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref1">
+                                    <label class="form-check-label" for="ref1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref2">
+                                    <label class="form-check-label" for="ref2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref3">
+                                    <label class="form-check-label" for="ref3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="ref4">
+                                    <label class="form-check-label" for="ref4"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+                <p-accordionTab header="Document Operations">
+                    <table class="table table-striped table-permissions">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Edit</th>
+                            <th>View</th>
+                            <th>Delete</th>
+                            <th>Upload</th>
+                            <th>Add</th>
+                            <th>Star</th>
+                            <th>Share</th>
+                            <th>Convert</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <i class="icon-folder"></i>
+                                <span>Folder</span>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder1">
+                                    <label class="form-check-label" for="folder1"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder2">
+                                    <label class="form-check-label" for="folder2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder3">
+                                    <label class="form-check-label" for="folder3"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="folder4">
+                                    <label class="form-check-label" for="folder4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-file"></i>
+                                <span>File</span>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file1">
+                                    <label class="form-check-label" for="file1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file2">
+                                    <label class="form-check-label" for="file2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file3">
+                                    <label class="form-check-label" for="file3"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file4">
+                                    <label class="form-check-label" for="file4"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file5">
+                                    <label class="form-check-label" for="file5"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file6">
+                                    <label class="form-check-label" for="file6"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="file7">
+                                    <label class="form-check-label" for="file7"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-comments"></i>
+                                <span>Comments</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="comments">
+                                    <label class="form-check-label" for="comments"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="icon-properties"></i>
+                                <span>Tags</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="form-check form-check-only">
+                                    <input class="form-check-input" type="checkbox" value="" id="tags">
+                                    <label class="form-check-label" for="tags"></label>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </p-accordionTab>
+            </p-accordion>
+        </fieldset>
+    </ng-container>
+    <ng-container pageFooter>
+        <button class="btn btn-sm btn-danger">Cancel</button>
+        <button class="btn btn-sm btn-primary">Add Role</button>
+    </ng-container>
+</layout-component>

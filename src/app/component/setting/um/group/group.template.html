@@ -1,0 +1,256 @@
+<layout-component>
+    <ng-container actionItems>
+        <button (click)="showAddGroupPopupAction()" class="btn btn-sm btn-primary">
+            <i class="icon-plus"></i> Add
+        </button>
+        <button (click)="showSearchPopupAction()" class="btn btn-sm btn-secondary">
+            <i class="icon-search"></i> Search
+        </button>
+    </ng-container>
+    <ng-container pageBody>
+        <p-table [value]="groups">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="code">Code
+                        <p-sortIcon field="code"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name">Group Name
+                        <p-sortIcon field="groupName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status">Status
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="role">Role
+                        <p-sortIcon field="role"></p-sortIcon>
+                    </th>
+                    <th class="actions">Action</th>
+                </tr>
+            </ng-template>
+            <ng-template let-row pTemplate="body">
+                <tr [ngClass]="row.selected ? 'p-highlight' : ''" [pSelectableRow]="row">
+                    <td>{{row.code}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.status}}</td>
+                    <td>Abdullah</td>
+                    <td>
+                        <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
+                            <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
+                            <i class="icon-menu-horizontal"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="4" class="text-center">
+                        {{message}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</layout-component>
+
+<p-dialog [(visible)]="visibleSearchGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Search Group</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="searchGroupForm">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="code" placeholder="Code" type="text">
+                    <label>Code</label>
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="groupName" placeholder="Name" type="text">
+                    <label>Name</label>
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="roles" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >
+                    <label for="status">Role</label>
+                </span>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label for="status">Status</label>
+                </span>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button (click)="hideSearchPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button (click)="searchGroup()" class="btn btn-sm btn-primary" type="button">Search</button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="visibleViewGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>View Role</span>
+        </div>
+    </ng-template>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{selectedGroup.code}}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{selectedGroup.name}}</td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+<!--                    <td>{{selectedGroup.role}}</td>-->
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{selectedGroup.status}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button (click)="hideViewGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="visibleAddGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Add Group</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="addGroupForm">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="code" placeholder="Code" type="text">
+                    <label>Code</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'code', 'code', 'required')">
+                    {{ appUtility.makeErrorMessage('Code', 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'code', 'code', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
+                    <label>Name</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'name', 'name', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'name', 'name', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 35) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="remarks" placeholder="Remarks" type="text">
+                    <label>Remarks</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'required')">
+                    {{ appUtility.makeErrorMessage('Remarks', 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Remarks', 'maxlength', 256) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >
+                    <label for="status">Role</label>
+                </span>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <label for="status">Status</label>
+                </span>
+            </div>
+
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button (click)="hideAddGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button (click)="createGroup()" [disabled]="addGroupForm.invalid" class="btn btn-sm btn-primary" type="button">Add
+        </button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="visibleUpdateGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Update Group</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="updateGroupForm">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="code" placeholder="Code" type="text">
+                    <label>Code</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'code', 'code', 'required')">
+                    {{ appUtility.makeErrorMessage('Code', 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'code', 'code', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
+                    <label>Name</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'groupName', 'groupName', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'groupName', 'groupName', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="">
+                    <label class="d-block">Name</label>
+                    <p-dropdown [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button (click)="hideUpdateGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button (click)="updateGroup()" [disabled]="updateGroupForm.invalid" class="btn btn-sm btn-primary" type="button">Update
+        </button>
+    </ng-template>
+</p-dialog>
+
+
+<p-confirmDialog #cd styleClass="dialog-danger">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Delete Group</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Delete</button>
+    </ng-template>
+</p-confirmDialog>

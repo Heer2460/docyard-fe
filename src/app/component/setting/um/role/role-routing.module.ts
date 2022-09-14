@@ -16,15 +16,15 @@ const routes: Routes = [
             }
         ]
     },
-  {
-    path: 'edit',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./edit-role/edit-role.module').then(m => m.EditRoleModule)
-      }
-    ]
-  }
+    {
+        path: 'edit',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./edit-role/edit-role.module').then(m => m.EditRoleModule)
+            }
+        ]
+    }
 ];
 
 @NgModule({
