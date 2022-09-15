@@ -34,8 +34,7 @@ export class AppSettingComponent implements OnInit {
             {
                 label: 'Profile',
                 icon: 'icon-user',
-                command: () => {
-                }
+                command: () => this.router.navigate(['/profile'])
             },
             {
                 label: 'Logout',

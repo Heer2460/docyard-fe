@@ -41,6 +41,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'profile',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/user-profile/user-profile.module').then(m => m.UserProfileModule)
+            }
+        ]
+    },
+    {
         path: '**',
         component: PageNotFoundComponent
     }
