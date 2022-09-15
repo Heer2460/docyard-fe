@@ -106,8 +106,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     setAttachment(event: any) {
-        console.log(event.target.files[0]);
-        console.log(event.target.files[0].size / 1024 / 1024);
         let format;
         let size;
         if (event.target.files.length > 0) {

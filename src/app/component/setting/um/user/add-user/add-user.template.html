@@ -119,26 +119,19 @@
                             </small>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="logo">
-                                Logo
-                                <span>No file chosen</span>
-                            </label>
-                            <input (change)="setAttachment($event)" class="form-control" id="logo"
-                                   type="file">
-
-                            <div class="file-input-child">
-                                <button class="btn btn-lg btn-danger" *ngIf="logoImageDataUrl" (click)="clearFiles()">
-                                    <i class="pi pi-times"></i>
+                    <div class="col-3 mb-3">
+                        <div class="custom-file">
+                            <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
+                            <input #file (change)="setAttachment($event)" class="form-control" id="file" type="file">
+                            <div class="file-viewer">
+                                <button class="btn" *ngIf="logoImageDataUrl" (click)="clearFiles()">
+                                    <i class="icon-times"></i>
                                 </button>
                                 <img
                                         *ngIf="logoImageDataUrl"
                                         src="data:image/jpeg;base64,{{logoImageDataUrl}}"
                                         alt="Logo"/>
-                                <img id="profileValid" *ngIf="!logoImageDataUrl"
-                                     src='./assets/images/default-file-image.svg'
-                                     alt="Logo"/>
+                                <i class="icon-image" *ngIf="!logoImageDataUrl"></i>
                             </div>
                         </div>
                     </div>
