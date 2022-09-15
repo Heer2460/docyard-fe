@@ -1,22 +1,23 @@
-import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterModule } from "@angular/router";
-import { ToastrModule } from "ngx-toastr";
+import {CommonModule} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterModule} from "@angular/router";
+import {ToastrModule} from "ngx-toastr";
 import {
-    NgxUiLoaderConfig, NgxUiLoaderHttpModule,
+    NgxUiLoaderConfig,
+    NgxUiLoaderHttpModule,
     NgxUiLoaderModule,
     NgxUiLoaderRouterModule,
     PB_DIRECTION
 } from "ngx-ui-loader";
-import { ConfirmationService } from "primeng/api";
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AppUtility } from "./util/app.utility";
-import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import {ConfirmationService} from "primeng/api";
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AppUtility} from "./util/app.utility";
+import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsSize: 100,
@@ -49,7 +50,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderRouterModule,
-        NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+        NgxUiLoaderHttpModule.forRoot({showForeground: true})
     ],
     providers: [
         AppUtility,

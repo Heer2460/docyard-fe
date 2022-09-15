@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class AppSettingComponent implements OnInit {
     
     toggleRightPaneStatus: boolean = false;
+    changePasswordDialog: boolean = false;
     items: MenuItem[] = [];
     @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
     
@@ -25,6 +26,11 @@ export class AppSettingComponent implements OnInit {
                 command: () => this.router.navigate(['setting/um/user'])
             },
             {separator: true},
+            {
+                label: 'Change password',
+                icon: 'icon-lock',
+                command: () => this.showChangePasswordDialogAction()
+            },
             {
                 label: 'Profile',
                 icon: 'icon-user',
@@ -55,6 +61,18 @@ export class AppSettingComponent implements OnInit {
     
     logoutUser() {
         this.router.navigate(['/login']);
+    }
+    
+    showChangePasswordDialogAction() {
+        this.changePasswordDialog = true;
+    }
+    
+    hideChangePasswordDialogAction() {
+        this.changePasswordDialog = false;
+    }
+    
+    changePasswordAction() {
+    
     }
     
 }
