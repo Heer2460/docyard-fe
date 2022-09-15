@@ -5,6 +5,8 @@ import { AddRoleRoutingModule } from './add-role-routing.module';
 import {AddRoleComponent} from "./add-role.component";
 import {LayoutModule} from "../../../../layout/layout.module";
 import {AccordionModule} from "primeng/accordion";
+import {DropdownModule} from "primeng/dropdown";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import {AccordionModule} from "primeng/accordion";
         CommonModule,
         AddRoleRoutingModule,
         LayoutModule,
-        AccordionModule
+        AccordionModule,
+        DropdownModule,
+        ReactiveFormsModule
     ]
 })
 export class AddRoleModule { }

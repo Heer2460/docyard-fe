@@ -83,10 +83,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
         if (this.addUserForm.invalid) {
             return;
         }
-        if (this.files.length < 1) {
-            this.toastService.error('Profile picture is missing.', 'Logo');
-            return;
-        }
+        // if (this.files.length < 1) {
+        //     this.toastService.error('Profile picture is missing.', 'Logo');
+        //     return;
+        // }
         let userDTO: UserDTO = new UserDTO();
         userDTO = userDTO.convertToNewDTO(this.addUserForm.value);
         if (userDTO) {

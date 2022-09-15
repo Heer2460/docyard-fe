@@ -24,7 +24,7 @@
                 </tr>
             </ng-template>
             <ng-template let-row pTemplate="body">
-                <tr [ngClass]="row.selected ? 'p-highlight' : ''" [pSelectableRow]="row">
+                <tr>
                     <td>{{row.code}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.status}}</td>
@@ -61,9 +61,6 @@
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
                     <label>Code</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(searchRoleForm, 'code', 'code', 'required')">
-                    {{ appUtility.makeErrorMessage('Code', 'required') }}
-                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -73,7 +70,7 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown id="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
                     <label for="status">Status</label>
                 </span>
             </div>
