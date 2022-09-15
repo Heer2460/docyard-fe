@@ -30,7 +30,7 @@ export class RequestService {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
             {
-                'Authorization': 'Bearer ' + this.getToken(),
+                // 'Authorization': 'Bearer ' + this.getToken(),
             }
         );
         return reqHeader;
@@ -77,7 +77,7 @@ export class RequestService {
         return this.http.post(this.getBEAPIServer() + url, params, {headers: headers, observe: 'response'});
     }
 
-    postRequestMultipartFormAndData(url: any, files: any[], data: any, stateId?: string) {
+    postRequestMultipartFormAndData(url: any, files: any[], data: any) {
         let headers = this.getBasicMultipartHeaders();
         let formData: FormData = new FormData();
         formData.append('data', new Blob([JSON.stringify(data)], {

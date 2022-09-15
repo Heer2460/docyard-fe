@@ -119,6 +119,29 @@
                             </small>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="logo">
+                                Logo
+                                <span>No file chosen</span>
+                            </label>
+                            <input (change)="setAttachment($event)" class="form-control" id="logo"
+                                   type="file">
+
+                            <div class="file-input-child">
+                                <button class="btn btn-lg btn-danger" *ngIf="logoImageDataUrl" (click)="clearFiles()">
+                                    <i class="pi pi-times"></i>
+                                </button>
+                                <img
+                                        *ngIf="logoImageDataUrl"
+                                        src="data:image/jpeg;base64,{{logoImageDataUrl}}"
+                                        alt="Logo"/>
+                                <img id="profileValid" *ngIf="!logoImageDataUrl"
+                                     src='./assets/images/default-file-image.svg'
+                                     alt="Logo"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
             <fieldset class="mt-30px">
