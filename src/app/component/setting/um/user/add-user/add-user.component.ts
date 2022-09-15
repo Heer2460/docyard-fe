@@ -119,7 +119,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
             format = event.target.files[0].type;
             if (!format.includes('image/')) {
                 this.toastService.error('Image format not valid.', 'Logo');
-                this.clearFiles();
                 return;
             }
             let obj = {
