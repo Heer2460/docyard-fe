@@ -1,20 +1,104 @@
 <layout-component>
     <ng-container pageBody>
-        <table class="table table-data-view">
-            <tbody>
-            <tr>
-                <th>Name</th>
-                <td>Muhammad Umar Farooq</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>umar.bwn</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>Active</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-container">
+                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="User image placeholder">
+                    <button class="btn btn-secondary">
+                        <i class="icon-edit"></i>
+                    </button>
+                </div>
+                <div class="content-container">
+                    <div class="left-container">
+                        <div>
+                            <h1>Umar Farooq</h1>
+                            <h4>Senior software engineer</h4>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-sm btn-primary">Edit profile</button>
+                        </div>
+                    </div>
+                    <div class="right-container">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th>Username</th>
+                                <td>Umar Farooq</td>
+                            </tr>
+                            <tr>
+                                <th>Email address</th>
+                                <td>umar.bwn@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <th>Age</th>
+                                <td>28 years</td>
+                            </tr>
+                            <tr>
+                                <th>Phone #</th>
+                                <td>+91-123-5673-2</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="actions">
+                            <button class="btn btn-sm btn-secondary">Change password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>
+            <span>Activity</span>
+        </h2>
+        <ul class="activity-timeline">
+            <li>
+                <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                <p>
+                    <span>Umar Farooq</span>
+                    <span class="text-muted">has changed</span>
+                    <span>2 attributes</span>
+                    <span  class="text-muted">on jan 21, 2021</span>
+                </p>
+            </li>
+            <li>
+                <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                <p>
+                    <span>Umar Farooq</span>
+                    <span class="text-muted">moved</span>
+                    <span>Tour-pic.jpeg</span>
+                    <span  class="text-muted">to</span>
+                    <span>Tour 2021</span>
+                    <span  class="text-muted">on Jan 21, 2021</span>
+                </p>
+            </li>
+            <li class="has-comments">
+                <div class="activity-box">
+                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                    <p>
+                        <span>Umar Farooq</span>
+                        <span  class="text-muted">commented on Jan 21, 2021</span>
+                    </p>
+                </div>
+                <div class="comment-box">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra
+                    </p>
+                    <div class="replies-tab">
+                        <i class="icon-arrow-right-curved"></i>
+                        <a role="button">Show 3 replies</a>
+                        <ul>
+                            <li>
+                                <img src="./assets/images/image.png" alt="Avatar">
+                            </li>
+                            <li>
+                                <img src="./assets/images/image.png" alt="Avatar">
+                            </li>
+                            <li>
+                                <img src="./assets/images/image.png" alt="Avatar">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </ng-container>
 </layout-component>
