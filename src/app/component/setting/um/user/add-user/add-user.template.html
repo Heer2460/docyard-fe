@@ -87,11 +87,8 @@
                     <div class="col-3 mb-3">
                         <div class="form-floating">
                             <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
-                                   placeholder="Phone Number" type="text">
+                                   placeholder="Phone Number" type="text" onlyNumber [float]="false">
                             <label for="name">Phone Number</label>
-                            <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'required')">
-                                {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
-                            </small>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
                             </small>
@@ -100,11 +97,8 @@
                     <div class="col-3 mb-3">
                         <div class="form-floating">
                             <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
-                                   placeholder="Mobile Number" type="text">
+                                   placeholder="Mobile Number" type="text" onlyNumber [float]="false">
                             <label for="mobileNumber">Mobile Number</label>
-                            <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'required')">
-                                {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
-                            </small>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
                             </small>
@@ -143,7 +137,8 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        optionLabel="value" optionValue="value"></p-dropdown>
+                                        placeholder="Select group" optionLabel="value" optionValue="value"
+                                        [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                             <label for="groupId">Group</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
@@ -153,7 +148,8 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="departments" appendTo="body" formControlName="departmentId" id="departmentId"
-                                        optionLabel="value" optionValue="value"></p-dropdown>
+                                        placeholder="Select department" optionLabel="name" optionValue="id"
+                                        [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                             <label for="departmentId">Department</label>
                         </span>
                     </div>
@@ -168,7 +164,8 @@
         </form>
     </ng-container>
     <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger" routerLink="setting/um/user">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="addUserForm.invalid" (click)="createUser()">Add User</button>
+        <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button"  (click)="createUser()">Add User</button>
+<!--        [disabled]="addUserForm.invalid"-->
     </ng-container>
 </layout-component>

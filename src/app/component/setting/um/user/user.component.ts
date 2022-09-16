@@ -9,6 +9,7 @@ import {AppUtility} from "../../../../util/app.utility";
 import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {forkJoin, Subject, takeUntil} from "rxjs";
 
 @Component({
     selector: 'user-component',
@@ -30,6 +31,7 @@ export class UserComponent implements OnInit {
     groups: any[] = [];
     departments: any[] = [];
     selectedUser: any;
+    destroy: Subject<boolean> = new Subject();
     message: string = 'Click search to get users.';
     actionItems: MenuItem[] = [
         {
@@ -59,8 +61,30 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.preloadedData();
         this.buildForms();
         this.searchUsers();
+    }
+
+    preloadedData(): void {
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        forkJoin([groups, departments])
+            .pipe(takeUntil(this.destroy))
+            .subscribe(
+                {
+                    next: (response: HttpResponse<any>[]) => {
+                        if (response[0].status === 200) {
+                            this.groups = response[0].body.data;
+                        }
+                        if (response[1].status === 200) {
+                            this.departments = response[1].body.data;
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'User');
+                    }
+                });
     }
 
     buildForms() {
@@ -140,6 +164,10 @@ export class UserComponent implements OnInit {
         } else {
             this.toastService.error('Select Item', 'User');
         }
+    }
+
+    ngOnDestroy() {
+        this.destroy.next(true);
     }
 
 }

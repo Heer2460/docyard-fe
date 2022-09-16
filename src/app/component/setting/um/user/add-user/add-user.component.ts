@@ -66,8 +66,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
             username: [null, [Validators.required, Validators.maxLength(35)]],
             name: [null, [Validators.required, Validators.maxLength(70)]],
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
-            phoneNumber: [null, [Validators.required, Validators.maxLength(32)]],
-            mobileNumber: [null, [Validators.required, Validators.maxLength(32)]],
+            phoneNumber: [null, [Validators.maxLength(32)]],
+            mobileNumber: [null, [Validators.maxLength(32)]],
             passwords: this.fb.group({
                 password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
                 confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
@@ -80,6 +80,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     createUser() {
+        console.log(this.addUserForm.value)
+        return;
         if (this.addUserForm.invalid) {
             return;
         }
@@ -143,4 +145,5 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy.next(true);
     }
+
 }

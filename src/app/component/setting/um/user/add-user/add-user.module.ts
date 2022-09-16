@@ -5,6 +5,7 @@ import {AddUserRoutingModule} from "./add-user-routing.module";
 import {LayoutModule} from "../../../../layout/layout.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
+import {CustomDirectiveModule} from "../../../../../shared/directive/custom.directive.module";
 
 
 
@@ -17,7 +18,8 @@ import {DropdownModule} from "primeng/dropdown";
         AddUserRoutingModule,
         LayoutModule,
         ReactiveFormsModule,
-        DropdownModule
+        DropdownModule,
+        CustomDirectiveModule
     ]
 })
 export class AddUserModule { }

@@ -22,7 +22,6 @@ export class RoleComponent implements OnInit {
     roles: any[] = [];
     message: string = 'Click search to get roles.';
     searchDialog: boolean = false;
-    viewDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
     selectedRole: RoleDTO = new RoleDTO();
 
