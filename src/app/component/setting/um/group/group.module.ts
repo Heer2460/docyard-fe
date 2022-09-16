@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {GroupRoutingModule} from "./group-routing.module";
 import {GroupComponent} from "./group.component";
+import {MultiSelectModule} from "primeng/multiselect";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {GroupComponent} from "./group.component";
         ConfirmDialogModule,
         ReactiveFormsModule,
         DropdownModule,
+        MultiSelectModule
     ]
 })
 export class GroupModule {
