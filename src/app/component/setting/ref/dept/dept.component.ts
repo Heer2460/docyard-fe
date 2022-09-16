@@ -187,6 +187,7 @@ export class DeptComponent implements OnInit {
             code: '',
             name: '',
             status: '',
+            roles:''
         });
         this.searchDialog = true;
     }

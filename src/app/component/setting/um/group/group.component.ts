@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
 import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
+import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
 
 
 @Component({
@@ -20,9 +21,8 @@ export class GroupComponent implements OnInit {
     addGroupForm: FormGroup = new FormGroup({});
     updateGroupForm: FormGroup = new FormGroup({});
     searchGroupForm: FormGroup = new FormGroup({});
-    groups: any[] = [];
-    roles: any[] = [];
-    selectedRoles = '';
+    groups: GroupDTO[] = [];
+    roles: RoleDTO[] = [];
     message: string = 'Click search to get groups.';
     visibleSearchGroupDialog: boolean = false;
     visibleAddGroupDialog: boolean = false;
@@ -53,13 +53,11 @@ export class GroupComponent implements OnInit {
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,
                 private appService: AppService, public appUtility: AppUtility,
-                private toastService: ToastrService,
-    ) {
+                private toastService: ToastrService) {
     }
 
-    searchRoles() {
-        let url = ApiUrlConstants.ROLE_API_URL + 'search' + '?code=' + this.searchGroupForm.value.code +
-            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status;
+    getAllRoles() {
+        let url = ApiUrlConstants.ROLE_API_URL;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
@@ -68,9 +66,7 @@ export class GroupComponent implements OnInit {
 
                     } else {
                         this.roles = [];
-                        this.message = 'No role found.';
                     }
-                    this.hideSearchPopupAction();
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Role');
@@ -80,38 +76,41 @@ export class GroupComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
-        this.searchGroup();
-        this.searchRoles();
+        this.getAllRoles();
     }
 
     buildForms() {
         this.searchGroupForm = this.fb.group({
-            code: [null, [Validators.maxLength(17)]],
-            name: [null, [Validators.maxLength(35)]],
+            code: ['', [Validators.maxLength(17)]],
+            name: ['', [Validators.maxLength(35)]],
             status: ['Active'],
-            roles: []
+            roles: ['']
         });
 
         this.addGroupForm = this.fb.group({
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
-            remarks: [null, [Validators.required, Validators.maxLength(256)]],
+            remarks: [null, [Validators.maxLength(256)]],
             status: ['Active'],
-            roles: []
+            role: ['']
         });
 
         this.updateGroupForm = this.fb.group({
+            id:[],
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: [null, Validators.required],
-            roles: []
+            role: ['']
         });
     }
 
     searchGroup() {
+        if (this.searchGroupForm.invalid) {
+            return;
+        }
         let url = ApiUrlConstants.GROUP_API_URL + 'search?code=' + this.searchGroupForm.value.code +
-            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status;
+            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status + '&role=' + this.searchGroupForm.value.roles;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
@@ -136,7 +135,7 @@ export class GroupComponent implements OnInit {
         let groupDTO: GroupDTO = new GroupDTO();
         groupDTO = groupDTO.convertToNewDTO(this.addGroupForm.value);
         if (groupDTO) {
-            this.requestsService.postRequest(ApiUrlConstants.ROLE_API_URL, groupDTO)
+            this.requestsService.postRequest(ApiUrlConstants.GROUP_API_URL, groupDTO)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
@@ -159,17 +158,17 @@ export class GroupComponent implements OnInit {
         let groupDTO: GroupDTO = new GroupDTO();
         groupDTO.convertToDTO(this.updateGroupForm.value);
         if (groupDTO) {
-            this.requestsService.putRequest(ApiUrlConstants.ROLE_API_URL, groupDTO)
+            this.requestsService.putRequest(ApiUrlConstants.GROUP_API_URL, groupDTO)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successUpdateMessage('Role');
+                            this.appService.successUpdateMessage('Group');
                             this.searchGroup();
                             this.hideUpdateGroupPopupAction();
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Role');
+                        this.appService.handleError(error, 'Group');
                     }
                 });
         }
@@ -208,7 +207,7 @@ export class GroupComponent implements OnInit {
             code: data.code,
             name: data.name,
             status: data.status,
-            role: data.roles,
+            role: data.role,
             remarks: data.remarks,
         });
     }
@@ -217,7 +216,7 @@ export class GroupComponent implements OnInit {
         this.searchGroupForm.patchValue({
             code: '',
             name: '',
-            role: [],
+            roles: '',
             status: '',
         });
         this.visibleSearchGroupDialog = true;
@@ -227,7 +226,7 @@ export class GroupComponent implements OnInit {
         this.searchGroupForm.patchValue({
             code: '',
             name: '',
-            role: [],
+            roles: '',
             status: '',
         });
         this.searchGroupForm.markAsUntouched();
@@ -248,7 +247,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: [],
+            role: '',
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
@@ -260,7 +259,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: [],
+            role: '',
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
@@ -272,7 +271,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             status: '',
-            role: [],
+            role: '',
             remarks: '',
         });
         this.updateGroupForm.markAsUntouched();

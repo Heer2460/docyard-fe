@@ -17,11 +17,11 @@
                     <th pSortableColumn="name">Name
                         <p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="status">Status
-                        <p-sortIcon field="status"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="role">Role
                         <p-sortIcon field="role"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status">Status
+                        <p-sortIcon field="status"></p-sortIcon>
                     </th>
                     <th class="actions">Action</th>
                 </tr>
@@ -30,8 +30,8 @@
                 <tr>
                     <td>{{row.code}}</td>
                     <td>{{row.name}}</td>
+                    <td>{{row.rolesNameList}}</td>
                     <td>{{row.status}}</td>
-                    <td>Abdullah</td>
                     <td>
                         <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
                             <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
@@ -51,7 +51,7 @@
     </ng-container>
 </layout-component>
 
-<p-dialog [(visible)]="visibleSearchGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="visibleSearchGroupDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -75,7 +75,8 @@
             <div class="col-6 mb-3">
                 <span class="p-float-label">
 <!--                <p-dropdown inputId="roles" [options]="roles" formControlName="roles" appendTo="body" optionLabel="name" optionValue="name"></p-dropdown>-->
-                    <p-multiSelect [options]="roles" [(ngModel)]="selectedRoles" optionValue="name"></p-multiSelect>
+                    <p-multiSelect [options]="roles" formControlName="roles" optionLabel="code" optionValue="id"
+                                   appendTo="body" [filter]="false"></p-multiSelect>
                     <label >Roles</label>
                 </span>
             </div>
@@ -92,7 +93,7 @@
         <button (click)="searchGroup()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleViewGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="visibleViewGroupDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -127,7 +128,7 @@
         <button (click)="hideViewGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleAddGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="visibleAddGroupDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -165,9 +166,6 @@
                     <input class="form-control" formControlName="remarks" placeholder="Remarks" type="text">
                     <label>Remarks</label>
                 </div>
-                <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'required')">
-                    {{ appUtility.makeErrorMessage('Remarks', 'required') }}
-                </small>
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Remarks', 'maxlength', 256) }}
                 </small>
@@ -175,7 +173,9 @@
             <div class="col-6 mb-3">
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
-                    <label for="status">Role</label>
+                   <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
+                                  appendTo="body" [filter]="false"></p-multiSelect>
+                    <label >Roles</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
@@ -193,7 +193,7 @@
         </button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleUpdateGroupDialog" [modal]="true" styleClass="p-dialog-lg">
+<p-dialog [(visible)]="visibleUpdateGroupDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -227,11 +227,28 @@
                 </small>
             </div>
             <div class="col-6 mb-3">
-                <div class="">
-                    <label class="d-block">Name</label>
-                    <p-dropdown [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
+                <div class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
                     </p-dropdown>
+                    <label for="status">Status</label>
                 </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="remarks" placeholder="Remarks" type="text">
+                    <label>Remarks</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Remarks', 'maxlength', 256) }}
+                </small>
+            </div>
+            <div class="col-6 mb-3">
+                <span class="p-float-label">
+<!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
+                   <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
+                                  appendTo="body" [filter]="false"></p-multiSelect>
+                    <label >Roles</label>
+                </span>
             </div>
         </div>
     </form>
