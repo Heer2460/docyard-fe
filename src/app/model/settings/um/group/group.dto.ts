@@ -7,6 +7,7 @@ export class GroupDTO extends BaseDTO {
     name: string | undefined;
     status: string | undefined;
     role: string | undefined;
+    rolesNameList:  string | undefined;
     remarks: string | undefined;
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
@@ -16,6 +17,7 @@ export class GroupDTO extends BaseDTO {
         this.code = data.code;
         this.name = data.name;
         this.status = data.status;
+        this.rolesNameList = data.rolesNameList
         this.role = data.role;
         this.remarks = data.remarks;
         this.createdOn = data.createdOn ? data.createdOn : new Date();
