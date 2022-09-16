@@ -76,7 +76,7 @@
                 <span class="p-float-label">
 <!--                <p-dropdown inputId="roles" [options]="roles" formControlName="roles" appendTo="body" optionLabel="name" optionValue="name"></p-dropdown>-->
                     <p-multiSelect [options]="roles" formControlName="roles" optionLabel="code" optionValue="id"
-                                   appendTo="body" [filter]="false"></p-multiSelect>
+                                   appendTo="body" [filter]="true"></p-multiSelect>
                     <label >Roles</label>
                 </span>
             </div>
@@ -114,7 +114,7 @@
                 </tr>
                 <tr>
                     <th>Role</th>
-<!--                    <td>{{selectedGroup.role}}</td>-->
+                    <td>{{selectedGroup.rolesNameList}}</td>
                 </tr>
                 <tr>
                     <th>Status</th>
@@ -174,7 +174,7 @@
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                    <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
-                                  appendTo="body" [filter]="false"></p-multiSelect>
+                                  appendTo="body" [filter]="true"></p-multiSelect>
                     <label >Roles</label>
                 </span>
             </div>
@@ -246,7 +246,7 @@
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                    <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
-                                  appendTo="body" [filter]="false"></p-multiSelect>
+                                  appendTo="body" [filter]="true"></p-multiSelect>
                     <label >Roles</label>
                 </span>
             </div>
