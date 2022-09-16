@@ -16,6 +16,12 @@ export class ApiUrlConstants {
     // Role API URL
     public static ROLE_API_URL = '/role/';
 
+    // Permission API URL
+    public static PERMISSIONS_API_URL = '/permission/';
+
+    // Module API URL
+    public static MODULE_API_URL = '/module/';
+
     // Group Api url
     public static GROUP_API_URL = '/group/';
 

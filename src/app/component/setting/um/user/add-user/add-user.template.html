@@ -112,11 +112,27 @@
                     </div>
                     <div class="col-3">
                         <div class="form-floating">
-                            <textarea class="form-control" formControlName="address" id="address" placeholder="Address" id="floatingTextarea"></textarea>
+                            <textarea class="form-control" formControlName="address" id="address" placeholder="Address"></textarea>
                             <label for="address">Address</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
                             </small>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="custom-file">
+                            <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
+                            <input #file (change)="setAttachment($event)" class="form-control" id="file" type="file">
+                            <div class="file-viewer">
+                                <button class="btn" *ngIf="logoImageDataUrl" (click)="clearFiles()">
+                                    <i class="icon-times"></i>
+                                </button>
+                                <img
+                                        *ngIf="logoImageDataUrl"
+                                        src="data:image/jpeg;base64,{{logoImageDataUrl}}"
+                                        alt="Logo"/>
+                                <i class="icon-image" *ngIf="!logoImageDataUrl"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

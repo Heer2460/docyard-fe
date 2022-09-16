@@ -1,0 +1,157 @@
+@import "../../../assets/less/_vars";
+
+:host {
+	background-color: @color-white;
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	.image-container {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		
+		.main-bg,
+		.switch-upper,
+		.switch-bottom,
+		.spark
+		{
+			width: 100%;
+			height: 100%;
+			background-size: contain;
+			background-position: right;
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-repeat: no-repeat;
+		}
+		
+		.main-bg {
+			background-image: url("../../../assets/images/svg/404/bg.svg");
+			animation: bgMove 5s ease-in-out infinite;
+		}
+		
+		.switch-upper {
+			background-image: url("../../../assets/images/svg/404/switch-top.svg");
+			animation: switchTop 3s ease-in-out infinite;
+		}
+		
+		.switch-bottom {
+			background-image: url("../../../assets/images/svg/404/switch-bottom.svg");
+			animation: switchBottom 3s ease-in-out infinite;
+		}
+		
+	}
+	
+	.content-container {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		position: relative;
+		z-index: 9;
+		width: 60%;
+		
+		.inner-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			
+			h1 {
+				font-size: 180px;
+				font-weight: 700;
+				margin: 0;
+			}
+			
+			h4 {
+				font-size: 50px;
+				font-weight: 700;
+				color: hsl(var(--color-green-03));
+			}
+			
+			p {
+				font-size: 18px;
+				text-align: center;
+				margin-bottom: 20px;
+				color: hsl(var(--color-green-04));
+			}
+			
+		}
+		
+	}
+	
+}
+
+@keyframes bgMove {
+	
+	0% {
+		right: 0;
+	}
+	
+	50% {
+		right: -20px;
+	}
+	
+	100% {
+		right: 0;
+	}
+	
+}
+
+@keyframes switchTop {
+	
+	0% {
+		top: 0;
+	}
+	
+	20% {
+		top: -30px;
+	}
+	
+	100% {
+		top: 0;
+	}
+	
+}
+
+@keyframes switchBottom {
+	
+	0% {
+		top: 0;
+	}
+	
+	80% {
+		top: 20px;
+	}
+	
+	100% {
+		top: 0;
+	}
+	
+}
+
+@keyframes spark {
+	
+	0% {
+		transform: scale(0);
+	}
+	
+	20% {
+		transform: scale(1);
+	}
+	
+	80% {
+		transform: scale(1);
+	}
+	
+	100% {
+		transform: scale(0);
+	}
+	
+}

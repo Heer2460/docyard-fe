@@ -10,6 +10,7 @@ import {forkJoin, Subject, takeUntil} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'add-user-component',
@@ -23,12 +24,15 @@ export class AddUserComponent implements OnInit, OnDestroy {
     groups: any[] = [];
     departments: any[] = [];
     statuses = ReferencesStatuses.userStatuses;
+    logoImageDataUrl: any;
+    files: any[] = [];
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
                 private appService: AppService,
                 public appUtility: AppUtility,
-                private router: Router) {
+                private router: Router,
+                private toastService: ToastrService) {
     }
 
     ngOnInit(): void {
@@ -79,10 +83,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
         if (this.addUserForm.invalid) {
             return;
         }
+        // if (this.files.length < 1) {
+        //     this.toastService.error('Profile picture is missing.', 'Logo');
+        //     return;
+        // }
         let userDTO: UserDTO = new UserDTO();
         userDTO = userDTO.convertToNewDTO(this.addUserForm.value);
         if (userDTO) {
-            this.requestsService.postRequest(ApiUrlConstants.USER_API_URL, userDTO)
+            this.requestsService.postRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
@@ -95,6 +103,41 @@ export class AddUserComponent implements OnInit, OnDestroy {
                     }
                 });
         }
+    }
+
+    setAttachment(event: any) {
+        let format;
+        let size;
+        if (event.target.files.length > 0) {
+            size = event.target.files[0].size / 1024 / 1024;
+            if (size > 1) {
+                this.toastService.error('File size not valid.', 'Logo');
+                return;
+            }
+            format = event.target.files[0].type;
+            if (!format.includes('image/')) {
+                this.toastService.error('Image format not valid.', 'Logo');
+                return;
+            }
+            let obj = {
+                type: 'logo',
+                data: event.target.files[0]
+            };
+            this.files.push(obj);
+            let reader = new FileReader();
+            reader.onload = this.handleReaderLoadedProfileImage.bind(this);
+            this.logoImageDataUrl = reader.readAsBinaryString(obj.data);
+        }
+    }
+
+    handleReaderLoadedProfileImage(readerEvt: any) {
+        let binaryString = readerEvt.target.result;
+        this.logoImageDataUrl = window.btoa(binaryString);
+    }
+
+    clearFiles() {
+        this.logoImageDataUrl = null;
+        this.files = [];
     }
 
     ngOnDestroy() {
