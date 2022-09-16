@@ -38,7 +38,7 @@
                             </small>
                         </span>
                     </div>
-                    <div class="col-6 mb-3">
+                    <div class="col-3 mb-3">
                         <div class="form-floating">
                             <textarea class="form-control" formControlName="remarks" id="remarks"
                                       placeholder="Remarks"></textarea>
@@ -472,7 +472,7 @@
         </fieldset>
     </ng-container>
     <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger" routerLink="setting/um/role">Cancel</button>
+        <button class="btn btn-sm btn-danger" routerLink="/setting/um/role">Cancel</button>
         <button class="btn btn-sm btn-primary" type="button" [disabled]="addRoleForm.invalid" (click)="createRole()">Add Role</button>
     </ng-container>
 </layout-component>

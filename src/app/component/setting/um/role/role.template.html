@@ -81,37 +81,6 @@
         <button (click)="searchRoles()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-md">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-building"></i>
-            <span>View Role</span>
-        </div>
-    </ng-template>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-bordered">
-                <tbody>
-                <tr>
-                    <th>Code</th>
-                    <td>{{selectedRole.code}}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{selectedRole.name}}</td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>{{selectedRole.status}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <button (click)="hideViewPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-    </ng-template>
-</p-dialog>
 
 <p-confirmDialog #cd styleClass="dialog-danger">
     <ng-template pTemplate="header">

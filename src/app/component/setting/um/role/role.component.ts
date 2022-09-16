@@ -52,7 +52,6 @@ export class RoleComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
-        // this.searchRoles();
     }
 
     buildForms() {
@@ -106,7 +105,7 @@ export class RoleComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.showViewPopupAction();
+        this.router.navigate(['/setting/um/role/view']);
     }
 
     onEditOptionSelected(data: any) {
@@ -124,14 +123,6 @@ export class RoleComponent implements OnInit {
 
     hideSearchPopupAction() {
         this.searchDialog = false;
-    }
-
-    showViewPopupAction() {
-        this.viewDialog = true;
-    }
-
-    hideViewPopupAction() {
-        this.viewDialog = false;
     }
 
     onItemDeleteAction(data: any) {
