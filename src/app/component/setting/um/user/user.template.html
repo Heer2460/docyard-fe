@@ -38,7 +38,7 @@
                     <td>{{row.department}}</td>
                     <td>{{row.status}}</td>
                     <td>
-                        <button (click)="menu.toggle($event);onMenuClicked($event)" class="btn btn-tiered-menu">
+                        <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
                             <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
                             <i class="icon-menu-horizontal"></i>
                         </button>
@@ -67,31 +67,38 @@
         <div class="row">
             <div class="col-6 mb-3">
                 <div class="form-floating">
-                    <input class="form-control" id="username" placeholder="Username" type="text">
+                    <input class="form-control" id="username" placeholder="Username" type="text"
+                    formControlName="username">
                     <label for="username">Username</label>
                 </div>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
-                    <input class="form-control" id="name" placeholder="Name" type="text">
+                    <input class="form-control" id="name" placeholder="Name" type="text"
+                           formControlName="name">
                     <label for="name">Name</label>
                 </div>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="group" [options]="groups" formControlName="group" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown [options]="groups" appendTo="body" formControlName="group"
+                                placeholder="Select group" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                     <label>Group</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="department" [options]="departments" formControlName="department" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown [options]="departments" appendTo="body" formControlName="department"
+                                placeholder="Select department" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                     <label>Department</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown [options]="statuses" appendTo="body" formControlName="status" inputId="status"
+                                optionLabel="value" optionValue="value"></p-dropdown>
                     <label>Status</label>
                 </span>
             </div>
@@ -99,6 +106,19 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideSearchPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button class="btn btn-sm btn-primary" type="button" (click)="searchUsers()">Search</button>
+        <button (click)="searchUsers()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
+
+<p-confirmDialog #cd styleClass="dialog-danger">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Delete User</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Yes</button>
+    </ng-template>
+</p-confirmDialog>

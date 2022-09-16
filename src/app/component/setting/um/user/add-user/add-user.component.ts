@@ -11,6 +11,8 @@ import {HttpResponse} from "@angular/common/http";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
+import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 
 @Component({
     selector: 'add-user-component',
@@ -21,11 +23,12 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     addUserForm: FormGroup = new FormGroup({});
     destroy: Subject<boolean> = new Subject();
-    groups: any[] = [];
-    departments: any[] = [];
+    groups: GroupDTO[] = [];
+    departments: DepartmentDTO[] = [];
     statuses = ReferencesStatuses.userStatuses;
     logoImageDataUrl: any;
     files: any[] = [];
+    logoImage: any;
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
@@ -80,17 +83,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     createUser() {
-        console.log(this.addUserForm.value)
-        return;
+        // console.log(this.addUserForm.value)
+        // return;
         if (this.addUserForm.invalid) {
             return;
         }
-        // if (this.files.length < 1) {
-        //     this.toastService.error('Profile picture is missing.', 'Logo');
-        //     return;
-        // }
         let userDTO: UserDTO = new UserDTO();
         userDTO = userDTO.convertToNewDTO(this.addUserForm.value);
+        userDTO.password = this.appService.encryptUsingAES256(userDTO.password);
         if (userDTO) {
             this.requestsService.postRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
                 .subscribe({
@@ -138,6 +138,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     clearFiles() {
+        this.logoImage = null;
         this.logoImageDataUrl = null;
         this.files = [];
     }
