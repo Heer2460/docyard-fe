@@ -71,6 +71,12 @@ export class BreadcrumbComponent implements OnInit {
             active: false,
         },
         {
+            label: 'Profile',
+            route: '/profile',
+            slug: 'profile',
+            active: false,
+        },
+        {
             label: 'Add',
             route: '',
             slug: 'add',
