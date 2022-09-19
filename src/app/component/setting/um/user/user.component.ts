@@ -10,6 +10,9 @@ import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {forkJoin, Subject, takeUntil} from "rxjs";
+import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
+import {DepartmentDTO} from "../../../../model/settings/ref/department/department.dto";
+import {UserDTO} from "../../../../model/settings/um/user/user.dto";
 
 @Component({
     selector: 'user-component',
@@ -20,16 +23,9 @@ export class UserComponent implements OnInit {
 
     searchUserForm: FormGroup = new FormGroup({});
     searchPopupToggle: boolean = false;
-    dataRows: any[] = [
-        {
-            name: 'Umar farooq',
-            username: 'umar',
-            address: 'street #01, johar town'
-        }
-    ];
-    users: any[] = [];
-    groups: any[] = [];
-    departments: any[] = [];
+    users: UserDTO[] = [];
+    groups: GroupDTO[] = [];
+    departments: DepartmentDTO[] = [];
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
     message: string = 'Click search to get users.';
@@ -63,7 +59,6 @@ export class UserComponent implements OnInit {
     ngOnInit(): void {
         this.preloadedData();
         this.buildForms();
-        this.searchUsers();
     }
 
     preloadedData(): void {
@@ -131,11 +126,11 @@ export class UserComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/view']);
+        this.router.navigate(['/setting/um/user/view/' + data.id]);
     }
 
     onEditOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/edit']);
+        this.router.navigate(['/setting/um/user/edit/' + data.id]);
     }
 
     onItemDeleteAction(data: any) {
@@ -164,6 +159,20 @@ export class UserComponent implements OnInit {
         } else {
             this.toastService.error('Select Item', 'User');
         }
+    }
+    
+    getGroupName(id: any) {
+        if (id) {
+            return this.groups.find((item: any) => Number(id) === item.id)?.name;
+        }
+        return '';
+    }
+
+    getDepartmentName(id: any) {
+        if (id) {
+            return this.departments.find((item: any) => Number(id) === item.id)?.name;
+        }
+        return '';
     }
 
     ngOnDestroy() {

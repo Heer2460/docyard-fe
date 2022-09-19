@@ -8,6 +8,7 @@ import {DialogModule} from "primeng/dialog";
 import {LayoutModule} from "../../../layout/layout.module";
 import {DropdownModule} from "primeng/dropdown";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         TieredMenuModule,
         DialogModule,
         DropdownModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ConfirmDialogModule
     ]
 })
 export class UserModule {

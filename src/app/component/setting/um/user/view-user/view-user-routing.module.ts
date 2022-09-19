@@ -4,7 +4,7 @@ import {ViewUserComponent} from "./view-user.component";
 
 const routes: Routes = [
     {
-        path: '',
+        path: ':id',
         component: ViewUserComponent
     }
 ];

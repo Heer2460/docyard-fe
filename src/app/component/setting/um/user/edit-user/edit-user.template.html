@@ -45,45 +45,6 @@
                             </small>
                         </div>
                     </div>
-                    <ng-container formGroupName="passwords">
-                        <div class="col-3 mb-3">
-                            <div class="form-floating">
-                                <input autocomplete="new-password" class="form-control" formControlName="password"
-                                       id="password"
-                                       placeholder="Password"
-                                       type="password">
-                                <label for="password">Password</label>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'password', 'required', 'password')">
-                                    {{ appUtility.makeErrorMessage("Password", 'required') }}
-                                </small>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'password', 'maxlength', 'password')">
-                                    {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
-                                </small>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'password', 'minlength', 'password')">
-                                    {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
-                                </small>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-3">
-                            <div class="form-floating">
-                                <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
-                                       placeholder="Confirm Password" type="password">
-                                <label for="confirmPassword">Confirm Password</label>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'confirmPassword', 'required', 'password')">
-                                    {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
-                                </small>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
-                                    {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
-                                </small>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
-                                    {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
-                                </small>
-                                <small *ngIf="appUtility.getFormError(editUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
-                                    {{ 'Password & Confirm Password does not match' }}
-                                </small>
-                            </div>
-                        </div>
-                    </ng-container>
                     <div class="col-3 mb-3">
                         <div class="form-floating">
                             <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
@@ -127,7 +88,7 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        optionLabel="value" optionValue="value"></p-dropdown>
+                                        optionLabel="name" optionValue="id"></p-dropdown>
                             <label for="groupId">Group</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
@@ -137,7 +98,7 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="departments" appendTo="body" formControlName="departmentId" id="departmentId"
-                                        optionLabel="value" optionValue="value"></p-dropdown>
+                                        optionLabel="name" optionValue="id"></p-dropdown>
                             <label for="departmentId">Department</label>
                         </span>
                     </div>
@@ -152,7 +113,7 @@
         </form>
     </ng-container>
     <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger" routerLink="setting/um/user">Cancel</button>
+        <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
         <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid" (click)="updateUser()">Update User</button>
     </ng-container>
 </layout-component>

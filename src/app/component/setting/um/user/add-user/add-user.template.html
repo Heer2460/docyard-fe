@@ -137,7 +137,7 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        placeholder="Select group" optionLabel="value" optionValue="value"
+                                        placeholder="Select group" optionLabel="name" optionValue="id"
                                         [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                             <label for="groupId">Group</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'groupId', 'groupId', 'required')">
@@ -165,7 +165,6 @@
     </ng-container>
     <ng-container pageFooter>
         <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button"  (click)="createUser()">Add User</button>
-<!--        [disabled]="addUserForm.invalid"-->
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="addUserForm.invalid" (click)="createUser()">Add User</button>
     </ng-container>
 </layout-component>

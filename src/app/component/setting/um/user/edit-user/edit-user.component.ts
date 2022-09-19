@@ -34,11 +34,9 @@ export class EditUserComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.activeRoute.queryParams.subscribe((params) => {
-            if (params['id']) {
-                this.userId = params['id'];
-            }
-        });
+        if (this.activeRoute.snapshot.paramMap.get('id')) {
+            this.userId = this.activeRoute.snapshot.paramMap.get('id')
+        }
         this.preloadedData();
         this.buildForms();
     }
@@ -56,9 +54,9 @@ export class EditUserComponent implements OnInit {
                         }
                         if (response[1].status === 200) {
                             this.departments = response[1].body.data;
-                            if (this.userId) {
-                                this.getUserById(this.userId);
-                            }
+                        }
+                        if (this.userId) {
+                            this.getUserById(this.userId);
                         }
                     },
                     error: (error: any) => {
@@ -69,11 +67,12 @@ export class EditUserComponent implements OnInit {
 
     buildForms() {
         this.editUserForm = this.fb.group({
+            id: [null],
             username: [null, [Validators.required, Validators.maxLength(35)]],
             name: [null, [Validators.required, Validators.maxLength(70)]],
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
-            phoneNumber: [null, [Validators.required, Validators.maxLength(32)]],
-            mobileNumber: [null, [Validators.required, Validators.maxLength(32)]],
+            phoneNumber: [null, Validators.maxLength(32)],
+            mobileNumber: [null, Validators.maxLength(32)],
             passwords: this.fb.group({
                 password: [null],
             }),
@@ -99,14 +98,14 @@ export class EditUserComponent implements OnInit {
     }
 
     populateUserForm(userDto: UserDTO) {
-        this.editUserForm.get('userId')?.setValue(userDto.id);
+        this.editUserForm.get('id')?.setValue(userDto.id);
         this.editUserForm.get('username')?.setValue(userDto.username);
         this.editUserForm.get('name')?.setValue(userDto.name);
         this.editUserForm.get('email')?.setValue(userDto.email);
         this.editUserForm.get('phoneNumber')?.setValue(userDto.phoneNumber);
         this.editUserForm.get('mobileNumber')?.setValue(userDto.mobileNumber);
-        this.editUserForm.get('group')?.setValue(userDto.groupId);
-        this.editUserForm.get('department')?.setValue(userDto.departmentId);
+        this.editUserForm.get('groupId')?.setValue(userDto.groupId);
+        this.editUserForm.get('departmentId')?.setValue(userDto.departmentId);
         this.editUserForm.get('address')?.setValue(userDto?.address);
         this.editUserForm.get('status')?.setValue(userDto.status);
         this.editUserForm.markAllAsTouched();
