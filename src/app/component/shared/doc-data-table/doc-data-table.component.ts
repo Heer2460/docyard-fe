@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../../service/app.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'data-table-component',
@@ -13,7 +14,7 @@ export class DocDataTableComponent implements OnInit {
     @Input() actionItems: MenuItem[] = [];
     isGridDisplay: boolean = false;
     
-    constructor(public appService: AppService) {
+    constructor(public appService: AppService, private router: Router) {
     }
     
     ngOnInit(): void {
@@ -22,10 +23,8 @@ export class DocDataTableComponent implements OnInit {
         });
     }
     
-    onRowSelected(event: any) {
-    }
-    
-    onRowUnSelected(event: any) {
+    imageNameClickAction(item: any) {
+        this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
     
 }

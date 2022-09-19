@@ -24,7 +24,7 @@ export class DocLibComponent implements OnInit {
             stared: false,
             selected: false,
             fileType: 'directory',
-            fileThumbnail: 'optional',
+            fileUrl: 'optional',
             shared: false,
         },
         {
@@ -39,7 +39,7 @@ export class DocLibComponent implements OnInit {
             stared: true,
             selected: false,
             fileType: 'directory',
-            fileThumbnail: 'optional',
+            fileUrl: 'optional',
             shared: true,
         },
         {
@@ -54,7 +54,7 @@ export class DocLibComponent implements OnInit {
             stared: false,
             selected: false,
             fileType: 'docx',
-            fileThumbnail: 'optional',
+            fileUrl: 'optional',
             shared: false,
         },
         {
@@ -69,7 +69,22 @@ export class DocLibComponent implements OnInit {
             stared: false,
             selected: false,
             fileType: 'pdf',
-            fileThumbnail: 'optional',
+            fileUrl: 'optional',
+            shared: false,
+        },
+        {
+            id: 4,
+            name: 'Glas Allt Shie.jpeg',
+            updatedAt: 'Jun, 22 2022',
+            user: {
+                userId: 1,
+                username: 'Umar Farooq'
+            },
+            size: '1.00 MB',
+            stared: false,
+            selected: false,
+            fileType: 'image',
+            fileUrl: 'https://images.unsplash.com/photo-1663163541223-2227c0bb696a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
             shared: false,
         }
     ];
