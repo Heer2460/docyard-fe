@@ -160,6 +160,20 @@ export class UserComponent implements OnInit {
             this.toastService.error('Select Item', 'User');
         }
     }
+    
+    getGroupName(id: any) {
+        if (id) {
+            return this.groups.find((item: any) => Number(id) === item.id)?.name;
+        }
+        return '';
+    }
+
+    getDepartmentName(id: any) {
+        if (id) {
+            return this.departments.find((item: any) => Number(id) === item.id)?.name;
+        }
+        return '';
+    }
 
     ngOnDestroy() {
         this.destroy.next(true);
