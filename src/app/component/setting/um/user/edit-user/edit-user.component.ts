@@ -9,6 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
+import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
+import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 
 @Component({
     selector: 'edit-user-component',
@@ -19,8 +21,8 @@ export class EditUserComponent implements OnInit {
 
     editUserForm: FormGroup = new FormGroup({});
     destroy: Subject<boolean> = new Subject();
-    groups: any[] = [];
-    departments: any[] = [];
+    groups: GroupDTO[] = [];
+    departments: DepartmentDTO[] = [];
     userId: any;
     selectedUser: UserDTO = new UserDTO();
     statuses = ReferencesStatuses.userStatuses;

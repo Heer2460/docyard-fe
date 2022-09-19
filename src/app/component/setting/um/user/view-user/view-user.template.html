@@ -4,15 +4,43 @@
             <tbody>
             <tr>
                 <th>Name</th>
-                <td>Muhammad Umar Farooq</td>
+                <td>{{selectedUser.name}}</td>
             </tr>
             <tr>
                 <th>Username</th>
-                <td>umar.bwn</td>
+                <td>{{selectedUser.username}}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{selectedUser.email}}</td>
+            </tr>
+            <tr>
+                <th>Mobile Number</th>
+                <td>{{selectedUser.mobileNumber}}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{selectedUser.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <th>Group</th>
+                <td>{{getGroupName(selectedUser?.groupId)}}</td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>{{getDepartmentName(selectedUser?.departmentId)}}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{selectedUser.address}}</td>
             </tr>
             <tr>
                 <th>Status</th>
-                <td>Active</td>
+                <td>{{selectedUser.status | titlecase}}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{selectedUser}}</td>
             </tr>
             </tbody>
         </table>

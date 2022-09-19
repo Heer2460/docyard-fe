@@ -28,7 +28,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
     statuses = ReferencesStatuses.userStatuses;
     logoImageDataUrl: any;
     files: any[] = [];
-    logoImage: any;
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
@@ -138,7 +137,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     clearFiles() {
-        this.logoImage = null;
         this.logoImageDataUrl = null;
         this.files = [];
     }
