@@ -9,10 +9,11 @@ export class UserDTO extends BaseDTO {
     phoneNumber: string | undefined;
     mobileNumber: string | undefined;
     groupId: null | undefined;
-    departmentId: null | undefined;
+    departmentIds: null | undefined;
     address: string | undefined;
     password: string | undefined;
-    profilePicture: string | undefined;
+    profilePhoto: string | undefined;
+    logo: string | undefined;
     status: string | undefined;
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
@@ -25,10 +26,10 @@ export class UserDTO extends BaseDTO {
         this.phoneNumber = data.phoneNumber;
         this.mobileNumber = data.mobileNumber;
         this.groupId = data.groupId;
-        this.departmentId = data.departmentId;
+        this.departmentIds = data.departmentIds;
         this.address = data.address;
         this.password = data.passwords.password;
-        this.profilePicture = data.profilePicture;
+        this.profilePhoto = data.profilePhoto;
         this.status = data.status;
 
         this.createdOn = data.createdOn ? data.createdOn : new Date();

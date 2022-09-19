@@ -34,8 +34,8 @@
                 <tr>
                     <td>{{row.username}}</td>
                     <td>{{row.name}}</td>
-                    <td>{{getGroupName(row?.groupId)}}</td>
-                    <td>{{getDepartmentName(row?.departmentId)}}</td>
+                    <td>{{row.groupId | filterObject: groups : 'single' }}</td>
+                    <td>{{row.departmentIds | filterObject: departments : 'multiple' }}</td>
                     <td>{{row.status}}</td>
                     <td>
                         <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">

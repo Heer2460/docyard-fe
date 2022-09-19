@@ -11,6 +11,7 @@ import {HttpResponse} from "@angular/common/http";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'edit-user-component',
@@ -25,6 +26,8 @@ export class EditUserComponent implements OnInit {
     departments: DepartmentDTO[] = [];
     userId: any;
     selectedUser: UserDTO = new UserDTO();
+    logoImageDataUrl: any;
+    files: any[] = [];
     statuses = ReferencesStatuses.userStatuses;
 
     constructor(private fb: FormBuilder,
@@ -32,7 +35,8 @@ export class EditUserComponent implements OnInit {
                 private appService: AppService,
                 public appUtility: AppUtility,
                 private router: Router,
-                private activeRoute: ActivatedRoute) {
+                private activeRoute: ActivatedRoute,
+                private toastService: ToastrService) {
     }
 
     ngOnInit(): void {
@@ -44,8 +48,8 @@ export class EditUserComponent implements OnInit {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -79,7 +83,8 @@ export class EditUserComponent implements OnInit {
                 password: [null],
             }),
             groupId: [null, Validators.required],
-            departmentId: [null],
+            departmentIds: [''],
+            profilePhoto: [''],
             address: [null, Validators.maxLength(256)],
             status: ['Active'],
         });
@@ -107,10 +112,20 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.get('phoneNumber')?.setValue(userDto.phoneNumber);
         this.editUserForm.get('mobileNumber')?.setValue(userDto.mobileNumber);
         this.editUserForm.get('groupId')?.setValue(userDto.groupId);
-        this.editUserForm.get('departmentId')?.setValue(userDto.departmentId);
+        this.editUserForm.get('departmentIds')?.setValue(this.setDepartmentIds(userDto.departmentIds));
         this.editUserForm.get('address')?.setValue(userDto?.address);
         this.editUserForm.get('status')?.setValue(userDto.status);
+        this.editUserForm.get('profilePhoto')?.setValue(userDto.profilePhoto);
+        userDto.profilePhoto ? this.logoImageDataUrl = userDto.profilePhoto : this.logoImageDataUrl = '';
         this.editUserForm.markAllAsTouched();
+    }
+
+    setDepartmentIds(ids: any) {
+        let idsArray: number[] = [];
+        if (ids.length > 0) {
+            ids.map((item: number) => idsArray.push(Number(item)));
+        }
+        return idsArray;
     }
 
     updateUser() {
@@ -119,7 +134,7 @@ export class EditUserComponent implements OnInit {
         }
         let userDTO: UserDTO = new UserDTO();
         userDTO.convertToDTO(this.editUserForm.value);
-        this.requestsService.putRequest(ApiUrlConstants.USER_API_URL, userDTO)
+        this.requestsService.putRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -130,6 +145,41 @@ export class EditUserComponent implements OnInit {
                     this.appService.handleError(error, 'User');
                 }
             });
+    }
+
+    setAttachment(event: any) {
+        let format;
+        let size;
+        if (event.target.files.length > 0) {
+            size = event.target.files[0].size / 1024 / 1024;
+            if (size > 1) {
+                this.toastService.error('File size not valid.', 'Logo');
+                return;
+            }
+            format = event.target.files[0].type;
+            if (!format.includes('image/')) {
+                this.toastService.error('Image format not valid.', 'Logo');
+                return;
+            }
+            let obj = {
+                type: 'logo',
+                data: event.target.files[0]
+            };
+            this.files.push(obj);
+            let reader = new FileReader();
+            reader.onload = this.handleReaderLoadedProfileImage.bind(this);
+            this.logoImageDataUrl = reader.readAsBinaryString(obj.data);
+        }
+    }
+
+    handleReaderLoadedProfileImage(readerEvt: any) {
+        let binaryString = readerEvt.target.result;
+        this.logoImageDataUrl = window.btoa(binaryString);
+    }
+
+    clearFiles() {
+        this.logoImageDataUrl = null;
+        this.files = [];
     }
 
     ngOnDestroy() {

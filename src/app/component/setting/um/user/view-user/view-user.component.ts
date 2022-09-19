@@ -38,8 +38,8 @@ export class ViewUserComponent implements OnInit {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -61,7 +61,6 @@ export class ViewUserComponent implements OnInit {
                 });
     }
 
-
     getUserById(id: number) {
         this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + id)
             .subscribe({
@@ -73,20 +72,6 @@ export class ViewUserComponent implements OnInit {
                     this.appService.handleError(error, 'User');
                 }
             });
-    }
-
-    getGroupName(id: any) {
-        if (id) {
-            return this.groups.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
-    }
-
-    getDepartmentName(id: any) {
-        if (id) {
-            return this.departments.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
     }
 
     ngOnDestroy() {

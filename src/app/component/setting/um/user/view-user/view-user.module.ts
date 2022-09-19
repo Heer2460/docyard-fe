@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ViewUserRoutingModule } from './view-user-routing.module';
 import { ViewUserComponent } from './view-user.component';
 import {LayoutModule} from "../../../../layout/layout.module";
+import {CustomDirectiveModule} from "../../../../../shared/directive/custom.directive.module";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {LayoutModule} from "../../../../layout/layout.module";
     imports: [
         CommonModule,
         ViewUserRoutingModule,
-        LayoutModule
+        LayoutModule,
+        CustomDirectiveModule
     ]
 })
 export class ViewUserModule { }

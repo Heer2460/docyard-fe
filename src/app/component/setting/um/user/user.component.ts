@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
     searchPopupToggle: boolean = false;
     users: UserDTO[] = [];
     groups: GroupDTO[] = [];
-    departments: DepartmentDTO[] = [];
+    departments: any[] = [];
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
     message: string = 'Click search to get users.';
@@ -62,8 +62,8 @@ export class UserComponent implements OnInit {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -159,20 +159,6 @@ export class UserComponent implements OnInit {
         } else {
             this.toastService.error('Select Item', 'User');
         }
-    }
-    
-    getGroupName(id: any) {
-        if (id) {
-            return this.groups.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
-    }
-
-    getDepartmentName(id: any) {
-        if (id) {
-            return this.departments.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
     }
 
     ngOnDestroy() {

@@ -18,7 +18,8 @@
                     </div>
                     <div class="col-3 mb-3">
                         <div class="form-floating">
-                            <input autocomplete="new-password" class="form-control" formControlName="username" id="username"
+                            <input autocomplete="new-password" class="form-control" formControlName="username"
+                                   id="username"
                                    placeholder="Username" type="text">
                             <label for="username">Username</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'required')">
@@ -62,6 +63,10 @@
                                 <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'minlength', 'password')">
                                     {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
                                 </small>
+                                <small *ngIf="addUserForm.controls['passwords'].get('password')?.touched &&
+                                        addUserForm.controls['passwords'].get('password')?.errors">
+                                    {{ 'Password must contain 1 alpha numeric key and 1 special char' }}
+                                </small>
                             </div>
                         </div>
                         <div class="col-3 mb-3">
@@ -86,8 +91,8 @@
                     </ng-container>
                     <div class="col-3 mb-3">
                         <div class="form-floating">
-                            <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
-                                   placeholder="Phone Number" type="text" onlyNumber [float]="false">
+                            <input [float]="false" class="form-control" formControlName="phoneNumber"
+                                   id="phoneNumber" onlyNumber placeholder="Phone Number" type="text">
                             <label for="name">Phone Number</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
@@ -96,8 +101,8 @@
                     </div>
                     <div class="col-3 mb-3">
                         <div class="form-floating">
-                            <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
-                                   placeholder="Mobile Number" type="text" onlyNumber [float]="false">
+                            <input [float]="false" class="form-control" formControlName="mobileNumber"
+                                   id="mobileNumber" onlyNumber placeholder="Mobile Number" type="text">
                             <label for="mobileNumber">Mobile Number</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
@@ -106,7 +111,8 @@
                     </div>
                     <div class="col-3">
                         <div class="form-floating">
-                            <textarea class="form-control" formControlName="address" id="address" placeholder="Address"></textarea>
+                            <textarea class="form-control" formControlName="address" id="address"
+                                      placeholder="Address"></textarea>
                             <label for="address">Address</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
                                 {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
@@ -116,16 +122,17 @@
                     <div class="col-3 mb-3">
                         <div class="custom-file">
                             <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
-                            <input #file (change)="setAttachment($event)" class="form-control" id="file" type="file">
+                            <input #file (change)="setAttachment($event)" class="form-control" id="file" onclick="this.value = null"
+                                   type="file">
                             <div class="file-viewer">
-                                <button class="btn" *ngIf="logoImageDataUrl" (click)="clearFiles()">
+                                <button (click)="clearFiles()" *ngIf="logoImageDataUrl" class="btn">
                                     <i class="icon-times"></i>
                                 </button>
                                 <img
                                         *ngIf="logoImageDataUrl"
-                                        src="data:image/jpeg;base64,{{logoImageDataUrl}}"
-                                        alt="Logo"/>
-                                <i class="icon-image" *ngIf="!logoImageDataUrl"></i>
+                                        alt="Logo"
+                                        src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
+                                <i *ngIf="!logoImageDataUrl" class="icon-image"></i>
                             </div>
                         </div>
                     </div>
@@ -136,9 +143,9 @@
                 <div class="row">
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        placeholder="Select group" optionLabel="name" optionValue="id"
-                                        [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                            <p-dropdown [filter]="true" [options]="groups" [showClear]="true" appendTo="body"
+                                        filterBy="name" formControlName="groupId" id="groupId"
+                                        optionLabel="name" optionValue="id" placeholder="Select group"></p-dropdown>
                             <label for="groupId">Group</label>
                             <small *ngIf="appUtility.getFormError(addUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
@@ -147,15 +154,17 @@
                     </div>
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown [options]="departments" appendTo="body" formControlName="departmentId" id="departmentId"
-                                        placeholder="Select department" optionLabel="name" optionValue="id"
-                                        [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
-                            <label for="departmentId">Department</label>
+                            <p-multiSelect [filter]="true" [options]="departments" [showClear]="true"
+                                           appendTo="body" filterBy="name" formControlName="departmentIds"
+                                           id="departmentIds" optionLabel="name" optionValue="id"
+                                           placeholder="Select department"></p-multiSelect>
+                            <label for="departmentIds">Department</label>
                         </span>
                     </div>
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown inputId="status" [options]="statuses" id="status" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                            <p-dropdown [options]="statuses" appendTo="body" formControlName="status" id="status"
+                                        inputId="status" optionLabel="value" optionValue="value"></p-dropdown>
                             <label for="status">Status</label>
                         </span>
                     </div>
@@ -165,6 +174,6 @@
     </ng-container>
     <ng-container pageFooter>
         <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="addUserForm.invalid" (click)="createUser()">Add User</button>
+        <button (click)="createUser()" [disabled]="addUserForm.invalid" class="btn btn-sm btn-primary" type="button">Add User</button>
     </ng-container>
 </layout-component>
