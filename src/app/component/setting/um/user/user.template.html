@@ -9,7 +9,7 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <p-table [value]="users">
+        <p-table [value]="users" [paginator]="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="username">Username

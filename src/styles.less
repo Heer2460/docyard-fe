@@ -1066,7 +1066,7 @@ p-menu.user-profile-menu-pane {
 
 		>tr {
 			border-bottom: 1px dashed hsl(var(--color-blue-05));
-			background: transparent;
+			background: hsl(var(--color-blue-01));
 
 			>th {
 				padding: 8px 16px;
@@ -1075,6 +1075,7 @@ p-menu.user-profile-menu-pane {
 				letter-spacing: 0.4px;
 				font-weight: 700;
 				background: transparent;
+				color: var(--color-white);
 
 				&:last-child {
 					width: 100px;
@@ -1166,29 +1167,38 @@ p-menu.user-profile-menu-pane {
 
 			&:hover {
 				background: hsla(var(--color-green-01), 20%);
-				color: hsl(var(--color-blue-01));
+				color: var(--color-white);
+				
+				.p-sortable-column-icon {
+					color: var(--color-white);
+				}
+				
 			}
 
 		}
 
 		&.p-highlight {
 			background: hsla(var(--color-green-01), 20%);
-			color: hsl(var(--color-blue-01));
+			color: var(--color-white);
 
 			&:hover {
 				background: hsla(var(--color-green-01), 20%);
-				color: hsl(var(--color-blue-01));
+				color: var(--color-white);
 			}
 
 			&:hover .p-sortable-column-icon,
 			.p-sortable-column-icon {
-				color: hsl(var(--color-blue-01));
+				color: var(--color-white);
 			}
 
 		}
 
 		&:focus {
 			box-shadow: inset 0 0 0 0.15rem hsla(var(--color-green-01), 50%);
+		}
+		
+		.p-sortable-column-icon {
+			color: var(--color-white);
 		}
 
 	}
