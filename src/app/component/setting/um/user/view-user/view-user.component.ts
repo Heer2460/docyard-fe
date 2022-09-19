@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
 import {RequestService} from "../../../../../service/request.service";
 import {AppService} from "../../../../../service/app.service";
 import {AppUtility} from "../../../../../util/app.utility";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {forkJoin, Subject, takeUntil} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
