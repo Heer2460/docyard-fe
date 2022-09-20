@@ -109,13 +109,13 @@ export class AddUserComponent implements OnInit, OnDestroy {
         let size;
         if (event.target.files.length > 0) {
             size = event.target.files[0].size / 1024 / 1024;
-            if (size > 1) {
-                this.toastService.error('File size not valid.', 'Logo');
+            if (size > 2) {
+                this.toastService.error('Uploaded file size is not supported.', 'Logo');
                 return;
             }
             format = event.target.files[0].type;
             if (!format.includes('image/')) {
-                this.toastService.error('Image format not valid.', 'Logo');
+                this.toastService.error('Uploaded file type is not supported.', 'Logo');
                 return;
             }
             let obj = {

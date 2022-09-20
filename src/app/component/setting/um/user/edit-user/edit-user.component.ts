@@ -74,7 +74,7 @@ export class EditUserComponent implements OnInit {
     buildForms() {
         this.editUserForm = this.fb.group({
             id: [null],
-            username: [null, [Validators.required, Validators.maxLength(35)]],
+            username: [{ value: null, disabled: true }],
             name: [null, [Validators.required, Validators.maxLength(70)]],
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
             phoneNumber: [null, Validators.maxLength(32)],

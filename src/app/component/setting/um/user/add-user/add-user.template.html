@@ -84,7 +84,7 @@
                                     {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
                                 </small>
                                 <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
-                                    {{ 'Password & Confirm Password does not match' }}
+                                    {{ 'Password & Confirm Password must be same' }}
                                 </small>
                             </div>
                         </div>

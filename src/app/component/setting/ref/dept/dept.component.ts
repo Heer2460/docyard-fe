@@ -234,7 +234,7 @@ export class DeptComponent implements OnInit {
 
     onItemDeleteAction(data: any) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to perform this action?',
+            message: 'Are you sure you want to delete this record?',
             accept: () => {
                 //Actual logic to perform a confirmation
                 this.deleteDepartment(data.id)

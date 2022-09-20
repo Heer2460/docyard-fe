@@ -41,6 +41,16 @@ export class UserComponent implements OnInit {
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
         {
+            label: 'Lock',
+            icon: 'icon-lock',
+            // command: () => this.onItemDeleteAction(this.selectedUser)
+        },
+        {
+            label: 'Unlock',
+            icon: 'icon-lock',
+            // command: () => this.onItemDeleteAction(this.selectedUser)
+        },
+        {
             label: 'Delete',
             icon: 'icon-trash',
             command: () => this.onItemDeleteAction(this.selectedUser)
@@ -135,7 +145,7 @@ export class UserComponent implements OnInit {
 
     onItemDeleteAction(data: any) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to perform this action?',
+            message: 'Are you sure you want to delete this record?',
             accept: () => {
                 //Actual logic to perform a confirmation
                 this.deleteUser(data.id)
@@ -153,7 +163,7 @@ export class UserComponent implements OnInit {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Delete User');
+                    this.appService.handleError(error, 'User');
                 }
             });
         } else {
