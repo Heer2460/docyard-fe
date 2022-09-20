@@ -15,7 +15,7 @@
                             <h4>{{selectedGroups.rolesNameList}}</h4>
                         </div>
                         <div class="actions">
-                            <button  class="btn btn-sm btn-primary">Edit profile</button>
+                            <button class="btn btn-sm btn-primary">Edit profile</button>
                         </div>
                     </div>
                     <div class="right-container">
@@ -41,7 +41,9 @@
                             </tbody>
                         </table>
                         <div class="actions">
-                            <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-secondary">Change password</button>
+                            <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-secondary">Change
+                                password
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -57,7 +59,7 @@
                     <span>Umar Farooq</span>
                     <span class="text-muted">has changed</span>
                     <span>2 attributes</span>
-                    <span  class="text-muted">on jan 21, 2021</span>
+                    <span class="text-muted">on jan 21, 2021</span>
                 </p>
             </li>
             <li>
@@ -66,9 +68,9 @@
                     <span>Umar Farooq</span>
                     <span class="text-muted">moved</span>
                     <span>Tour-pic.jpeg</span>
-                    <span  class="text-muted">to</span>
+                    <span class="text-muted">to</span>
                     <span>Tour 2021</span>
-                    <span  class="text-muted">on Jan 21, 2021</span>
+                    <span class="text-muted">on Jan 21, 2021</span>
                 </p>
             </li>
             <li class="has-comments">
@@ -76,12 +78,15 @@
                     <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
                     <p>
                         <span>Umar Farooq</span>
-                        <span  class="text-muted">commented on Jan 21, 2021</span>
+                        <span class="text-muted">commented on Jan 21, 2021</span>
                     </p>
                 </div>
                 <div class="comment-box">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
+                        mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
+                        interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
+                        aptent taciti sociosqu ad litora torquent per conubia nostra
                     </p>
                     <div class="replies-tab">
                         <i class="icon-arrow-right-curved"></i>
@@ -112,45 +117,66 @@
                 <div class="row">
                     <div class="col-6 mb-3">
                         <div class="form-floating">
-                            <input class="form-control" formControlName="currentPassword" placeholder="Current Password" type="password">
+                            <input class="form-control" formControlName="currentPassword" placeholder="Current Password"
+                                   type="password">
                             <label>Current Password</label>
                         </div>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'required')">
+                        <small
+                            *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'required')">
                             {{ appUtility.makeErrorMessage('Current Password ', 'required') }}
                         </small>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'maxlength')">
+                        <small
+                            *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'maxlength')">
                             {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                         </small>
                     </div>
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="newPassword" placeholder="New Password" type="password">
-                            <label>New Password</label>
+                    <ng-container formGroupName="passwords">
+                        <div class="col-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" formControlName="password" placeholder="New Password"
+                                       type="password">
+                                <label>New Password</label>
+                            </div>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'required', 'password')">
+                                {{ appUtility.makeErrorMessage("Password", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'maxlength', 'password')">
+                                {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'minlength', 'password')">
+                                {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
+                            </small>
+                            <small *ngIf="changePasswordForm.controls['passwords'].get('password')?.touched &&
+                                        changePasswordForm.controls['passwords'].get('password')?.errors">
+                                {{ 'Password must contain 1 alpha numeric key and 1 special char' }}
+                            </small>
                         </div>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'newPassword', 'newPassword', 'required')">
-                            {{ appUtility.makeErrorMessage("New Password", 'required') }}
-                        </small>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'newPassword', 'newPassword', 'maxlength')">
-                            {{ appUtility.makeErrorMessage('new Password', 'maxlength', 17) }}
-                        </small>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="confirmPassword" placeholder="Remarks" type="password">
-                            <label>Confirm Password</label>
+                        <div class="col-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" formControlName="confirmPassword" placeholder="Remarks"
+                                       type="password">
+                                <label>Confirm Password</label>
+                            </div>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">
+                                {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
+                                {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
+                                {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
+                            </small>
+                            <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'match', 'password')">
+                                {{ 'Password & Confirm Password must be same' }}
+                            </small>
                         </div>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'confirmPassword', 'confirmPassword', 'required')">
-                            {{ appUtility.makeErrorMessage("confirm Password", 'required') }}
-                        </small>
-                        <small *ngIf="appUtility.getFormError(changePasswordForm, 'confirmPassword', 'confirmPassword', 'maxlength')">
-                            {{ appUtility.makeErrorMessage('confirm Password', 'maxlength', 17) }}
-                        </small>
-                    </div>
+                    </ng-container>
                 </div>
             </form>
             <ng-template pTemplate="footer">
                 <button (click)="hideChangePasswordPopup()" class="btn btn-sm btn-danger me-2">Close</button>
-                <button (click)="changePassword()" [disabled]="changePasswordForm.invalid" class="btn btn-sm btn-primary" type="button">Save
+                <button (click)="changePassword()" [disabled]="changePasswordForm.invalid"
+                        class="btn btn-sm btn-primary" type="button">Save
                 </button>
             </ng-template>
         </p-dialog>
