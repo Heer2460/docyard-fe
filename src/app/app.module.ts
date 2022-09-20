@@ -32,7 +32,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 @NgModule({
     declarations: [
         AppComponent,
-        PageNotFoundComponent,
+        PageNotFoundComponent
     ],
     imports: [
         RouterModule,

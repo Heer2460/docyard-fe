@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
     searchPopupToggle: boolean = false;
     users: UserDTO[] = [];
     groups: GroupDTO[] = [];
-    departments: DepartmentDTO[] = [];
+    departments: any[] = [];
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
     message: string = 'Click search to get users.';
@@ -39,6 +39,16 @@ export class UserComponent implements OnInit {
             label: 'Edit',
             icon: 'icon-edit',
             command: () => this.onEditOptionSelected(this.selectedUser)
+        },
+        {
+            label: 'Lock',
+            icon: 'icon-lock',
+            // command: () => this.onItemDeleteAction(this.selectedUser)
+        },
+        {
+            label: 'Unlock',
+            icon: 'icon-lock',
+            // command: () => this.onItemDeleteAction(this.selectedUser)
         },
         {
             label: 'Delete',
@@ -62,8 +72,8 @@ export class UserComponent implements OnInit {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -135,7 +145,7 @@ export class UserComponent implements OnInit {
 
     onItemDeleteAction(data: any) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to perform this action?',
+            message: 'Are you sure you want to delete this record?',
             accept: () => {
                 //Actual logic to perform a confirmation
                 this.deleteUser(data.id)
@@ -153,26 +163,12 @@ export class UserComponent implements OnInit {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Delete User');
+                    this.appService.handleError(error, 'User');
                 }
             });
         } else {
             this.toastService.error('Select Item', 'User');
         }
-    }
-    
-    getGroupName(id: any) {
-        if (id) {
-            return this.groups.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
-    }
-
-    getDepartmentName(id: any) {
-        if (id) {
-            return this.departments.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
     }
 
     ngOnDestroy() {

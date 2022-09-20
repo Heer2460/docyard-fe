@@ -9,6 +9,7 @@ import {LayoutModule} from "../../../layout/layout.module";
 import {DropdownModule} from "primeng/dropdown";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {CustomDirectiveModule} from "../../../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         DialogModule,
         DropdownModule,
         ReactiveFormsModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        CustomDirectiveModule
     ]
 })
 export class UserModule {

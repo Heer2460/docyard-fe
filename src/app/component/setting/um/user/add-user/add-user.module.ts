@@ -6,6 +6,7 @@ import {LayoutModule} from "../../../../layout/layout.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {CustomDirectiveModule} from "../../../../../shared/directive/custom.directive.module";
+import {MultiSelectModule} from "primeng/multiselect";
 
 
 
@@ -19,7 +20,8 @@ import {CustomDirectiveModule} from "../../../../../shared/directive/custom.dire
         LayoutModule,
         ReactiveFormsModule,
         DropdownModule,
-        CustomDirectiveModule
+        CustomDirectiveModule,
+        MultiSelectModule
     ]
 })
 export class AddUserModule { }

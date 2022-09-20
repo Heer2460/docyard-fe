@@ -24,11 +24,11 @@
             </tr>
             <tr>
                 <th>Group</th>
-                <td>{{getGroupName(selectedUser?.groupId)}}</td>
+                <td>{{selectedUser.groupId | filterObject: groups : 'single' }}</td>
             </tr>
             <tr>
                 <th>Department</th>
-                <td>{{getDepartmentName(selectedUser?.departmentId)}}</td>
+                <td>{{selectedUser.departmentIds | filterObject: departments : 'multiple' }}</td>
             </tr>
             <tr>
                 <th>Address</th>
@@ -40,7 +40,10 @@
             </tr>
             <tr>
                 <th>Logo</th>
-                <td>{{selectedUser}}</td>
+                <td><img *ngIf="selectedUser?.profilePhoto" alt="Logo"
+                         class="img-table-view p-0"
+                         src="data:image/jpeg;base64,{{selectedUser.profilePhoto}}"/>
+                </td>
             </tr>
             </tbody>
         </table>

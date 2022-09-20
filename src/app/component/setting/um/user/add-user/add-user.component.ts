@@ -43,8 +43,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -71,19 +71,17 @@ export class AddUserComponent implements OnInit, OnDestroy {
             phoneNumber: [null, [Validators.maxLength(32)]],
             mobileNumber: [null, [Validators.maxLength(32)]],
             passwords: this.fb.group({
-                password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
-                confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^.{6,}$/)]],
+                password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
+                confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
             }, {validators: CustomValidations.passwordConfirming}),
             groupId: [null, Validators.required],
-            departmentId: [null],
+            departmentIds: [''],
             address: [null, Validators.maxLength(256)],
             status: ['Active'],
         });
     }
 
     createUser() {
-        // console.log(this.addUserForm.value)
-        // return;
         if (this.addUserForm.invalid) {
             return;
         }
@@ -111,13 +109,13 @@ export class AddUserComponent implements OnInit, OnDestroy {
         let size;
         if (event.target.files.length > 0) {
             size = event.target.files[0].size / 1024 / 1024;
-            if (size > 1) {
-                this.toastService.error('File size not valid.', 'Logo');
+            if (size > 2) {
+                this.toastService.error('Uploaded file size is not supported.', 'Logo');
                 return;
             }
             format = event.target.files[0].type;
             if (!format.includes('image/')) {
-                this.toastService.error('Image format not valid.', 'Logo');
+                this.toastService.error('Uploaded file type is not supported.', 'Logo');
                 return;
             }
             let obj = {

@@ -9,7 +9,7 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <p-table [value]="users">
+        <p-table [value]="users" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="username">Username
@@ -34,8 +34,8 @@
                 <tr>
                     <td>{{row.username}}</td>
                     <td>{{row.name}}</td>
-                    <td>{{getGroupName(row?.groupId)}}</td>
-                    <td>{{getDepartmentName(row?.departmentId)}}</td>
+                    <td>{{row.groupId | filterObject: groups : 'single' }}</td>
+                    <td>{{row.departmentIds | filterObject: departments : 'multiple' }}</td>
                     <td>{{row.status}}</td>
                     <td>
                         <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
@@ -47,7 +47,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td [attr.colspan]="5" class="text-center">
+                    <td [attr.colspan]="6" class="text-center">
                         No records found
                     </td>
                 </tr>
