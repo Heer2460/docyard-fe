@@ -109,6 +109,66 @@
         <button (click)="searchUsers()" class="btn btn-sm btn-primary" type="button">Search</button>
     </ng-template>
 </p-dialog>
+<p-dialog [(visible)]="resetPasswordDialog" [modal]="true" styleClass="p-dialog-sm">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-lock"></i>
+            <span>Reset password</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="resetPasswordForm">
+        <div class="row">
+            <ng-container formGroupName="passwords">
+                <div class="col-12 mb-3">
+                    <div class="form-floating">
+                        <input autocomplete="new-password" class="form-control" formControlName="password"
+                               id="password"
+                               placeholder="Password"
+                               type="password">
+                        <label for="password">Password</label>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'password', 'required', 'password')">
+                            {{ appUtility.makeErrorMessage("Password", 'required') }}
+                        </small>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'password', 'maxlength', 'password')">
+                            {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
+                        </small>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'password', 'minlength', 'password')">
+                            {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
+                        </small>
+                        <small *ngIf="resetPasswordForm.controls['passwords'].get('password')?.touched &&
+                                        resetPasswordForm.controls['passwords'].get('password')?.errors">
+                            {{ 'Password must contain 1 alpha numeric key and 1 special char' }}
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12 mb-3">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
+                               placeholder="Confirm Password" type="password">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">
+                            {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
+                        </small>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
+                            {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
+                        </small>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
+                            {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
+                        </small>
+                        <small *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'confirmPassword', 'match', 'password')">
+                            {{ 'Password & Confirm Password must be same' }}
+                        </small>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button (click)="hideResetPasswordDialogAction()" class="btn btn-sm btn-danger me-2">Close</button>
+        <button (click)="onResetPassword(selectedUser)" [disabled]="resetPasswordForm.invalid"
+                class="btn btn-sm btn-primary" type="button">Reset</button>
+    </ng-template>
+</p-dialog>
 
 <p-confirmDialog #cd styleClass="dialog-danger">
     <ng-template pTemplate="header">

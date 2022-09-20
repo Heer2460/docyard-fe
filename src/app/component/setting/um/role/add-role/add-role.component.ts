@@ -32,7 +32,7 @@ export class AddRoleComponent implements OnInit {
     }
 
     preLoadedData() {
-        this.requestsService.getRequest(ApiUrlConstants.PERMISSIONS_API_URL)
+        this.requestsService.getRequest(ApiUrlConstants.MODULE_API_URL)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -56,14 +56,57 @@ export class AddRoleComponent implements OnInit {
         });
     }
 
-    createRole() {
-        if (this.addRoleForm.invalid) {
-            return;
+    checkAllChildrenPermissions(permission: any, event: any) {
+        const isChecked = event.target.checked;
+        permission.checked = isChecked;
+        let permissions = permission.children;
+        for (let i = 0; i < permissions.length; i++) {
+            permissions[i].checked = isChecked;
+            this.checkAllActionPermissions(permissions[i], event);
         }
-        // if (this.files.length < 1) {
-        //     this.toastService.error('Profile picture is missing.', 'Logo');
+    }
+
+    isParentChecked(permission: any, parent: any) {
+        let checkedItems = permission.filter((item: any) => item.checked);
+        let permissionLength = permission.length;
+        let checkedItemsLength = checkedItems.length;
+        parent.checked = permissionLength == checkedItemsLength;
+    }
+
+    checkAllActionPermissions(permission: any, event: any, item?: any, parent?: any) {
+        const isChecked = event.target.checked;
+        permission.checked = isChecked;
+        if (item && parent) {
+            this.isParentChecked(item, parent);
+        }
+        let permissions = permission.moduleActionDTOList;
+        if (permissions) {
+            for (let i = 0; i < permissions.length; i++) {
+                permissions[i].checked = isChecked;
+            }
+        }
+    }
+
+    createRolePermissions() {
+        // if (this.addRoleForm.invalid) {
         //     return;
         // }
+
+        let permissionsArray: any[] = [];
+        this.permissions.forEach((parent: any) => {
+            if (parent.children) {
+                parent.children.forEach((child: any) => {
+                    child.moduleActionDTOList.forEach((action: any) => {
+                        if (action.checked) {
+                            permissionsArray.push(action.moduleActionId);
+                        }
+                    });
+                });
+            }
+        });
+        console.log(permissionsArray);
+
+        return;
         let roleDTO: RoleDTO = new RoleDTO();
         roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);
         if (roleDTO) {
@@ -81,5 +124,4 @@ export class AddRoleComponent implements OnInit {
                 });
         }
     }
-
 }

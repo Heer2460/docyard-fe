@@ -164,7 +164,8 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="statuses" appendTo="body" formControlName="status" id="status"
-                                        inputId="status" optionLabel="value" optionValue="value"></p-dropdown>
+                                        inputId="status" optionLabel="value" optionValue="value"
+                                        [readonly]="true" class="cursor-none"></p-dropdown>
                             <label for="status">Status</label>
                         </span>
                     </div>

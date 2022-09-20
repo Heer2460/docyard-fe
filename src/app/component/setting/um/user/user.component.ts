@@ -11,8 +11,8 @@ import {HttpResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {forkJoin, Subject, takeUntil} from "rxjs";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
-import {DepartmentDTO} from "../../../../model/settings/ref/department/department.dto";
 import {UserDTO} from "../../../../model/settings/um/user/user.dto";
+import {CustomValidations} from "../../../../util/custom.validations";
 
 @Component({
     selector: 'user-component',
@@ -22,7 +22,9 @@ import {UserDTO} from "../../../../model/settings/um/user/user.dto";
 export class UserComponent implements OnInit {
 
     searchUserForm: FormGroup = new FormGroup({});
+    resetPasswordForm: FormGroup = new FormGroup({});
     searchPopupToggle: boolean = false;
+    resetPasswordDialog: boolean = false;
     users: UserDTO[] = [];
     groups: GroupDTO[] = [];
     departments: any[] = [];
@@ -41,14 +43,9 @@ export class UserComponent implements OnInit {
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
         {
-            label: 'Lock',
-            icon: 'icon-lock',
-            // command: () => this.onItemDeleteAction(this.selectedUser)
-        },
-        {
-            label: 'Unlock',
-            icon: 'icon-lock',
-            // command: () => this.onItemDeleteAction(this.selectedUser)
+            label: 'Reset Password',
+            icon: 'icon-edit',
+            command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
             label: 'Delete',
@@ -56,7 +53,7 @@ export class UserComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedUser)
         }
     ];
-    statuses = ReferencesStatuses.userStatuses;
+    statuses = ReferencesStatuses.userSearchStatuses;
 
     constructor(private fb: FormBuilder, private router: Router,
                 private confirmationService: ConfirmationService,
@@ -100,6 +97,15 @@ export class UserComponent implements OnInit {
             department: [null],
             status: ['Active'],
         });
+
+        this.resetPasswordForm = this.fb.group({
+            passwords: this.fb.group({
+                password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
+                confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
+            }, {validators: CustomValidations.passwordConfirming}),
+            // groupId: [null, Validators.required],
+            // departmentIds: ['']
+        });
     }
 
     searchUsers() {
@@ -133,6 +139,58 @@ export class UserComponent implements OnInit {
 
     onMenuClicked(data: any) {
         this.selectedUser = data;
+        if (this.selectedUser.status === 'Locked') {
+            this.actionItems = [
+                {
+                    label: 'View',
+                    icon: 'icon-eye',
+                    command: () => this.onViewOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Edit',
+                    icon: 'icon-edit',
+                    command: () => this.onEditOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Unlock',
+                    icon: 'icon-lock',
+                    command: () => this.onUnlockUserAction(this.selectedUser)
+                },
+                {
+                    label: 'Reset Password',
+                    icon: 'icon-edit',
+                    command: () => this.showResetPasswordDialogAction(this.selectedUser)
+                },
+                {
+                    label: 'Delete',
+                    icon: 'icon-trash',
+                    command: () => this.onItemDeleteAction(this.selectedUser)
+                }
+            ];
+        } else {
+            this.actionItems = [
+                {
+                    label: 'View',
+                    icon: 'icon-eye',
+                    command: () => this.onViewOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Edit',
+                    icon: 'icon-edit',
+                    command: () => this.onEditOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Reset Password',
+                    icon: 'icon-edit',
+                    command: () => this.showResetPasswordDialogAction(this.selectedUser)
+                },
+                {
+                    label: 'Delete',
+                    icon: 'icon-trash',
+                    command: () => this.onItemDeleteAction(this.selectedUser)
+                }
+            ];
+        }
     }
 
     onViewOptionSelected(data: any) {
@@ -171,8 +229,70 @@ export class UserComponent implements OnInit {
         }
     }
 
+    showResetPasswordDialogAction(selectedUser: UserDTO) {
+        this.resetPasswordForm.patchValue({
+            passwords: {
+                password: '',
+                confirmPassword: ''
+            }
+        });
+        this.resetPasswordForm.markAsUntouched();
+        this.resetPasswordDialog = true;
+    }
+
+    hideResetPasswordDialogAction() {
+        this.resetPasswordDialog = false;
+    }
+
+    onResetPassword(selectedUser: UserDTO) {
+        if (this.resetPasswordForm.invalid) {
+            return;
+        }
+        if (selectedUser) {
+            const data = {
+                userId: selectedUser.id,
+                newPassword: this.appService.encryptUsingAES256(this.resetPasswordForm.value.passwords.password),
+            }
+            this.requestsService.putRequest(ApiUrlConstants.USER_RESET_PASS_API_URL, data)
+                .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successUpdateMessage('User');
+                            this.hideResetPasswordDialogAction();
+                            this.searchUsers();
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'User');
+                    }
+                });
+        } else {
+            this.toastService.error('Select item', 'User');
+        }
+    }
+
+    onUnlockUserAction(selectedUser: any) {
+        if (selectedUser) {
+            const data = {
+                id: selectedUser.id,
+                status: 'Active',
+            }
+            this.requestsService.putRequest(ApiUrlConstants.USER_STATUS_API_URL, data)
+                .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successUpdateMessage('User');
+                            this.searchUsers();
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'User');
+                    }
+                });
+        }
+    }
+
     ngOnDestroy() {
         this.destroy.next(true);
     }
-
 }

@@ -119,8 +119,6 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.markAllAsTouched();
     }
 
-<<<<<<< HEAD
-=======
     setDepartmentIds(ids: any) {
         let idsArray: number[] = [];
         if (ids.length > 0) {
@@ -128,14 +126,13 @@ export class EditUserComponent implements OnInit {
         }
         return idsArray;
     }
->>>>>>> 5fd994b66e343be99608dee398202e1baba021c3
 
     updateUser() {
         if (this.editUserForm.invalid) {
             return;
         }
         let userDTO: UserDTO = new UserDTO();
-        userDTO.convertToDTO(this.editUserForm.value);
+        userDTO.convertToDTO(this.editUserForm.getRawValue());
         this.requestsService.putRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
