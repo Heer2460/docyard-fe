@@ -98,7 +98,6 @@ export class EditUserComponent implements OnInit {
                 }
             });
     }
-
     populateUserForm(userDto: UserDTO) {
         this.editUserForm.get('id')?.setValue(userDto.id);
         this.editUserForm.get('username')?.setValue(userDto.username);
@@ -112,6 +111,7 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.get('status')?.setValue(userDto.status);
         this.editUserForm.markAllAsTouched();
     }
+
 
     updateUser() {
         if (this.editUserForm.invalid) {
