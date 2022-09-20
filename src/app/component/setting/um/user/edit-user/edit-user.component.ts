@@ -111,16 +111,14 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.get('phoneNumber')?.setValue(userDto.phoneNumber);
         this.editUserForm.get('mobileNumber')?.setValue(userDto.mobileNumber);
         this.editUserForm.get('groupId')?.setValue(userDto.groupId);
-        this.editUserForm.get('departmentIds')?.setValue(this.setDepartmentIds(userDto.departmentIds));
+        // this.editUserForm.get('departmentIds')?.setValue(this.setDepartmentIds(userDto.departmentIds));
         this.editUserForm.get('address')?.setValue(userDto?.address);
         this.editUserForm.get('status')?.setValue(userDto.status);
-        this.editUserForm.get('profilePhoto')?.setValue(userDto.profilePhoto);
-        userDto.profilePhoto ? this.logoImageDataUrl = userDto.profilePhoto : this.logoImageDataUrl = '';
+        // this.editUserForm.get('profilePhoto')?.setValue(userDto.profilePhoto);
+        // userDto.profilePhoto ? this.logoImageDataUrl = userDto.profilePhoto : this.logoImageDataUrl = '';
         this.editUserForm.markAllAsTouched();
     }
 
-<<<<<<< HEAD
-=======
     setDepartmentIds(ids: any) {
         let idsArray: number[] = [];
         if (ids.length > 0) {
@@ -128,7 +126,7 @@ export class EditUserComponent implements OnInit {
         }
         return idsArray;
     }
->>>>>>> 5fd994b66e343be99608dee398202e1baba021c3
+
 
     updateUser() {
         if (this.editUserForm.invalid) {

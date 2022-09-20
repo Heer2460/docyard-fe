@@ -12,6 +12,7 @@ import {AppUtility} from "../../util/app.utility";
 import {ToastrService} from "ngx-toastr";
 import {RoleDTO} from "../../model/settings/um/role/role.dto";
 import {GroupDTO} from "../../model/settings/um/group/group.dto";
+import {CustomValidations} from "../../util/custom.validations";
 
 
 @Component({
@@ -80,8 +81,10 @@ export class UserProfileComponent implements OnInit {
         this.changePasswordForm = this.fb.group({
             userId: [8],
             currentPassword: [null, [Validators.required, Validators.maxLength(32)]],
-            newPassword: [null, [Validators.required, Validators.maxLength(32)]],
-            confirmPassword: [null, [Validators.required, Validators.maxLength(32)]],
+            passwords: this.fb.group({
+                password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
+                confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
+            }, {validators: CustomValidations.passwordConfirming}),
 
         });
     }
