@@ -98,7 +98,7 @@
                                         </td>
                                         <ng-container *ngFor="let action of child.moduleActionDTOList; let j = index">
                                             <td>
-                                                <div class="form-check form-check-only">
+                                                <div class="form-check">
                                                     <input (change)="isParentChecked(child.moduleActionDTOList, child);
                                                            checkAllActionPermissions(action, $event, permission.children, permission)"
                                                            [(ngModel)]="action.checked" [attr.id]="action.slug + index + i + j"

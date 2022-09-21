@@ -8,7 +8,7 @@ import {AppService} from "../../../../../service/app.service";
 
 @Component({
     selector: 'app-view-role',
-    templateUrl: './view-role.component.html',
+    templateUrl: './view-role.template.html',
     styleUrls: ['./view-role.component.less']
 })
 export class ViewRoleComponent implements OnInit {
