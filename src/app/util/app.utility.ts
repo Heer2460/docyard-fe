@@ -1,4 +1,4 @@
-import {RoleActionsConstants} from "./role.actions.constants";
+import {RoleActionConstants} from "./role.actions.constants";
 
 export class AppUtility {
 

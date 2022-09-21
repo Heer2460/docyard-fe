@@ -32,7 +32,7 @@ export class AddRoleComponent implements OnInit {
     }
 
     preLoadedData() {
-        this.requestsService.getRequest(ApiUrlConstants.PERMISSIONS_API_URL)
+        this.requestsService.getRequest(ApiUrlConstants.MODULE_API_URL)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -52,18 +52,59 @@ export class AddRoleComponent implements OnInit {
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
-            remarks: ['', Validators.maxLength(256)]
+            remarks: ['', Validators.maxLength(256)],
+            moduleActionList: []
         });
     }
 
-    createRole() {
+    checkAllChildrenPermissions(permission: any, event: any) {
+        const isChecked = event.target.checked;
+        permission.checked = isChecked;
+        let permissions = permission.children;
+        for (let i = 0; i < permissions.length; i++) {
+            permissions[i].checked = isChecked;
+            this.checkAllActionPermissions(permissions[i], event);
+        }
+    }
+
+    isParentChecked(permission: any, parent: any) {
+        let checkedItems = permission.filter((item: any) => item.checked);
+        let permissionLength = permission.length;
+        let checkedItemsLength = checkedItems.length;
+        parent.checked = permissionLength == checkedItemsLength;
+    }
+
+    checkAllActionPermissions(permission: any, event: any, item?: any, parent?: any) {
+        const isChecked = event.target.checked;
+        permission.checked = isChecked;
+        if (item && parent) {
+            this.isParentChecked(item, parent);
+        }
+        let permissions = permission.moduleActionDTOList;
+        if (permissions) {
+            for (let i = 0; i < permissions.length; i++) {
+                permissions[i].checked = isChecked;
+            }
+        }
+    }
+
+    createRolePermissions() {
         if (this.addRoleForm.invalid) {
             return;
         }
-        // if (this.files.length < 1) {
-        //     this.toastService.error('Profile picture is missing.', 'Logo');
-        //     return;
-        // }
+        let permissionsArray: any[] = [];
+        this.permissions.forEach((parent: any) => {
+            if (parent.children) {
+                parent.children.forEach((child: any) => {
+                    child.moduleActionDTOList.forEach((action: any) => {
+                        if (action.checked) {
+                            permissionsArray.push(action.moduleActionId);
+                        }
+                    });
+                });
+            }
+        });
+        this.addRoleForm.get('moduleActionList')?.patchValue(permissionsArray);
         let roleDTO: RoleDTO = new RoleDTO();
         roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);
         if (roleDTO) {
@@ -72,7 +113,7 @@ export class AddRoleComponent implements OnInit {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.appService.successAddMessage('Role');
-                            this.router.navigate(['setting/um/role']);
+                            this.router.navigate(['/setting/um/role']);
                         }
                     },
                     error: (error: any) => {
@@ -82,4 +123,7 @@ export class AddRoleComponent implements OnInit {
         }
     }
 
+    counter(i: number) {
+        return new Array(i);
+    }
 }

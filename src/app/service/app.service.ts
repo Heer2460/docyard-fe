@@ -11,6 +11,7 @@ import {AppConstants} from "../util/app.constants";
 export class AppService {
     secretKey: string = 'DOCYARDINFOTECH';
     permissions: any = [];
+    menus: any = {};
 
     public toggleMenuBSubject = new BehaviorSubject(false);
     public toggleRightPaneSubject = new BehaviorSubject(false);
@@ -81,11 +82,11 @@ export class AppService {
     }
 
     successAddMessage(title: string): void {
-        this.toastService.success('Added Successfully', title);
+        this.toastService.success('Record created successfully.', title);
     }
 
     successUpdateMessage(title: string): void {
-        this.toastService.success('Updated Successfully', title);
+        this.toastService.success('The record updated successfully.', title);
     }
 
     successDeleteMessage(title: string): void {

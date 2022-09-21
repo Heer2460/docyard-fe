@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
 import {RequestService} from "../../../../../service/request.service";
 import {AppService} from "../../../../../service/app.service";
 import {AppUtility} from "../../../../../util/app.utility";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {forkJoin, Subject, takeUntil} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
@@ -38,8 +37,8 @@ export class ViewUserComponent implements OnInit {
     }
 
     preloadedData(): void {
-        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL);
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL);
+        const groups = this.requestsService.getRequest(ApiUrlConstants.GROUP_API_URL + '?status=Active');
+        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + '?status=Active');
         forkJoin([groups, departments])
             .pipe(takeUntil(this.destroy))
             .subscribe(
@@ -61,7 +60,6 @@ export class ViewUserComponent implements OnInit {
                 });
     }
 
-
     getUserById(id: number) {
         this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + id)
             .subscribe({
@@ -73,20 +71,6 @@ export class ViewUserComponent implements OnInit {
                     this.appService.handleError(error, 'User');
                 }
             });
-    }
-
-    getGroupName(id: any) {
-        if (id) {
-            return this.groups.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
-    }
-
-    getDepartmentName(id: any) {
-        if (id) {
-            return this.departments.find((item: any) => Number(id) === item.id)?.name;
-        }
-        return '';
     }
 
     ngOnDestroy() {

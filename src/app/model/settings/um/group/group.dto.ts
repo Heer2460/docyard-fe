@@ -34,5 +34,4 @@ export class GroupDTO extends BaseDTO {
         groupDTO.convertToDTO(data);
         return groupDTO;
     }
-
 }

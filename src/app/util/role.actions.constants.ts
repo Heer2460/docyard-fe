@@ -1,3 +1,3 @@
-export class RoleActionsConstants {
+export class RoleActionConstants {
 
 }
