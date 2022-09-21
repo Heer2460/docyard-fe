@@ -8,7 +8,7 @@ const routes: Routes = [
         component: RefComponent
     },
     {
-        path: 'dept',
+        path: 'department',
         children: [
             {
                 path: '',

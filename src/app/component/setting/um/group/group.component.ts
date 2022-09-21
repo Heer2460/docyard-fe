@@ -57,8 +57,7 @@ export class GroupComponent implements OnInit {
     }
 
     getAllRoles() {
-        let url = ApiUrlConstants.ROLE_API_URL;
-        this.requestsService.getRequest(url)
+        this.requestsService.getRequest(ApiUrlConstants.ROLE_API_URL + 'search?code=&name=&status=Active')
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -96,7 +95,7 @@ export class GroupComponent implements OnInit {
         });
 
         this.updateGroupForm = this.fb.group({
-            id:[],
+            id:[''],
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
