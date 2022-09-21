@@ -53,7 +53,7 @@ export class AddRoleComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
             remarks: ['', Validators.maxLength(256)],
-            permissionId: []
+            moduleActionList: []
         });
     }
 
@@ -104,7 +104,7 @@ export class AddRoleComponent implements OnInit {
                 });
             }
         });
-        this.addRoleForm.get('permissionId')?.patchValue(permissionsArray);
+        this.addRoleForm.get('moduleActionList')?.patchValue(permissionsArray);
         let roleDTO: RoleDTO = new RoleDTO();
         roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);
         if (roleDTO) {

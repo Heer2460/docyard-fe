@@ -24,6 +24,15 @@ const routes: Routes = [
                 loadChildren: () => import('./edit-role/edit-role.module').then(m => m.EditRoleModule)
             }
         ]
+    },
+    {
+        path: 'view',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./view-role/view-role.module').then(m => m.ViewRoleModule)
+            }
+        ]
     }
 ];
 

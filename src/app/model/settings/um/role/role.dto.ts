@@ -7,7 +7,7 @@ export class RoleDTO extends BaseDTO {
     name: string | undefined;
     status: string | undefined;
     remarks: string | undefined;
-    permissionId: Array<any> = [];
+    moduleActionList: Array<any> = [];
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
 
@@ -17,7 +17,7 @@ export class RoleDTO extends BaseDTO {
         this.name = data.name;
         this.status = data.status;
         this.remarks = data.remarks;
-        this.permissionId = data.permissionId;
+        this.moduleActionList = data.moduleActionList;
 
         this.createdOn = data.createdOn ? data.createdOn : new Date();
         this.updatedOn = new Date();

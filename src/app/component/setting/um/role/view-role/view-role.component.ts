@@ -1,32 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ReferencesStatuses} from "../../../../../util/references.statuses";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ConfirmationService} from "primeng/api";
-import {RequestService} from "../../../../../service/request.service";
-import {AppService} from "../../../../../service/app.service";
-import {AppUtility} from "../../../../../util/app.utility";
+import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
-import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
+import {ActivatedRoute} from "@angular/router";
+import {RequestService} from "../../../../../service/request.service";
+import {AppService} from "../../../../../service/app.service";
 
 @Component({
-    selector: 'edit-role-component',
-    templateUrl: './edit-role.template.html',
-    styleUrls: ['./edit-role.component.less']
+    selector: 'app-view-role',
+    templateUrl: './view-role.component.html',
+    styleUrls: ['./view-role.component.less']
 })
-export class EditRoleComponent implements OnInit {
+export class ViewRoleComponent implements OnInit {
 
-    editRoleForm: FormGroup = new FormGroup({});
-    statuses = ReferencesStatuses.statuses;
     permissions: any = [];
     roleId: any;
     selectedRole: RoleDTO = new RoleDTO();
 
-    constructor(private router: Router, private confirmationService: ConfirmationService,
-                private fb: FormBuilder, private requestsService: RequestService,
-                private appService: AppService, public appUtility: AppUtility,
-                private activeRoute: ActivatedRoute) {
+    constructor(private activeRoute: ActivatedRoute,
+                private requestsService: RequestService,
+                private appService: AppService) {
     }
 
     ngOnInit(): void {
@@ -34,7 +27,6 @@ export class EditRoleComponent implements OnInit {
             this.roleId = this.activeRoute.snapshot.paramMap.get('id')
         }
         this.preLoadedData();
-        this.buildForms();
     }
 
     preLoadedData() {
@@ -54,41 +46,20 @@ export class EditRoleComponent implements OnInit {
             });
     }
 
-    buildForms() {
-        this.editRoleForm = this.fb.group({
-            id: [null],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
-            status: ['Active', Validators.required],
-            remarks: ['', Validators.maxLength(256)],
-            moduleActionList: []
-        });
-    }
-
     getRoleById(id: number) {
         this.requestsService.getRequest(ApiUrlConstants.ROLE_API_URL + id)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.selectedRole = response.body.data;
-                        this.populateRoleForm(response.body.data);
+                        if (this.selectedRole.moduleActionList.length > 0) {
+                            this.populateSelectedPermissions(this.selectedRole.moduleActionList);
+                        }
                     }
                 }, error: (error: any) => {
                     this.appService.handleError(error, 'User');
                 }
             });
-    }
-    
-    populateRoleForm(roleDto: RoleDTO) {
-        this.editRoleForm.get('id')?.setValue(roleDto.id);
-        this.editRoleForm.get('code')?.setValue(roleDto.code);
-        this.editRoleForm.get('name')?.setValue(roleDto.name);
-        this.editRoleForm.get('status')?.setValue(roleDto.status);
-        this.editRoleForm.get('remarks')?.setValue(roleDto.remarks);
-        this.editRoleForm.markAllAsTouched();
-        if (roleDto.moduleActionList.length > 0) {
-            this.populateSelectedPermissions(roleDto.moduleActionList);
-        }
     }
 
     checkAllChildrenPermissions(permission: any, event: any) {
@@ -144,38 +115,4 @@ export class EditRoleComponent implements OnInit {
         });
     }
 
-    updateRolePermissions() {
-        if (this.editRoleForm.invalid) {
-            return;
-        }
-        let permissionsArray: any[] = [];
-        this.permissions.forEach((parent: any) => {
-            if (parent.children) {
-                parent.children.forEach((child: any) => {
-                    child.moduleActionDTOList.forEach((action: any) => {
-                        if (action.checked) {
-                            permissionsArray.push(action.moduleActionId);
-                        }
-                    });
-                });
-            }
-        });
-        this.editRoleForm.get('moduleActionList')?.patchValue(permissionsArray);
-        let roleDTO: RoleDTO = new RoleDTO();
-        roleDTO.convertToDTO(this.editRoleForm.value);
-        if (roleDTO) {
-            this.requestsService.putRequest(ApiUrlConstants.ROLE_API_URL, roleDTO)
-                .subscribe({
-                    next: (response: HttpResponse<any>) => {
-                        if (response.status === 200) {
-                            this.appService.successAddMessage('Role');
-                            this.router.navigate(['/setting/um/role']);
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Role');
-                    }
-                });
-        }
-    }
 }
