@@ -91,6 +91,9 @@ export class AppService {
     successDeleteMessage(title: string): void {
         this.toastService.success('Deleted Successfully', title);
     }
+    successMessage(message: string): void {
+        this.toastService.success('Update Successfully', message);
+    }
 
     encryptUsingAES256(text: any) {
         const textToChars = (text: any) => text.split('').map((c: any) => c.charCodeAt(0));
