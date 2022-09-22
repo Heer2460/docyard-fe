@@ -3,10 +3,16 @@
         <div class="card">
             <div class="card-body">
                 <div class="profile-container">
-                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="User image placeholder">
-                    <button class="btn btn-secondary">
+                    <img *ngIf="profileImage === null" src="./assets/images/svg/user-image-placeholder.svg" alt="User Image"/>
+                    <img *ngIf="profileImage != null" src="{{'data:image/jpg;base64,' + profileImage}}" alt="User Image"/>
+                    <button (click)="signatureImg.click()" class="btn btn-secondary">
                         <i class="icon-edit"></i>
                     </button>
+                    <input type="file" name="signatureImg"
+                           accept="image/png, image/jpeg, application/pdf"
+                           class="d-none" #signatureImg onclick="this.value = null"
+                           (change)="updateProfileImg($event)"/>
+
                 </div>
                 <div class="content-container">
                     <div class="left-container">
@@ -15,7 +21,8 @@
                             <h4>{{selectedGroups.rolesNameList}}</h4>
                         </div>
                         <div class="actions">
-                            <button class="btn btn-sm btn-primary">Edit profile</button>
+<!--                            <button class="btn btn-sm btn-primary">Edit profile</button>-->
+                            <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-primary">Change Password</button>
                         </div>
                     </div>
                     <div class="right-container">
@@ -41,9 +48,7 @@
                             </tbody>
                         </table>
                         <div class="actions">
-                            <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-secondary">Change
-                                password
-                            </button>
+
                         </div>
                     </div>
                 </div>

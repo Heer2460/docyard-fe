@@ -10,6 +10,9 @@ export class ApiUrlConstants {
     // User API URL
     public static USER_API_URL = '/user/';
 
+    // upload profile
+    public static UPLOAD_IMAGE_API_URL ='/user/profile-picture'
+
     // User Status API URL
     public static USER_STATUS_API_URL = '/user/updateUserStatus/';
 
@@ -17,7 +20,7 @@ export class ApiUrlConstants {
     public static USER_RESET_PASS_API_URL = '/user/reset-password/';
 
     // Change Password
-    public static ChangePassword = '/user/change-password';
+    public static CHANGE_PASSWORD_API_URL = '/user/change-password';
 
     // Department API URL
     public static DEPARTMENT_API_URL = '/department/';
