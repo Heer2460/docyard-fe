@@ -54,8 +54,8 @@ export class BreadcrumbComponent implements OnInit {
         },
         {
             label: 'Department',
-            route: '/setting/ref/dept',
-            slug: 'dept',
+            route: '/setting/ref/department',
+            slug: 'department',
             active: false,
         },
         {

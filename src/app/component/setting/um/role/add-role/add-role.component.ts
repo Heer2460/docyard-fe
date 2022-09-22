@@ -52,7 +52,8 @@ export class AddRoleComponent implements OnInit {
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
-            remarks: ['', Validators.maxLength(256)]
+            remarks: ['', Validators.maxLength(256)],
+            moduleActionList: []
         });
     }
 
@@ -88,10 +89,9 @@ export class AddRoleComponent implements OnInit {
     }
 
     createRolePermissions() {
-        // if (this.addRoleForm.invalid) {
-        //     return;
-        // }
-
+        if (this.addRoleForm.invalid) {
+            return;
+        }
         let permissionsArray: any[] = [];
         this.permissions.forEach((parent: any) => {
             if (parent.children) {
@@ -104,9 +104,7 @@ export class AddRoleComponent implements OnInit {
                 });
             }
         });
-        console.log(permissionsArray);
-
-        return;
+        this.addRoleForm.get('moduleActionList')?.patchValue(permissionsArray);
         let roleDTO: RoleDTO = new RoleDTO();
         roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);
         if (roleDTO) {
@@ -115,7 +113,7 @@ export class AddRoleComponent implements OnInit {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.appService.successAddMessage('Role');
-                            this.router.navigate(['setting/um/role']);
+                            this.router.navigate(['/setting/um/role']);
                         }
                     },
                     error: (error: any) => {
@@ -123,5 +121,9 @@ export class AddRoleComponent implements OnInit {
                     }
                 });
         }
+    }
+
+    counter(i: number) {
+        return new Array(i);
     }
 }

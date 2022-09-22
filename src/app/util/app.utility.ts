@@ -1,4 +1,4 @@
-import {RoleActionsConstants} from "./role.actions.constants";
+import {RoleActionConstants} from "./role.actions.constants";
 
 export class AppUtility {
 
@@ -92,6 +92,7 @@ export class AppUtility {
         return error;
     }
 
+    // handle form-control error messages
     public makeErrorMessage(...args: any[]) {
         let fieldLabel: string, rule: string, maxlength: number = 0, minlength: number = 0, charsType: string = '',
             errorMessage: string = '';

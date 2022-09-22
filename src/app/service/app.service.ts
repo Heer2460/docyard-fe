@@ -11,6 +11,7 @@ import {AppConstants} from "../util/app.constants";
 export class AppService {
     secretKey: string = 'DOCYARDINFOTECH';
     permissions: any = [];
+    menus: any = {};
 
     public toggleMenuBSubject = new BehaviorSubject(false);
     public toggleRightPaneSubject = new BehaviorSubject(false);

@@ -99,7 +99,7 @@
                     <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        optionLabel="name" optionValue="id"></p-dropdown>
+                                        optionLabel="name" optionValue="id"  placeholder="Select group"></p-dropdown>
                             <label for="groupId">Group</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ReferencesStatuses} from "../../../../util/references.statuses";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
@@ -104,11 +104,11 @@ export class RoleComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/role/view']);
+        this.router.navigate(['/setting/um/role/view/' + data.id]);
     }
 
     onEditOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/role/edit']);
+        this.router.navigate(['/setting/um/role/edit/' + data.id]);
     }
 
     showSearchPopupAction() {

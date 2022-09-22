@@ -4,7 +4,7 @@ import {EditRoleComponent} from "./edit-role.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: EditRoleComponent
   }
 ];
