@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {RoutesDTO} from "../model/routes.dto";
 import {AppConstants} from "../util/app.constants";
+import {RoleActionConstants} from "../util/role.actions.constants";
 
 @Injectable({
     providedIn: 'root'
@@ -114,5 +115,15 @@ export class AppService {
             .map(applySaltToChar)
             .map((charCode: any) => String.fromCharCode(charCode))
             .join('');
+    }
+
+    noRightsMessage(): void {
+        this.toastService.info('You do not have permission.', 'Permission');
+    }
+
+    public logout() {
+        RoleActionConstants.resetPermission();
+        localStorage.clear();
+        this.router.navigate(['/login']);
     }
 }
