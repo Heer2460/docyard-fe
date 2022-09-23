@@ -12,7 +12,6 @@ import {RoleActionConstants} from "../util/role.actions.constants";
 export class AppService {
     secretKey: string = 'DOCYARDINFOTECH';
     permissions: any = [];
-    menus: any = {};
 
     public toggleMenuBSubject = new BehaviorSubject(false);
     public toggleRightPaneSubject = new BehaviorSubject(false);
@@ -21,16 +20,6 @@ export class AppService {
     routes: RoutesDTO[] = [];
 
     constructor(private toastService: ToastrService, private router: Router) {
-    }
-
-    setRoutes(routes: RoutesDTO[]) {
-        localStorage.removeItem(AppConstants.APP_ROUTES);
-        localStorage.setItem(AppConstants.APP_ROUTES, JSON.stringify(routes));
-    }
-
-    getRoutes() {
-        const routes: any = localStorage.getItem(AppConstants.APP_ROUTES)
-        return JSON.parse(routes);
     }
 
     setToggleMenuBSubject(state: boolean) {

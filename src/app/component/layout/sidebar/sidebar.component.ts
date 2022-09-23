@@ -11,7 +11,7 @@ import {AppRouteConstants} from "../../../util/app.route.constants";
 })
 export class SidebarComponent implements OnInit {
 
-    @Input() routes: RoutesDTO[] = [];
+    routes: RoutesDTO[] = [];
     currentRoute: string = '';
 
     constructor(public appService: AppService, private router: Router) {
@@ -56,12 +56,7 @@ export class SidebarComponent implements OnInit {
     }
 
     switchRouteTypes() {
-        if (this.router.url.split('/')[1] == 'setting') {
-            this.appService.setRoutes(AppRouteConstants.settingRoutes);
-        } else {
-            this.appService.setRoutes(AppRouteConstants.mainRoutes);
-        }
-        this.routes = this.appService.getRoutes();
+        this.routes = AppRouteConstants.mainRoutes;
     }
 
 }
