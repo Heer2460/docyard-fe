@@ -2,7 +2,6 @@ import {RoleActionConstants} from "./role.actions.constants";
 
 export class AppUtility {
 
-
     // handle form-control errors
     public getFormError(userForm: any, control: any, name: any, rule: any, type: string = '') {
         let error;
@@ -92,6 +91,7 @@ export class AppUtility {
         return error;
     }
 
+    // handle form-control error messages
     public makeErrorMessage(...args: any[]) {
         let fieldLabel: string, rule: string, maxlength: number = 0, minlength: number = 0, charsType: string = '',
             errorMessage: string = '';
@@ -124,5 +124,128 @@ export class AppUtility {
                 break;
         }
         return errorMessage;
+    }
+
+    // set roles & actions
+    setRoles(roles: any) {
+        // console.log(roles);
+        if (roles && roles.length > 0) {
+            roles.forEach((menu: any) => {
+                menu.children.forEach((subMenu: any) => {
+                    switch (subMenu.route) {
+                        // User Management
+                        case RoleActionConstants.USER_ROUTE.url:
+                            RoleActionConstants.USER_ROUTE.valid = true;
+                            this.setUserActions(subMenu.moduleActionDTOList);
+                            break;
+                        case RoleActionConstants.GROUP_ROUTE.url:
+                            RoleActionConstants.GROUP_ROUTE.valid = true;
+                            this.setGroupActions(subMenu.moduleActionDTOList);
+                            break;
+                        case RoleActionConstants.ROLE_ROUTE.url:
+                            RoleActionConstants.ROLE_ROUTE.valid = true;
+                            this.setRoleActions(subMenu.moduleActionDTOList);
+                            break;
+                        // References
+                        case RoleActionConstants.DEPARTMENT_ROUTE.url:
+                            RoleActionConstants.DEPARTMENT_ROUTE.valid = true;
+                            this.setDepartmentActions(subMenu.moduleActionDTOList);
+                            break;
+
+                    }
+                });
+            });
+        }
+    }
+
+    private setUserActions(actions: any) {
+        actions.forEach((action: any) => {
+            switch (action.slug) {
+                case RoleActionConstants.USER_ADD.key:
+                    RoleActionConstants.USER_ADD.value = true;
+                    RoleActionConstants.USER_ADD_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.USER_VIEW.key:
+                    RoleActionConstants.USER_VIEW.value = true;
+                    RoleActionConstants.USER_VIEW_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.USER_EDIT.key:
+                    RoleActionConstants.USER_EDIT.value = true;
+                    RoleActionConstants.USER_EDIT_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.USER_DEL.key:
+                    RoleActionConstants.USER_DEL.value = true;
+                    break;
+                case RoleActionConstants.USER_UNLOCK.key:
+                    RoleActionConstants.USER_UNLOCK.value = true;
+                    break;
+            }
+        });
+    }
+
+    private setGroupActions(actions: any) {
+        actions.forEach((action: any) => {
+            switch (action.slug) {
+                case RoleActionConstants.GROUP_ADD.key:
+                    RoleActionConstants.GROUP_ADD.value = true;
+                    RoleActionConstants.GROUP_ADD_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.GROUP_VIEW.key:
+                    RoleActionConstants.GROUP_VIEW.value = true;
+                    RoleActionConstants.GROUP_VIEW_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.GROUP_EDIT.key:
+                    RoleActionConstants.GROUP_EDIT.value = true;
+                    RoleActionConstants.GROUP_EDIT_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.GROUP_DEL.key:
+                    RoleActionConstants.GROUP_DEL.value = true;
+                    break;
+            }
+        });
+    }
+
+    private setRoleActions(actions: any) {
+        actions.forEach((action: any) => {
+            switch (action.slug) {
+                case RoleActionConstants.ROLE_ADD.key:
+                    RoleActionConstants.ROLE_ADD.value = true;
+                    RoleActionConstants.ROLE_ADD_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.ROLE_VIEW.key:
+                    RoleActionConstants.ROLE_VIEW.value = true;
+                    RoleActionConstants.ROLE_VIEW_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.ROLE_EDIT.key:
+                    RoleActionConstants.ROLE_EDIT.value = true;
+                    RoleActionConstants.ROLE_EDIT_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.ROLE_DEL.key:
+                    RoleActionConstants.ROLE_DEL.value = true;
+                    break;
+            }
+        });
+    }
+
+    private setDepartmentActions(actions: any) {
+        actions.forEach((action: any) => {
+            switch (action.slug) {
+                case RoleActionConstants.DEPT_ADD.key:
+                    RoleActionConstants.DEPT_ADD.value = true;
+                    RoleActionConstants.DEPARTMENT_ADD_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.DEPT_VIEW.key:
+                    RoleActionConstants.DEPT_VIEW.value = true;
+                    RoleActionConstants.DEPARTMENT_VIEW_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.DEPT_EDIT.key:
+                    RoleActionConstants.DEPT_EDIT.value = true;
+                    RoleActionConstants.DEPARTMENT_EDIT_ROUTE.valid = true;
+                    break;
+                case RoleActionConstants.DEPT_DEL.key:
+                    RoleActionConstants.DEPT_DEL.value = true;
+                    break;
+            }
+        });
     }
 }

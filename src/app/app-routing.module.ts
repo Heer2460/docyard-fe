@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from "./component/layout/layout.component";
 import {PageNotFoundComponent} from "./component/page-not-found/page-not-found.component";
+import {AuthGuard} from "./guard/auth.guard";
 
 const routes: Routes = [
     {
@@ -35,7 +36,7 @@ const routes: Routes = [
         path: 'setting',
         children: [
             {
-                path: '',
+                path: '', canActivate: [AuthGuard],
                 loadChildren: () => import('./component/setting/setting.module').then(m => m.SettingModule)
             }
         ]

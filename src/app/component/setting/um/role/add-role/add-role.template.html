@@ -58,68 +58,68 @@
             <p-accordion styleClass="mb-3">
                 <ng-container *ngFor="let permission of permissions; let index = index">
                     <p-accordionTab [header]="permission.name" [selected]="true">
-                            <table class="table table-striped table-permissions">
-                                <thead>
+                        <table class="table table-striped table-permissions">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="form-check form-check-only">
+                                        <input (change)="checkAllChildrenPermissions(permission, $event)" [attr.id]="permission.slug + index"
+                                               [checked]="permission.checked"
+                                               class="form-check-input"
+                                               type="checkbox">
+                                        <label [attr.for]="permission.slug + index"
+                                               class="form-check-label"></label>
+                                    </div>
+                                </th>
+                                <th>All</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <ng-container *ngFor="let child of permission.children; let i = index">
                                 <tr>
-                                    <th>
+                                    <td>
                                         <div class="form-check form-check-only">
-                                            <input (change)="checkAllChildrenPermissions(permission, $event)" [attr.id]="permission.slug + index"
-                                                   [checked]="permission.checked"
+                                            <input (change)="checkAllActionPermissions(child, $event, permission.children, permission)" [(ngModel)]="child.checked"
+                                                   [attr.id]="child.slug + index + i"
                                                    class="form-check-input"
                                                    type="checkbox">
-                                            <label [attr.for]="permission.slug + index"
+                                            <label [attr.for]="child.slug + index + i"
                                                    class="form-check-label"></label>
                                         </div>
-                                    </th>
-                                    <th>All</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <ng-container *ngFor="let child of permission.children; let i = index">
-                                    <tr>
+                                    </td>
+                                    <td>
+                                        <i class="icon-user"></i>
+                                        <span>{{child.name}}</span>
+                                    </td>
+                                    <ng-container *ngFor="let action of child.moduleActionDTOList; let j = index">
                                         <td>
-                                            <div class="form-check form-check-only">
-                                                <input (change)="checkAllActionPermissions(child, $event, permission.children, permission)" [(ngModel)]="child.checked"
-                                                       [attr.id]="child.slug + index + i"
+                                            <div class="form-check">
+                                                <input (change)="isParentChecked(child.moduleActionDTOList, child);
+                                                           checkAllActionPermissions(action, $event, permission.children, permission)"
+                                                       [(ngModel)]="action.checked" [attr.id]="action.slug + index + i + j"
                                                        class="form-check-input"
                                                        type="checkbox">
-                                                <label [attr.for]="child.slug + index + i"
-                                                       class="form-check-label"></label>
+                                                <label [attr.for]="action.slug + index + i + j"
+                                                       class="form-check-label">{{action.title}}</label>
                                             </div>
                                         </td>
-                                        <td>
-                                            <i class="icon-user"></i>
-                                            <span>{{child.name}}</span>
-                                        </td>
-                                        <ng-container *ngFor="let action of child.moduleActionDTOList; let j = index">
-                                            <td>
-                                                <div class="form-check">
-                                                    <input (change)="isParentChecked(child.moduleActionDTOList, child);
-                                                           checkAllActionPermissions(action, $event, permission.children, permission)"
-                                                           [(ngModel)]="action.checked" [attr.id]="action.slug + index + i + j"
-                                                           class="form-check-input"
-                                                           type="checkbox">
-                                                    <label [attr.for]="action.slug + index + i + j"
-                                                           class="form-check-label">{{action.title}}</label>
-                                                </div>
-                                            </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="child.moduleActionDTOList.length < 5">
+                                        <ng-container
+                                                *ngFor="let data of counter(5 - child.moduleActionDTOList.length)">
+                                            <td></td>
                                         </ng-container>
-                                        <ng-container *ngIf="child.moduleActionDTOList.length < 5">
-                                            <ng-container
-                                                    *ngFor="let data of counter(5 - child.moduleActionDTOList.length)">
-                                                <td></td>
-                                            </ng-container>
-                                        </ng-container>
-                                    </tr>
-                                </ng-container>
-                                </tbody>
-                            </table>
-                        </p-accordionTab>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                            </tbody>
+                        </table>
+                    </p-accordionTab>
                 </ng-container>
             </p-accordion>
         </fieldset>

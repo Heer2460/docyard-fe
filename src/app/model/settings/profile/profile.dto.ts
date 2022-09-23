@@ -8,10 +8,10 @@ export class ProfileDTO extends BaseDTO {
     phoneNumber: null | undefined;
     mobileNumber: null | undefined;
     address: string | undefined;
-    profilePhoto: string | undefined;
     currentPassword: string | undefined;
     newPassword: string | undefined;
     confirmPassword: string | undefined;
+    profilePhotoReceived: string | undefined;
 
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
@@ -21,12 +21,12 @@ export class ProfileDTO extends BaseDTO {
         this.email = data.email;
         this.name = data.name;
         this.currentPassword = data.currentPassword;
-        this.newPassword = data.newPassword;
-        this.confirmPassword = data.confirmPassword;
+        this.newPassword = data.passwords.newPassword;
+        this.confirmPassword = data.passwords.confirmPassword;
         this.phoneNumber = data.phoneNumber;
         this.mobileNumber = data.mobileNumber;
         this.address = data.address;
-        this.profilePhoto = data.profilePhoto;
+        this.profilePhotoReceived = data.profilePhotoReceived;
         this.createdOn = data.createdOn ? data.createdOn : new Date();
         this.updatedOn = new Date();
         this.createdBy = data.createdBy ? data.createdBy : 0;
@@ -37,8 +37,8 @@ export class ProfileDTO extends BaseDTO {
         let profileDTO: ProfileDTO = new ProfileDTO();
         profileDTO.userId = null;
         profileDTO.currentPassword = '';
+        profileDTO.confirmPassword=''
         profileDTO.newPassword = '';
-        profileDTO.confirmPassword='';
         profileDTO.createdOn = new Date();
         profileDTO.createdBy = 0;
         profileDTO.convertToDTO(data);
