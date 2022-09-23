@@ -41,6 +41,7 @@ export class UserDTO extends BaseDTO {
     convertToNewDTO(data: any): UserDTO {
         let userDTO: UserDTO = new UserDTO();
         userDTO.id = null;
+        userDTO.email = '';
         userDTO.createdOn = new Date();
         userDTO.createdBy = 0;
         userDTO.convertToDTO(data);

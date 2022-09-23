@@ -13,27 +13,31 @@ import {HttpResponse} from "@angular/common/http";
     styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
-    
+
     loginFrom!: FormGroup;
-    
+
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
                 private router: Router,
                 private appService: AppService,
                 private toastService: ToastrService) {
     }
-    
+
     ngOnInit(): void {
         this.createLoginForm();
     }
-    
+
     createLoginForm() {
         this.loginFrom = this.fb.group({
             username: [null, Validators.required],
             password: [null, Validators.required]
         });
     }
-    
+
+    forgetPassword(){
+        this.router.navigate(['/forgot-password']);
+    }
+
     login(data: any) {
         this.router.navigate(['/home']);
         return;
@@ -53,7 +57,7 @@ export class LoginComponent implements OnInit {
                                 .subscribe({
                                     next: (responseLogin: any) => {
                                         if (responseLogin.status === 200) {
-                                            
+
                                             // const userObj = JSON.parse(JSON.stringify(responseLogin.body));
                                             // localStorage.setItem(window.btoa(AppConstants.AUTH_USER_INFO), JSON.stringify(userObj));
                                             // this.appService.userInfo = userObj;
@@ -114,5 +118,5 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
-    
+
 }
