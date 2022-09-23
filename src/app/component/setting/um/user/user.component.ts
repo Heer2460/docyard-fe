@@ -13,6 +13,7 @@ import {forkJoin, Subject, takeUntil} from "rxjs";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
 import {UserDTO} from "../../../../model/settings/um/user/user.dto";
 import {CustomValidations} from "../../../../util/custom.validations";
+import {RoleActionConstants} from "../../../../util/role.actions.constants";
 
 @Component({
     selector: 'user-component',
@@ -54,6 +55,7 @@ export class UserComponent implements OnInit {
         }
     ];
     statuses = ReferencesStatuses.userSearchStatuses;
+    roleActions = RoleActionConstants;
 
     constructor(private fb: FormBuilder, private router: Router,
                 private confirmationService: ConfirmationService,
@@ -294,5 +296,13 @@ export class UserComponent implements OnInit {
 
     ngOnDestroy() {
         this.destroy.next(true);
+    }
+
+    addUser() {
+        if (!this.roleActions.USER_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.router.navigate(['/setting/um/user/add']);
     }
 }

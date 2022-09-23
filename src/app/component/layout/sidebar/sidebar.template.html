@@ -16,16 +16,32 @@
 
             <ng-container *ngIf="route?.children">
                 <li class="has-children" [ngClass]="[route.expended ? 'expended active' : '']">
-                    <a role="button" (click)="toggleDropdown(route)">
+
+                    <ng-container *ngIf="route.route == '/setting'; else elseCase">
+                        <a role="button" (click)="toggleDropdown(route)" [routerLink]="route.route">
                         <span class="icon-holder">
                             <i [attr.class]=" 'default ' + route.icon"></i>
                             <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
                         </span>
-                        <span>
+                            <span>
                             <span>{{route.label}}</span>
                             <i class="icon-arrow-left"></i>
                         </span>
-                    </a>
+                        </a>
+                    </ng-container>
+
+                    <ng-template #elseCase>
+                        <a role="button" (click)="toggleDropdown(route)">
+                        <span class="icon-holder">
+                            <i [attr.class]=" 'default ' + route.icon"></i>
+                            <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
+                        </span>
+                            <span>
+                            <span>{{route.label}}</span>
+                            <i class="icon-arrow-left"></i>
+                        </span>
+                        </a>
+                    </ng-template>
 
                     <ul [ngClass]="route.expended ? 'show' : ''">
                         <li *ngFor="let child of route.children" [ngClass]="child.active ? 'active' : ''">

@@ -1,0 +1,223 @@
+@import "../../../assets/less/_vars";
+
+.card {
+    border-color: transparent;
+
+    .card-body {
+        min-height: 120px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 15px;
+        cursor: pointer;
+
+        > div {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            color: @color-white;
+
+            h6 {
+                font-size: 22px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            i {
+                width: 60px;
+                height: 60px;
+                font-size: 60px;
+                line-height: 60px;
+                opacity: 50%;
+            }
+
+        }
+
+        p {
+            font-size: 16px;
+            color: @color-white;
+
+            span {
+
+                &:first-child {
+
+                    &:after {
+                        content: "/";
+                        margin: 0 5px;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .card-footer {
+        border-radius: 0;
+        padding: 10px 15px;
+
+        .progress {
+            --bs-progress-height: 8px;
+            border-radius: 10px;
+
+            .progress-bar {
+                border-radius: 10px;
+                background-color: @color-white;
+            }
+
+        }
+
+    }
+
+    &.card-aqua {
+
+        .card-body {
+            background: linear-gradient(180deg, #3AABBB 0%, #2C8490 100%);
+        }
+
+        .card-footer {
+            background: #13545E;
+
+            .progress {
+                background: #349AA8;
+            }
+
+        }
+
+    }
+
+    &.card-blue {
+
+        .card-body {
+            background: linear-gradient(180deg, #3882B7 0%, #2C6790 94.68%);
+        }
+
+        .card-footer {
+            background: #133E5E;
+
+            .progress {
+                background: #3477A8;
+            }
+
+        }
+
+    }
+
+    &.card-yellow {
+
+        .card-body {
+            background: linear-gradient(360deg, #90862C 0%, #B7AB38 100%);
+        }
+
+        .card-footer {
+            background: #5E5613;
+
+            .progress {
+                background: #A89C34;
+            }
+
+        }
+
+    }
+
+    &.card-red {
+
+        .card-body {
+            background: linear-gradient(360deg, #902C2C 0%, #B73838 100%);
+        }
+
+        .card-footer {
+            background: #5E1313;
+
+            .progress {
+                background: #A83434;
+            }
+
+        }
+
+    }
+
+
+}
+
+.home-h2 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+
+    .card {
+
+        .card-body {
+            min-height: 100px;
+
+            > div h6 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+        }
+
+    }
+
+    .home-h2 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+}
+
+@media screen and (max-width: 1440px) {
+
+    .card {
+
+        .card-body {
+            min-height: 100px;
+
+            > div h6 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+        }
+
+    }
+
+    .home-h2 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+}
+
+@media screen and (max-width: 1199px) {
+
+    .col-lg-6:nth-child(1),
+    .col-lg-6:nth-child(2) {
+        margin-bottom: 20px;
+    }
+
+}
+
+@media screen and (max-width: 575px) {
+
+    .row {
+
+        .col-sm-6:not(:last-of-type) {
+            margin-bottom: 15px;
+        }
+
+    }
+
+
+}
+

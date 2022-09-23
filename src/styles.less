@@ -183,7 +183,7 @@ fieldset {
 			.mixin-transition(@duration: 150ms);
 			border-color: hsl(var(--color-blue-01));
 
-			~label {
+			~ label {
 				opacity: 1;
 				transform: scale(.85) translateY(calc(-50% - 2px)) translateX(5px);
 				background-color: @color-white;
@@ -194,6 +194,17 @@ fieldset {
 				font-weight: 600;
 				.mixin-transition(@duration: 150ms);
 				color: hsl(var(--color-blue-01));
+				
+				&.required {
+					
+					&:after {
+						content: "*";
+						margin-left: 2px;
+						color: @color-red-01;
+					}
+					
+				}
+				
 			}
 
 			~.input-group-text {

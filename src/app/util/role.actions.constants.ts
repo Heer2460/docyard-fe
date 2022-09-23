@@ -3,7 +3,7 @@ export class RoleActionConstants {
     // Application Routes
 
     // Main Home Route
-    public static HOME_ROUTE = {url: '/home', valid: true};
+    // public static HOME_ROUTE = {url: '/home', valid: true};
 
     // User Management Routes
     public static USER_MAIN_ROUTE = {url: '/setting/um', valid: true};
@@ -63,8 +63,7 @@ export class RoleActionConstants {
         key: 'USER_UNLOCK',
         value: false
     };
-
-
+    
     // Group Actions
     public static GROUP_ADD = {
         key: 'GROUP_ADD',
@@ -121,4 +120,53 @@ export class RoleActionConstants {
         key: 'DEPT_DEL',
         value: false
     };
+
+
+    // Reset all permissions & actions
+    public static resetPermission() {
+        // routes
+        RoleActionConstants.USER_ROUTE.valid = false;
+        RoleActionConstants.USER_ADD_ROUTE.valid = false;
+        RoleActionConstants.USER_VIEW_ROUTE.valid = false;
+        RoleActionConstants.USER_EDIT_ROUTE.valid = false;
+
+        RoleActionConstants.GROUP_ROUTE.valid = false;
+        RoleActionConstants.GROUP_ADD_ROUTE.valid = false;
+        RoleActionConstants.GROUP_VIEW_ROUTE.valid = false;
+        RoleActionConstants.GROUP_EDIT_ROUTE.valid = false;
+
+        RoleActionConstants.ROLE_ROUTE.valid = false;
+        RoleActionConstants.ROLE_ADD_ROUTE.valid = false;
+        RoleActionConstants.ROLE_VIEW_ROUTE.valid = false;
+        RoleActionConstants.ROLE_EDIT_ROUTE.valid = false;
+
+
+        RoleActionConstants.DEPARTMENT_ROUTE.valid = false;
+        RoleActionConstants.DEPARTMENT_ADD_ROUTE.valid = false;
+        RoleActionConstants.DEPARTMENT_VIEW_ROUTE.valid = false;
+        RoleActionConstants.DEPARTMENT_EDIT_ROUTE.valid = false;
+
+
+        //actions
+        RoleActionConstants.USER_ADD.value = false;
+        RoleActionConstants.USER_VIEW.value = false;
+        RoleActionConstants.USER_EDIT.value = false;
+        RoleActionConstants.USER_DEL.value = false;
+        RoleActionConstants.USER_UNLOCK.value = false;
+
+        RoleActionConstants.GROUP_ADD.value = false;
+        RoleActionConstants.GROUP_VIEW.value = false;
+        RoleActionConstants.GROUP_EDIT.value = false;
+        RoleActionConstants.GROUP_DEL.value = false;
+
+        RoleActionConstants.ROLE_ADD.value = false;
+        RoleActionConstants.ROLE_VIEW.value = false;
+        RoleActionConstants.ROLE_EDIT.value = false;
+        RoleActionConstants.ROLE_DEL.value = false;
+
+        RoleActionConstants.DEPT_ADD.value = false;
+        RoleActionConstants.DEPT_VIEW.value = false;
+        RoleActionConstants.DEPT_EDIT.value = false;
+        RoleActionConstants.DEPT_DEL.value = false;
+    }
 }
