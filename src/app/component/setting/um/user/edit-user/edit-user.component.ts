@@ -12,6 +12,7 @@ import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 import {ToastrService} from "ngx-toastr";
+import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 
 @Component({
     selector: 'edit-user-component',
@@ -28,6 +29,7 @@ export class EditUserComponent implements OnInit {
     selectedUser: UserDTO = new UserDTO();
     logoImageDataUrl: any;
     files: any[] = [];
+    roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.userStatuses;
 
     constructor(private fb: FormBuilder,
@@ -128,6 +130,10 @@ export class EditUserComponent implements OnInit {
     }
 
     updateUser() {
+        if (!this.roleActions.USER_EDIT.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
         if (this.editUserForm.invalid) {
             return;
         }

@@ -31,31 +31,35 @@ export class UserComponent implements OnInit {
     departments: any[] = [];
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
+    roleActions = RoleActionConstants;
     message: string = 'Click search to get users.';
     actionItems: MenuItem[] = [
         {
             label: 'View',
             icon: 'icon-eye',
+            visible: this.roleActions.USER_VIEW.value,
             command: () => this.onViewOptionSelected(this.selectedUser)
         },
         {
             label: 'Edit',
             icon: 'icon-edit',
+            visible: this.roleActions.USER_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
         {
             label: 'Reset Password',
             icon: 'icon-edit',
+            visible: this.roleActions.USER_EDIT.value,
             command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
             label: 'Delete',
             icon: 'icon-trash',
+            visible: this.roleActions.USER_DEL.value,
             command: () => this.onItemDeleteAction(this.selectedUser)
         }
     ];
     statuses = ReferencesStatuses.userSearchStatuses;
-    roleActions = RoleActionConstants;
 
     constructor(private fb: FormBuilder, private router: Router,
                 private confirmationService: ConfirmationService,
@@ -146,26 +150,31 @@ export class UserComponent implements OnInit {
                 {
                     label: 'View',
                     icon: 'icon-eye',
+                    visible: this.roleActions.USER_VIEW.value,
                     command: () => this.onViewOptionSelected(this.selectedUser)
                 },
                 {
                     label: 'Edit',
                     icon: 'icon-edit',
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.onEditOptionSelected(this.selectedUser)
                 },
                 {
                     label: 'Unlock',
                     icon: 'icon-lock',
+                    visible: this.roleActions.USER_UNLOCK.value,
                     command: () => this.onUnlockUserAction(this.selectedUser)
                 },
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
                     label: 'Delete',
                     icon: 'icon-trash',
+                    visible: this.roleActions.USER_DEL.value,
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
             ];
@@ -174,21 +183,25 @@ export class UserComponent implements OnInit {
                 {
                     label: 'View',
                     icon: 'icon-eye',
+                    visible: this.roleActions.USER_VIEW.value,
                     command: () => this.onViewOptionSelected(this.selectedUser)
                 },
                 {
                     label: 'Edit',
                     icon: 'icon-edit',
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.onEditOptionSelected(this.selectedUser)
                 },
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
                     label: 'Delete',
                     icon: 'icon-trash',
+                    visible: this.roleActions.USER_DEL.value,
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
             ];
@@ -305,4 +318,13 @@ export class UserComponent implements OnInit {
         }
         this.router.navigate(['/setting/um/user/add']);
     }
+
+    searchUser() {
+        if (!this.roleActions.USER_VIEW.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showSearchPopupAction();
+    }
+
 }

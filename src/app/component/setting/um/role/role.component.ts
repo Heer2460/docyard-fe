@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
 import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
+import {RoleActionConstants} from "../../../../util/role.actions.constants";
 
 @Component({
     selector: 'role-component',
@@ -24,21 +25,24 @@ export class RoleComponent implements OnInit {
     searchDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
     selectedRole: RoleDTO = new RoleDTO();
-
+    roleActions = RoleActionConstants;
     actionItems: MenuItem[] = [
         {
             label: 'View',
             icon: 'icon-eye',
+            visible: this.roleActions.ROLE_VIEW.value,
             command: () => this.onViewOptionSelected(this.selectedRole)
         },
         {
             label: 'Edit',
             icon: 'icon-edit',
+            visible: this.roleActions.ROLE_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedRole)
         },
         {
             label: 'Delete',
             icon: 'icon-trash',
+            visible: this.roleActions.ROLE_DEL.value,
             command: () => this.onItemDeleteAction(this.selectedRole)
         }
     ];
@@ -132,6 +136,22 @@ export class RoleComponent implements OnInit {
                 this.deleteRole(data.id)
             }
         });
+    }
+
+    addRole() {
+        if (!this.roleActions.ROLE_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.router.navigate(['/setting/um/role/add']);
+    }
+
+    searchRole() {
+        if (!this.roleActions.ROLE_VIEW.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showSearchPopupAction();
     }
 
 }
