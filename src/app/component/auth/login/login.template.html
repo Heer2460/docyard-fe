@@ -44,7 +44,7 @@
                             Remember me
                         </label>
                     </div>
-                    <a role="button">Forgot Password</a>
+                    <a (click)="forgetPassword()" role="button">Forgot Password</a>
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-primary" (click)="login(loginFrom.value)" [disabled]="loginFrom.invalid">Login</button>

@@ -10,6 +10,9 @@ export class ApiUrlConstants {
     // User API URL
     public static USER_API_URL = '/user/';
 
+    // User Forgot Password API URL
+    public static FORGOT_PASSWORD_API_URL = '/user/forgot-password'
+
     // upload profile
     public static UPLOAD_IMAGE_API_URL ='/user/profile-picture'
 
