@@ -44,15 +44,52 @@
                     </ng-template>
 
                     <ul [ngClass]="route.expended ? 'show' : ''">
-                        <li *ngFor="let child of route.children" [ngClass]="child.active ? 'active' : ''">
-                            <a role="button" [routerLink]="child.route">
-                                <span class="icon-holder">
-                                    <i [attr.class]=" 'default ' + child.icon"></i>
-                                    <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
-                                </span>
-                                <span>{{child.label}}</span>
-                            </a>
-                        </li>
+
+                        <ng-container *ngFor="let child of route.children; elseCase">
+
+                            <ng-container *ngIf="child?.children">
+
+                                <li [ngClass]="child.active ? 'active' : ''">
+                                    <a role="button" [routerLink]="child.route">
+                                        <span class="icon-holder">
+                                            <i [attr.class]=" 'default ' + child.icon"></i>
+                                            <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
+                                        </span>
+                                        <span>{{child.label}}</span>
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+
+                                    <ul class="lvl-3">
+                                        <li *ngFor="let subChild of child.children">
+                                            <a role="button" [routerLink]="subChild.route">
+                                                <span class="icon-holder">
+                                                    <i [attr.class]=" 'default ' + subChild.icon"></i>
+                                                </span>
+                                                <span>{{subChild.label}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+                            </ng-container>
+
+                            <ng-template #elseCase>
+
+                                <li [ngClass]="child.active ? 'active' : ''">
+                                    <a role="button" [routerLink]="child.route">
+                                        <span class="icon-holder">
+                                            <i [attr.class]=" 'default ' + child.icon"></i>
+                                            <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
+                                        </span>
+                                        <span>{{child.label}}</span>
+                                    </a>
+                                </li>
+
+                            </ng-template>
+
+                        </ng-container>
+
                     </ul>
 
                 </li>
