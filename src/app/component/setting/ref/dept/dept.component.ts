@@ -10,6 +10,7 @@ import { RequestService } from "../../../../service/request.service";
 import { ApiUrlConstants } from "../../../../util/api.url.constants";
 import { AppUtility } from "../../../../util/app.utility";
 import { ReferencesStatuses } from "../../../../util/references.statuses";
+import {RoleActionConstants} from "../../../../util/role.actions.constants";
 
 @Component({
     selector: 'dept-component',
@@ -27,6 +28,7 @@ export class DeptComponent implements OnInit {
     addDialog: boolean = false;
     updateDialog: boolean = false;
     viewDialog: boolean = false;
+    roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     selectedDepartment: DepartmentDTO = new DepartmentDTO();
 
@@ -34,16 +36,19 @@ export class DeptComponent implements OnInit {
         {
             label: 'View',
             icon: 'icon-eye',
+            visible: this.roleActions.DEPT_VIEW.value,
             command: () => this.onViewOptionSelected(this.selectedDepartment)
         },
         {
             label: 'Edit',
             icon: 'icon-edit',
+            visible: this.roleActions.DEPT_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedDepartment)
         },
         {
             label: 'Delete',
             icon: 'icon-trash',
+            visible: this.roleActions.DEPT_DEL.value,
             command: () => this.onItemDeleteAction(this.selectedDepartment)
         }
     ];
@@ -240,6 +245,22 @@ export class DeptComponent implements OnInit {
                 this.deleteDepartment(data.id)
             }
         });
+    }
+
+    addDepartment() {
+        if (!this.roleActions.DEPT_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showAddPopupAction();
+    }
+
+    searchDepartment() {
+        if (!this.roleActions.DEPT_VIEW.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showSearchPopupAction();
     }
 
 }
