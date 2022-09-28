@@ -96,7 +96,7 @@ export class AppRouteConstants {
                     children: [
                         {
                             label: 'Department',
-                            route: '/setting/ref/dept',
+                            route: '/setting/ref/department',
                             icon: 'icon-building',
                             expended: false,
                             active: false
@@ -162,7 +162,7 @@ export class AppRouteConstants {
             children: [
                 {
                     label: 'Department',
-                    route: '/setting/ref/dept',
+                    route: '/setting/ref/department',
                     icon: 'icon-building',
                     expended: false,
                     active: false
