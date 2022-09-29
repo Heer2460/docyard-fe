@@ -11,6 +11,7 @@ import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
 import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
+import {RoleActionConstants} from "../../../../util/role.actions.constants";
 
 
 @Component({
@@ -29,23 +30,25 @@ export class GroupComponent implements OnInit {
     visibleUpdateGroupDialog: boolean = false;
     visibleViewGroupDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
-
+    roleActions = RoleActionConstants;
     selectedGroup: GroupDTO = new GroupDTO();
-
     actionItems: MenuItem[] = [
         {
             label: 'View',
             icon: 'icon-eye',
+            visible: this.roleActions.GROUP_VIEW.value,
             command: () => this.onViewOptionSelected(this.selectedGroup)
         },
         {
             label: 'Edit',
             icon: 'icon-edit',
+            visible: this.roleActions.GROUP_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedGroup)
         },
         {
             label: 'Delete',
             icon: 'icon-trash',
+            visible: this.roleActions.GROUP_DEL.value,
             command: () => this.onItemDeleteAction(this.selectedGroup)
         }
     ];
@@ -289,6 +292,22 @@ export class GroupComponent implements OnInit {
                 this.deleteGroup(data.id);
             }
         });
+    }
+
+    addGroup() {
+        if (!this.roleActions.GROUP_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showAddGroupPopupAction();
+    }
+
+    searchGroups() {
+        if (!this.roleActions.GROUP_VIEW.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.showSearchPopupAction();
     }
 
 }

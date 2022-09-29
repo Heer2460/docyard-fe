@@ -7,6 +7,7 @@ import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
 import {DocDataTableModule} from "../shared/doc-data-table/doc-data-table.module";
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
         TieredMenuModule,
         LayoutModule,
         DocDataTableModule,
-        DocInfoPaneModule
+        DocInfoPaneModule,
+        DialogModule
     ]
 })
 export class DocLibModule {

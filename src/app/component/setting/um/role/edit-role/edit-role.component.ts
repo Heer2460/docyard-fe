@@ -9,6 +9,7 @@ import {AppUtility} from "../../../../../util/app.utility";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
+import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 
 @Component({
     selector: 'edit-role-component',
@@ -18,6 +19,7 @@ import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 export class EditRoleComponent implements OnInit {
 
     editRoleForm: FormGroup = new FormGroup({});
+    roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     permissions: any = [];
     roleId: any;
@@ -145,6 +147,10 @@ export class EditRoleComponent implements OnInit {
     }
 
     updateRolePermissions() {
+        if (!this.roleActions.ROLE_EDIT.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
         if (this.editRoleForm.invalid) {
             return;
         }

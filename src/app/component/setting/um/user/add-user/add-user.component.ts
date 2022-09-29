@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
+import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 
 @Component({
     selector: 'add-user-component',
@@ -28,6 +29,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     statuses = ReferencesStatuses.userStatuses;
     logoImageDataUrl: any;
     files: any[] = [];
+    roleActions = RoleActionConstants;
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
@@ -82,6 +84,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     createUser() {
+        if (!this.roleActions.USER_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
         if (this.addUserForm.invalid) {
             return;
         }

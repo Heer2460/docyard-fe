@@ -9,6 +9,7 @@ import {AppUtility} from "../../../../../util/app.utility";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
+import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 
 @Component({
     selector: 'add-role-component',
@@ -18,6 +19,7 @@ import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 export class AddRoleComponent implements OnInit {
 
     addRoleForm: FormGroup = new FormGroup({});
+    roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     permissions: any = [];
 
@@ -89,6 +91,10 @@ export class AddRoleComponent implements OnInit {
     }
 
     createRolePermissions() {
+        if (!this.roleActions.ROLE_ADD.value) {
+            this.appService.noRightsMessage();
+            return;
+        }
         if (this.addRoleForm.invalid) {
             return;
         }

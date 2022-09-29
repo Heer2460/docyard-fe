@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {RoleActionConstants} from "../../util/role.actions.constants";
 
 @Component({
     selector: 'setting-component',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./setting.component.less']
 })
 export class SettingComponent implements OnInit {
+
+    roleActions = RoleActionConstants;
     
     ngOnInit(): void {
     }
