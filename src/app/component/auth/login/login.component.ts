@@ -196,18 +196,18 @@ export class LoginComponent implements OnInit {
                     "catName": null,
                     "children": null,
                     "moduleActionDTOList": [
-                        // {
-                        //     "id": null,
-                        //     "createdOn": "2022-09-16T17:39:27+05:00",
-                        //     "updatedOn": null,
-                        //     "createdBy": null,
-                        //     "updatedBy": null,
-                        //     "moduleActionId": 11,
-                        //     "title": "Add",
-                        //     "slug": "GROUP_ADD",
-                        //     "seq": 1,
-                        //     "moduleDTO": null
-                        // },
+                        {
+                            "id": null,
+                            "createdOn": "2022-09-16T17:39:27+05:00",
+                            "updatedOn": null,
+                            "createdBy": null,
+                            "updatedBy": null,
+                            "moduleActionId": 11,
+                            "title": "Add",
+                            "slug": "GROUP_ADD",
+                            "seq": 1,
+                            "moduleDTO": null
+                        },
                         {
                             "id": null,
                             "createdOn": "2022-09-16T17:40:21+05:00",
@@ -241,6 +241,92 @@ export class LoginComponent implements OnInit {
                             "moduleActionId": 15,
                             "title": "Delete",
                             "slug": "GROUP_DEL",
+                            "seq": 4,
+                            "moduleDTO": null
+                        }
+                    ]
+                }
+            ],
+            "moduleActionDTOList": []
+        },
+        {
+            "id": null,
+            "createdOn": "2022-09-21T10:51:25+05:00",
+            "updatedOn": "2022-09-16T17:02:21+05:00",
+            "createdBy": null,
+            "updatedBy": null,
+            "moduleId": 7,
+            "name": "References",
+            "slug": "reference",
+            "route": "/setting/ref",
+            "icon": "icon-reference",
+            "seq": 3,
+            "status": "Active",
+            "catSlug": null,
+            "catName": null,
+            "children": [
+                {
+                    "id": null,
+                    "createdOn": "2022-09-21T10:50:28+05:00",
+                    "updatedOn": "2022-09-16T17:03:36+05:00",
+                    "createdBy": null,
+                    "updatedBy": null,
+                    "moduleId": 8,
+                    "name": "Departments",
+                    "slug": "department",
+                    "route": "/setting/ref/department",
+                    "icon": "icon-department",
+                    "seq": 1,
+                    "status": "Active",
+                    "catSlug": null,
+                    "catName": null,
+                    "children": null,
+                    "moduleActionDTOList": [
+                        {
+                            "id": null,
+                            "createdOn": "2022-09-16T17:43:12+05:00",
+                            "updatedOn": null,
+                            "createdBy": null,
+                            "updatedBy": null,
+                            "moduleActionId": 19,
+                            "title": "Add",
+                            "slug": "DEPT_ADD",
+                            "seq": 1,
+                            "moduleDTO": null
+                        },
+                        {
+                            "id": null,
+                            "createdOn": "2022-09-16T17:43:12+05:00",
+                            "updatedOn": null,
+                            "createdBy": null,
+                            "updatedBy": null,
+                            "moduleActionId": 20,
+                            "title": "View",
+                            "slug": "DEPT_VIEW",
+                            "seq": 2,
+                            "moduleDTO": null
+                        },
+                        {
+                            "id": null,
+                            "createdOn": "2022-09-16T17:43:12+05:00",
+                            "updatedOn": null,
+                            "createdBy": null,
+                            "updatedBy": null,
+                            "moduleActionId": 21,
+                            "title": "Edit",
+                            "slug": "DEPT_EDIT",
+                            "seq": 3,
+                            "moduleDTO": null
+                        },
+                        {
+                            "id": null,
+                            "createdOn": "2022-09-16T17:43:12+05:00",
+                            "updatedOn": null,
+                            "createdBy": null,
+                            "updatedBy": null,
+                            "moduleActionId": 22,
+                            "title": "Delete",
+                            "slug": "DEPT_DEL",
                             "seq": 4,
                             "moduleDTO": null
                         }
