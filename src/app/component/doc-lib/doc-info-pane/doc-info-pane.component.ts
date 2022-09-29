@@ -11,6 +11,9 @@ export class DocInfoPaneComponent implements OnInit {
     docInfoPane: boolean = false;
     toggleShowAll: boolean = false;
     constructor(public appService: AppService) {
+        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.docInfoPane = value;
+        });
     }
     
     ngOnInit(): void {

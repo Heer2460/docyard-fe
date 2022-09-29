@@ -1,1 +1,46 @@
-<h1>hello world</h1>
+<div class="layout-wrapper">
+    <div class="content-wrapper">
+        <nav-component [showImageViewSettings]="true"></nav-component>
+        <section class="main-page-wrapper">
+            <div class="left">
+
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1664332817741-7c9ab631a9be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80"
+                         alt="Image">
+                </div>
+
+                <div class="image-controls">
+                    <div class="controllers">
+                        <button class="btn btn-control btn-pref"></button>
+                        <button class="btn btn-control btn-next"></button>
+                    </div>
+                    <div class="image-control-pane">
+                        <div class="metadata">
+                            <p class="image-name">Image name.jpeg</p>
+                            <button class="btn btn-star">
+                                <i class="icon-star"></i>
+                            </button>
+                            <p class="image-counter">1 of 1</p>
+                        </div>
+                        <div class="image-controls">
+                            <ul>
+                                <li>
+                                    <button class="btn btn-zoom-in"></button>
+                                </li>
+                                <li>
+                                    100%
+                                </li>
+                                <li>
+                                    <button class="btn btn-zoom-out"></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <doc-info-pane-component [ngClass]="docInfoPane ? 'collapsed': ''"></doc-info-pane-component>
+        </section>
+    </div>
+</div>
+
