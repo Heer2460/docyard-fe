@@ -36,10 +36,11 @@ export class SidebarComponent implements OnInit {
             
             //False all previous active routes;
             route.active = false;
-    
+            route.expended = false;
+            
             //Expending all parents of current child
             if(parent) {
-                parent.active = parent.expended = false;
+                
                 if(currentRouteUrl.includes(parent.route)) {
                     parent.active = true;
                     parent.expended = true;
@@ -61,7 +62,6 @@ export class SidebarComponent implements OnInit {
                     route.active = true;
                     return route;
                 }
-                
                 
             }
     
