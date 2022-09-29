@@ -139,22 +139,21 @@ export class DocLibComponent implements OnInit {
     buildOptionItems() {
         this.createMenuItems = [
             {
-                label: 'File',
-                icon: 'icon-file-plus',
-                command: () => this.showAddFilePopup()
-            },
-            {
                 label: 'Folder',
                 icon: 'icon-folder-plus',
                 command: () => this.showAddFolderPopup()
+            },
+            {
+                label: 'Text File',
+                icon: 'icon-file-plus',
+                command: () => this.showAddFilePopup()
             }
-
         ];
         this.uploadMenuItems = [
             {
                 label: 'File',
                 icon: 'icon-file-plus',
-                command: () => this.showUploadFilePopup()
+                command: () => this.uploadFile(event)
             },
             {
                 label: 'Folder',
@@ -200,26 +199,23 @@ export class DocLibComponent implements OnInit {
         this.visibleUploadFileDialog = false;
     }
 
-    setAttachment(event: any) {
-        // let format;
-        // let size;
-        if (event.target.files.length > 0) {
-            // size = event.target.files[0].size / 1024 / 1024;
-            // if (size > 2) {
-            //     this.toastService.error('Uploaded file size is not supported.', 'Logo');
-            //     return;
-            // }
-            // format = event.target.files[0].type;
-            // if (!format.includes('image/')) {
-            //     this.toastService.error('Uploaded file type is not supported.', 'Logo');
-            //     return;
-            // }
-            // let obj = {
-            //     type: 'logo',
-            //     data: event.target.files[0]
-            // };
-            this.files.push(event.target.files[0]);
-            console.log(this.files);
+    uploadFile(event: any) {
+        console.log('1:', event);
+        console.log('1:', event.target.files);
+        // if (event.target.files.length > 0) {
+        //     this.files.push(event.target.files[0]);
+        //     console.log(this.files);
+        // }
+    }
+
+    uploadFolder(event: any) {
+        console.log('Dir: ', event.target.files);
+
+        for (let i = 0; i < event.target.files.length; i++) {
+            const file = event.target.files[i];
+            const path = file.webkitRelativePath.split('/');
+            // upload file using path
+            console.log('Path ', i, path);
         }
     }
 }

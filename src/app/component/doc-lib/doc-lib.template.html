@@ -29,7 +29,7 @@
     </ng-container>
 </layout-component>
 
-<p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="p-dialog-md">
+<p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -38,7 +38,7 @@
     </ng-template>
     <form >
         <div class="row">
-            <div class="col-6 mb-3">
+            <div class="col mb-3">
                 <div class="form-floating">
                     <input class="form-control" placeholder="Name" type="text">
                     <label>Name</label>
@@ -51,16 +51,16 @@
         <button class="btn btn-sm btn-primary" type="button">Create</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleAddFileDialog" [modal]="true" styleClass="p-dialog-md">
+<p-dialog [(visible)]="visibleAddFileDialog" [modal]="true" styleClass="">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Create File</span>
+            <span>Create Text File</span>
         </div>
     </ng-template>
     <form >
         <div class="row">
-            <div class="col-6 mb-3">
+            <div class="col mb-3">
                 <div class="form-floating">
                     <input class="form-control" placeholder="Name" type="text">
                     <label>Name</label>
@@ -83,9 +83,10 @@
     <form >
         <div class="row">
             <div class="col-6 mb-3">
-                <div class="form-floating">
-                    <input class="form-control" placeholder="Name" type="text">
-                    <label>Name</label>
+                <div class="custom-file">
+                    <label for="folder">{{'Choose folder'}}</label>
+                    <input #folder (change)="uploadFolder($event)" class="form-control" id="folder"
+                           onclick="this.value = null" type="file" webkitdirectory directory multiple>
                 </div>
             </div>
         </div>
@@ -95,7 +96,12 @@
         <button class="btn btn-sm btn-primary" type="button">Create</button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleUploadFileDialog" [modal]="true" styleClass="p-dialog-md">
+
+<ng-container>
+    <input #file (change)="uploadFile($event)" class="form-control" id="file"
+           onclick="this.value = null" type="file" [hidden]="true">
+</ng-container>
+<!--<p-dialog [(visible)]="visibleUploadFileDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -117,4 +123,4 @@
         <button class="btn btn-sm btn-danger me-2" (click)="hideUploadFilePopup()">Cancel</button>
         <button class="btn btn-sm btn-primary" type="button">Create</button>
     </ng-template>
-</p-dialog>
+</p-dialog>-->

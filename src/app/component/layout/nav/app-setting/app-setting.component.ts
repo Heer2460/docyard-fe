@@ -22,12 +22,6 @@ export class AppSettingComponent implements OnInit {
     ngOnInit(): void {
         this.items = [
             {
-                label: 'Settings',
-                icon: 'icon-cog',
-                command: () => this.router.navigate(['setting/um/user'])
-            },
-            {separator: true},
-            {
                 label: 'Change password',
                 icon: 'icon-lock',
                 command: () => this.showChangePasswordDialogAction()
