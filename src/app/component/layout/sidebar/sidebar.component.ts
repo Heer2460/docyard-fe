@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit {
 
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
+            // route.active = false;
     
             if(parent) {
                 parent.active = parent.expended = false;
@@ -54,7 +55,6 @@ export class SidebarComponent implements OnInit {
                     return routes;
                 }
             }
-            route.active = false;
     
         });
     }
