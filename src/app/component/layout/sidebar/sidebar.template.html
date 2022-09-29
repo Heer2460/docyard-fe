@@ -60,7 +60,7 @@
                                     </a>
 
                                     <ul class="lvl-3">
-                                        <li *ngFor="let subChild of child.children">
+                                        <li [ngClass]="subChild.active ? 'active' : ''" *ngFor="let subChild of child.children">
                                             <a role="button" [routerLink]="subChild.route">
                                                 <span class="icon-holder">
                                                     <i [attr.class]=" 'default ' + subChild.icon"></i>

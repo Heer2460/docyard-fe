@@ -81,6 +81,11 @@ form {
 /*====================================================
         Form controls
 ====================================================*/
+
+.input-group-text {
+	.mixin-transition();
+}
+
 fieldset {
 	position: relative;
 
@@ -125,6 +130,12 @@ fieldset {
 
 	&:hover {
 		border-color: hsl(var(--color-blue-01));
+		
+		~.input-group-text {
+			border-color: hsl(var(--color-blue-01));
+			color: hsl(var(--color-blue-01));
+		}
+		
 	}
 	
 	&:focus {
@@ -145,7 +156,8 @@ fieldset {
 				}
 
 			}
-
+			
+			&:focus ~.input-group-text,
 			~.input-group-text {
 				border-color: @color-red-01;
 				color: @color-red-01;

@@ -162,19 +162,19 @@
 						visibility: visible;
 					}
 					
-					li {
+					> li {
 						position: relative;
 						
 						
 						&.active {
 							
-							a {
+							> a {
 								background-color: hsla(var(--color-blue-02), 50%);
 							}
 							
 						}
 						
-						a {
+						> a {
 							
 							&:hover {
 								background-color: hsla(var(--color-blue-02), 50%);
@@ -196,6 +196,7 @@
 						
 						.lvl-3 {
 							position: absolute;
+							z-index: 999;
 							visibility: hidden;
 							opacity: 0;
 							top: 0;
@@ -225,6 +226,19 @@
 							li {
 								background-color: hsl(var(--color-blue-03));
 								border: 1px solid hsl(var(--color-blue-03));
+								
+								+ li {
+									border-top: none;
+								}
+								
+								&:hover,
+								&.active {
+									
+									> a {
+										background-color: hsla(var(--color-blue-02), 50%);
+									}
+									
+								}
 								
 							}
 							
