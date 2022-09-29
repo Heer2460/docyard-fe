@@ -8,6 +8,7 @@ import {LayoutModule} from "../layout/layout.module";
 import {DocDataTableModule} from "../shared/doc-data-table/doc-data-table.module";
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {DialogModule} from "primeng/dialog";
         LayoutModule,
         DocDataTableModule,
         DocInfoPaneModule,
-        DialogModule
+        DialogModule,
+        ReactiveFormsModule
     ]
 })
 export class DocLibModule {
