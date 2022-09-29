@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AppUtility} from "../../util/app.utility";
 
 @Component({
     selector: 'doc-lib-component',
@@ -8,14 +10,17 @@ import {AppService} from "../../service/app.service";
     styleUrls: ['./doc-lib.component.less']
 })
 export class DocLibComponent implements OnInit {
-    
+
+    @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
+    @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
+
+    addFolderForm: FormGroup = new FormGroup({});
+    addFileForm: FormGroup = new FormGroup({});
     menuItems: MenuItem[] = [];
     uploadMenuItems: MenuItem[] = [];
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     visibleAddFileDialog: boolean = false;
-    visibleUploadFolderDialog: boolean = false;
-    visibleUploadFileDialog: boolean = false;
     rows: any[] = [
         {
             id: 1,
@@ -96,7 +101,9 @@ export class DocLibComponent implements OnInit {
     docInfoPane: boolean = false;
     files: any[] = [];
     
-    constructor(public appService: AppService) {
+    constructor(public appService: AppService,
+                private fb: FormBuilder,
+                public appUtility: AppUtility) {
         this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
             this.docInfoPane = value;
         });
@@ -105,6 +112,7 @@ export class DocLibComponent implements OnInit {
     ngOnInit(): void {
         this.buildDocumentActions();
         this.buildOptionItems();
+        this.buildForms();
     }
 
     buildDocumentActions() {
@@ -153,18 +161,31 @@ export class DocLibComponent implements OnInit {
             {
                 label: 'File',
                 icon: 'icon-file-plus',
-                command: () => this.uploadFile(event)
+                command: () => this.fileUpload?.nativeElement.click()
             },
             {
                 label: 'Folder',
                 icon: 'icon-folder-plus',
-                command: () => this.showUploadFolderPopup()
+                command: () => this.folderUpload?.nativeElement.click()
             }
         ];
     }
 
+    buildForms() {
+        this.addFolderForm = this.fb.group({
+            name: [null, [Validators.required, Validators.maxLength(17)]],
+        });
+        this.addFileForm = this.fb.group({
+            name: [null, [Validators.required, Validators.maxLength(17)]],
+        });
+    }
+
     // creating
     showAddFolderPopup() {
+        this.addFolderForm.patchValue({
+            name: '',
+        });
+        this.addFolderForm.markAsUntouched();
         this.visibleAddFolderDialog = true;
     }
 
@@ -173,6 +194,10 @@ export class DocLibComponent implements OnInit {
     }
 
     showAddFilePopup() {
+        this.addFileForm.patchValue({
+            name: '',
+        });
+        this.addFileForm.markAsUntouched();
         this.visibleAddFileDialog = true;
     }
 
@@ -182,26 +207,8 @@ export class DocLibComponent implements OnInit {
 
 
     // updating
-
-    showUploadFolderPopup() {
-        this.visibleUploadFolderDialog = true;
-    }
-
-    hideUploadFolderPopup() {
-        this.visibleUploadFolderDialog = false;
-    }
-
-    showUploadFilePopup() {
-        this.visibleUploadFileDialog = true;
-    }
-
-    hideUploadFilePopup() {
-        this.visibleUploadFileDialog = false;
-    }
-
     uploadFile(event: any) {
-        console.log('1:', event);
-        console.log('1:', event.target.files);
+        console.log('Single:', event.target.files[0]);
         // if (event.target.files.length > 0) {
         //     this.files.push(event.target.files[0]);
         //     console.log(this.files);

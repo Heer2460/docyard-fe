@@ -36,19 +36,25 @@
             <span>Create Folder</span>
         </div>
     </ng-template>
-    <form >
+    <form [formGroup]="addFolderForm">
         <div class="row">
             <div class="col mb-3">
                 <div class="form-floating">
-                    <input class="form-control" placeholder="Name" type="text">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
+                <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
+                </small>
             </div>
         </div>
     </form>
     <ng-template pTemplate="footer">
         <button class="btn btn-sm btn-danger me-2" (click)="hideAddFolderPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button">Create</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid">Create</button>
     </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="visibleAddFileDialog" [modal]="true" styleClass="">
@@ -58,69 +64,32 @@
             <span>Create Text File</span>
         </div>
     </ng-template>
-    <form >
+    <form [formGroup]="addFileForm">
         <div class="row">
             <div class="col mb-3">
                 <div class="form-floating">
-                    <input class="form-control" placeholder="Name" type="text">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
+                <small *ngIf="appUtility.getFormError(addFileForm, 'name', 'name', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(addFileForm, 'name', 'name', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
+                </small>
             </div>
         </div>
     </form>
     <ng-template pTemplate="footer">
         <button class="btn btn-sm btn-danger me-2" (click)="hideAddFilePopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button">Create</button>
-    </ng-template>
-</p-dialog>
-<p-dialog [(visible)]="visibleUploadFolderDialog" [modal]="true" styleClass="p-dialog-md">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-building"></i>
-            <span>Upload Folder</span>
-        </div>
-    </ng-template>
-    <form >
-        <div class="row">
-            <div class="col-6 mb-3">
-                <div class="custom-file">
-                    <label for="folder">{{'Choose folder'}}</label>
-                    <input #folder (change)="uploadFolder($event)" class="form-control" id="folder"
-                           onclick="this.value = null" type="file" webkitdirectory directory multiple>
-                </div>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideUploadFolderPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button">Create</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFileForm.invalid">Create</button>
     </ng-template>
 </p-dialog>
 
+
 <ng-container>
-    <input #file (change)="uploadFile($event)" class="form-control" id="file"
+    <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file"
            onclick="this.value = null" type="file" [hidden]="true">
+    <input #folderUpload (change)="uploadFolder($event)" class="form-control" id="folder"
+           onclick="this.value = null" type="file" webkitdirectory directory multiple [hidden]="true">
 </ng-container>
-<!--<p-dialog [(visible)]="visibleUploadFileDialog" [modal]="true" styleClass="p-dialog-md">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-building"></i>
-            <span>Upload File</span>
-        </div>
-    </ng-template>
-    <form >
-        <div class="row">
-            <div class="col-6 mb-3">
-                <div class="custom-file">
-                    <label for="file">{{files[0]?.name ?? 'Choose file'}}</label>
-                    <input #file (change)="setAttachment($event)" class="form-control" id="file"
-                           onclick="this.value = null" type="file">
-                </div>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideUploadFilePopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button">Create</button>
-    </ng-template>
-</p-dialog>-->
