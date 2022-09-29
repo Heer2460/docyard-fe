@@ -33,28 +33,37 @@ export class SidebarComponent implements OnInit {
 
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
+            
+            //False all previous active routes;
+            route.active = false;
     
+            //Expending all parents of current child
             if(parent) {
                 parent.active = parent.expended = false;
-                if(currentRouteUrl.includes(parent.route)   ) {
+                if(currentRouteUrl.includes(parent.route)) {
                     parent.active = true;
                     parent.expended = true;
                 }
             }
             
-            if (route.route.indexOf(currentRouteUrl) > -1 ) {
-                if(parent) {
-                    parent.expended = true;
+            if (currentRouteUrl.includes(route.route)) {
+    
+                if (route?.children?.length > 0) {
+                    const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
+                    if (routes) {
+                        return routes;
+                    }
+                }else {
+                    if(parent) {
+                        parent.expended = true;
+                    }
+    
+                    route.active = true;
+                    return route;
                 }
-                route.active = true;
-                return route;
-            } else if (route?.children?.length > 0) {
-                const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
-                if (routes) {
-                    return routes;
-                }
+                
+                
             }
-            route.active = false;
     
         });
     }
