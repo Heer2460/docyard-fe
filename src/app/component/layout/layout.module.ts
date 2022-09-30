@@ -16,7 +16,8 @@ import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
         RightPaneComponent,
     ],
     exports: [
-        LayoutComponent
+        LayoutComponent,
+        RightPaneComponent
     ],
     imports: [
         NavModule,
