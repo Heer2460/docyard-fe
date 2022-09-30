@@ -7,6 +7,7 @@ import {RequestService} from "../../../service/request.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {AppUtility} from "../../../util/app.utility";
+import {AppConstants} from "../../../util/app.constants";
 
 @Component({
     selector: 'login-component',
@@ -16,7 +17,7 @@ import {AppUtility} from "../../../util/app.utility";
 export class LoginComponent implements OnInit {
 
     loginFrom!: FormGroup;
-    permissions :any[] = [
+    permissions: any[] = [
         {
             "id": null,
             "createdOn": "2022-09-21T10:51:41+05:00",
@@ -356,61 +357,68 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    forgetPassword(){
+    forgetPassword() {
         this.router.navigate(['/forgot-password']);
     }
 
     login(data: any) {
 
-        localStorage.setItem(window.btoa('permissions'), JSON.stringify(this.permissions));
-        this.appService.permissions = this.permissions;
-        this.appUtility.setRoles(this.appService.permissions);
-        this.router.navigate(['/home']);
+        // localStorage.setItem(window.btoa('permissions'), JSON.stringify(this.permissions));
+        // this.appService.permissions = this.permissions;
+        // this.appUtility.setRoles(this.appService.permissions);
+        // this.router.navigate(['/home']);
 
-        /*
+        console.log('In')
+
         if (this.loginFrom.invalid) {
             return;
         }
+        // first API
         let url = ApiUrlConstants.OAUTH_TOKEN_API_URL + '?username=' + data.username + '&password=' + data.password + '&grant_type=password';
         this.requestsService.postAccessTokenRequest(url, {})
             .subscribe({
                 next: (responseOauth: HttpResponse<any>) => {
                     if (responseOauth.status === 200) {
                         if (responseOauth.body.token_type === 'bearer') {
-                            // localStorage.setItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN), responseOauth.body.access_token);
-                            // localStorage.setItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN), responseOauth.body.refresh_token);
-                            // localStorage.setItem(window.btoa(AppConstants.AUTH_EXPIRE_IN), responseOauth.body.expires_in);
+                            localStorage.setItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN), responseOauth.body.access_token);
+                            localStorage.setItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN), responseOauth.body.refresh_token);
+                            localStorage.setItem(window.btoa(AppConstants.AUTH_EXPIRES_IN), responseOauth.body.expires_in);
+
+                            // second API
                             this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL, {})
                                 .subscribe({
                                     next: (responseLogin: any) => {
                                         if (responseLogin.status === 200) {
 
-                                            // const userObj = JSON.parse(JSON.stringify(responseLogin.body));
-                                            // localStorage.setItem(window.btoa(AppConstants.AUTH_USER_INFO), JSON.stringify(userObj));
-                                            // this.appService.userInfo = userObj;
-                                            // localStorage.setItem(window.btoa(AppConstants.AUTH_USER_ID), userObj.userId);
-                                            //
-                                            // this.permissions = responseLogin?.body?.roleDTO?.permissionDTOList;
-                                            // localStorage.setItem(window.btoa(AppConstants.AUTH_PERMISSIONS), JSON.stringify(this.permissions));
-                                            // this.appService.permissions = this.permissions;
-                                            // this.appUtility.setUserActions(this.appService.permissions);
-                                            // this.router.navigate(['/main']);
+
+                                            const userObj = JSON.parse(JSON.stringify(responseLogin.body));
+                                            localStorage.setItem(window.btoa(AppConstants.AUTH_USER_INFO), JSON.stringify(userObj));
+                                            this.appService.userInfo = userObj;
+                                            localStorage.setItem(window.btoa(AppConstants.AUTH_USER_ID), userObj.userId);
+
+                                            this.permissions = responseLogin?.body?.roleDTO?.permissionDTOList;
+                                            localStorage.setItem(window.btoa(AppConstants.AUTH_PERMISSIONS), JSON.stringify(this.permissions));
+                                            this.appService.permissions = this.permissions;
+                                            this.appUtility.setRoles(this.appService.permissions);
+                                            this.router.navigate(['/home']);
+
                                         } else {
-                                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
-                                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
-                                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRE_IN));
-                                            // this.router.navigate(['/auth/login']);
+                                            localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
+                                            localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
+                                            localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRES_IN));
+                                            this.router.navigate(['/login']);
                                         }
+
                                     },
                                     error: (error: any) => {
                                         this.appService.handleError(error, 'Sign In User');
                                     }
                                 });
                         } else {
-                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
-                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
-                            // localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRE_IN));
-                            // this.router.navigate(['/auth/login']);
+                            localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
+                            localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
+                            localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRES_IN));
+                            this.router.navigate(['/login']);
                         }
                     } else {
                         this.toastService.error('Unable to Sign In', 'Sign In User');
@@ -443,7 +451,7 @@ export class LoginComponent implements OnInit {
                         }
                     }
                 }
-            });*/
+            });
     }
 
 }
