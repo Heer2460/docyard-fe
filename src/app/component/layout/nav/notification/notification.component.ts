@@ -1,38 +1,41 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {getMessaging, onMessage} from "firebase/messaging";
 
 @Component({
-	selector: 'notification-component',
-	templateUrl: './notification.template.html',
-	styleUrls: ['./notification.component.less']
+    selector: 'notification-component',
+    templateUrl: './notification.template.html',
+    styleUrls: ['./notification.component.less']
 })
 export class NotificationComponent implements OnInit {
-	
-	items: MenuItem[] = [
-		{
-			label: 'Drive is full please upgrade',
-			icon: 'icon-bell',
-			command: () => {
-			}
-		},
-		{
-			label: 'Upload finished!',
-			icon: 'icon-bell',
-			command: () => {
-			}
-		},
-		{separator: true},
-		{
-			label: 'Clear all',
-			command: () => {
-			}
-		}
-	];
-	
-	constructor() {
-	}
-	
-	ngOnInit(): void {
-	}
-	
+
+    notifications: MenuItem[] = [
+        {
+            label: 'Push notification integrated, need to send from FCM.',
+            icon: 'icon-bell',
+            command: () => {
+            }
+        }
+    ];
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+        this.listen();
+    }
+
+    listen() {
+        const messaging = getMessaging();
+        onMessage(messaging, (payload) => {
+            //console.log('Message received. ', payload);
+            this.notifications.push({
+                label: payload?.notification?.body,
+                icon: 'icon-bell',
+                command: () => {
+                }
+            })
+        });
+    }
+
 }

@@ -18,6 +18,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AppUtility} from "./util/app.utility";
 import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
+import {environment} from "../environments/environment";
+import {initializeApp} from "firebase/app";
+
+initializeApp(environment.firebase);
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsSize: 100,
