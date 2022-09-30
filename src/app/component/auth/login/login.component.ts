@@ -368,8 +368,6 @@ export class LoginComponent implements OnInit {
         // this.appUtility.setRoles(this.appService.permissions);
         // this.router.navigate(['/home']);
 
-        console.log('In')
-
         if (this.loginFrom.invalid) {
             return;
         }
@@ -385,21 +383,20 @@ export class LoginComponent implements OnInit {
                             localStorage.setItem(window.btoa(AppConstants.AUTH_EXPIRES_IN), responseOauth.body.expires_in);
 
                             // second API
-                            this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL, {})
+                            this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL + '/' + data.username, {})
                                 .subscribe({
                                     next: (responseLogin: any) => {
                                         if (responseLogin.status === 200) {
 
-
                                             const userObj = JSON.parse(JSON.stringify(responseLogin.body));
                                             localStorage.setItem(window.btoa(AppConstants.AUTH_USER_INFO), JSON.stringify(userObj));
                                             this.appService.userInfo = userObj;
-                                            localStorage.setItem(window.btoa(AppConstants.AUTH_USER_ID), userObj.userId);
+                                            localStorage.setItem(window.btoa(AppConstants.AUTH_USER_ID), userObj.id);
 
-                                            this.permissions = responseLogin?.body?.roleDTO?.permissionDTOList;
-                                            localStorage.setItem(window.btoa(AppConstants.AUTH_PERMISSIONS), JSON.stringify(this.permissions));
-                                            this.appService.permissions = this.permissions;
-                                            this.appUtility.setRoles(this.appService.permissions);
+                                            // this.permissions = responseLogin?.body?.roleDTO?.permissionDTOList;
+                                            // localStorage.setItem(window.btoa(AppConstants.AUTH_PERMISSIONS), JSON.stringify(this.permissions));
+                                            // this.appService.permissions = this.permissions;
+                                            // this.appUtility.setRoles(this.appService.permissions);
                                             this.router.navigate(['/home']);
 
                                         } else {

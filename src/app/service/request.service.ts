@@ -19,7 +19,8 @@ export class RequestService {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
             {
-                'Authorization': 'Bearer ' + this.getToken(),
+                // 'Authorization': 'Bearer ' + this.getToken(),
+                'auth_token': 'Bearer ' + this.getToken(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }
