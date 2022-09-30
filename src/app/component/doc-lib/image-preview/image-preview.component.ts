@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AppService} from "../../../service/app.service";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'image-preview-component',
     templateUrl: './image-preview.template.html',
-    styleUrls: ['./image-preview.component.less']
+    styleUrls: ['./image-preview.component.less'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ImagePreviewComponent implements OnInit {
     
-    selectedItem: any = null;
+    docInfoPane: boolean = true;
     
-    constructor(public appService: AppService, private activatedRoute: ActivatedRoute) {
-        this.selectedItem = activatedRoute.snapshot.paramMap.get('fileUrl');
+    constructor(public appService: AppService) {
+        this.appService.setToggleDocInfoPaneSubject(this.docInfoPane);
     }
     
     ngOnInit(): void {
-        console.log(this.selectedItem);
+        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.docInfoPane = value;
+        });
     }
     
 }

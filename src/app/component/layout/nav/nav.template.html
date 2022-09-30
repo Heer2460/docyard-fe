@@ -1,14 +1,20 @@
-<nav>
-    <button class="btn btn-menu-toggle-responsive" (click)="setToggleMenuState()">
-        <i class="icon-menu"></i>
-    </button>
-    <img src="../../../../assets/images/svg/infotech-logo.svg" alt="Infotech logo" class="vendor-logo">
-    <div class="search-and-notify-wrapper">
-        <search-bar-component></search-bar-component>
-        <notification-component></notification-component>
-        <button class="btn btn-toggle-right-pane" (click)="setToggleRightPaneState()">
-            <i class="icon-cog"></i>
+<ng-template #elseCase>
+    <nav>
+        <button class="btn btn-menu-toggle-responsive" (click)="setToggleMenuState()">
+            <i class="icon-menu"></i>
         </button>
-    </div>
-</nav>
-<app-setting-component></app-setting-component>
+        <img src="../../../../assets/images/svg/infotech-logo.svg" alt="Infotech logo" class="vendor-logo">
+        <div class="search-and-notify-wrapper">
+            <search-bar-component></search-bar-component>
+            <notification-component></notification-component>
+            <button class="btn btn-toggle-right-pane" (click)="setToggleRightPaneState()">
+                <i class="icon-cog"></i>
+            </button>
+        </div>
+    </nav>
+    <app-setting-component></app-setting-component>
+</ng-template>
+
+<ng-container *ngIf="showImageViewSettings; else elseCase">
+
+</ng-container>

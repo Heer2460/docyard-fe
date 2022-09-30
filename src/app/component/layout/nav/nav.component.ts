@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {MenuItem} from "primeng/api";
 
@@ -11,6 +11,8 @@ export class NavComponent implements OnInit {
 	
 	toggleMenuState: boolean = false;
 	toggleRightPaneStatus: boolean = false;
+	
+	@Input() showImageViewSettings: boolean = false;
 	
 	constructor(public appService: AppService) {
 	}
