@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {AppConstants} from "../util/app.constants";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class RequestService {
     }
 
     getToken() {
-        return localStorage.getItem(window.btoa('access_token'));
+        return localStorage.getItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
     }
 
     getBasicHeaders(): HttpHeaders {
@@ -19,6 +20,7 @@ export class RequestService {
         reqHeader = new HttpHeaders(
             {
                 // 'Authorization': 'Bearer ' + this.getToken(),
+                'auth_token': 'Bearer ' + this.getToken(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }

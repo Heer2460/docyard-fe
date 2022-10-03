@@ -3,7 +3,6 @@ import {BehaviorSubject} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {RoutesDTO} from "../model/routes.dto";
-import {AppConstants} from "../util/app.constants";
 import {RoleActionConstants} from "../util/role.actions.constants";
 
 @Injectable({
@@ -12,6 +11,7 @@ import {RoleActionConstants} from "../util/role.actions.constants";
 export class AppService {
     secretKey: string = 'DOCYARDINFOTECH';
     permissions: any = [];
+    userInfo: any;
 
     public toggleMenuBSubject = new BehaviorSubject(false);
     public toggleRightPaneSubject = new BehaviorSubject(false);
@@ -82,6 +82,7 @@ export class AppService {
     successDeleteMessage(title: string): void {
         this.toastService.success('Deleted Successfully', title);
     }
+
     successMessage(message: string): void {
         this.toastService.success('Update Successfully', message);
     }
