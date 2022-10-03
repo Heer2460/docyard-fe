@@ -5,7 +5,6 @@ import {AppService} from "../../../service/app.service";
     selector: 'image-preview-component',
     templateUrl: './image-preview.template.html',
     styleUrls: ['./image-preview.component.less'],
-    encapsulation: ViewEncapsulation.None
 })
 export class ImagePreviewComponent implements OnInit {
     
