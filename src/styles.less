@@ -464,6 +464,25 @@ fieldset {
 	--bs-btn-disabled-border-color: hsl(var(--color-blue-03));
 }
 
+.btn-light {
+	--bs-btn-color: hsl(var(--color-blue-01));
+	--bs-btn-bg: var(--color-white);
+	--bs-btn-border-color: var(--color-white);
+	
+	--bs-btn-hover-bg: var(--color-white-02);
+	--bs-btn-hover-border-color: var(--color-white-02);
+	
+	--bs-btn-focus-shadow-rgb: none;
+	
+	--bs-btn-active-bg: var(--color-white-02);
+	--bs-btn-active-border-color: var(--color-white-02);
+	--bs-btn-active-shadow: none;
+	
+	--bs-btn-disabled-color: hsl(var(--color-blue-01));
+	--bs-btn-disabled-bg: var(--color-white);
+	--bs-btn-disabled-border-color: var(--color-white);
+}
+
 .btn-danger {
 	--bs-btn-color: #fff;
 	--bs-btn-bg: @color-red-01;
@@ -479,6 +498,19 @@ fieldset {
 	--bs-btn-disabled-color: #fff;
 	--bs-btn-disabled-bg: @color-red-01;
 	--bs-btn-disabled-border-color: @color-red-01;
+}
+
+.btn-transparent {
+	color: var(--color-white);
+	background-color: hsl(var(--color-green-06));
+	
+	&:focus,
+	&:active,
+	&:hover {
+		color: var(--color-white);
+		background-color: hsl(var(--color-green-06));
+	}
+	
 }
 
 /*====================================================

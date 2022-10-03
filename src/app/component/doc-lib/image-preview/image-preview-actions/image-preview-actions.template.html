@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-6">
+        <button class="btn btn-sm btn-transparent me-4" (click)="backToDocLibAction()">
+            <i class="icon-arrow-left"></i>
+        </button>
+        <button class="btn btn-sm btn-light me-2">
+            <i class="icon-download"></i>
+            Download
+        </button>
+        <button class="btn btn-sm btn-light" (click)="uploadMenu.toggle($event)">
+            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems" [popup]="true"></p-tieredMenu>
+            <i class="icon-cog"></i>
+            Manage
+            <i class="icon-arrow-down"></i>
+        </button>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-end">
+        <button class="btn btn-sm btn-primary me-2">
+            <i class="icon-share"></i>
+            Share
+        </button>
+    </div>
+</div>

@@ -122,7 +122,7 @@ export class RoleActionConstants {
     };
 
 
-    // Reset all permissions & actions
+    // Reset all permissions & image-preview-actions
     public static resetPermission() {
         // routes
         RoleActionConstants.USER_ROUTE.valid = false;
@@ -147,7 +147,7 @@ export class RoleActionConstants {
         RoleActionConstants.DEPARTMENT_EDIT_ROUTE.valid = false;
 
 
-        //actions
+        //image-preview-actions
         RoleActionConstants.USER_ADD.value = false;
         RoleActionConstants.USER_VIEW.value = false;
         RoleActionConstants.USER_EDIT.value = false;

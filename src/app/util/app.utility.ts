@@ -126,7 +126,7 @@ export class AppUtility {
         return errorMessage;
     }
 
-    // set roles & actions
+    // set roles & image-preview-actions
     setRoles(roles: any) {
         // console.log(roles);
         if (roles && roles.length > 0) {
