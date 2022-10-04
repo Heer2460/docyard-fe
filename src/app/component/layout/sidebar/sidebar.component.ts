@@ -45,22 +45,21 @@ export class SidebarComponent implements OnInit {
                     parent.active = true;
                     parent.expended = true;
                 }
+                
             }
-            
-            if (currentRouteUrl.includes(route.route)) {
     
-                if (route?.children?.length > 0) {
-                    const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
-                    if (routes) {
-                        return routes;
-                    }
-                }else {
-                    if(parent) {
-                        parent.expended = true;
-                    }
+            if (route?.children?.length > 0) {
+                const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
+                if (routes) {
+                    return routes;
+                }
+            }else {
+    
+                if (currentRouteUrl.includes(route.route)) {
     
                     route.active = true;
                     return route;
+        
                 }
                 
             }
