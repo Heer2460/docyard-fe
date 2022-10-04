@@ -383,11 +383,10 @@ export class LoginComponent implements OnInit {
                             localStorage.setItem(window.btoa(AppConstants.AUTH_EXPIRES_IN), responseOauth.body.expires_in);
 
                             // second API
-                            this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL + '/' + data.username, {})
+                            this.requestsService.postRequest(ApiUrlConstants.SIGN_IN_API_URL + '/' + data.username, {})
                                 .subscribe({
                                     next: (responseLogin: any) => {
                                         if (responseLogin.status === 200) {
-
                                             const userObj = JSON.parse(JSON.stringify(responseLogin.body));
                                             localStorage.setItem(window.btoa(AppConstants.AUTH_USER_INFO), JSON.stringify(userObj));
                                             this.appService.userInfo = userObj;

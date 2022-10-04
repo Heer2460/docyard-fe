@@ -17,7 +17,7 @@ export class ApiUrlConstants {
     public static UPLOAD_IMAGE_API_URL ='/user/profile-picture'
 
     // User Status API URL
-    public static USER_STATUS_API_URL = '/user/updateUserStatus/';
+    public static USER_STATUS_API_URL = '/user/update-user-status/';
 
     // User Reset Pass API URL
     public static USER_RESET_PASS_API_URL = '/user/reset-password/';
