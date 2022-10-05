@@ -61,7 +61,6 @@ export class DeptComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
-        this.searchDepartments();
     }
 
     buildForms() {
