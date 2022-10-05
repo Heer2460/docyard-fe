@@ -1,0 +1,70 @@
+<div class="file-uploader" [ngClass]="showFileUploader ? '' : 'collapsed'">
+    <header>
+        <div class="header-content">
+            <h4>6 of 12 files are being uploaded</h4>
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span>67%</span>
+            </div>
+        </div>
+        <div class="action-items">
+            <button class="btn btn-toggle btn-transparent" (click)="toggleFileUploaderAction()">
+                <i class="icon-arrow-down" *ngIf="showFileUploader"></i>
+                <i class="icon-arrow-up" *ngIf="!showFileUploader"></i>
+            </button>
+            <button class="btn btn-transparent">
+                <i class="icon-times"></i>
+            </button>
+        </div>
+    </header>
+    <div class="body">
+        <ul>
+            <li>
+                <div class="file-metadata">
+                    <div class="file-icon-container">
+                        <img src="./assets/images/svg/icons/docx.svg" alt="Docx">
+                    </div>
+                    <div class="file-detail">
+                        <h5>Business requirement specifications.docx</h5>
+                        <div class="dir-and-percentage">
+                            <p>Uploading to <span>Files</span></p>
+                            <span class="percentage">67%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button class="btn btn-transparent">
+                        <i class="icon-times"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="file-metadata">
+                    <div class="file-icon-container">
+                        <img src="./assets/images/svg/icons/jpg.svg" alt="Docx">
+                    </div>
+                    <div class="file-detail">
+                        <h5>Passport size picture.jpg</h5>
+                        <div class="dir-and-percentage">
+                            <p>Uploading to <span>Files</span></p>
+                            <span class="percentage">100%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button class="btn btn-success btn-transparent">
+                        <i class="icon-check"></i>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
