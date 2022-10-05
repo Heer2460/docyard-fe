@@ -21,6 +21,7 @@
                 </div>
             </div>
             <ng-content select=[docInfoPane]></ng-content>
+            <ng-content select=[fileUploader]></ng-content>
         </section>
     </div>
     <right-pane-component [ngClass]="toggleRightPaneState ? 'expended' : ''"></right-pane-component>

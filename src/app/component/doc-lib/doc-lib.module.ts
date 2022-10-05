@@ -9,6 +9,7 @@ import {DocDataTableModule} from "../shared/doc-data-table/doc-data-table.module
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
+import {FileUploaderModule} from "./file-uploader/file-uploader.module";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         DocDataTableModule,
         DocInfoPaneModule,
         DialogModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FileUploaderModule
     ]
 })
 export class DocLibModule {

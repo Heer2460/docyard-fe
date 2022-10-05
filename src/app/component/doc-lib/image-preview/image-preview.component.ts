@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 
 @Component({
@@ -45,8 +45,8 @@ export class ImagePreviewComponent implements OnInit {
     
     generateStyleObj() {
         
-        const calcWidth = ( (this.initialWidth * this.magnifierZoom) / 100 ) + this.initialWidth;
-        const calcHeight = ( (this.initialHeight * this.magnifierZoom) / 100 ) + this.initialHeight;
+        const calcWidth = ((this.initialWidth * this.magnifierZoom) / 100) + this.initialWidth;
+        const calcHeight = ((this.initialHeight * this.magnifierZoom) / 100) + this.initialHeight;
         
         this.imageObj.style.width = `${calcWidth}px`;
         this.imageObj.style.height = `${calcHeight}px`;

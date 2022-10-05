@@ -27,6 +27,9 @@
     <ng-container docInfoPane>
         <doc-info-pane-component [ngClass]="docInfoPane ? 'collapsed': ''"></doc-info-pane-component>
     </ng-container>
+    <ng-container fileUploader>
+        <file-uploader-component ></file-uploader-component>
+    </ng-container>
 </layout-component>
 
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
