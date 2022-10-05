@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
 
     routes: RoutesDTO[] = [];
     currentRoute: string = '';
+    menus: any;
 
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
@@ -24,6 +25,7 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.populateMenus();
         this.setActiveRoute();
     }
 
@@ -76,6 +78,11 @@ export class SidebarComponent implements OnInit {
 
     switchRouteTypes() {
         this.routes = AppRouteConstants.mainRoutes;
+    }
+
+    populateMenus() {
+        this.menus = this.appService.permissions;
+        console.log(this.menus);
     }
 
 }

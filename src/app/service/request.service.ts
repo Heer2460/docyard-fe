@@ -31,7 +31,7 @@ export class RequestService {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
             {
-                // 'Authorization': 'Bearer ' + this.getToken(),
+                'auth_token': 'Bearer ' + this.getToken(),
             }
         );
         return reqHeader;

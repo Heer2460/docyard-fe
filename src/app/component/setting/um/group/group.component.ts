@@ -94,7 +94,7 @@ export class GroupComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: ['Active'],
-            role: ['']
+            role: ['', Validators.required]
         });
 
         this.updateGroupForm = this.fb.group({
@@ -249,7 +249,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: '',
+            role: [],
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
@@ -261,7 +261,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: '',
+            role: [],
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
