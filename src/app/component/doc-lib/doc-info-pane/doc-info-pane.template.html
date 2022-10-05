@@ -43,7 +43,7 @@
                         <th>Keywords</th>
                         <td>Family, Pictures, Photos</td>
                     </tr>
-                    <ng-container *ngIf="toggleShowAll">
+                    <ng-container *ngIf="showAll">
                         <tr>
                             <th>Property 1</th>
                             <td>description</td>
@@ -56,8 +56,8 @@
                     <tr>
                         <th colspan="2">
                             <button class="btn btn-show-all" (click)="toggleShowAllAction()">
-                                <span *ngIf="!toggleShowAll">Show all</span>
-                                <span *ngIf="toggleShowAll">Show less</span>
+                                <span *ngIf="!showAll">Show all</span>
+                                <span *ngIf="showAll">Show less</span>
                             </button>
                         </th>
                     </tr>

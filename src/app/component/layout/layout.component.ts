@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class LayoutComponent implements OnInit {
     
-    toggleMenuState: boolean = false;
+    showMenu: boolean = false;
     showRightPane: boolean = false;
     showDocInfoPane: boolean = true;
     
@@ -21,7 +21,7 @@ export class LayoutComponent implements OnInit {
     
     ngOnInit(): void {
         this.appService.showMenuBSubject.subscribe((value: boolean) => {
-            this.toggleMenuState = value;
+            this.showMenu = value;
         });
         
         this.appService.showRightPaneSubject.subscribe((value: boolean) => {
