@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
 
     routes: RoutesDTO[] = [];
     currentRoute: string = '';
-    menus: any;
+    menus: RoutesDTO[] = [];
 
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
@@ -25,7 +25,6 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.populateMenus();
         this.setActiveRoute();
     }
 
@@ -77,12 +76,45 @@ export class SidebarComponent implements OnInit {
     }
 
     switchRouteTypes() {
+        this.routes = [];
         this.routes = AppRouteConstants.mainRoutes;
-    }
-
-    populateMenus() {
-        this.menus = this.appService.permissions;
-        console.log(this.menus);
+        this.routes.forEach((items: any, index: number) => {
+            if (items.label.includes('Setting')) {
+                this.routes.splice(index, 1);
+            }
+        });
+        if (this.appService.permissions) {
+            let menu = {
+                label: 'Setting',
+                route: '/setting',
+                icon: 'icon-cog',
+                expended: false,
+                active: false,
+                children: <any>[],
+            };
+            this.appService.permissions.forEach((item: any) => {
+                let parentObj = {
+                    label: item.name,
+                    route: item.route,
+                    icon: item.icon,
+                    expended: false,
+                    active: false,
+                    children: <any>[],
+                };
+                menu.children.push(parentObj);
+                item.children.forEach((subMenu: any) => {
+                    let childObj = {
+                        label: subMenu.name,
+                        route: subMenu.route,
+                        icon: subMenu.icon,
+                        expended: false,
+                        active: false,
+                    };
+                    parentObj.children.push(childObj);
+                });
+            });
+            this.routes.push(menu);
+        }
     }
 
 }

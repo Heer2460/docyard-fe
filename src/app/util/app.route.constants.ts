@@ -50,7 +50,7 @@ export class AppRouteConstants {
             active: false,
             
         },
-        {
+        /*{
             label: 'Setting',
             route: '/setting',
             icon: 'icon-cog',
@@ -103,16 +103,16 @@ export class AppRouteConstants {
                         }
                     ]
                 },
-                /*{
+                /!*{
                     label: 'Theme',
                     route: '/setting/theme',
                     icon: 'icon-link',
                     expended: false,
                     active: false,
-                }*/
+                }*!/
             ]
 
-        },
+        },*/
     ];
     public static settingRoutes: RoutesDTO[] = [
         {
