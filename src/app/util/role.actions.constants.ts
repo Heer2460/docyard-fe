@@ -6,6 +6,7 @@ export class RoleActionConstants {
     // public static HOME_ROUTE = {url: '/home', valid: true};
 
     // User Management Routes
+    public static USER_SETTING_ROUTE = {url: '/setting', valid: true};
     public static USER_MAIN_ROUTE = {url: '/setting/um', valid: true};
 
     // User Routes

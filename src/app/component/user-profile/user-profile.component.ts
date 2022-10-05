@@ -131,7 +131,6 @@ export class UserProfileComponent implements OnInit {
             let reader = new FileReader();
             reader.onload = this.handleReaderLoadedProfileImage.bind(this);
             this.profileImage = reader.readAsBinaryString(obj.data);
-            console.log(this.profileImage);
             this.requestsService.putRequestMultipartFormAndData(ApiUrlConstants.UPLOAD_IMAGE_API_URL, this.files, data)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RoleActionConstants} from "../../util/role.actions.constants";
+import {AppService} from "../../service/app.service";
 
 @Component({
     selector: 'setting-component',
@@ -8,8 +9,9 @@ import {RoleActionConstants} from "../../util/role.actions.constants";
 })
 export class SettingComponent implements OnInit {
 
-    roleActions = RoleActionConstants;
-    
+    constructor(public appService: AppService) {
+    }
+
     ngOnInit(): void {
     }
     

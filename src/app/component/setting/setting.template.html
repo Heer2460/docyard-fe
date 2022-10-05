@@ -2,7 +2,7 @@
     <ng-container pageBody>
         <div class="home-template">
             <div class="row">
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="roleActions.USER_ROUTE.valid">
+                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasUserPermissions()">
                     <div class="card card-aqua">
                         <div class="card-body" routerLink="/setting/um/user">
                             <div>
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="roleActions.GROUP_ROUTE.valid">
+                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasGroupPermissions()">
                     <div class="card card-blue">
                         <div class="card-body" routerLink="/setting/um/group">
                             <div>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="roleActions.ROLE_ROUTE.valid">
+                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasRolePermissions()">
                     <div class="card card-yellow">
                         <div class="card-body" routerLink="/setting/um/role">
                             <div>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="roleActions.DEPARTMENT_ROUTE.valid">
+                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasDepartmentPermissions()">
                     <div class="card card-red">
                         <div class="card-body" routerLink="/setting/ref/department">
                             <div>

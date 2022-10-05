@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {RoutesDTO} from "../model/routes.dto";
 import {RoleActionConstants} from "../util/role.actions.constants";
+import {AppConstants} from "../util/app.constants";
 
 @Injectable({
     providedIn: 'root'
@@ -118,5 +119,35 @@ export class AppService {
         RoleActionConstants.resetPermission();
         localStorage.clear();
         this.router.navigate(['/login']);
+    }
+
+
+    // check permissions
+    hasUserPermissions() {
+        return (
+            RoleActionConstants.USER_ADD.value || RoleActionConstants.USER_EDIT.value ||
+            RoleActionConstants.USER_VIEW.value || RoleActionConstants.USER_DEL.value
+        );
+    }
+
+    hasGroupPermissions() {
+        return (
+            RoleActionConstants.GROUP_ADD.value || RoleActionConstants.GROUP_EDIT.value ||
+            RoleActionConstants.GROUP_VIEW.value || RoleActionConstants.GROUP_DEL.value
+        );
+    }
+
+    hasRolePermissions() {
+        return (
+            RoleActionConstants.ROLE_ADD.value || RoleActionConstants.ROLE_EDIT.value ||
+            RoleActionConstants.ROLE_VIEW.value || RoleActionConstants.ROLE_DEL.value
+        );
+    }
+
+    hasDepartmentPermissions() {
+        return (
+            RoleActionConstants.DEPT_ADD.value || RoleActionConstants.DEPT_EDIT.value ||
+            RoleActionConstants.DEPT_VIEW.value || RoleActionConstants.DEPT_DEL.value
+        );
     }
 }

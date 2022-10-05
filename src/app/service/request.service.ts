@@ -19,7 +19,6 @@ export class RequestService {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
             {
-                // 'Authorization': 'Bearer ' + this.getToken(),
                 'auth_token': 'Bearer ' + this.getToken(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -47,9 +46,9 @@ export class RequestService {
             return '';
         } else {
             if (port === '' || !port) {
-                return protocol + environment.http_separator + server + ':' + port;
+                return protocol + environment.http_separator + server + ':' + port + contextPath;
             } else {
-                return protocol + environment.http_separator + server + ':' + port;
+                return protocol + environment.http_separator + server + ':' + port + contextPath;
             }
         }
     }

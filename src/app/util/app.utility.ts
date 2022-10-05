@@ -128,7 +128,6 @@ export class AppUtility {
 
     // set roles & image-preview-actions
     setRoles(roles: any) {
-        // console.log(roles);
         if (roles && roles.length > 0) {
             roles.forEach((menu: any) => {
                 menu.children.forEach((subMenu: any) => {
