@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         if (this.validateRoute(state.url.split('?')[0])) {
-            console.log('in')
             return this.validateRoute(state.url.split('?')[0]);
         } else {
             this.router.navigate(['/home']);
