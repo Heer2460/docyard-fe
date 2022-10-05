@@ -5,14 +5,14 @@
                 <i *ngIf="!gridItem.shared" class="icon-folder-filled"></i>
                 <i *ngIf="gridItem.shared" class="icon-folder-shared-filled"></i>
             </ng-container>-->
-            <img src="{{gridItem.icon}}" alt="icon">
+            <img src="./assets/images/svg/icons/{{gridItem.extension}}.svg" alt="icon">
         </ng-container>
     </div>
     <div class="file-details">
         <p class="title">{{gridItem?.name}}</p>
         <p class="date-and-author">
-            <span>{{gridItem?.updatedOn}} by </span>
-            <a role="button" routerLink="/link">{{gridItem?.updatedBy}}</a>
+            <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
+            <a role="button" routerLink="/link">{{gridItem?.updatedByName}}</a>
         </p>
         <p class="file-size">{{gridItem?.size}}</p>
     </div>

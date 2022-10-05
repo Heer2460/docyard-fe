@@ -100,7 +100,7 @@ export class DocLibComponent implements OnInit {
     ];
     docInfoPane: boolean = false;
     files: any[] = [];
-    
+
     constructor(public appService: AppService,
                 private fb: FormBuilder,
                 public appUtility: AppUtility) {
@@ -108,7 +108,7 @@ export class DocLibComponent implements OnInit {
             this.docInfoPane = value;
         });
     }
-    
+
     ngOnInit(): void {
         this.buildDocumentActions();
         this.buildOptionItems();

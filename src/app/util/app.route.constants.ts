@@ -8,7 +8,7 @@ export class AppRouteConstants {
             icon: 'icon-home',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'Document Library',
@@ -16,7 +16,7 @@ export class AppRouteConstants {
             icon: 'icon-cloud',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'Shared by Me',
@@ -24,7 +24,7 @@ export class AppRouteConstants {
             icon: 'icon-shared-by-me',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'Shared with Me',
@@ -32,7 +32,7 @@ export class AppRouteConstants {
             icon: 'icon-shared-with-me',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'Favourite',
@@ -40,7 +40,7 @@ export class AppRouteConstants {
             icon: 'icon-star',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'Trash',
@@ -48,10 +48,10 @@ export class AppRouteConstants {
             icon: 'icon-trash',
             expended: false,
             active: false,
-            
+
         },
         {
-            label: 'Setting',
+            label: 'Settings',
             route: '/setting',
             icon: 'icon-cog',
             expended: false,
@@ -121,7 +121,7 @@ export class AppRouteConstants {
             icon: 'icon-home',
             expended: false,
             active: false,
-            
+
         },
         {
             label: 'User Management',

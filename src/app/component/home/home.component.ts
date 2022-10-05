@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {ApiUrlConstants} from "../../util/api.url.constants";
+import {HttpResponse} from "@angular/common/http";
+import {RequestService} from "../../service/request.service";
+import {AppService} from "../../service/app.service";
 
 @Component({
     selector: 'home-component',
@@ -8,72 +12,57 @@ import {MenuItem} from "primeng/api";
 })
 export class HomeComponent implements OnInit {
 
-    menuItems: MenuItem[] = [];
-    gridItems: any[] = [
+    menuItems: MenuItem[] = [
         {
-            id: 1,
-            name: 'tour-pic.jpeg',
-            updatedOn: 'Aug 24, 2022',
-            updatedBy: 'Umar Farooq',
-            size: '333.35 KB',
-            icon: './assets/images/image.png',
+            label: 'Share',
+            icon: 'icon-share',
+            command: () => {
+            }
         },
         {
-            id: 2,
-            name: 'Curriculum Vitae.docx',
-            updatedOn: 'Aug 24, 2022',
-            updatedBy: 'Umar Farooq',
-            size: '500 KB',
-            icon: './assets/images/svg/docx.svg',
+            label: 'Download',
+            icon: 'icon-download',
+            command: () => {
+            }
         },
         {
-            id: 3,
-            name: 'Software requirements.pdf',
-            updatedOn: 'Aug 24, 2022',
-            updatedBy: 'Umar Farooq',
-            size: '300 KB',
-            fileThumbnail: './assets/images/svg/pdf.svg',
+            label: 'Delete',
+            icon: 'icon-trash',
+            command: () => {
+            }
         },
         {
-            id: 3,
-            name: 'Software requirements.pdf',
-            updatedOn: 'Aug 24, 2022',
-            updatedBy: 'Umar Farooq',
-            size: '300 KB',
-            fileThumbnail: './assets/images/svg/pdf.svg',
-        },
+            label: 'Rename',
+            icon: 'icon-edit',
+            command: () => {
+            }
+        }
     ];
+    recentDocs: any[] = [];
 
-    constructor() {
+    constructor(private requestsService: RequestService,
+                private appService: AppService) {
     }
 
     ngOnInit(): void {
-        this.menuItems = [
-            {
-                label: 'Share',
-                icon: 'icon-share',
-                command: () => {
+        this.getRecentDocument();
+    }
+
+    getRecentDocument() {
+        let url = ApiUrlConstants.GET_RECENT_DOCUMENT_API_URL + '6';
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.recentDocs = response.body.data;
+                    } else {
+                        this.recentDocs = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Recent Documents');
                 }
-            },
-            {
-                label: 'Download',
-                icon: 'icon-download',
-                command: () => {
-                }
-            },
-            {
-                label: 'Delete',
-                icon: 'icon-trash',
-                command: () => {
-                }
-            },
-            {
-                label: 'Rename',
-                icon: 'icon-edit',
-                command: () => {
-                }
-            }
-        ];
+            });
     }
 
 }

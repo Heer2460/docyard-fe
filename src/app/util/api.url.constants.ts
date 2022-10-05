@@ -7,10 +7,10 @@ export class ApiUrlConstants {
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
 
-    // User Management API URL
+    // User Management API URLS
     public static USER_API_URL = '/um/user/';
     public static FORGOT_PASSWORD_API_URL = '/um/user/forgot-password';
-    public static UPLOAD_IMAGE_API_URL ='/um/user/profile-picture';
+    public static UPLOAD_IMAGE_API_URL = '/um/user/profile-picture';
     public static USER_STATUS_API_URL = '/um/user/update-user-status/';
     public static USER_RESET_PASS_API_URL = '/um/user/reset-password/';
     public static CHANGE_PASSWORD_API_URL = '/user/change-password';
@@ -19,5 +19,8 @@ export class ApiUrlConstants {
     public static PERMISSIONS_API_URL = '/um/permission/';
     public static MODULE_API_URL = '/um/module/';
     public static GROUP_API_URL = '/um/group/';
+
+    // Document Handling API URLS
+    public static GET_RECENT_DOCUMENT_API_URL = '/dl/dl-document/recent/owner/';
 
 }

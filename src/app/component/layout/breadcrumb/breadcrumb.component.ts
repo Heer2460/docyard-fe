@@ -29,7 +29,7 @@ export class BreadcrumbComponent implements OnInit {
             active: false,
         },
         {
-            label: 'Setting',
+            label: 'Settings',
             route: '/setting',
             slug: 'setting',
             active: false,
