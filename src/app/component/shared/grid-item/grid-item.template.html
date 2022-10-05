@@ -5,7 +5,9 @@
                 <i *ngIf="!gridItem.shared" class="icon-folder-filled"></i>
                 <i *ngIf="gridItem.shared" class="icon-folder-shared-filled"></i>
             </ng-container>-->
-            <img src="./assets/images/svg/icons/{{gridItem.extension}}.svg" alt="icon">
+            <img *ngIf="gridItem.isFolder == false" src="./assets/images/svg/icons/{{gridItem.extension}}.svg"
+                 alt="{{gridItem.extension}}">
+            <img *ngIf="gridItem.isFolder == true" src="./assets/images/svg/icons/zip.svg" alt="icon">
         </ng-container>
     </div>
     <div class="file-details">

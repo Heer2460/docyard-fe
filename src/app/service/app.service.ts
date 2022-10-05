@@ -15,7 +15,7 @@ export class AppService {
 
     public toggleMenuBSubject = new BehaviorSubject(false);
     public toggleRightPaneSubject = new BehaviorSubject(false);
-    public toggleDocInfoPaneSubject = new BehaviorSubject(false);
+    public toggleDocInfoPaneSubject = new BehaviorSubject(true);
     public isGridDisplaySubject = new BehaviorSubject(false);
     routes: RoutesDTO[] = [];
 

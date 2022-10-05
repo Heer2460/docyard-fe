@@ -1,7 +1,7 @@
 <ng-container *ngIf="isGridDisplay">
     <div class="grid-view-container">
         <div class="row">
-            <ng-container *ngFor="let item of dataRows">
+            <ng-container *ngFor="let item of dlDocuments">
                 <div class="col-sm-6 col-lg-6 col-xl-3">
                     <grid-item-component [gridItem]="item" [menuItem]="actionItems"></grid-item-component>
                 </div>
@@ -10,7 +10,8 @@
     </div>
 </ng-container>
 <ng-container *ngIf="!isGridDisplay">
-    <p-table styleClass="doc-data-table" [value]="dataRows" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
+    <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
+             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
         <ng-template pTemplate="header">
             <tr>
                 <th>
@@ -19,9 +20,15 @@
                         <label class="form-check-label" for="flexCheckDefault"></label>
                     </div>
                 </th>
-                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="updated">Updated <p-sortIcon field="updated"></p-sortIcon></th>
-                <th pSortableColumn="size">Size <p-sortIcon field="size"></p-sortIcon></th>
+                <th pSortableColumn="name">Name
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="updated">Updated
+                    <p-sortIcon field="updated"></p-sortIcon>
+                </th>
+                <th pSortableColumn="size">Size
+                    <p-sortIcon field="size"></p-sortIcon>
+                </th>
                 <th></th>
                 <th></th>
             </tr>
@@ -30,21 +37,16 @@
             <tr>
                 <td>
                     <div class="form-check form-check-only">
-                        <input class="form-check-input" type="checkbox" [checked]="row.selected" [attr.id]="'checkbox-' + row.id">
+                        <input class="form-check-input" type="checkbox" [checked]="row.selected"
+                               [attr.id]="'checkbox-' + row.id">
                         <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
                     </div>
                 </td>
                 <td>
                     <div class="file-types">
-                        <ng-container [ngSwitch]="row.fileType">
-                            <ng-container *ngSwitchCase="'directory'">
-                                <i *ngIf="row.shared" class="icon-folder-shared-filled"></i>
-                                <i *ngIf="!row.shared" class="icon-folder-filled"></i>
-                            </ng-container>
-                            <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="Directory">
-                            <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="Directory">
-                            <img *ngSwitchCase="'image'" [attr.src]="row.fileUrl" alt="Directory">
-                        </ng-container>
+                        <img *ngIf="row.isFolder == false" src="./assets/images/svg/icons/{{row.extension}}.svg"
+                             alt="{{row.extension}}">
+                        <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/zip.svg" alt="icon">
                         <ng-container [ngSwitch]="row.fileType">
                             <ng-container *ngSwitchCase="'image'">
                                 <span role="button" (click)="imageNameClickAction(row)">{{row.name}}</span>
@@ -53,17 +55,17 @@
                                 <span role="button">{{row.name}}</span>
                             </ng-container>
                         </ng-container>
-
                     </div>
                 </td>
                 <td>
-                    <span>{{row.updatedAt}} by </span>
-                    <a role="button" class="author">{{row.user.username}}</a>
+                    <span>{{row.updatedOn | date:'medium'}} by </span>
+                    <a role="button" class="author">{{row.updatedByName}}</a>
                 </td>
                 <td>{{row.size}}</td>
                 <td>
                     <div class="form-check form-check-only form-check-star">
-                        <input class="form-check-input" type="checkbox" [checked]="row.stared" [attr.id]="'stared-' + row.id">
+                        <input class="form-check-input" type="checkbox" [checked]="row.isFavourite"
+                               [attr.id]="'stared-' + row.id">
                         <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
                     </div>
                 </td>

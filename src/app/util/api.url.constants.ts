@@ -22,5 +22,7 @@ export class ApiUrlConstants {
 
     // Document Handling API URLS
     public static GET_RECENT_DOCUMENT_API_URL = '/dl/dl-document/recent/owner/';
+    public static GET_ALL_DL_DOCUMENT_API_URL = '/dl/dl-document/?folderId={folderId}&archived={archived}';
+
 
 }
