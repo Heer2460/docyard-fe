@@ -7,74 +7,46 @@ import {MenuItem} from "primeng/api";
     styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-    
+
     menuItems: MenuItem[] = [];
     gridItems: any[] = [
         {
             id: 1,
             name: 'tour-pic.jpeg',
-            updatedAt: 'Aug 24, 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
+            updatedOn: 'Aug 24, 2022',
+            updatedBy: 'Umar Farooq',
             size: '333.35 KB',
-            stared: false,
-            selected: false,
-            fileType: 'image',
-            fileThumbnail: './assets/images/image.png',
-            shared: false,
+            icon: './assets/images/image.png',
         },
         {
             id: 2,
             name: 'Curriculum Vitae.docx',
-            updatedAt: 'Sep 24, 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
+            updatedOn: 'Aug 24, 2022',
+            updatedBy: 'Umar Farooq',
             size: '500 KB',
-            stared: false,
-            selected: false,
-            fileType: 'docx',
-            fileThumbnail: '',
-            shared: false,
+            icon: './assets/images/svg/docx.svg',
         },
         {
             id: 3,
             name: 'Software requirements.pdf',
-            updatedAt: 'Sep 24, 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
+            updatedOn: 'Aug 24, 2022',
+            updatedBy: 'Umar Farooq',
             size: '300 KB',
-            stared: false,
-            selected: false,
-            fileType: 'pdf',
-            fileThumbnail: '',
-            shared: false,
+            fileThumbnail: './assets/images/svg/pdf.svg',
         },
         {
-            id: 4,
-            name: 'Family pictures',
-            updatedAt: 'Sep 24, 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
+            id: 3,
+            name: 'Software requirements.pdf',
+            updatedOn: 'Aug 24, 2022',
+            updatedBy: 'Umar Farooq',
             size: '300 KB',
-            stared: false,
-            selected: false,
-            fileType: 'directory',
-            fileThumbnail: '',
-            shared: false,
+            fileThumbnail: './assets/images/svg/pdf.svg',
         },
     ];
-    
+
     constructor() {
     }
-    
+
     ngOnInit(): void {
         this.menuItems = [
             {
@@ -103,5 +75,5 @@ export class HomeComponent implements OnInit {
             }
         ];
     }
-    
+
 }
