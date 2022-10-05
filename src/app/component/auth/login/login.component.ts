@@ -99,22 +99,6 @@ export class LoginComponent implements OnInit {
                 error: (error: any) => {
                     if (error?.error?.error === 'invalid_grant') {
                         this.toastService.error('Invalid credentials provided, please verify.', 'Sign In User');
-                        // this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL, {})
-                        //     .subscribe({
-                        //         next: (response: HttpResponse<any>) => {
-                        //             localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
-                        //             localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
-                        //             localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRE_IN));
-                        //             this.router.navigate(['/auth/login']);
-                        //             if (response.status === 423) {
-                        //                 this.toastService.error('User is locked due to multiple unsuccessful login attempts, please contact administrator.',
-                        //                     'Sign In User');
-                        //             }
-                        //         },
-                        //         error: (error: any) => {
-                        //             this.appService.handleError(error, 'Sign In User');
-                        //         }
-                        //     });
                     } else {
                         if (error.status === 0 && error?.error instanceof ProgressEvent) {
                             this.toastService.error('Connection Refused, May be server is down.', 'Sign In User');

@@ -7,16 +7,17 @@ export class ApiUrlConstants {
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
 
-    // User management API URL
-    public static USER_API_URL = '/user/';
-    public static FORGOT_PASSWORD_API_URL = '/user/forgot-password';
-    public static UPLOAD_IMAGE_API_URL = '/user/profile-picture';
-    public static USER_STATUS_API_URL = '/user/update-user-status/';
-    public static USER_RESET_PASS_API_URL = '/user/reset-password/';
+    // User Management API URL
+    public static USER_API_URL = '/um/user/';
+    public static FORGOT_PASSWORD_API_URL = '/um/user/forgot-password';
+    public static UPLOAD_IMAGE_API_URL ='/um/user/profile-picture';
+    public static USER_STATUS_API_URL = '/um/user/update-user-status/';
+    public static USER_RESET_PASS_API_URL = '/um/user/reset-password/';
     public static CHANGE_PASSWORD_API_URL = '/user/change-password';
-    public static DEPARTMENT_API_URL = '/department/';
-    public static ROLE_API_URL = '/role/';
-    public static MODULE_API_URL = '/module/';
-    public static GROUP_API_URL = '/group/';
+    public static DEPARTMENT_API_URL = '/um/department/';
+    public static ROLE_API_URL = '/um/role/';
+    public static PERMISSIONS_API_URL = '/um/permission/';
+    public static MODULE_API_URL = '/um/module/';
+    public static GROUP_API_URL = '/um/group/';
 
 }
