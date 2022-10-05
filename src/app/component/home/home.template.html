@@ -83,12 +83,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row row-items">
                 <div class="col-12">
                     <h2 class="home-h2">Recent Documents</h2>
                 </div>
                 <ng-container *ngFor="let gridItem of recentDocs">
-                    <div class="col-sm-6 col-lg-6 col-xl-3">
+                    <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
                         <grid-item-component [gridItem]="gridItem" [menuItem]="menuItems"></grid-item-component>
                     </div>
                 </ng-container>

@@ -12,14 +12,14 @@ export class DocDataTableComponent implements OnInit {
 
     @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
-    isGridDisplay: boolean = false;
+    showGridDisplay: boolean = false;
 
     constructor(public appService: AppService, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.appService.isGridDisplaySubject.subscribe((value: boolean) => {
-            this.isGridDisplay = value;
+        this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
+            this.showGridDisplay = value;
         });
     }
 

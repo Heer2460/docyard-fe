@@ -17,11 +17,11 @@ export class ImagePreviewComponent implements OnInit {
     stared: boolean = false;
     
     constructor(public appService: AppService) {
-        this.appService.setToggleDocInfoPaneSubject(this.docInfoPane);
+        this.appService.setDocInfoPaneSubjectState(this.docInfoPane);
     }
     
     ngOnInit(): void {
-        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
+        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.docInfoPane = value;
         });
         this.setInitialProps();

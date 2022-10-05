@@ -13,29 +13,29 @@ export class AppService {
     permissions: any = [];
     userInfo: any;
 
-    public toggleMenuBSubject = new BehaviorSubject(false);
-    public toggleRightPaneSubject = new BehaviorSubject(false);
-    public toggleDocInfoPaneSubject = new BehaviorSubject(true);
-    public isGridDisplaySubject = new BehaviorSubject(false);
+    public showMenuBSubject = new BehaviorSubject(false);
+    public showRightPaneSubject = new BehaviorSubject(false);
+    public showDocInfoPaneSubject = new BehaviorSubject(true);
+    public showGridDisplaySubject = new BehaviorSubject(false);
     routes: RoutesDTO[] = [];
 
     constructor(private toastService: ToastrService, private router: Router) {
     }
 
-    setToggleMenuBSubject(state: boolean) {
-        this.toggleMenuBSubject.next(state);
+    setMenuBarSubjectState(state: boolean) {
+        this.showMenuBSubject.next(state);
     }
 
-    setToggleRightPaneSubject(state: boolean) {
-        this.toggleRightPaneSubject.next(state);
+    setRightPaneSubjectState(state: boolean) {
+        this.showRightPaneSubject.next(state);
     }
 
-    setToggleDocInfoPaneSubject(state: boolean) {
-        this.toggleDocInfoPaneSubject.next(state);
+    setDocInfoPaneSubjectState(state: boolean) {
+        this.showDocInfoPaneSubject.next(state);
     }
 
-    setGridDisplaySubject(state: boolean) {
-        this.isGridDisplaySubject.next(state);
+    setGridDisplaySubjectState(state: boolean) {
+        this.showGridDisplaySubject.next(state);
     }
 
     handleError(error: any, title: string, fromLogin?: boolean) {

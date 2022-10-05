@@ -25,14 +25,14 @@ export class DocLibComponent implements OnInit {
     visibleAddFolderDialog: boolean = false;
     visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
-    docInfoPane: boolean = false;
+    showDocInfoPane: boolean = true;
 
     constructor(public appService: AppService,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService) {
-        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.docInfoPane = value;
+        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.showDocInfoPane = value;
         });
     }
 

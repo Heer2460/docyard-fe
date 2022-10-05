@@ -14,7 +14,7 @@ export class BreadcrumbComponent implements OnInit {
     breadcrumbs: any[] = [];
     currentRouteUrl: string = '';
     titleAndDescOnly: boolean = false;
-    isGridDisplay: boolean = false;
+    showGridDisplay: boolean = false;
     breadcrumbObj: any = [
         {
             label: 'Home',
@@ -108,6 +108,9 @@ export class BreadcrumbComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
+            this.showGridDisplay = value;
+        });
     }
 
     setPageTitleAndBreadcrumb() {
@@ -137,13 +140,11 @@ export class BreadcrumbComponent implements OnInit {
     }
 
     setGridDisplay() {
-        this.isGridDisplay = true;
-        this.appService.setGridDisplaySubject(this.isGridDisplay);
+        this.appService.setGridDisplaySubjectState(true);
     }
 
     setListDisplay() {
-        this.isGridDisplay = false;
-        this.appService.setGridDisplaySubject(this.isGridDisplay);
+        this.appService.setGridDisplaySubjectState(false);
     }
 
 }

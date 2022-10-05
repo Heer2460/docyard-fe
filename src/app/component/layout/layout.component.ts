@@ -10,8 +10,8 @@ import {Router} from "@angular/router";
 export class LayoutComponent implements OnInit {
     
     toggleMenuState: boolean = false;
-    toggleRightPaneState: boolean = false;
-    docInfoPane: boolean = false;
+    showRightPane: boolean = false;
+    showDocInfoPane: boolean = true;
     
     @Input() showDisplayButtons: boolean = false;
     
@@ -20,16 +20,16 @@ export class LayoutComponent implements OnInit {
     }
     
     ngOnInit(): void {
-        this.appService.toggleMenuBSubject.subscribe((value: boolean) => {
+        this.appService.showMenuBSubject.subscribe((value: boolean) => {
             this.toggleMenuState = value;
         });
         
-        this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
-            this.toggleRightPaneState = value;
+        this.appService.showRightPaneSubject.subscribe((value: boolean) => {
+            this.showRightPane = value;
         });
         
-        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.docInfoPane = value;
+        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.showDocInfoPane = value;
         });
     }
     

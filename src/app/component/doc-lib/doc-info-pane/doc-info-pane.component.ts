@@ -8,11 +8,11 @@ import {AppService} from "../../../service/app.service";
 })
 export class DocInfoPaneComponent implements OnInit {
     
-    docInfoPane: boolean = false;
+    showDocInfoPane: boolean = true;
     toggleShowAll: boolean = false;
     constructor(public appService: AppService) {
-        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.docInfoPane = value;
+        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.showDocInfoPane = value;
         });
     }
     
@@ -20,8 +20,8 @@ export class DocInfoPaneComponent implements OnInit {
     }
     
     toggleDocInfoPane() {
-        this.docInfoPane = !this.docInfoPane;
-        this.appService.setToggleDocInfoPaneSubject(this.docInfoPane);
+        this.showDocInfoPane = !this.showDocInfoPane;
+        this.appService.setDocInfoPaneSubjectState(this.showDocInfoPane);
     }
     
     toggleShowAllAction() {

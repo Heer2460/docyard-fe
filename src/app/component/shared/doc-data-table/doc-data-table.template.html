@@ -1,15 +1,15 @@
-<ng-container *ngIf="isGridDisplay">
+<ng-container *ngIf="showGridDisplay">
     <div class="grid-view-container">
-        <div class="row">
+        <div class="row row-items">
             <ng-container *ngFor="let item of dlDocuments">
-                <div class="col-sm-6 col-lg-6 col-xl-3">
+                <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
                     <grid-item-component [gridItem]="item" [menuItem]="actionItems"></grid-item-component>
                 </div>
             </ng-container>
         </div>
     </div>
 </ng-container>
-<ng-container *ngIf="!isGridDisplay">
+<ng-container *ngIf="!showGridDisplay">
     <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
              [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
         <ng-template pTemplate="header">
@@ -46,7 +46,7 @@
                     <div class="file-types">
                         <img *ngIf="row.isFolder == false" src="./assets/images/svg/icons/{{row.extension}}.svg"
                              alt="{{row.extension}}">
-                        <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/zip.svg" alt="icon">
+                        <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
                         <ng-container [ngSwitch]="row.fileType">
                             <ng-container *ngSwitchCase="'image'">
                                 <span role="button" (click)="imageNameClickAction(row)">{{row.name}}</span>

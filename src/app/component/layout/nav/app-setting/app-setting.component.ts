@@ -39,14 +39,14 @@ export class AppSettingComponent implements OnInit {
         
         ];
         this.addUserProfileMenuItems();
-        this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
+        this.appService.showRightPaneSubject.subscribe((value: boolean) => {
             this.toggleRightPaneStatus = value;
         });
     }
     
     setToggleRightPaneState() {
         this.toggleRightPaneStatus = !this.toggleRightPaneStatus;
-        this.appService.setToggleRightPaneSubject(this.toggleRightPaneStatus);
+        this.appService.setRightPaneSubjectState(this.toggleRightPaneStatus);
     }
     
     addUserProfileMenuItems() {
