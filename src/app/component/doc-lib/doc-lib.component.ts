@@ -1,8 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
+import {ApiUrlConstants} from "../../util/api.url.constants";
+import {HttpResponse} from "@angular/common/http";
+import {RequestService} from "../../service/request.service";
 
 @Component({
     selector: 'doc-lib-component',
@@ -21,98 +24,23 @@ export class DocLibComponent implements OnInit {
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     visibleAddFileDialog: boolean = false;
-    rows: any[] = [
-        {
-            id: 1,
-            name: 'My pics',
-            updatedAt: 'Today',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
-            size: '33.3 KB',
-            stared: false,
-            selected: false,
-            fileType: 'directory',
-            fileUrl: 'optional',
-            shared: false,
-        },
-        {
-            id: 2,
-            name: 'Prototypes',
-            updatedAt: 'Jul, 10 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
-            size: '200.0 KB',
-            stared: true,
-            selected: false,
-            fileType: 'directory',
-            fileUrl: 'optional',
-            shared: true,
-        },
-        {
-            id: 3,
-            name: 'Business Requirements.docx',
-            updatedAt: '1 minute ago',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
-            size: '350.0 KB',
-            stared: false,
-            selected: false,
-            fileType: 'docx',
-            fileUrl: 'optional',
-            shared: false,
-        },
-        {
-            id: 4,
-            name: 'Object Oriented Programming.pdf',
-            updatedAt: 'Jun, 22 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
-            size: '10.0 MB',
-            stared: false,
-            selected: false,
-            fileType: 'pdf',
-            fileUrl: 'optional',
-            shared: false,
-        },
-        {
-            id: 4,
-            name: 'Glas Allt Shie.jpeg',
-            updatedAt: 'Jun, 22 2022',
-            user: {
-                userId: 1,
-                username: 'Umar Farooq'
-            },
-            size: '1.00 MB',
-            stared: false,
-            selected: false,
-            fileType: 'image',
-            fileUrl: 'https://images.unsplash.com/photo-1663163541223-2227c0bb696a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-            shared: false,
-        }
-    ];
-    docInfoPane: boolean = false;
-    files: any[] = [];
-    
+    dlDocuments: any[] = [];
+    showDocInfoPane: boolean = true;
+
     constructor(public appService: AppService,
                 private fb: FormBuilder,
-                public appUtility: AppUtility) {
-        this.appService.toggleDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.docInfoPane = value;
+                public appUtility: AppUtility,
+                private requestsService: RequestService) {
+        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
+            this.showDocInfoPane = value;
         });
     }
-    
+
     ngOnInit(): void {
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
+        this.loadDocumentLibrary("0", false);
     }
 
     buildDocumentActions() {
@@ -209,10 +137,6 @@ export class DocLibComponent implements OnInit {
     // updating
     uploadFile(event: any) {
         console.log('Single:', event.target.files[0]);
-        // if (event.target.files.length > 0) {
-        //     this.files.push(event.target.files[0]);
-        //     console.log(this.files);
-        // }
     }
 
     uploadFolder(event: any) {
@@ -221,8 +145,24 @@ export class DocLibComponent implements OnInit {
         for (let i = 0; i < event.target.files.length; i++) {
             const file = event.target.files[i];
             const path = file.webkitRelativePath.split('/');
-            // upload file using path
-            console.log('Path ', i, path);
+
         }
+    }
+
+    loadDocumentLibrary(folderId: string, archived: boolean) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_API_URL
+            .replace("{folderId}", folderId).replace("{archived}", String(archived)))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
     }
 }

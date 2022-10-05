@@ -22,14 +22,14 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <data-table-component [actionItems]="menuItems" [dataRows]="rows"></data-table-component>
+        <data-table-component [actionItems]="menuItems" [dlDocuments]="dlDocuments"></data-table-component>
     </ng-container>
     <ng-container docInfoPane>
-        <doc-info-pane-component [ngClass]="docInfoPane ? 'collapsed': ''"></doc-info-pane-component>
+        <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"></doc-info-pane-component>
     </ng-container>
-    <ng-container fileUploader>
-        <file-uploader-component ></file-uploader-component>
-    </ng-container>
+   <!-- <ng-container fileUploader>
+        <file-uploader-component></file-uploader-component>
+    </ng-container>-->
 </layout-component>
 
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">

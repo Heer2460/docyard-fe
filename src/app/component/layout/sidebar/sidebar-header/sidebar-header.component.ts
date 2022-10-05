@@ -14,14 +14,14 @@ export class SidebarHeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.appService.toggleMenuBSubject.subscribe((value: boolean) => {
+        this.appService.showMenuBSubject.subscribe((value: boolean) => {
             this.toggleMenuState = value;
         });
     }
 
     setToggleMenuState() {
         this.toggleMenuState = !this.toggleMenuState;
-        this.appService.setToggleMenuBSubject(this.toggleMenuState);
+        this.appService.setMenuBarSubjectState(this.toggleMenuState);
     }
 
 }

@@ -1,20 +1,20 @@
 <div class="file-card">
     <div class="icon-thumbnail">
-        <ng-container [ngSwitch]="gridItem.fileType">
-            <ng-container *ngSwitchCase="'directory'">
+        <ng-container>
+            <!--<ng-container *ngSwitchCase="'directory'">
                 <i *ngIf="!gridItem.shared" class="icon-folder-filled"></i>
                 <i *ngIf="gridItem.shared" class="icon-folder-shared-filled"></i>
-            </ng-container>
-            <img *ngSwitchCase="'pdf'" src="./assets/images/svg/pdf.svg" alt="pdf">
-            <img *ngSwitchCase="'docx'" src="./assets/images/svg/docx.svg" alt="docx">
-            <img *ngSwitchDefault src="{{gridItem?.fileThumbnail}}" alt="Image">
+            </ng-container>-->
+            <img *ngIf="gridItem.isFolder == false" src="./assets/images/svg/icons/{{gridItem.extension}}.svg"
+                 alt="{{gridItem.extension}}">
+            <img *ngIf="gridItem.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
         </ng-container>
     </div>
     <div class="file-details">
         <p class="title">{{gridItem?.name}}</p>
         <p class="date-and-author">
-            <span>{{gridItem?.updatedAt}} by </span>
-            <a role="button" routerLink="/link">{{gridItem?.user?.username}}</a>
+            <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
+            <a role="button" routerLink="/link">{{gridItem?.updatedByName}}</a>
         </p>
         <p class="file-size">{{gridItem?.size}}</p>
     </div>

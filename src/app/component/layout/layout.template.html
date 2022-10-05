@@ -1,9 +1,9 @@
-<div class="layout-wrapper" [ngClass]="[toggleMenuState ? 'expended' : '', toggleRightPaneState ? 'right-pane-expended' : '']">
-    <sidebar-component [ngClass]="toggleMenuState ? 'expended' : ''"></sidebar-component>
+<div class="layout-wrapper" [ngClass]="[showMenu ? 'expended' : '', showRightPane ? 'right-pane-expended' : '']">
+    <sidebar-component [ngClass]="showMenu ? 'expended' : ''"></sidebar-component>
     <div class="content-wrapper">
         <nav-component></nav-component>
         <section class="main-page-wrapper">
-            <div class="left" [ngClass]="docInfoPane ? 'collapsed' : ''">
+            <div class="left" [ngClass]="showDocInfoPane ? 'collapsed' : ''">
                 <div>
                     <header class="page-header">
                         <breadcrumb-component [showDisplayButtons]="showDisplayButtons">
@@ -24,6 +24,6 @@
             <ng-content select=[fileUploader]></ng-content>
         </section>
     </div>
-    <right-pane-component [ngClass]="toggleRightPaneState ? 'expended' : ''"></right-pane-component>
+    <right-pane-component [ngClass]="showRightPane ? 'expended' : ''"></right-pane-component>
 </div>
 

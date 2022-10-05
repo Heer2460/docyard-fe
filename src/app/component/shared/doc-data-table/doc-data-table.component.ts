@@ -9,22 +9,22 @@ import {Router} from "@angular/router";
     styleUrls: ['./doc-data-table.component.less']
 })
 export class DocDataTableComponent implements OnInit {
-    
-    @Input() dataRows: any[] = [];
+
+    @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
-    isGridDisplay: boolean = false;
-    
+    showGridDisplay: boolean = false;
+
     constructor(public appService: AppService, private router: Router) {
     }
-    
+
     ngOnInit(): void {
-        this.appService.isGridDisplaySubject.subscribe((value: boolean) => {
-            this.isGridDisplay = value;
+        this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
+            this.showGridDisplay = value;
         });
     }
-    
+
     imageNameClickAction(item: any) {
         this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
-    
+
 }

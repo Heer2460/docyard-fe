@@ -9,8 +9,8 @@ import {MenuItem} from "primeng/api";
 })
 export class NavComponent implements OnInit {
 	
-	toggleMenuState: boolean = false;
-	toggleRightPaneStatus: boolean = false;
+	showMenuBSubject: boolean = false;
+	showRightPane: boolean = false;
 	
 	@Input() showImageViewSettings: boolean = false;
 	
@@ -18,22 +18,21 @@ export class NavComponent implements OnInit {
 	}
 	
 	ngOnInit(): void {
-		this.appService.toggleMenuBSubject.subscribe((value: boolean) => {
-			this.toggleMenuState = value;
+		this.appService.showMenuBSubject.subscribe((value: boolean) => {
+			this.showMenuBSubject = value;
 		});
-		this.appService.toggleRightPaneSubject.subscribe((value: boolean) => {
-			this.toggleRightPaneStatus = value;
+		this.appService.showRightPaneSubject.subscribe((value: boolean) => {
+			this.showRightPane = value;
 		});
 	}
 	
 	setToggleMenuState() {
-		this.toggleMenuState = !this.toggleMenuState;
-		this.appService.setToggleMenuBSubject(this.toggleMenuState);
+		this.showMenuBSubject = !this.showMenuBSubject;
+		this.appService.setMenuBarSubjectState(this.showMenuBSubject);
 	}
 	
-	setToggleRightPaneState() {
-		this.toggleRightPaneStatus = !this.toggleRightPaneStatus;
-		this.appService.setToggleRightPaneSubject(this.toggleRightPaneStatus);
+	setRightPaneState() {
+		this.appService.setRightPaneSubjectState(!this.showRightPane);
 	}
 	
 }

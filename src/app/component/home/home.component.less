@@ -1,48 +1,52 @@
 @import "../../../assets/less/_vars";
 
-.card {
-	border-color: transparent;
+.home-template {
 	
-	.card-body {
-		min-height: 120px;
-		display: flex;
-		justify-content: space-between;
-		flex-direction: column;
-		padding: 15px;
+	.card {
+		border-color: transparent;
 		
-		> div {
+		.card-body {
+			min-height: 120px;
 			display: flex;
-			align-items: flex-start;
 			justify-content: space-between;
-			color: @color-white;
+			flex-direction: column;
+			padding: 15px;
 			
-			h6 {
-				font-size: 22px;
-				font-weight: 700;
-				margin: 0;
-			}
-			
-			i {
-				width: 60px;
-				height: 60px;
-				font-size: 60px;
-				line-height: 60px;
-				opacity: 50%;
-			}
-			
-		}
-		
-		p {
-			font-size: 16px;
-			color: @color-white;
-			
-			span {
+			> div {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				color: @color-white;
 				
-				&:first-child {
+				h6 {
+					font-size: 22px;
+					font-weight: 700;
+					margin: 0;
+				}
+				
+				i {
+					width: 60px;
+					height: 60px;
+					font-size: 60px;
+					line-height: 60px;
+					opacity: 50%;
+				}
+				
+			}
+			
+			p {
+				font-size: 16px;
+				color: @color-white;
+				
+				span {
 					
-					&:after {
-						content: "/";
-						margin: 0 5px;
+					&:first-child {
+						
+						&:after {
+							content: "/";
+							margin: 0 5px;
+						}
+						
 					}
 					
 				}
@@ -51,99 +55,115 @@
 			
 		}
 		
-	}
-	
-	.card-footer {
-		border-radius: 0;
-		padding: 10px 15px;
-		
-		.progress {
-			--bs-progress-height: 8px;
-			border-radius: 10px;
+		.card-footer {
+			border-radius: 0;
+			padding: 10px 15px;
 			
-			.progress-bar {
+			.progress {
+				--bs-progress-height: 8px;
 				border-radius: 10px;
-				background-color: @color-white;
+				
+				.progress-bar {
+					border-radius: 10px;
+					background-color: @color-white;
+				}
+				
+			}
+			
+		}
+		
+		&.card-aqua {
+			
+			.card-body {
+				background: linear-gradient(180deg, #3AABBB 0%, #2C8490 100%);
+			}
+			
+			.card-footer {
+				background: #13545E;
+				
+				.progress {
+					background: #349AA8;
+				}
+				
+			}
+			
+		}
+		
+		&.card-blue {
+			
+			.card-body {
+				background: linear-gradient(180deg, #3882B7 0%, #2C6790 94.68%);
+			}
+			
+			.card-footer {
+				background: #133E5E;
+				
+				.progress {
+					background: #3477A8;
+				}
+				
+			}
+			
+		}
+		
+		&.card-yellow {
+			
+			.card-body {
+				background: linear-gradient(360deg, #90862C 0%, #B7AB38 100%);
+			}
+			
+			.card-footer {
+				background: #5E5613;
+				
+				.progress {
+					background: #A89C34;
+				}
+				
+			}
+			
+		}
+		
+		&.card-red {
+			
+			.card-body {
+				background: linear-gradient(360deg, #902C2C 0%, #B73838 100%);
+			}
+			
+			.card-footer {
+				background: #5E1313;
+				
+				.progress {
+					background: #A83434;
+				}
+				
+			}
+			
+		}
+		
+		
+	}
+	
+	.home-h2 {
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+	
+	.row-items {
+		
+		.col-item {
+			
+			&:not(:nth-last-child(1)),
+			&:not(:nth-last-child(2)),
+			&:not(:nth-last-child(3)),
+			&:not(:nth-last-child(4))
+			{
+				margin-bottom: 30px;
 			}
 			
 		}
 		
 	}
 	
-	&.card-aqua {
-		
-		.card-body {
-			background: linear-gradient(180deg, #3AABBB 0%, #2C8490 100%);
-		}
-		
-		.card-footer {
-			background: #13545E;
-			
-			.progress {
-				background: #349AA8;
-			}
-			
-		}
-		
-	}
-	
-	&.card-blue {
-		
-		.card-body {
-			background: linear-gradient(180deg, #3882B7 0%, #2C6790 94.68%);
-		}
-		
-		.card-footer {
-			background: #133E5E;
-			
-			.progress {
-				background: #3477A8;
-			}
-			
-		}
-		
-	}
-	
-	&.card-yellow {
-		
-		.card-body {
-			background: linear-gradient(360deg, #90862C 0%, #B7AB38 100%);
-		}
-		
-		.card-footer {
-			background: #5E5613;
-			
-			.progress {
-				background: #A89C34;
-			}
-			
-		}
-		
-	}
-	
-	&.card-red {
-		
-		.card-body {
-			background: linear-gradient(360deg, #902C2C 0%, #B73838 100%);
-		}
-		
-		.card-footer {
-			background: #5E1313;
-			
-			.progress {
-				background: #A83434;
-			}
-			
-		}
-		
-	}
-	
-	
-}
-
-.home-h2 {
-	margin-top: 30px;
-	margin-bottom: 20px;
 }
 
 @media (-webkit-device-pixel-ratio: 1.25) {
