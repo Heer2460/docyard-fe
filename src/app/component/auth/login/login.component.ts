@@ -46,8 +46,7 @@ export class LoginComponent implements OnInit {
         if (this.loginFrom.invalid) {
             return;
         }
-        // first API
-        let url = ApiUrlConstants.OAUTH_TOKEN_API_URL + '?username=' + data.username + '&password=' + data.password + '&grant_type=password';
+        let url = ApiUrlConstants.OAUTH_TOKEN_API_URL + '?username=' + data.username + '&password=' +  this.appService.encryptUsingAES256(data.password) + '&grant_type=password';
         this.requestsService.postAccessTokenRequest(url, {})
             .subscribe({
                 next: (responseOauth: HttpResponse<any>) => {
@@ -57,8 +56,7 @@ export class LoginComponent implements OnInit {
                             localStorage.setItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN), responseOauth.body.refresh_token);
                             localStorage.setItem(window.btoa(AppConstants.AUTH_EXPIRES_IN), responseOauth.body.expires_in);
 
-                            // second API
-                            this.requestsService.postRequest(ApiUrlConstants.SIGN_IN_API_URL + '/' + data.username, {})
+                            this.requestsService.postSignInRequest(ApiUrlConstants.SIGN_IN_API_URL + '/' + data.username, {})
                                 .subscribe({
                                     next: (responseLogin: any) => {
                                         if (responseLogin.status === 200) {

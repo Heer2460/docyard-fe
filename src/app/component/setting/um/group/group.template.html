@@ -174,9 +174,13 @@
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                    <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
-                                  appendTo="body" [filter]="true"></p-multiSelect>
+                                  [showClear]="true" appendTo="body" filterBy="name" placeholder="Select role"
+                                  [filter]="true"></p-multiSelect>
                     <label >Roles</label>
                 </span>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'role', 'role', 'required')">
+                    {{ appUtility.makeErrorMessage("Role", 'required') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">

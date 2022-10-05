@@ -4,7 +4,6 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {RoutesDTO} from "../model/routes.dto";
 import {RoleActionConstants} from "../util/role.actions.constants";
-import {AppConstants} from "../util/app.constants";
 
 @Injectable({
     providedIn: 'root'
