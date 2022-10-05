@@ -9,8 +9,8 @@ export class ApiUrlConstants {
 
     // User management API URL
     public static USER_API_URL = '/user/';
-    public static FORGOT_PASSWORD_API_URL = '/user/forgot-password'
-    public static UPLOAD_IMAGE_API_URL = '/user/profile-picture'
+    public static FORGOT_PASSWORD_API_URL = '/user/forgot-password';
+    public static UPLOAD_IMAGE_API_URL = '/user/profile-picture';
     public static USER_STATUS_API_URL = '/user/update-user-status/';
     public static USER_RESET_PASS_API_URL = '/user/reset-password/';
     public static CHANGE_PASSWORD_API_URL = '/user/change-password';
