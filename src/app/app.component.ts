@@ -5,6 +5,7 @@ import {AppUtility} from "./util/app.utility";
 import {environment} from "../environments/environment";
 import {getMessaging, getToken} from "firebase/messaging";
 import {ToastrService} from "ngx-toastr";
+import {AppConstants} from "./util/app.constants";
 
 @Component({
     selector: 'app-component',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
                 public appUtility: AppUtility,
                 private toastService: ToastrService) {
 
-        let menu: any = localStorage.getItem(window.btoa('permissions'));
+        let menu: any = localStorage.getItem(window.btoa(AppConstants.AUTH_PERMISSIONS));
         this.appService.permissions = JSON.parse(menu);
         this.appUtility.setRoles(this.appService.permissions);
 
