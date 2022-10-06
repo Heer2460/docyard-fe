@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{row.code}}</td>
                     <td>{{row.name}}</td>
-                    <td>{{row.rolesNameList}}</td>
+                    <td>{{row.rolesNameList.join(', ')}}</td>
                     <td>{{row.status}}</td>
                     <td>
                         <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
