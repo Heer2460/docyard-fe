@@ -23,12 +23,10 @@
     </ng-container>
     <ng-container pageBody>
         <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments" (folderEvent)="receiveDirID($event)">
-
         </data-table-component>
-
     </ng-container>
     <ng-container docInfoPane>
-        <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"  [selectedDocId]="docDataTable?.selectedDocumentId"></doc-info-pane-component>
+        <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"  [selectedDocId]="docDataTableComponent?.selectedDocumentId"></doc-info-pane-component>
     </ng-container>
     <!-- <ng-container fileUploader>
          <file-uploader-component></file-uploader-component>

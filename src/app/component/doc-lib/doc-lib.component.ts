@@ -18,7 +18,7 @@ export class DocLibComponent implements OnInit {
 
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
-    @ViewChild('docDataTableComponent') docDataTable: DocDataTableComponent | undefined;
+    @ViewChild('docDataTableComponent') docDataTableComponent: DocDataTableComponent | undefined;
 
     addFolderForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
