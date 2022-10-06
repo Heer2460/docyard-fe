@@ -13,9 +13,12 @@ export class DocDataTableComponent implements OnInit {
     
     @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
+    @Output() openFolderEmitter = new EventEmitter<number>();
+    
     showGridDisplay: boolean = false;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     selectedDocumentId: any = 0;
+    
     breadcrumbs: any[] = [];
     
     constructor(public appService: AppService, private router: Router) {
@@ -38,22 +41,22 @@ export class DocDataTableComponent implements OnInit {
         console.log(item);
     }
     
-    getChildDirectory(rowData: any) {
+    openFolder(rowData: any) {
         const lastBreadcrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
+    
+        this.openFolderEmitter.emit(rowData.id);
         
-        if (lastBreadcrumb.id != rowData.id) {
-            this.appService.setCurrentFolderIdSubjectState(rowData.id)
-            lastBreadcrumb.active = false;
-            this.appService.setBreadcrumbSubjectState([
-                ...this.breadcrumbs,
-                {
-                    id: rowData.id,
-                    label: rowData.title,
-                    active: true
-                }
-            ])
-            this.selectedDocumentId = rowData.id;
-        }
+        lastBreadcrumb.active = false;
+        this.appService.setBreadcrumbSubjectState([
+            ...this.breadcrumbs,
+            {
+                id: rowData.id,
+                label: rowData.title,
+                active: true
+            }
+        ]);
+        
+        this.selectedDocumentId = rowData.id;
         
     }
 }

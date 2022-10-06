@@ -158,8 +158,9 @@ export class BreadcrumbComponent implements OnInit {
     
     navigateToRoute(breadcrumb: BreadcrumbDTO) {
         if (breadcrumb.id) {
-        
+            this.appService.setCurrentFolderIdSubjectState(breadcrumb.id);
         } else {
+            this.appService.setCurrentFolderIdSubjectState(0);
             this.router.navigate([breadcrumb.route]);
         }
     }

@@ -57,7 +57,7 @@
 
 
                         <ng-container *ngIf="row.isFolder == true; else elseCase">
-                            <span role="button" (click)="getChildDirectory(row)">{{row.name}}</span>
+                            <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                         </ng-container>
                         <ng-template #elseCase>
                             <span role="button">{{row.name}}</span>

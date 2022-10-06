@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -16,11 +16,11 @@ import {AppConstants} from "../../util/app.constants";
     styleUrls: ['./doc-lib.component.less']
 })
 export class DocLibComponent implements OnInit {
-
+    
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
     @ViewChild('docDataTableComponent') docDataTableComponent: DocDataTableComponent | undefined;
-
+    
     addFolderForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
     menuItems: MenuItem[] = [];
@@ -30,7 +30,7 @@ export class DocLibComponent implements OnInit {
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
-
+    
     constructor(public appService: AppService,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
@@ -38,23 +38,16 @@ export class DocLibComponent implements OnInit {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
-        this.appService.currentFolderIdSubject.subscribe((id: any) => {
-            if(id) {
-                // this.dirId = id;
-                // if (this.dirId) {
-                //     this.loadDocumentLibrary(this.dirId, false);
-                // }
-            }
-        });
+        this.openFolder();
     }
-
+    
     ngOnInit(): void {
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
         this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
     }
-
+    
     buildDocumentActions() {
         this.menuItems = [
             {
@@ -83,7 +76,7 @@ export class DocLibComponent implements OnInit {
             }
         ];
     }
-
+    
     buildOptionItems() {
         this.createMenuItems = [
             {
@@ -110,7 +103,7 @@ export class DocLibComponent implements OnInit {
             }
         ];
     }
-
+    
     buildForms() {
         this.addFolderForm = this.fb.group({
             name: [null, [Validators.required, Validators.maxLength(17)]],
@@ -119,7 +112,7 @@ export class DocLibComponent implements OnInit {
             name: [null, [Validators.required, Validators.maxLength(17)]],
         });
     }
-
+    
     // creating
     showAddFolderPopup() {
         this.addFolderForm.patchValue({
@@ -128,38 +121,26 @@ export class DocLibComponent implements OnInit {
         this.addFolderForm.markAsUntouched();
         this.visibleAddFolderDialog = true;
     }
-
+    
     hideAddFolderPopup() {
         this.visibleAddFolderDialog = false;
     }
-
-    /*showAddFilePopup() {
-        this.addFileForm.patchValue({
-            name: '',
-        });
-        this.addFileForm.markAsUntouched();
-        this.visibleAddFileDialog = true;
-    }
-
-    hideAddFilePopup() {
-        this.visibleAddFileDialog = false;
-    }*/
-
+    
     // updating
     uploadFile(event: any) {
         console.log('Single:', event.target.files[0]);
     }
-
+    
     uploadFolder(event: any) {
         console.log('Dir: ', event.target.files);
-
+        
         for (let i = 0; i < event.target.files.length; i++) {
             const file = event.target.files[i];
             const path = file.webkitRelativePath.split('/');
-
+            
         }
     }
-
+    
     loadDocumentLibrary(folderId: string, archived: boolean) {
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_API_URL
             .replace("{folderId}", folderId).replace("{archived}", String(archived)))
@@ -176,7 +157,7 @@ export class DocLibComponent implements OnInit {
                 }
             });
     }
-
+    
     createFolder() {
         if (this.addFolderForm.invalid) {
             return;
@@ -184,7 +165,7 @@ export class DocLibComponent implements OnInit {
         let dlDocumentDTO: DlDocumentDTO = new DlDocumentDTO();
         dlDocumentDTO.convertToDTO(this.addFolderForm.value);
         dlDocumentDTO.parentId = this.appService.getSelectedFolderId() == '0' ? null : this.appService.getSelectedFolderId();
-
+        
         if (dlDocumentDTO) {
             this.requestsService.postRequest(ApiUrlConstants.CREATE_FOLDER_API_URL, dlDocumentDTO)
                 .subscribe({
@@ -201,13 +182,14 @@ export class DocLibComponent implements OnInit {
                 });
         }
     }
-
-    openFolder(event: any) {
-        let dlFolderId = event;
-        if (dlFolderId) {
-            this.loadDocumentLibrary(dlFolderId, false);
-            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
-        }
+    
+    openFolder() {
+        this.appService.currentFolderIdSubject.subscribe((dlFolderId: any) => {
+            if (dlFolderId != '') {
+                this.loadDocumentLibrary(dlFolderId, false);
+                localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
+            }
+        });
     }
     
 }
