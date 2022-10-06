@@ -6,6 +6,7 @@ import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
+import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.component";
 
 @Component({
     selector: 'doc-lib-component',
@@ -16,6 +17,7 @@ export class DocLibComponent implements OnInit {
 
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
+    @ViewChild('docDataTableComponent') docDataTable: DocDataTableComponent | undefined;
 
     addFolderForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});

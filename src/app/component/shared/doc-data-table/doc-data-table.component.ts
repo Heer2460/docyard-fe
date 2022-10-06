@@ -13,6 +13,7 @@ export class DocDataTableComponent implements OnInit {
     @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
     showGridDisplay: boolean = false;
+    selectedDocumentId: any = 0;
 
     constructor(public appService: AppService, private router: Router) {
     }
@@ -26,5 +27,7 @@ export class DocDataTableComponent implements OnInit {
     imageNameClickAction(item: any) {
         this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
-
+    setDocumentId(id:any){
+        this.selectedDocumentId = id;
+    }
 }

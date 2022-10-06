@@ -52,7 +52,7 @@
                                 <span role="button" (click)="imageNameClickAction(row)">{{row.name}}</span>
                             </ng-container>
                             <ng-container *ngSwitchDefault>
-                                <span role="button">{{row.name}}</span>
+                                <span role="button" (click)="setDocumentId(row.id)">{{row.name}}</span>
                             </ng-container>
                         </ng-container>
                     </div>
