@@ -153,10 +153,6 @@ export class AppService {
     }
 
     public getSelectedFolderId(): any {
-        let rawSelectedFolderId = localStorage.getItem(btoa(AppConstants.SELECTED_FOLDER_ID)) + '';
-        if (rawSelectedFolderId == null || rawSelectedFolderId == 'null') {
-            return null;
-        }
-        return Number.parseInt(rawSelectedFolderId);
+        return Number.parseInt(localStorage.getItem(btoa(AppConstants.SELECTED_FOLDER_ID)) + '');
     }
 }
