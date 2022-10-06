@@ -140,7 +140,7 @@
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
-                    <label>Code</label>
+                    <label class="required">Code</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'code', 'code', 'required')">
                     {{ appUtility.makeErrorMessage('Code', 'required') }}
@@ -152,7 +152,7 @@
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="name" placeholder="Name" type="text">
-                    <label>Name</label>
+                    <label class="required">Name</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'name', 'name', 'required')">
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
@@ -176,7 +176,7 @@
                    <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
                                   [showClear]="true" appendTo="body" filterBy="name" placeholder="Select role"
                                   [filter]="true"></p-multiSelect>
-                    <label >Roles</label>
+                    <label class="required">Roles</label>
                 </span>
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'role', 'role', 'required')">
                     {{ appUtility.makeErrorMessage("Role", 'required') }}
@@ -209,7 +209,7 @@
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
-                    <label>Code</label>
+                    <label class="required">Code</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(updateGroupForm, 'code', 'code', 'required')">
                     {{ appUtility.makeErrorMessage('Code', 'required') }}
@@ -221,7 +221,7 @@
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="name" placeholder="Name" type="text">
-                    <label>Name</label>
+                    <label class="required">Name</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'required')">
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
@@ -229,13 +229,6 @@
                 <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                 </small>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
-                    </p-dropdown>
-                    <label for="status">Status</label>
-                </div>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -251,8 +244,15 @@
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                    <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
                                   appendTo="body" [filter]="true"></p-multiSelect>
-                    <label >Roles</label>
+                    <label class="required">Roles</label>
                 </span>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="p-float-label">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
+                    </p-dropdown>
+                    <label>Status</label>
+                </div>
             </div>
         </div>
     </form>

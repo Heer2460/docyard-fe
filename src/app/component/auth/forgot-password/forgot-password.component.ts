@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../../../service/app.service";
 import {ToastrService} from "ngx-toastr";
@@ -7,7 +6,6 @@ import {RequestService} from "../../../service/request.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {AppUtility} from "../../../util/app.utility";
-import {UserDTO} from "../../../model/settings/um/user/user.dto";
 
 @Component({
     selector: 'forgot-password-component',
