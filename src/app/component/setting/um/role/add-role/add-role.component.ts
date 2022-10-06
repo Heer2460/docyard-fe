@@ -112,10 +112,6 @@ export class AddRoleComponent implements OnInit {
                 });
             }
         });
-        if (permissionsArray.length < 1) {
-            this.toastService.error('Select permission', 'Permission');
-            return;
-        }
         this.addRoleForm.get('moduleActionList')?.patchValue(permissionsArray);
         let roleDTO: RoleDTO = new RoleDTO();
         roleDTO = roleDTO.convertToNewDTO(this.addRoleForm.value);

@@ -6,6 +6,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { NotificationComponent } from './notification/notification.component';
 import {DialogModule} from "primeng/dialog";
 import {AppSettingComponent} from "./app-setting/app-setting.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -23,7 +24,8 @@ import {AppSettingComponent} from "./app-setting/app-setting.component";
     imports: [
         CommonModule,
         TieredMenuModule,
-        DialogModule
+        DialogModule,
+        ReactiveFormsModule
     ]
 })
 export class NavModule { }

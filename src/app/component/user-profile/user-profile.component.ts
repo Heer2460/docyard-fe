@@ -12,6 +12,7 @@ import {AppUtility} from "../../util/app.utility";
 import {ToastrService} from "ngx-toastr";
 import {GroupDTO} from "../../model/settings/um/group/group.dto";
 import {CustomValidations} from "../../util/custom.validations";
+import {AppConstants} from "../../util/app.constants";
 
 
 @Component({
@@ -32,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     url = '';
     profileImage: any = null;
     profilePicture: any;
+    userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
 
 
     constructor(private router: Router,
@@ -43,11 +45,11 @@ export class UserProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getUserById(10);
+        this.getUserById(this.userId);
         this.buildForms();
     }
 
-    getUserById(id: 10) {
+    getUserById(id: any) {
         this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + id)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
@@ -66,8 +68,10 @@ export class UserProfileComponent implements OnInit {
     showChangePasswordPopup() {
         this.changePasswordForm.patchValue({
             currentPassword: '',
-            newPassword: '',
-            confirmPassword: '',
+            passwords: {
+                password: '',
+                confirmPassword: ''
+            }
         });
         this.changePasswordForm.markAsUntouched();
         this.visibleChangePasswordDialog = true;
@@ -76,17 +80,18 @@ export class UserProfileComponent implements OnInit {
     hideChangePasswordPopup() {
         this.changePasswordForm.patchValue({
             currentPassword: '',
-            newPassword: '',
-            confirmPassword: '',
+            passwords: {
+                password: '',
+                confirmPassword: ''
+            }
         });
         this.changePasswordForm.markAsUntouched();
         this.visibleChangePasswordDialog = false;
     }
 
-
     buildForms() {
         this.changePasswordForm = this.fb.group({
-            userId: [10],
+            userId: [this.userId],
             profilePicture: [''],
             currentPassword: [null, [Validators.required, Validators.maxLength(32)]],
             passwords: this.fb.group({
@@ -99,7 +104,7 @@ export class UserProfileComponent implements OnInit {
 
     changePassword() {
         let data = {
-            userId: 10,
+            userId: this.userId,
             currentPassword: this.appService.encryptUsingAES256(this.changePasswordForm.value.currentPassword),
             newPassword: this.appService.encryptUsingAES256(this.changePasswordForm.value.passwords.password)
         };
@@ -107,12 +112,12 @@ export class UserProfileComponent implements OnInit {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        this.appService.successAddMessage('Group');
+                        this.toastService.success(response.body.message, 'Change Password')
                         this.hideChangePasswordPopup();
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Group');
+                    this.appService.handleError(error, 'Change Password');
                 }
             });
     }
@@ -120,7 +125,7 @@ export class UserProfileComponent implements OnInit {
     updateProfileImg(event: any) {
         if (event.target.files.length > 0) {
             let data = {
-                id: 10,
+                id: this.userId,
             };
             let obj = {
                 type: 'profilePicture',
@@ -134,11 +139,10 @@ export class UserProfileComponent implements OnInit {
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successMessage('Image');
-                            // this.toastService.error('Image update successfully.');
+                            this.appService.successMessage('Change Profile');
                         }
                     }, error: (error: any) => {
-                        this.appService.handleError(error, 'User');
+                        this.appService.handleError(error, 'Change Profile');
                     }
                 });
         }
