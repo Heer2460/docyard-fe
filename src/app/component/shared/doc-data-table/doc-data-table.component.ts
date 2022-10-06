@@ -10,23 +10,26 @@ import {AppConstants} from "../../../util/app.constants";
     styleUrls: ['./doc-data-table.component.less']
 })
 export class DocDataTableComponent implements OnInit {
-
+    
     @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
-    @Output() folderEvent = new EventEmitter<any>();
     showGridDisplay: boolean = false;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     selectedDocumentId: any = 0;
-
+    breadcrumbs: any[] = [];
+    
     constructor(public appService: AppService, private router: Router) {
     }
-
+    
     ngOnInit(): void {
         this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
             this.showGridDisplay = value;
         });
+        this.appService.breadcrumbsSubject.subscribe((breadcrumbs: any[]) => {
+            this.breadcrumbs = breadcrumbs;
+        })
     }
-
+    
     imageNameClickAction(item: any) {
         this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
@@ -34,12 +37,23 @@ export class DocDataTableComponent implements OnInit {
     itemNameClickAction(item: any) {
         console.log(item);
     }
-
+    
     getChildDirectory(rowData: any) {
-        console.log(this.dlDocuments);
-        console.log(rowData);
-        this.selectedDocumentId = rowData.id;
-        this.folderEvent.emit(rowData.id);
-
+        const lastBreadcrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
+        
+        if (lastBreadcrumb.id != rowData.id) {
+            this.appService.setCurrentFolderIdSubjectState(rowData.id)
+            lastBreadcrumb.active = false;
+            this.appService.setBreadcrumbSubjectState([
+                ...this.breadcrumbs,
+                {
+                    id: rowData.id,
+                    label: rowData.title,
+                    active: true
+                }
+            ])
+            this.selectedDocumentId = rowData.id;
+        }
+        
     }
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {BehaviorSubject} from "rxjs";
+import {BreadcrumbDTO} from "../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'breadcrumb-component',
@@ -9,14 +10,14 @@ import {BehaviorSubject} from "rxjs";
     styleUrls: ['./breadcrumb.component.less']
 })
 export class BreadcrumbComponent implements OnInit {
-
+    
     title: string = '';
     description: string = '';
     breadcrumbs: any[] = [];
     currentRouteUrl: string = '';
     titleAndDescOnly: boolean = false;
     showGridDisplay: boolean = false;
-    breadcrumbObj: any = [
+    breadcrumbObj: BreadcrumbDTO[] = [
         {
             label: 'Home',
             route: '/home',
@@ -96,9 +97,9 @@ export class BreadcrumbComponent implements OnInit {
             active: false,
         },
     ];
-
+    
     @Input() showDisplayButtons: boolean = false;
-
+    
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
             if (route instanceof NavigationEnd) {
@@ -107,21 +108,21 @@ export class BreadcrumbComponent implements OnInit {
             }
         });
     }
-
+    
     ngOnInit(): void {
         this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
             this.showGridDisplay = value;
         });
-    
+        
         this.appService.breadcrumbsSubject.subscribe((value: any[]) => {
             this.breadcrumbs = value;
         });
     }
-
+    
     setPageTitleAndBreadcrumb() {
         const routesArray = this.currentRouteUrl.split('/');
         let breadcrumbs: any[] = [];
-
+        
         if (this.currentRouteUrl == '/home') {
             this.title = this.breadcrumbObj[0].label;
             this.description = 'Hello User, Welcome back!';
@@ -137,22 +138,30 @@ export class BreadcrumbComponent implements OnInit {
                     breadcrumbs.push(breadcrumbItem);
                 }
             }
-
+            
             breadcrumbs = [this.breadcrumbObj[0], ...breadcrumbs];
             this.title = breadcrumbs[breadcrumbs.length - 1].label;
             breadcrumbs[breadcrumbs.length - 1].active = true;
         }
         
         this.appService.setBreadcrumbSubjectState(breadcrumbs);
-
+        
     }
-
+    
     setGridDisplay() {
         this.appService.setGridDisplaySubjectState(true);
     }
-
+    
     setListDisplay() {
         this.appService.setGridDisplaySubjectState(false);
     }
-
+    
+    navigateToRoute(breadcrumb: BreadcrumbDTO) {
+        if (breadcrumb.id) {
+        
+        } else {
+            this.router.navigate([breadcrumb.route]);
+        }
+    }
+    
 }

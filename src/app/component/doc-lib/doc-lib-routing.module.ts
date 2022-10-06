@@ -4,7 +4,7 @@ import {DocLibComponent} from "./doc-lib.component";
 
 const routes: Routes = [
     {
-        path: '',
+        path: '**',
         component: DocLibComponent
     },
     {

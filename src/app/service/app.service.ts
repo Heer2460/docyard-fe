@@ -19,6 +19,7 @@ export class AppService {
     public showDocInfoPaneSubject = new BehaviorSubject(true);
     public showGridDisplaySubject = new BehaviorSubject(false);
     public breadcrumbsSubject: any = new BehaviorSubject([]);
+    public currentFolderIdSubject: any = new BehaviorSubject(null);
     
     routes: RoutesDTO[] = [];
 
@@ -44,6 +45,10 @@ export class AppService {
     
     setBreadcrumbSubjectState(breadcrumbs: any[]) {
         this.breadcrumbsSubject.next(breadcrumbs);
+    }
+    
+    setCurrentFolderIdSubjectState(id: number) {
+        this.currentFolderIdSubject.next(id);
     }
     
     handleError(error: any, title: string, fromLogin?: boolean) {

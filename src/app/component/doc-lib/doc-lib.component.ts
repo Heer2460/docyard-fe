@@ -38,6 +38,14 @@ export class DocLibComponent implements OnInit {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
+        this.appService.currentFolderIdSubject.subscribe((id: any) => {
+            if(id) {
+                this.dirId = id;
+                if (this.dirId) {
+                    this.loadDocumentLibrary(this.dirId, false);
+                }
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -193,11 +201,5 @@ export class DocLibComponent implements OnInit {
                 });
         }
     }
-
-    receiveDirID(event: any) {
-        this.dirId = event;
-        if (this.dirId) {
-            this.loadDocumentLibrary(this.dirId, false);
-        }
-    }
+    
 }

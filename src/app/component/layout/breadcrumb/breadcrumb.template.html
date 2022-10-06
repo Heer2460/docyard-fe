@@ -22,7 +22,7 @@
                 <ol class="breadcrumb">
                     <ng-container *ngFor="let breadcrumb of breadcrumbs; let lastIndex = last;">
                         <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
-                            <a type="button" [routerLink]="breadcrumb.route">
+                            <a type="button" (click)="navigateToRoute(breadcrumb)">
                                 {{breadcrumb.label}}
                             </a>
                         </li>
