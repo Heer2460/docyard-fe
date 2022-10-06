@@ -9,48 +9,53 @@
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-properties"></i>
-                    <span>Properties</span>
+                    <span>Properties  ({{selectedDocId}})</span>
                 </div>
             </ng-template>
             <ng-template pTemplate="content">
                 <table class="table">
                     <tbody>
                     <tr>
+                        <th>Title</th>
+                        <td>{{paneData?.title}}</td>
+                    </tr>
+                    <tr>
                         <th>Saved in</th>
-                        <td>home/document library</td>
+                        <td>{{paneData?.savedIn}}</td>
                     </tr>
                     <tr>
                         <th>Size</th>
-                        <td>200 KB</td>
+                        <td>{{paneData?.size}}</td>
                     </tr>
                     <tr>
                         <th>Modified</th>
-                        <td>19/4/2022 6:18 pm</td>
+                        <td>{{paneData?.updatedOn}}</td>
                     </tr>
                     <tr>
                         <th>Type</th>
-                        <td>Directory</td>
+                        <td>{{paneData?.extention}}</td>
                     </tr>
                     <tr>
                         <th>Description</th>
-                        <td>Personal folder</td>
+                        <td>{{paneData?.description}}</td>
                     </tr>
                     <tr>
-                        <th>Copyright</th>
-                        <td>Copyright (c) 2022 Infotech/Lahore No use without permission.</td>
+                        <th>Current Version</th>
+                        <td>{{paneData?.currentVersion}}</td>
                     </tr>
-                    <tr>
-                        <th>Keywords</th>
-                        <td>Family, Pictures, Photos</td>
-                    </tr>
+
                     <ng-container *ngIf="showAll">
                         <tr>
-                            <th>Property 1</th>
-                            <td>description</td>
+                            <th>Copyright</th>
+                            <td>Copyright (c) 2022 Infotech/Lahore No use without permission.</td>
                         </tr>
                         <tr>
-                            <th>Property 2</th>
-                            <td>description</td>
+                            <th>Last Updated By</th>
+                            <td>{{paneData?.updatedByName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created By</th>
+                            <td>{{paneData?.createdByName}}</td>
                         </tr>
                     </ng-container>
                     <tr>

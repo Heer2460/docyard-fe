@@ -16,6 +16,7 @@ export class DocDataTableComponent implements OnInit {
     @Output() folderEvent = new EventEmitter<any>();
     showGridDisplay: boolean = false;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
+    selectedDocumentId: any = 0;
 
     constructor(public appService: AppService, private router: Router) {
     }
@@ -37,6 +38,8 @@ export class DocDataTableComponent implements OnInit {
     getChildDirectory(rowData: any) {
         console.log(this.dlDocuments);
         console.log(rowData);
+        this.selectedDocumentId = rowData.id;
         this.folderEvent.emit(rowData.id);
+
     }
 }
