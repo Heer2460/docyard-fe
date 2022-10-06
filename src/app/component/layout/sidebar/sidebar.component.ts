@@ -10,28 +10,28 @@ import {AppRouteConstants} from "../../../util/app.route.constants";
     styleUrls: ['./sidebar.component.less']
 })
 export class SidebarComponent implements OnInit {
-
+    
     routes: RoutesDTO[] = [];
     currentRoute: string = '';
     menus: RoutesDTO[] = [];
-
+    
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
-            if(route instanceof NavigationEnd) {
+            if (route instanceof NavigationEnd) {
                 this.currentRoute = route.url;
                 this.switchRouteTypes();
             }
         });
     }
-
+    
     ngOnInit(): void {
         this.setActiveRoute();
     }
-
+    
     setActiveRoute() {
         this.setCurrentRoute(null, this.routes, this.currentRoute);
     }
-
+    
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
             
@@ -40,81 +40,74 @@ export class SidebarComponent implements OnInit {
             route.expended = false;
             
             //Expending all parents of current child
-            if(parent) {
+            if (parent) {
                 
-                if(currentRouteUrl.includes(parent.route)) {
+                if (currentRouteUrl.includes(parent.route)) {
                     parent.active = true;
                     parent.expended = true;
                 }
                 
             }
-    
+            
             if (route?.children?.length > 0) {
                 const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
                 if (routes) {
                     return routes;
                 }
-            }else {
-    
+            } else {
+                
                 if (currentRouteUrl.includes(route.route)) {
-    
+                    
                     route.active = true;
                     return route;
-        
+                    
                 }
                 
             }
-    
+            
         });
     }
-
+    
     toggleDropdown(route: any) {
         this.routes.map((route: any) => {
             route.expended = false;
         });
         route.expended = !route.expended;
     }
-
+    
     switchRouteTypes() {
-        this.routes = [];
-        this.routes = AppRouteConstants.mainRoutes;
-        this.routes.forEach((items: any, index: number) => {
-            if (items.label.includes('Setting')) {
-                this.routes.splice(index, 1);
+        
+        const mappedMenu = this.appService.permissions.map((item: any, index: number) => {
+            return {
+                label: item.name,
+                route: item.route,
+                icon: item.icon,
+                expended: false,
+                active: false,
+                children: item.children.map((child: any, index: number) => {
+                    return {
+                        label: child.name,
+                        route: child.route,
+                        icon: child.icon,
+                        expended: false,
+                        active: false,
+                    };
+                }),
             }
         });
-        if (this.appService.permissions) {
-            let menu = {
+    
+        this.routes = [
+            ...AppRouteConstants.mainRoutes,
+            {
                 label: 'Setting',
                 route: '/setting',
                 icon: 'icon-cog',
                 expended: false,
                 active: false,
-                children: <any>[],
-            };
-            this.appService.permissions.forEach((item: any) => {
-                let parentObj = {
-                    label: item.name,
-                    route: item.route,
-                    icon: item.icon,
-                    expended: false,
-                    active: false,
-                    children: <any>[],
-                };
-                menu.children.push(parentObj);
-                item.children.forEach((subMenu: any) => {
-                    let childObj = {
-                        label: subMenu.name,
-                        route: subMenu.route,
-                        icon: subMenu.icon,
-                        expended: false,
-                        active: false,
-                    };
-                    parentObj.children.push(childObj);
-                });
-            });
-            this.routes.push(menu);
-        }
+                children: mappedMenu
+            }
+        ]
+        
     }
-
+    
 }
