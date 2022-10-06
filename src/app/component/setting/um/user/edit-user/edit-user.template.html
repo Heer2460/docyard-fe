@@ -7,7 +7,7 @@
                     <div class="col-3 mb-3">
                         <div class="form-floating">
                             <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
-                            <label for="name">Name</label>
+                            <label for="name" class="required">Name</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'required')">
                                 {{ appUtility.makeErrorMessage("Name", 'required') }}
                             </small>
@@ -27,7 +27,7 @@
                         <div class="form-floating">
                             <input class="form-control" formControlName="email" id="email" placeholder="Email"
                                    type="email">
-                            <label for="email">Email</label>
+                            <label for="email" class="required">Email</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'required')">
                                 {{ appUtility.makeErrorMessage("Email", 'required') }}
                             </small>
@@ -100,7 +100,7 @@
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
                                         optionLabel="name" optionValue="id"  placeholder="Select group"></p-dropdown>
-                            <label for="groupId">Group</label>
+                            <label for="groupId" class="required">Group</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
                             </small>

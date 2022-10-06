@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
                 public appUtility: AppUtility,
                 private toastService: ToastrService) {
 
+        let userObj: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
+        this.appService.userInfo = JSON.parse(userObj);
+
         let menu: any = localStorage.getItem(window.btoa(AppConstants.AUTH_PERMISSIONS));
         this.appService.permissions = JSON.parse(menu);
         this.appUtility.setRoles(this.appService.permissions);

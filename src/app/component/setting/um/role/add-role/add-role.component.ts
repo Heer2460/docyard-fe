@@ -10,6 +10,7 @@ import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'add-role-component',
@@ -25,7 +26,8 @@ export class AddRoleComponent implements OnInit {
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,
-                private appService: AppService, public appUtility: AppUtility) {
+                private appService: AppService, public appUtility: AppUtility,
+                private toastService: ToastrService,) {
     }
 
     ngOnInit(): void {

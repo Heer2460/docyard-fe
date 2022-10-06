@@ -22,14 +22,17 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments"></data-table-component>
+        <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments" (folderEvent)="receiveDirID($event)">
+
+        </data-table-component>
+
     </ng-container>
     <ng-container docInfoPane>
         <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"  [selectedDocId]="docDataTable?.selectedDocumentId"></doc-info-pane-component>
     </ng-container>
-   <!-- <ng-container fileUploader>
-        <file-uploader-component></file-uploader-component>
-    </ng-container>-->
+    <!-- <ng-container fileUploader>
+         <file-uploader-component></file-uploader-component>
+     </ng-container>-->
 </layout-component>
 
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
@@ -57,10 +60,13 @@
     </form>
     <ng-template pTemplate="footer">
         <button class="btn btn-sm btn-danger me-2" (click)="hideAddFolderPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid">Create</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid"
+                (click)="createFolder()">
+            Create
+        </button>
     </ng-template>
 </p-dialog>
-<p-dialog [(visible)]="visibleAddFileDialog" [modal]="true" styleClass="">
+<!--<p-dialog [(visible)]="visibleAddFileDialog" [modal]="true" styleClass="">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
@@ -87,8 +93,7 @@
         <button class="btn btn-sm btn-danger me-2" (click)="hideAddFilePopup()">Cancel</button>
         <button class="btn btn-sm btn-primary" type="button" [disabled]="addFileForm.invalid">Create</button>
     </ng-template>
-</p-dialog>
-
+</p-dialog>-->
 
 <ng-container>
     <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file"

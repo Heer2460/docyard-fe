@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {AppConstants} from "../util/app.constants";
+import {BaseDTO} from "../model/base.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -75,6 +76,10 @@ export class RequestService {
 
     postRequest(url: any, params: any) {
         let headers = this.getBasicHeaders();
+        if (params instanceof BaseDTO) {
+            params.createdBy = this.getLoggedInUserId();
+            params.updatedBy = this.getLoggedInUserId();
+        }
         return this.http.post(this.getBEAPIServer() + url, params, {headers: headers, observe: 'response'});
     }
 
@@ -94,6 +99,10 @@ export class RequestService {
 
     putRequest(url: any, params?: any) {
         let headers = this.getBasicHeaders();
+        if (params instanceof BaseDTO) {
+            params.createdBy = this.getLoggedInUserId();
+            params.updatedBy = this.getLoggedInUserId();
+        }
         return this.http.put(this.getBEAPIServer() + url, params, {headers: headers, observe: 'response'});
     }
 
@@ -113,11 +122,19 @@ export class RequestService {
 
     patchRequest(url: any, params?: any) {
         let headers = this.getBasicHeaders();
+        if (params instanceof BaseDTO) {
+            params.createdBy = this.getLoggedInUserId();
+            params.updatedBy = this.getLoggedInUserId();
+        }
         return this.http.patch(this.getBEAPIServer() + url, params, {headers: headers, observe: 'response'});
     }
 
     deleteRequest(url: any) {
         let headers = this.getBasicHeaders();
         return this.http.delete(this.getBEAPIServer() + url, {headers: headers, observe: 'response'});
+    }
+
+    public getLoggedInUserId(): number {
+        return Number.parseInt(localStorage.getItem(btoa('loggedInUserId')) + '');
     }
 }

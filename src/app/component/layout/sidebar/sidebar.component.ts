@@ -77,14 +77,14 @@ export class SidebarComponent implements OnInit {
     
     switchRouteTypes() {
         
-        const mappedMenu = this.appService.permissions.map((item: any, index: number) => {
+        const mappedMenu = this.appService.permissions.map((item: any) => {
             return {
                 label: item.name,
                 route: item.route,
                 icon: item.icon,
                 expended: false,
                 active: false,
-                children: item.children.map((child: any, index: number) => {
+                children: item.children.map((child: any) => {
                     return {
                         label: child.name,
                         route: child.route,
@@ -95,7 +95,6 @@ export class SidebarComponent implements OnInit {
                 }),
             }
         });
-    
         this.routes = [
             ...AppRouteConstants.mainRoutes,
             {
@@ -106,7 +105,7 @@ export class SidebarComponent implements OnInit {
                 active: false,
                 children: mappedMenu
             }
-        ]
+        ];
         
     }
     

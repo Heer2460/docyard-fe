@@ -3,6 +3,8 @@ import {MenuItem} from "primeng/api";
 import {AppService} from "../../../../service/app.service";
 import {Router} from "@angular/router";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
+import {AppConstants} from "../../../../util/app.constants";
+import {ProfileDTO} from "../../../../model/settings/profile/profile.dto";
 
 @Component({
     selector: 'app-setting-component',
@@ -10,22 +12,23 @@ import {RoleActionConstants} from "../../../../util/role.actions.constants";
     styleUrls: ['./app-setting.component.less']
 })
 export class AppSettingComponent implements OnInit {
-    
+
+    userInfo: any;
+    profileImage = '';
     toggleRightPaneStatus: boolean = false;
-    changePasswordDialog: boolean = false;
     items: MenuItem[] = [];
     @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
     
     constructor(public appService: AppService, private router: Router) {
+        let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
+        this.userInfo = JSON.parse(userData);
+        if (this.userInfo.profilePhoto) {
+            this.profileImage = this.userInfo.profilePhoto;
+        }
     }
     
     ngOnInit(): void {
         this.items = [
-            {
-                label: 'Change password',
-                icon: 'icon-lock',
-                command: () => this.showChangePasswordDialogAction()
-            },
             {
                 label: 'Profile',
                 icon: 'icon-user',
@@ -55,18 +58,6 @@ export class AppSettingComponent implements OnInit {
     
     logoutUser() {
         this.appService.logout();
-    }
-    
-    showChangePasswordDialogAction() {
-        this.changePasswordDialog = true;
-    }
-    
-    hideChangePasswordDialogAction() {
-        this.changePasswordDialog = false;
-    }
-    
-    changePasswordAction() {
-    
     }
     
 }

@@ -13,7 +13,7 @@ export class ApiUrlConstants {
     public static UPLOAD_IMAGE_API_URL = '/um/user/profile-picture';
     public static USER_STATUS_API_URL = '/um/user/update-user-status/';
     public static USER_RESET_PASS_API_URL = '/um/user/reset-password/';
-    public static CHANGE_PASSWORD_API_URL = '/user/change-password';
+    public static CHANGE_PASSWORD_API_URL = '/um/user/change-password';
     public static DEPARTMENT_API_URL = '/um/department/';
     public static ROLE_API_URL = '/um/role/';
     public static PERMISSIONS_API_URL = '/um/permission/';
@@ -23,6 +23,7 @@ export class ApiUrlConstants {
     // Document Handling API URLS
     public static GET_RECENT_DOCUMENT_API_URL = '/dl/dl-document/recent/owner/';
     public static GET_ALL_DL_DOCUMENT_API_URL = '/dl/dl-document/?folderId={folderId}&archived={archived}';
+    public static CREATE_FOLDER_API_URL = '/dl/dl-document/folder';
     public static GET_META_DL_DOCUMENT_API_URL = '/dl/dl-document/meta/{dlDocumentId}';
 
 

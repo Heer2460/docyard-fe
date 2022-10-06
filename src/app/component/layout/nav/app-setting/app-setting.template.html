@@ -1,8 +1,9 @@
-<img src="../../../../../assets/images/svg/user-image-placeholder.svg" alt="Default user image placeholder">
+<img *ngIf="!profileImage" src="../../../../../assets/images/svg/user-image-placeholder.svg" alt="Default user image placeholder">
+<img *ngIf="profileImage" src="data:image/jpeg;base64,{{profileImage}}" class="user-img" alt="user image">
 <div class="user-details-container">
     <div class="user-details">
-        <h4 class="user-name">Umar Farooq</h4>
-        <p class="user-email">umar.bwn@gmail.com</p>
+        <h4 class="user-name">{{ userInfo?.name | titlecase }}</h4>
+        <p class="user-email">{{ userInfo?.email }}</p>
     </div>
     <button class="btn btn-user-settings" (click)="menu.toggle($event)">
         <p-tieredMenu appendTo="body" #menu [model]="items" [popup]="true"></p-tieredMenu>
@@ -13,36 +14,3 @@
         <i class="icon-pane-toggle"></i>
     </button>
 </div>
-
-<p-dialog [(visible)]="changePasswordDialog" [modal]="true" styleClass="p-dialog-sm">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-lock"></i>
-            <span>Change password</span>
-        </div>
-    </ng-template>
-    <div class="row">
-        <div class="col-12 mb-3">
-            <div class="form-floating">
-                <input class="form-control" formControlName="password" placeholder="Old password" type="text">
-                <label>Old password</label>
-            </div>
-        </div>
-        <div class="col-12 mb-3">
-            <div class="form-floating">
-                <input class="form-control" formControlName="password" placeholder="Password" type="text">
-                <label>Password</label>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-floating">
-                <input class="form-control" formControlName="password" placeholder="Confirm password" type="text">
-                <label>Confirm password</label>
-            </div>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <button (click)="hideChangePasswordDialogAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="changePasswordAction()" class="btn btn-sm btn-primary" type="button">Change password</button>
-    </ng-template>
-</p-dialog>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../../service/app.service";
 import {Router} from "@angular/router";
@@ -12,6 +12,7 @@ export class DocDataTableComponent implements OnInit {
 
     @Input() dlDocuments: any[] = [];
     @Input() actionItems: MenuItem[] = [];
+    @Output() folderEvent = new EventEmitter<any>();
     showGridDisplay: boolean = false;
     selectedDocumentId: any = 0;
 
@@ -27,7 +28,10 @@ export class DocDataTableComponent implements OnInit {
     imageNameClickAction(item: any) {
         this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
-    setDocumentId(id:any){
-        this.selectedDocumentId = id;
+
+    getChildDirectory(rowData: any) {
+        this.selectedDocumentId = rowData.id;
+        this.folderEvent.emit(rowData.id);
+
     }
 }

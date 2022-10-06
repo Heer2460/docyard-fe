@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         if (this.loginFrom.invalid) {
             return;
         }
-        let url = ApiUrlConstants.OAUTH_TOKEN_API_URL + '?username=' + data.username + '&password=' +  this.appService.encryptUsingAES256(data.password) + '&grant_type=password';
+        let url = ApiUrlConstants.OAUTH_TOKEN_API_URL + '?username=' + data.username + '&password=' + this.appService.encryptUsingAES256(data.password) + '&grant_type=password';
         this.requestsService.postAccessTokenRequest(url, {})
             .subscribe({
                 next: (responseOauth: HttpResponse<any>) => {
@@ -69,6 +69,9 @@ export class LoginComponent implements OnInit {
                                             localStorage.setItem(window.btoa(AppConstants.AUTH_PERMISSIONS), JSON.stringify(this.permissions));
                                             this.appService.permissions = this.permissions;
                                             this.appUtility.setRoles(this.appService.permissions);
+
+                                            // navigation between folders
+                                            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), "null");
 
                                             this.router.navigate(['/home']);
 

@@ -47,14 +47,20 @@
                         <img *ngIf="row.isFolder == false" src="./assets/images/svg/icons/{{row.extension}}.svg"
                              alt="{{row.extension}}">
                         <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
-                        <ng-container [ngSwitch]="row.fileType">
+                        <ng-container *ngIf="row.isFolder == true; else elseCase">
+                            <span role="button" (click)="getChildDirectory(row)">{{row.name}}</span>
+                        </ng-container>
+                        <ng-template #elseCase>
+                            <span role="button">{{row.name}}</span>
+                        </ng-template>
+                        <!--<ng-container [ngSwitch]="row.fileType">
                             <ng-container *ngSwitchCase="'image'">
                                 <span role="button" (click)="imageNameClickAction(row)">{{row.name}}</span>
                             </ng-container>
                             <ng-container *ngSwitchDefault>
-                                <span role="button" (click)="setDocumentId(row.id)">{{row.name}}</span>
+                                <span role="button" (click)="getChildDirectory(row)">{{row.name}}</span>
                             </ng-container>
-                        </ng-container>
+                        </ng-container>-->
                     </div>
                 </td>
                 <td>

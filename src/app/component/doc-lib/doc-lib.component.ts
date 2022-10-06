@@ -7,6 +7,7 @@ import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.component";
+import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 
 @Component({
     selector: 'doc-lib-component',
@@ -25,9 +26,10 @@ export class DocLibComponent implements OnInit {
     uploadMenuItems: MenuItem[] = [];
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
-    visibleAddFileDialog: boolean = false;
+    //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
+    dirId: any;
 
     constructor(public appService: AppService,
                 private fb: FormBuilder,
@@ -81,11 +83,11 @@ export class DocLibComponent implements OnInit {
                 icon: 'icon-folder-plus',
                 command: () => this.showAddFolderPopup()
             },
-            {
+            /*{
                 label: 'Text File',
                 icon: 'icon-file-plus',
                 command: () => this.showAddFilePopup()
-            }
+            }*/
         ];
         this.uploadMenuItems = [
             {
@@ -123,7 +125,7 @@ export class DocLibComponent implements OnInit {
         this.visibleAddFolderDialog = false;
     }
 
-    showAddFilePopup() {
+    /*showAddFilePopup() {
         this.addFileForm.patchValue({
             name: '',
         });
@@ -133,8 +135,7 @@ export class DocLibComponent implements OnInit {
 
     hideAddFilePopup() {
         this.visibleAddFileDialog = false;
-    }
-
+    }*/
 
     // updating
     uploadFile(event: any) {
@@ -166,5 +167,37 @@ export class DocLibComponent implements OnInit {
                     this.appService.handleError(error, 'Document Library');
                 }
             });
+    }
+
+    createFolder() {
+        if (this.addFolderForm.invalid) {
+            return;
+        }
+        let dlDocumentDTO: DlDocumentDTO = new DlDocumentDTO();
+        dlDocumentDTO.convertToDTO(this.addFolderForm.value);
+        dlDocumentDTO.parentId = this.appService.getSelectedFolderId();
+
+        if (dlDocumentDTO) {
+            this.requestsService.postRequest(ApiUrlConstants.CREATE_FOLDER_API_URL, dlDocumentDTO)
+                .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successAddMessage('Document Library');
+                            this.loadDocumentLibrary(this.appService.getSelectedFolderId() == null ? '0' : this.appService.getSelectedFolderId(), false);
+                            this.hideAddFolderPopup();
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Document Library');
+                    }
+                });
+        }
+    }
+
+    receiveDirID(event: any) {
+        this.dirId = event;
+        if (this.dirId) {
+            this.loadDocumentLibrary(this.dirId, false);
+        }
     }
 }
