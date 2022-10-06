@@ -8,6 +8,7 @@ import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.component";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
+import {AppConstants} from "../../util/app.constants";
 
 @Component({
     selector: 'doc-lib-component',
@@ -29,7 +30,6 @@ export class DocLibComponent implements OnInit {
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
-    dirId: any;
 
     constructor(public appService: AppService,
                 private fb: FormBuilder,
@@ -40,10 +40,10 @@ export class DocLibComponent implements OnInit {
         });
         this.appService.currentFolderIdSubject.subscribe((id: any) => {
             if(id) {
-                this.dirId = id;
-                if (this.dirId) {
-                    this.loadDocumentLibrary(this.dirId, false);
-                }
+                // this.dirId = id;
+                // if (this.dirId) {
+                //     this.loadDocumentLibrary(this.dirId, false);
+                // }
             }
         });
     }
@@ -52,7 +52,7 @@ export class DocLibComponent implements OnInit {
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
-        this.loadDocumentLibrary("0", false);
+        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
     }
 
     buildDocumentActions() {
@@ -183,7 +183,7 @@ export class DocLibComponent implements OnInit {
         }
         let dlDocumentDTO: DlDocumentDTO = new DlDocumentDTO();
         dlDocumentDTO.convertToDTO(this.addFolderForm.value);
-        dlDocumentDTO.parentId = this.appService.getSelectedFolderId();
+        dlDocumentDTO.parentId = this.appService.getSelectedFolderId() == '0' ? null : this.appService.getSelectedFolderId();
 
         if (dlDocumentDTO) {
             this.requestsService.postRequest(ApiUrlConstants.CREATE_FOLDER_API_URL, dlDocumentDTO)
@@ -191,7 +191,7 @@ export class DocLibComponent implements OnInit {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.appService.successAddMessage('Document Library');
-                            this.loadDocumentLibrary(this.appService.getSelectedFolderId() == null ? '0' : this.appService.getSelectedFolderId(), false);
+                            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
                             this.hideAddFolderPopup();
                         }
                     },
@@ -199,6 +199,14 @@ export class DocLibComponent implements OnInit {
                         this.appService.handleError(error, 'Document Library');
                     }
                 });
+        }
+    }
+
+    openFolder(event: any) {
+        let dlFolderId = event;
+        if (dlFolderId) {
+            this.loadDocumentLibrary(dlFolderId, false);
+            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
         }
     }
     

@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
                                             this.appUtility.setRoles(this.appService.permissions);
 
                                             // navigation between folders
-                                            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), "null");
+                                            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), "0");
 
                                             this.router.navigate(['/home']);
 
