@@ -6,7 +6,6 @@ import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
-import {DepartmentDTO} from "../../model/settings/ref/department/department.dto";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 
 @Component({
