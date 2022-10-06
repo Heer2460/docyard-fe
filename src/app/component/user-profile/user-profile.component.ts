@@ -10,7 +10,6 @@ import {Router} from "@angular/router";
 import {ConfirmationService} from "primeng/api";
 import {AppUtility} from "../../util/app.utility";
 import {ToastrService} from "ngx-toastr";
-import {RoleDTO} from "../../model/settings/um/role/role.dto";
 import {GroupDTO} from "../../model/settings/um/group/group.dto";
 import {CustomValidations} from "../../util/custom.validations";
 import {AppConstants} from "../../util/app.constants";
@@ -42,7 +41,7 @@ export class UserProfileComponent implements OnInit {
                 private fb: FormBuilder,
                 private requestsService: RequestService,
                 private appService: AppService,
-                public appUtility: AppUtility,private toastService: ToastrService) {
+                public appUtility: AppUtility, private toastService: ToastrService) {
     }
 
     ngOnInit(): void {
