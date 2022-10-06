@@ -9,7 +9,7 @@
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-properties"></i>
-                    <span>Properties  ({{selectedDocId}})</span>
+                    <span>Properties</span>
                 </div>
             </ng-template>
             <ng-template pTemplate="content">
@@ -77,7 +77,12 @@
                     <span>Comments</span>
                 </div>
             </ng-template>
-            <ng-template pTemplate="content">Body Content</ng-template>
+            <ng-template pTemplate="content">
+                <ng-container  *ngFor="let comment of comments">
+                    <h2>{{getUserName(comment?.userId)}}</h2>
+                    <p>{{comment?.message}}</p>
+                </ng-container>
+            </ng-template>
         </p-accordionTab>
         <p-accordionTab>
             <ng-template pTemplate="header">
