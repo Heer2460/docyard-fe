@@ -22,7 +22,9 @@
         </button>
     </ng-container>
     <ng-container pageBody>
-        <data-table-component [actionItems]="menuItems" [dlDocuments]="dlDocuments"></data-table-component>
+        <data-table-component [actionItems]="menuItems" [dlDocuments]="dlDocuments" (folderEvent)="receiveDirID($event)">
+
+        </data-table-component>
     </ng-container>
     <ng-container docInfoPane>
         <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"></doc-info-pane-component>

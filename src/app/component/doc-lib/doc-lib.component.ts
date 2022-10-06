@@ -27,6 +27,7 @@ export class DocLibComponent implements OnInit {
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
+    dirId: any;
 
     constructor(public appService: AppService,
                 private fb: FormBuilder,
@@ -188,6 +189,13 @@ export class DocLibComponent implements OnInit {
                         this.appService.handleError(error, 'Document Library');
                     }
                 });
+        }
+    }
+
+    receiveDirID(event: any) {
+        this.dirId = event;
+        if (this.dirId) {
+            this.loadDocumentLibrary(this.dirId, false);
         }
     }
 }
