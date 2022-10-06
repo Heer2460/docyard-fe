@@ -18,7 +18,7 @@ export class AppSettingComponent implements OnInit {
     toggleRightPaneStatus: boolean = false;
     items: MenuItem[] = [];
     @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
-    
+
     constructor(public appService: AppService, private router: Router) {
         let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
         this.userInfo = JSON.parse(userData);
@@ -26,7 +26,7 @@ export class AppSettingComponent implements OnInit {
             this.profileImage = this.userInfo.profilePhoto;
         }
     }
-    
+
     ngOnInit(): void {
         this.items = [
             {
@@ -39,25 +39,25 @@ export class AppSettingComponent implements OnInit {
                 icon: 'icon-logout',
                 command: () => this.logoutUser()
             }
-        
+
         ];
         this.addUserProfileMenuItems();
         this.appService.showRightPaneSubject.subscribe((value: boolean) => {
             this.toggleRightPaneStatus = value;
         });
     }
-    
+
     setToggleRightPaneState() {
         this.toggleRightPaneStatus = !this.toggleRightPaneStatus;
         this.appService.setRightPaneSubjectState(this.toggleRightPaneStatus);
     }
-    
+
     addUserProfileMenuItems() {
         this.userProfileMenuItemsEvent.emit(this.items);
     }
-    
+
     logoutUser() {
         this.appService.logout();
     }
-    
+
 }
