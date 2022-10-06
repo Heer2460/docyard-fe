@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {NavigationEnd, Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
     selector: 'breadcrumb-component',
@@ -111,10 +112,15 @@ export class BreadcrumbComponent implements OnInit {
         this.appService.showGridDisplaySubject.subscribe((value: boolean) => {
             this.showGridDisplay = value;
         });
+    
+        this.appService.breadcrumbsSubject.subscribe((value: any[]) => {
+            this.breadcrumbs = value;
+        });
     }
 
     setPageTitleAndBreadcrumb() {
         const routesArray = this.currentRouteUrl.split('/');
+        let breadcrumbs: any[] = [];
 
         if (this.currentRouteUrl == '/home') {
             this.title = this.breadcrumbObj[0].label;
@@ -128,14 +134,16 @@ export class BreadcrumbComponent implements OnInit {
                     }
                 });
                 if (breadcrumbItem) {
-                    this.breadcrumbs.push(breadcrumbItem);
+                    breadcrumbs.push(breadcrumbItem);
                 }
             }
 
-            this.breadcrumbs = [this.breadcrumbObj[0], ...this.breadcrumbs];
-            this.title = this.breadcrumbs[this.breadcrumbs.length - 1].label;
-            this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+            breadcrumbs = [this.breadcrumbObj[0], ...breadcrumbs];
+            this.title = breadcrumbs[breadcrumbs.length - 1].label;
+            breadcrumbs[breadcrumbs.length - 1].active = true;
         }
+        
+        this.appService.setBreadcrumbSubjectState(breadcrumbs);
 
     }
 

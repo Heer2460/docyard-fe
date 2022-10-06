@@ -26,5 +26,9 @@ export class DocDataTableComponent implements OnInit {
     imageNameClickAction(item: any) {
         this.router.navigate(['/doc-lib/preview', {fileUrl: item.fileUrl}])
     }
+    
+    itemNameClickAction(item: any) {
+        console.log(item);
+    }
 
 }
