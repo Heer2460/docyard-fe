@@ -44,9 +44,18 @@
                 </td>
                 <td>
                     <div class="file-types">
-                        <img *ngIf="row.isFolder == false" src="./assets/images/svg/icons/{{row.extension}}.svg"
-                             alt="{{row.extension}}">
+
+                        <ng-container *ngIf="row.isFolder == false">
+                            <ng-container *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                <img  src="./assets/images/svg/icons/{{row.extension}}.svg" alt="{{row.extension}}">
+                            </ng-container>
+                            <ng-template #otherFileElseCase>
+                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                            </ng-template>
+                        </ng-container>
                         <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+
+
                         <ng-container *ngIf="row.isFolder == true; else elseCase">
                             <span role="button" (click)="getChildDirectory(row)">{{row.name}}</span>
                         </ng-container>
