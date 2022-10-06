@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {RoutesDTO} from "../model/routes.dto";
 import {RoleActionConstants} from "../util/role.actions.constants";
+import {AppConstants} from "../util/app.constants";
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,8 @@ export class AppService {
     public showGridDisplaySubject = new BehaviorSubject(false);
     routes: RoutesDTO[] = [];
 
-    constructor(private toastService: ToastrService, private router: Router) {
+    constructor(private toastService: ToastrService,
+                private router: Router) {
     }
 
     setMenuBarSubjectState(state: boolean) {
@@ -148,5 +150,13 @@ export class AppService {
             RoleActionConstants.DEPT_ADD.value || RoleActionConstants.DEPT_EDIT.value ||
             RoleActionConstants.DEPT_VIEW.value || RoleActionConstants.DEPT_DEL.value
         );
+    }
+
+    public getSelectedFolderId(): any {
+        let rawSelectedFolderId = localStorage.getItem(btoa(AppConstants.SELECTED_FOLDER_ID)) + '';
+        if (rawSelectedFolderId == null || rawSelectedFolderId == 'null') {
+            return null;
+        }
+        return Number.parseInt(rawSelectedFolderId);
     }
 }
