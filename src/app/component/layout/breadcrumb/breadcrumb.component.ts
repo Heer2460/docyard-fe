@@ -116,25 +116,25 @@ export class BreadcrumbComponent implements OnInit {
     setPageTitleAndBreadcrumb() {
         const routesArray = this.currentRouteUrl.split('/');
 
-        if(this.currentRouteUrl == '/home') {
+        if (this.currentRouteUrl == '/home') {
             this.title = this.breadcrumbObj[0].label;
             this.description = 'Hello User, Welcome back!';
             this.titleAndDescOnly = true;
         } else {
-            for(const route of routesArray) {
+            for (const route of routesArray) {
                 const breadcrumbItem = this.breadcrumbObj.find((item: any) => {
-                    if(item.slug == route) {
+                    if (item.slug == route) {
                         return item;
                     }
                 });
-                if(breadcrumbItem) {
+                if (breadcrumbItem) {
                     this.breadcrumbs.push(breadcrumbItem);
                 }
             }
 
             this.breadcrumbs = [this.breadcrumbObj[0], ...this.breadcrumbs];
-            this.title = this.breadcrumbs[this.breadcrumbs.length-1].label;
-            this.breadcrumbs[this.breadcrumbs.length-1].active = true;
+            this.title = this.breadcrumbs[this.breadcrumbs.length - 1].label;
+            this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
         }
 
     }
