@@ -164,6 +164,6 @@ export class AppService {
     }
 
     public getSelectedFolderId(): any {
-        return Number.parseInt(localStorage.getItem(btoa(AppConstants.SELECTED_FOLDER_ID)) + '');
+        return Number.parseInt(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)) + '');
     }
 }

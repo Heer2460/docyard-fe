@@ -80,7 +80,7 @@
                 <td>
                     <div class="form-check form-check-only form-check-star">
                         <input class="form-check-input" type="checkbox" [checked]="row.isFavourite"
-                               [attr.id]="'stared-' + row.id">
+                               [attr.id]="'stared-' + row.id" (change)="favouriteDocument($event, row.id)">
                         <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
                     </div>
                 </td>

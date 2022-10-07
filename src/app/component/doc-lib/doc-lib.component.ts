@@ -80,8 +80,7 @@ export class DocLibComponent implements OnInit {
             {
                 label: 'Delete',
                 icon: 'icon-trash',
-                command: () => {
-                }
+                command: () => this.onDeleteIDocument()
             },
             {
                 label: 'Rename',
@@ -196,6 +195,10 @@ export class DocLibComponent implements OnInit {
                     }
                 });
         }
+    }
+
+    onDeleteIDocument() {
+        console.log('abc')
     }
 
 }

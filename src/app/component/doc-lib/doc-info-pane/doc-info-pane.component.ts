@@ -42,7 +42,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
 
     getMetaDocumentByID(){
         if(this.selectedDocId && this.selectedDocId > 0 ){
-            this.requestsService.getRequest(ApiUrlConstants.GET_META_DL_DOCUMENT_API_URL
+            this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
                 .replace("{dlDocumentId}", String(this.selectedDocId)))
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
