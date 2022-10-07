@@ -7,6 +7,7 @@ import {AccordionModule} from "primeng/accordion";
 import {LayoutModule} from "../../../../layout/layout.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
+import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {DropdownModule} from "primeng/dropdown";
         LayoutModule,
         ReactiveFormsModule,
         DropdownModule,
-        FormsModule
+        FormsModule,
+        BreadcrumbModule
     ]
 })
 export class EditRoleModule { }

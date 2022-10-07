@@ -5,6 +5,7 @@ import {HttpResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {RequestService} from "../../../../../service/request.service";
 import {AppService} from "../../../../../service/app.service";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'app-view-role',
@@ -16,6 +17,36 @@ export class ViewRoleComponent implements OnInit {
     permissions: any = [];
     roleId: any;
     selectedRole: RoleDTO = new RoleDTO();
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Role',
+            route: '/setting/um/role',
+            active: false
+        },
+        {
+            label: 'View',
+            route: '/setting/um/role/view',
+            active: true
+        }
+    ];
+    
+    title: string = 'View';
 
     constructor(private activeRoute: ActivatedRoute,
                 private requestsService: RequestService,

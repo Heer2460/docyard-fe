@@ -11,6 +11,7 @@ import {ApiUrlConstants} from "../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'role-component',
@@ -46,6 +47,31 @@ export class RoleComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedRole)
         }
     ];
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Role',
+            route: '/setting/um/role',
+            active: true
+        }
+    ];
+    
+    title: string = 'Role';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,

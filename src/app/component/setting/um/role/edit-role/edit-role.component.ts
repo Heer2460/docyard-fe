@@ -10,6 +10,7 @@ import {ApiUrlConstants} from "../../../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'edit-role-component',
@@ -24,6 +25,35 @@ export class EditRoleComponent implements OnInit {
     permissions: any = [];
     roleId: any;
     selectedRole: RoleDTO = new RoleDTO();
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Role',
+            route: '/setting/um/role',
+            active: false
+        },
+        {
+            label: 'Edit',
+            route: '/setting/um/role/edit',
+            active: true
+        }
+    ];
+    
+    title: string = 'Edit';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,

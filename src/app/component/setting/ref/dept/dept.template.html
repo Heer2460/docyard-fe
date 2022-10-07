@@ -1,51 +1,66 @@
-<layout-component>
-    <ng-container actionItems>
-        <button (click)="addDepartment()" class="btn btn-sm btn-primary">
-            <i class="icon-plus"></i> Add
-        </button>
-        <button (click)="searchDepartment()" class="btn btn-sm btn-secondary">
-            <i class="icon-search"></i> Search
-        </button>
-    </ng-container>
-    <ng-container pageBody>
-        <p-table [value]="departments" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="code">Code
-                        <p-sortIcon field="code"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="name">Name
-                        <p-sortIcon field="name"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="status">Status
-                        <p-sortIcon field="status"></p-sortIcon>
-                    </th>
-                    <th class="actions">Action</th>
-                </tr>
-            </ng-template>
-            <ng-template let-row pTemplate="body">
-                <tr [ngClass]="row.selected ? 'p-highlight' : ''" [pSelectableRow]="row">
-                    <td>{{row.code}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.status}}</td>
-                    <td>
-                        <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
-                            <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
-                            <i class="icon-menu-horizontal"></i>
+<section class="main-page-wrapper">
+    <div class="left">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <ng-container>
+                        <h3 class="title">{{title}}</h3>
+                    </ng-container>
+                    <div class="action-items">
+                        <button (click)="addDepartment()" class="btn btn-sm btn-primary">
+                            <i class="icon-plus"></i> Add
                         </button>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td [attr.colspan]="5" class="text-center">
-                        {{message}}
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </ng-container>
-</layout-component>
+                        <button (click)="searchDepartment()" class="btn btn-sm btn-secondary">
+                            <i class="icon-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+                <div class="container-breadcrumb-and-list-view">
+                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <p-table [value]="departments" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="code">Code
+                                <p-sortIcon field="code"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="name">Name
+                                <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status">Status
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                            <th class="actions">Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-row pTemplate="body">
+                        <tr [ngClass]="row.selected ? 'p-highlight' : ''" [pSelectableRow]="row">
+                            <td>{{row.code}}</td>
+                            <td>{{row.name}}</td>
+                            <td>{{row.status}}</td>
+                            <td>
+                                <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
+                                    <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
+                                    <i class="icon-menu-horizontal"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td [attr.colspan]="5" class="text-center">
+                                {{message}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</section>
 
 <p-dialog [(visible)]="searchDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">

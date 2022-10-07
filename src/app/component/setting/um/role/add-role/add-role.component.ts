@@ -11,6 +11,7 @@ import {HttpResponse} from "@angular/common/http";
 import {RoleDTO} from "../../../../../model/settings/um/role/role.dto";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 import {ToastrService} from "ngx-toastr";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'add-role-component',
@@ -23,6 +24,36 @@ export class AddRoleComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     permissions: any = [];
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Role',
+            route: '/setting/um/role',
+            active: false
+        },
+        {
+            label: 'Add',
+            route: '/setting/um/role/add',
+            active: true
+        }
+    ];
+    
+    title: string = 'Add';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,

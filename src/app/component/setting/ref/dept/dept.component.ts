@@ -11,6 +11,7 @@ import { ApiUrlConstants } from "../../../../util/api.url.constants";
 import { AppUtility } from "../../../../util/app.utility";
 import { ReferencesStatuses } from "../../../../util/references.statuses";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'dept-component',
@@ -31,6 +32,31 @@ export class DeptComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     selectedDepartment: DepartmentDTO = new DepartmentDTO();
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'Reference',
+            route: '/setting/ref',
+            active: false
+        },
+        {
+            label: 'Department',
+            route: '/setting/ref/department',
+            active: true
+        }
+    ];
+    
+    title: string = 'Department';
 
     actionItems: MenuItem[] = [
         {

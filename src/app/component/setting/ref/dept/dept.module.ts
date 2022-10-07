@@ -9,6 +9,7 @@ import {LayoutModule} from "../../../layout/layout.module";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
+import {BreadcrumbModule} from "../../../layout/breadcrumb/breadcrumb.module";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import {DropdownModule} from "primeng/dropdown";
         DialogModule,
         ConfirmDialogModule,
         ReactiveFormsModule,
-        DropdownModule
+        DropdownModule,
+        BreadcrumbModule
     ]
 })
 export class DeptModule {
