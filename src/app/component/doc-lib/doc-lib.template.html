@@ -178,7 +178,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event)">
+                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event);onMenuClicked(row)">
                                         <p-tieredMenu appendTo="body" #menu [model]="menuItems"
                                                       [popup]="true"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>

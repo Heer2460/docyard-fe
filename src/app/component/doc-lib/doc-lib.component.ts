@@ -28,6 +28,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     dlDocuments: any[] = [];
+    selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = true;
     showGridDisplay: boolean = false;
     dlFolderId: any;
@@ -76,13 +77,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
             {
                 label: 'Delete',
                 icon: 'icon-trash',
-                command: () => this.onDeleteIDocument()
+                command: () => this.onDeleteDocument(this.selectedDoc)
             },
             {
                 label: 'Rename',
                 icon: 'icon-edit',
-                command: () => {
-                }
+                command: () => this.onRenameDocument(this.selectedDoc)
             }
         ];
     }
@@ -161,6 +161,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.appService.handleError(error, 'Document Library');
                 }
             });
+    }
+
+    onMenuClicked(data: DlDocumentDTO) {
+        this.selectedDoc = data;
     }
     
     createFolder() {
@@ -296,4 +300,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
     }
     
+
+    onDeleteDocument(data: any) {
+        // console.log('Delete', data)
+    }
+
+    onRenameDocument(data: any) {
+        // console.log('Rename', data)
+    }
+
 }
