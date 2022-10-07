@@ -26,7 +26,7 @@ export class ApiUrlConstants {
     public static GET_ALL_DL_DOCUMENT_API_URL = '/dl/dl-document/?folderId={folderId}&archived={archived}';
     public static CREATE_FOLDER_API_URL = '/dl/dl-document/folder';
     public static DL_DOCUMENT_API_URL = '/dl/dl-document/{dlDocumentId}';
-    public static DL_DOCUMENT_ARCHIVED_API_URL = '/archive/{dlDocumentId}?archive={archived}';
+    public static DL_DOCUMENT_ARCHIVED_API_URL = '/dl/dl-document/archive/{dlDocumentId}?archive={archived}';
 
 
 }

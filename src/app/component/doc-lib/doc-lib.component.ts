@@ -273,9 +273,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
     
-    onDeleteIDocument() {
-    }
-    
     favouriteDocument(event: any, id: any) {
         const isChecked = event.target.checked;
         let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(id)) + '/?favourite=' + isChecked;
