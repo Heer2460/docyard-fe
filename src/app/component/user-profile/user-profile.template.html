@@ -1,118 +1,131 @@
-<layout-component>
-    <ng-container pageBody>
-        <div class="card">
-            <div class="card-body">
-                <div class="profile-container">
-                    <img *ngIf="profileImage === null" src="./assets/images/svg/user-image-placeholder.svg" alt="User Image"/>
-                    <img *ngIf="profileImage != null" src="{{'data:image/jpg;base64,' + profileImage}}" alt="User Image"/>
-                    <button (click)="signatureImg.click()" class="btn btn-secondary">
-                        <i class="icon-edit"></i>
-                    </button>
-                    <input type="file" name="signatureImg"
-                           accept="image/png, image/jpeg, application/pdf"
-                           class="d-none" #signatureImg onclick="this.value = null"
-                           (change)="updateProfileImg($event)"/>
-
+<section class="main-page-wrapper">
+    <div class="left">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <h3 class="title">{{title}}</h3>
                 </div>
-                <div class="content-container">
-                    <div class="left-container">
-                        <div>
-                            <h1>{{selectedUserProfile.name}}</h1>
-                            <h4>{{selectedGroups.rolesNameList}}</h4>
+                <div class="container-breadcrumb-and-list-view">
+                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-container">
+                            <img *ngIf="profileImage === null" src="./assets/images/svg/user-image-placeholder.svg" alt="User Image"/>
+                            <img *ngIf="profileImage != null" src="{{'data:image/jpg;base64,' + profileImage}}" alt="User Image"/>
+                            <button (click)="signatureImg.click()" class="btn btn-secondary">
+                                <i class="icon-edit"></i>
+                            </button>
+                            <input type="file" name="signatureImg"
+                                   accept="image/png, image/jpeg, application/pdf"
+                                   class="d-none" #signatureImg onclick="this.value = null"
+                                   (change)="updateProfileImg($event)"/>
+
                         </div>
-                        <div class="actions">
-<!--                            <button class="btn btn-sm btn-primary">Edit profile</button>-->
-                            <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-primary">Change Password</button>
+                        <div class="content-container">
+                            <div class="left-container">
+                                <div>
+                                    <h1>{{selectedUserProfile.name}}</h1>
+                                    <h4>{{selectedGroups.rolesNameList}}</h4>
+                                </div>
+                                <div class="actions">
+                                    <!--                            <button class="btn btn-sm btn-primary">Edit profile</button>-->
+                                    <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-primary">Change Password</button>
+                                </div>
+                            </div>
+                            <div class="right-container">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Username</th>
+                                        <td>{{selectedUserProfile.username}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email address</th>
+                                        <td>{{selectedUserProfile.email}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile Number</th>
+                                        <td>{{selectedUserProfile.mobileNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone #</th>
+                                        <td>{{selectedUserProfile.phoneNumber}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="actions">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="right-container">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <th>Username</th>
-                                <td>{{selectedUserProfile.username}}</td>
-                            </tr>
-                            <tr>
-                                <th>Email address</th>
-                                <td>{{selectedUserProfile.email}}</td>
-
-                            </tr>
-                            <tr>
-                                <th>Mobile Number</th>
-                                <td>{{selectedUserProfile.mobileNumber}}</td>
-                            </tr>
-                            <tr>
-                                <th>Phone #</th>
-                                <td>{{selectedUserProfile.phoneNumber}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="actions">
-
-                        </div>
-                    </div>
                 </div>
+                <h2>
+                    <span>Activity</span>
+                </h2>
+                <ul class="activity-timeline">
+                    <li>
+                        <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                        <p>
+                            <span>Umar Farooq</span>
+                            <span class="text-muted">has changed</span>
+                            <span>2 attributes</span>
+                            <span class="text-muted">on jan 21, 2021</span>
+                        </p>
+                    </li>
+                    <li>
+                        <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                        <p>
+                            <span>Umar Farooq</span>
+                            <span class="text-muted">moved</span>
+                            <span>Tour-pic.jpeg</span>
+                            <span class="text-muted">to</span>
+                            <span>Tour 2021</span>
+                            <span class="text-muted">on Jan 21, 2021</span>
+                        </p>
+                    </li>
+                    <li class="has-comments">
+                        <div class="activity-box">
+                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                            <p>
+                                <span>Umar Farooq</span>
+                                <span class="text-muted">commented on Jan 21, 2021</span>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
+                                mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
+                                interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
+                                aptent taciti sociosqu ad litora torquent per conubia nostra
+                            </p>
+                            <div class="replies-tab">
+                                <i class="icon-arrow-right-curved"></i>
+                                <a role="button">Show 3 replies</a>
+                                <ul>
+                                    <li>
+                                        <img src="./assets/images/image.png" alt="Avatar">
+                                    </li>
+                                    <li>
+                                        <img src="./assets/images/image.png" alt="Avatar">
+                                    </li>
+                                    <li>
+                                        <img src="./assets/images/image.png" alt="Avatar">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <h2>
-            <span>Activity</span>
-        </h2>
-        <ul class="activity-timeline">
-            <li>
-                <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                <p>
-                    <span>Umar Farooq</span>
-                    <span class="text-muted">has changed</span>
-                    <span>2 attributes</span>
-                    <span class="text-muted">on jan 21, 2021</span>
-                </p>
-            </li>
-            <li>
-                <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                <p>
-                    <span>Umar Farooq</span>
-                    <span class="text-muted">moved</span>
-                    <span>Tour-pic.jpeg</span>
-                    <span class="text-muted">to</span>
-                    <span>Tour 2021</span>
-                    <span class="text-muted">on Jan 21, 2021</span>
-                </p>
-            </li>
-            <li class="has-comments">
-                <div class="activity-box">
-                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                    <p>
-                        <span>Umar Farooq</span>
-                        <span class="text-muted">commented on Jan 21, 2021</span>
-                    </p>
-                </div>
-                <div class="comment-box">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
-                        mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
-                        interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
-                        aptent taciti sociosqu ad litora torquent per conubia nostra
-                    </p>
-                    <div class="replies-tab">
-                        <i class="icon-arrow-right-curved"></i>
-                        <a role="button">Show 3 replies</a>
-                        <ul>
-                            <li>
-                                <img src="./assets/images/image.png" alt="Avatar">
-                            </li>
-                            <li>
-                                <img src="./assets/images/image.png" alt="Avatar">
-                            </li>
-                            <li>
-                                <img src="./assets/images/image.png" alt="Avatar">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </ng-container>
-</layout-component>
+    </div>
+</section>
 
 <p-dialog [(visible)]="visibleChangePasswordDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">

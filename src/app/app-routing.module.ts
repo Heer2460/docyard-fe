@@ -46,6 +46,7 @@ const routes: Routes = [
     },
     {
         path: 'profile',
+        component: LayoutComponent,
         children: [
             {
                 path: '',

@@ -12,6 +12,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
+import {BreadcrumbModule} from "../layout/breadcrumb/breadcrumb.module";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MultiSelectModule} from "primeng/multiselect";
         ConfirmDialogModule,
         ReactiveFormsModule,
         DropdownModule,
-        MultiSelectModule
+        MultiSelectModule,
+        BreadcrumbModule
     ]
 })
 export class UserProfileModule { }

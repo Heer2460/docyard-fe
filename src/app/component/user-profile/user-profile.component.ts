@@ -13,6 +13,7 @@ import {ToastrService} from "ngx-toastr";
 import {GroupDTO} from "../../model/settings/um/group/group.dto";
 import {CustomValidations} from "../../util/custom.validations";
 import {AppConstants} from "../../util/app.constants";
+import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 
 
 @Component({
@@ -34,6 +35,21 @@ export class UserProfileComponent implements OnInit {
     profileImage: any = null;
     profilePicture: any;
     userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Profile',
+            route: '/profile',
+            active: true
+        }
+    ];
+    
+    title: string = 'Profile';
 
 
     constructor(private router: Router,
