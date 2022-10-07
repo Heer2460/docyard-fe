@@ -20,7 +20,7 @@ export class AppService {
     public showGridDisplaySubject = new BehaviorSubject(false);
     public breadcrumbsSubject: any = new BehaviorSubject([]);
     public currentFolderIdSubject: any = new BehaviorSubject(null);
-    
+
     routes: RoutesDTO[] = [];
 
     constructor(private toastService: ToastrService,
@@ -42,15 +42,15 @@ export class AppService {
     setGridDisplaySubjectState(state: boolean) {
         this.showGridDisplaySubject.next(state);
     }
-    
+
     setBreadcrumbSubjectState(breadcrumbs: any[]) {
         this.breadcrumbsSubject.next(breadcrumbs);
     }
-    
+
     setCurrentFolderIdSubjectState(id: number) {
         this.currentFolderIdSubject.next(id);
     }
-    
+
     handleError(error: any, title: string, fromLogin?: boolean) {
         if (error.status === 400) {
             this.toastService.error(error.error.message, title);
