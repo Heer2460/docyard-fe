@@ -57,8 +57,136 @@
             </header>
 
             <div class="page-body">
-                <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments" (openFolderEmitter)="openFolder($event)">
-                </data-table-component>
+<!--                <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments" (openFolderEmitter)="openFolder($event)">-->
+<!--                </data-table-component>-->
+                <ng-container *ngIf="showGridDisplay">
+                    <div class="grid-view-container">
+                        <div class="row row-items">
+                            <ng-container *ngFor="let item of dlDocuments">
+                                <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
+<!--                                    <grid-item-component [gridItem]="item" [menuItem]="actionItems"></grid-item-component>-->
+                                    <div class="file-card">
+                                        <div class="icon-thumbnail">
+                                            <ng-container>
+                                                <!--<ng-container *ngSwitchCase="'directory'">
+                                                    <i *ngIf="!gridItem.shared" class="icon-folder-filled"></i>
+                                                    <i *ngIf="gridItem.shared" class="icon-folder-shared-filled"></i>
+                                                </ng-container>-->
+                                                <img *ngIf="item.isFolder == false" src="./assets/images/svg/icons/{{item.extension}}.svg"
+                                                     alt="{{item.extension}}">
+                                                <img *ngIf="item.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                            </ng-container>
+                                        </div>
+                                        <div class="file-details">
+                                            <p class="title">{{item?.name}}</p>
+                                            <p class="date-and-author">
+                                                <span>{{item?.updatedOn | date:'mediumDate'}} by </span>
+                                                <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
+                                            </p>
+                                            <p class="file-size">{{item?.size}}</p>
+                                        </div>
+                                        <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                                            <p-tieredMenu #menu [model]="menuItems" appendTo="body" [popup]="true"></p-tieredMenu>
+                                            <i class="icon-menu-vertical"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!showGridDisplay">
+                    <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
+                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>
+                                    <div class="form-check form-check-only">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault"></label>
+                                    </div>
+                                </th>
+                                <th pSortableColumn="name">Name
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updated">Updated
+                                    <p-sortIcon field="updated"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="size">Size
+                                    <p-sortIcon field="size"></p-sortIcon>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row>
+                            <tr>
+                                <td>
+                                    <div class="form-check form-check-only">
+                                        <input class="form-check-input" type="checkbox" [checked]="row.selected"
+                                               [attr.id]="'checkbox-' + row.id">
+                                        <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="file-types">
+
+                                        <ng-container *ngIf="row.isFolder == false">
+                                            <ng-container *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                <img  src="./assets/images/svg/icons/{{row.extension}}.svg" alt="{{row.extension}}">
+                                            </ng-container>
+                                            <ng-template #otherFileElseCase>
+                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                            </ng-template>
+                                        </ng-container>
+                                        <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+
+
+                                        <ng-container *ngIf="row.isFolder == true; else elseCase">
+                                            <span role="button" (click)="openFolder(row)">{{row.name}}</span>
+                                        </ng-container>
+                                        <ng-template #elseCase>
+                                            <span role="button">{{row.name}}</span>
+                                        </ng-template>
+                                        <!--<ng-container [ngSwitch]="row.fileType">
+                                            <ng-container *ngSwitchCase="'image'">
+                                                <span role="button" (click)="imageNameClickAction(row)">{{row.name}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchDefault>
+                                                <span role="button" (click)="getChildDirectory(row)">{{row.name}}</span>
+                                            </ng-container>
+                                        </ng-container>-->
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>{{row.updatedOn | date:'medium'}} by </span>
+                                    <a role="button" class="author">{{row.updatedByName}}</a>
+                                </td>
+                                <td>{{row.size}}</td>
+                                <td>
+                                    <div class="form-check form-check-only form-check-star">
+                                        <input class="form-check-input" type="checkbox" [checked]="row.isFavourite"
+                                               [attr.id]="'stared-' + row.id" (change)="favouriteDocument($event, row.id)">
+                                        <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event)">
+                                        <p-tieredMenu appendTo="body" #menu [model]="menuItems" [popup]="true"></p-tieredMenu>
+                                        <i class="icon-menu-horizontal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td [attr.colspan]="6" class="text-center">
+                                    No records found
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </ng-container>
             </div>
         </div>
         <div class="page-footer">
@@ -66,7 +194,7 @@
         </div>
     </div>
     <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
-                             [selectedDocId]="docDataTableComponent?.selectedDocumentId"></doc-info-pane-component>
+                             [selectedDocId]="dlFolderId"></doc-info-pane-component>
     <!--    <file-uploader-component></file-uploader-component>-->
 </section>
 

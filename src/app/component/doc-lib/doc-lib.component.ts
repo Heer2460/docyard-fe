@@ -6,7 +6,6 @@ import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
-import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.component";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
 import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
@@ -21,7 +20,6 @@ export class DocLibComponent implements OnInit {
     
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
-    @ViewChild('docDataTableComponent') docDataTableComponent: DocDataTableComponent | undefined;
     
     addFolderForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
@@ -33,6 +31,9 @@ export class DocLibComponent implements OnInit {
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
     showGridDisplay: boolean = false;
+    dlFolderId: any;
+    
+    validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -202,10 +203,10 @@ export class DocLibComponent implements OnInit {
     
     
     openFolder(rowData: any) {
-        const dlFolderId: string = rowData.id;
-        if (dlFolderId != '') {
-            this.loadDocumentLibrary(dlFolderId, false);
-            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
+        this.dlFolderId = rowData.id;
+        if (this.dlFolderId != '') {
+            this.loadDocumentLibrary(this.dlFolderId, false);
+            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), this.dlFolderId);
             this.updateBreadcrumb(rowData);
         }
     }
@@ -243,6 +244,24 @@ export class DocLibComponent implements OnInit {
 
     onDeleteIDocument() {
         console.log('abc')
+    }
+    
+    favouriteDocument(event: any, id: any) {
+        const isChecked = event.target.checked;
+        let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(id)) + '/?favourite=' + isChecked;
+        this.requestsService.putRequest(url, {})
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successUpdateMessage('Document');
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Document');
+                    }
+                }
+            );
+        
     }
 
 }

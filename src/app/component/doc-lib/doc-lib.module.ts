@@ -5,11 +5,11 @@ import {DocLibComponent} from "./doc-lib.component";
 import {BreadcrumbModule} from "../layout/breadcrumb/breadcrumb.module";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
-import {DocDataTableModule} from "../shared/doc-data-table/doc-data-table.module";
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderModule} from "./file-uploader/file-uploader.module";
+import {TableModule} from "primeng/table";
 
 @NgModule({
     declarations: [
@@ -21,11 +21,11 @@ import {FileUploaderModule} from "./file-uploader/file-uploader.module";
         BreadcrumbModule,
         TieredMenuModule,
         LayoutModule,
-        DocDataTableModule,
         DocInfoPaneModule,
         DialogModule,
         ReactiveFormsModule,
         FileUploaderModule,
+        TableModule,
     ]
 })
 export class DocLibModule {
