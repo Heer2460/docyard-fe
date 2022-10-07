@@ -45,9 +45,14 @@
                                     </ng-container>
                                     <ng-container *ngIf="index >= breadcrumbs.length -breadcrumbItemsToShow">
                                         <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
-                                            <a role="button" (click)="navigateToRoute(breadcrumb, index)">
-                                                {{breadcrumb.label}}
-                                            </a>
+                                            <ng-container *ngIf="lastIndex; else elseBlock">
+                                                <a>{{breadcrumb.label}}</a>
+                                            </ng-container>
+                                            <ng-template #elseBlock>
+                                                <a role="button" (click)="navigateToRoute(breadcrumb, index)">
+                                                    {{breadcrumb.label}}
+                                                </a>
+                                            </ng-template>
                                         </li>
                                     </ng-container>
                                 </ng-container>
