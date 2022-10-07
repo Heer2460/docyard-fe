@@ -10,7 +10,6 @@ import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderModule} from "./file-uploader/file-uploader.module";
-import {ListingDisplayModule} from "../layout/listing-display/listing-display.module";
 
 @NgModule({
     declarations: [
@@ -27,7 +26,6 @@ import {ListingDisplayModule} from "../layout/listing-display/listing-display.mo
         DialogModule,
         ReactiveFormsModule,
         FileUploaderModule,
-        ListingDisplayModule
     ]
 })
 export class DocLibModule {

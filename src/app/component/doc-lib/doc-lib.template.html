@@ -31,7 +31,16 @@
                 </div>
                 <div class="container-breadcrumb-and-list-view">
                     <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
-                    <listing-display-component></listing-display-component>
+                    <div class="btn-group input-group-display-listing">
+                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? 'active': ''"
+                                (click)="setGridDisplay()">
+                            <i class="icon-display-grid"></i>
+                        </button>
+                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? '': 'active'"
+                                (click)="setListDisplay()">
+                            <i class="icon-display-listing"></i>
+                        </button>
+                    </div>
                 </div>
             </header>
 

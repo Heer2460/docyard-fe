@@ -31,6 +31,7 @@ export class DocLibComponent implements OnInit {
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
+    showGridDisplay: boolean = false;
     
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -206,6 +207,14 @@ export class DocLibComponent implements OnInit {
                 localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
             }
         });
+    }
+    
+    setGridDisplay() {
+        this.appService.setGridDisplaySubjectState(true);
+    }
+    
+    setListDisplay() {
+        this.appService.setGridDisplaySubjectState(false);
     }
     
 }
