@@ -79,7 +79,7 @@
                                 <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
                                     <div class="file-card">
                                         <div class="icon-thumbnail">
-                                            <ng-container *ngIf="item.isFolder == false">
+                                            <ng-container *ngIf="item.folder == false">
                                                 <ng-container
                                                         *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img src="./assets/images/svg/icons/{{item.extension}}.svg"
@@ -89,7 +89,7 @@
                                                     <img src="./assets/images/svg/icons/other.svg" alt="other">
                                                 </ng-template>
                                             </ng-container>
-                                            <img *ngIf="item.isFolder == true"
+                                            <img *ngIf="item.folder == true"
                                                  src="./assets/images/svg/icons/folder.svg" alt="icon">
                                         </div>
                                         <div class="file-details">
@@ -147,7 +147,7 @@
                                 <td>
                                     <div class="file-types">
 
-                                        <ng-container *ngIf="row.isFolder == false">
+                                        <ng-container *ngIf="row.folder == false">
                                             <ng-container
                                                     *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
                                                 <img src="./assets/images/svg/icons/{{row.extension}}.svg"
@@ -157,10 +157,10 @@
                                                 <img src="./assets/images/svg/icons/other.svg" alt="other">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.isFolder == true" src="./assets/images/svg/icons/folder.svg"
+                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
                                              alt="icon">
 
-                                        <ng-container *ngIf="row.isFolder == true; else elseCase">
+                                        <ng-container *ngIf="row.folder == true; else elseCase">
                                             <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
@@ -176,7 +176,7 @@
                                 <td>{{row.size}}</td>
                                 <td>
                                     <div class="form-check form-check-only form-check-star">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.isFavourite"
+                                        <input class="form-check-input" type="checkbox" [checked]="row.favourite"
                                                [attr.id]="'stared-' + row.id"
                                                (change)="favouriteDocument($event, row.id)">
                                         <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
@@ -214,7 +214,7 @@
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
     <ng-template pTemplate="header">
         <div class="header-title">
-            <i class="icon-building"></i>
+            <i class="icon-folder"></i>
             <span>Create Folder</span>
         </div>
     </ng-template>
@@ -239,6 +239,37 @@
         <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid"
                 (click)="createFolder()">
             Create
+        </button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="renameDocumentDialog" [modal]="true" styleClass="">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <span>Rename {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="renameDocumentForm">
+        <div class="row">
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                    <label>Name</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
+                </small>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
+                (click)="onRenameDocument()">Update
         </button>
     </ng-template>
 </p-dialog>

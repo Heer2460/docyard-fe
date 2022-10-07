@@ -6,6 +6,7 @@ export class DlDocumentDTO extends BaseDTO {
     name: string | undefined;
     title: string | undefined;
     parentId: null | undefined;
+    folder?: boolean;
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
 

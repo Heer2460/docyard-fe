@@ -74,6 +74,11 @@ export class RequestService {
         return this.http.get(this.getBEAPIServer() + url, {headers: headers, params: params, observe: 'response'});
     }
 
+    getRequestFile(url: any) {
+        let headers = this.getBasicHeaders();
+        return this.http.get(this.getBEAPIServer() + url, {headers: headers, responseType: 'arraybuffer'});
+    }
+
     postRequest(url: any, params: any) {
         let headers = this.getBasicHeaders();
         if (params instanceof BaseDTO) {
