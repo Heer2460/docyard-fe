@@ -14,6 +14,7 @@ import {ToastrService} from "ngx-toastr";
 import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'add-user-component',
@@ -30,6 +31,36 @@ export class AddUserComponent implements OnInit, OnDestroy {
     logoImageDataUrl: any;
     files: any[] = [];
     roleActions = RoleActionConstants;
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Users',
+            route: '/setting/um/user',
+            active: false
+        },
+        {
+            label: 'Add',
+            route: '/setting/um/user/add',
+            active: true
+        }
+    ];
+    
+    title: string = 'Add';
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,

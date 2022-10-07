@@ -10,6 +10,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {GroupRoutingModule} from "./group-routing.module";
 import {GroupComponent} from "./group.component";
 import {MultiSelectModule} from "primeng/multiselect";
+import {BreadcrumbModule} from "../../../layout/breadcrumb/breadcrumb.module";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MultiSelectModule} from "primeng/multiselect";
         ConfirmDialogModule,
         ReactiveFormsModule,
         DropdownModule,
-        MultiSelectModule
+        MultiSelectModule,
+        BreadcrumbModule
     ]
 })
 export class GroupModule {

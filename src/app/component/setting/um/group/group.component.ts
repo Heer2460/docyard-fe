@@ -12,6 +12,7 @@ import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
 import {RoleDTO} from "../../../../model/settings/um/role/role.dto";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../model/breadcrumb.dto";
 
 
 @Component({
@@ -52,6 +53,31 @@ export class GroupComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedGroup)
         }
     ];
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Group',
+            route: '/setting/um/group',
+            active: true
+        }
+    ];
+    
+    title: string = 'Group';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
                 private fb: FormBuilder, private requestsService: RequestService,

@@ -1,98 +1,107 @@
-<layout-component>
-    <ng-container pageBody>
-        <div class="home-template">
-            <div class="row">
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0">
-                    <div class="card card-aqua">
-                        <div class="card-body">
-                            <div>
-                                <h6>Images</h6>
-                                <i class="icon-image"></i>
+<section class="main-page-wrapper">
+    <div class="left">
+        <div>
+            <header class="page-header">
+                <h3 class="title">Home</h3>
+                <p class="desc">Hello User, Welcome back!</p>
+            </header>
+            <div class="page-body">
+                <div class="home-template">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0">
+                            <div class="card card-aqua">
+                                <div class="card-body">
+                                    <div>
+                                        <h6>Images</h6>
+                                        <i class="icon-image"></i>
+                                    </div>
+                                    <p>
+                                        <span>840.2 MB</span>
+                                        <span>14 GB</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
+                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <p>
-                                <span>840.2 MB</span>
-                                <span>14 GB</span>
-                            </p>
                         </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                     style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0">
+                            <div class="card card-blue">
+                                <div class="card-body">
+                                    <div>
+                                        <h6>Videos</h6>
+                                        <i class="icon-videos-filled"></i>
+                                    </div>
+                                    <p>
+                                        <span>840.2 MB</span>
+                                        <span>14 GB</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
+                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0">
+                            <div class="card card-yellow">
+                                <div class="card-body">
+                                    <div>
+                                        <h6>Documents</h6>
+                                        <i class="icon-file-filled"></i>
+                                    </div>
+                                    <p>
+                                        <span>840.2 MB</span>
+                                        <span>14 GB</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
+                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 col-xl-3">
+                            <div class="card card-red">
+                                <div class="card-body">
+                                    <div>
+                                        <h6>Others</h6>
+                                        <i class="icon-folder-filled"></i>
+                                    </div>
+                                    <p>
+                                        <span>840.2 MB</span>
+                                        <span>14 GB</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
+                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0">
-                    <div class="card card-blue">
-                        <div class="card-body">
-                            <div>
-                                <h6>Videos</h6>
-                                <i class="icon-videos-filled"></i>
-                            </div>
-                            <p>
-                                <span>840.2 MB</span>
-                                <span>14 GB</span>
-                            </p>
+                    <div class="row row-items">
+                        <div class="col-12">
+                            <h2 class="home-h2">Recent Documents</h2>
                         </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                     style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <ng-container *ngFor="let gridItem of recentDocs">
+                            <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
+                                <grid-item-component [gridItem]="gridItem" [menuItem]="menuItems"></grid-item-component>
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0">
-                    <div class="card card-yellow">
-                        <div class="card-body">
-                            <div>
-                                <h6>Documents</h6>
-                                <i class="icon-file-filled"></i>
-                            </div>
-                            <p>
-                                <span>840.2 MB</span>
-                                <span>14 GB</span>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                     style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3">
-                    <div class="card card-red">
-                        <div class="card-body">
-                            <div>
-                                <h6>Others</h6>
-                                <i class="icon-folder-filled"></i>
-                            </div>
-                            <p>
-                                <span>840.2 MB</span>
-                                <span>14 GB</span>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                     style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-items">
-                <div class="col-12">
-                    <h2 class="home-h2">Recent Documents</h2>
-                </div>
-                <ng-container *ngFor="let gridItem of recentDocs">
-                    <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
-                        <grid-item-component [gridItem]="gridItem" [menuItem]="menuItems"></grid-item-component>
-                    </div>
-                </ng-container>
             </div>
         </div>
-    </ng-container>
-</layout-component>
+    </div>
+</section>
+

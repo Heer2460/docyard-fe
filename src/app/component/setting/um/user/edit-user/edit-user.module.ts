@@ -8,6 +8,7 @@ import {TableModule} from "primeng/table";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
+import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {MultiSelectModule} from "primeng/multiselect";
         TableModule,
         ReactiveFormsModule,
         DropdownModule,
-        MultiSelectModule
+        MultiSelectModule,
+        BreadcrumbModule
     ]
 })
 export class EditUserModule { }

@@ -1,56 +1,75 @@
-<layout-component>
-    <ng-container pageBody>
-        <div class="home-template">
-            <div class="row">
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasUserPermissions()">
-                    <div class="card card-aqua">
-                        <div class="card-body" routerLink="/setting/um/user">
-                            <div>
-                                <h6>User</h6>
-                                <i class="icon-user"></i>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
+<section class="main-page-wrapper">
+    <div class="left" [ngClass]="showDocInfoPane ? 'collapsed' : ''">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <ng-container>
+                        <h3 class="title">{{title}}</h3>
+                    </ng-container>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasGroupPermissions()">
-                    <div class="card card-blue">
-                        <div class="card-body" routerLink="/setting/um/group">
-                            <div>
-                                <h6>Group</h6>
-                                <i class="icon-group"></i>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
+                <div class="container-breadcrumb-and-list-view">
+                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
                 </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasRolePermissions()">
-                    <div class="card card-yellow">
-                        <div class="card-body" routerLink="/setting/um/role">
-                            <div>
-                                <h6>Role</h6>
-                                <i class="icon-role"></i>
+            </header>
+            <div class="page-body">
+                <div class="home-template">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasUserPermissions()">
+                            <div class="card card-aqua">
+                                <div class="card-body" routerLink="/setting/um/user">
+                                    <div>
+                                        <h6>User</h6>
+                                        <i class="icon-user"></i>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasDepartmentPermissions()">
-                    <div class="card card-red">
-                        <div class="card-body" routerLink="/setting/ref/department">
-                            <div>
-                                <h6>Department</h6>
-                                <i class="icon-building"></i>
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-3 mb-xl-0" *ngIf="appService.hasGroupPermissions()">
+                            <div class="card card-blue">
+                                <div class="card-body" routerLink="/setting/um/group">
+                                    <div>
+                                        <h6>Group</h6>
+                                        <i class="icon-group"></i>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasRolePermissions()">
+                            <div class="card card-yellow">
+                                <div class="card-body" routerLink="/setting/um/role">
+                                    <div>
+                                        <h6>Role</h6>
+                                        <i class="icon-role"></i>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6 col-xl-3 mb-3 mb-sm-0 mb-xl-0" *ngIf="appService.hasDepartmentPermissions()">
+                            <div class="card card-red">
+                                <div class="card-body" routerLink="/setting/ref/department">
+                                    <div>
+                                        <h6>Department</h6>
+                                        <i class="icon-building"></i>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </ng-container>
-</layout-component>
+        <div class="page-footer">
+            <ng-content select=[pageFooter]></ng-content>
+        </div>
+    </div>
+
+</section>
+

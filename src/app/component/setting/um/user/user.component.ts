@@ -14,6 +14,7 @@ import {GroupDTO} from "../../../../model/settings/um/group/group.dto";
 import {UserDTO} from "../../../../model/settings/um/user/user.dto";
 import {CustomValidations} from "../../../../util/custom.validations";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'user-component',
@@ -60,6 +61,31 @@ export class UserComponent implements OnInit {
         }
     ];
     statuses = ReferencesStatuses.userSearchStatuses;
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Users',
+            route: '/setting/um/user',
+            active: true
+        }
+    ];
+    
+    title: string = 'Users';
 
     constructor(private fb: FormBuilder, private router: Router,
                 private confirmationService: ConfirmationService,

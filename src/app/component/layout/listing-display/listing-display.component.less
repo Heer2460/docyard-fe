@@ -1,0 +1,31 @@
+@import "../../../../assets/less/_vars";
+
+.input-group-display-listing {
+	
+	.btn {
+		width: 22px;
+		height: 22px;
+		padding: 0;
+		font-size: 12px;
+		line-height: 12px;
+		background-color: hsl(var(--color-green-02));
+		border-color: hsl(var(--color-blue-05));
+		color:hsl(var(--color-blue-01));
+		
+		&.active,
+		&:focus,
+		&:active,
+		&:hover {
+			background-color:hsl(var(--color-blue-01));
+			border-color:hsl(var(--color-blue-01));
+			color: @color-white;
+		}
+		
+		&:first-child {
+			margin-right: 10px;
+		}
+		
+		
+	}
+	
+}

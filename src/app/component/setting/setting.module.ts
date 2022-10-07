@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {SettingComponent} from "./setting.component";
 import {SettingRoutingModule} from "./setting-routing.module";
 import {LayoutModule} from "../layout/layout.module";
+import {BreadcrumbModule} from "../layout/breadcrumb/breadcrumb.module";
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import {LayoutModule} from "../layout/layout.module";
     imports: [
         CommonModule,
         SettingRoutingModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class SettingModule {

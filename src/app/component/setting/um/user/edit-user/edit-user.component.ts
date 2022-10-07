@@ -13,6 +13,7 @@ import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 import {ToastrService} from "ngx-toastr";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'edit-user-component',
@@ -31,6 +32,36 @@ export class EditUserComponent implements OnInit {
     files: any[] = [];
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.userStatuses;
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Users',
+            route: '/setting/um/user',
+            active: false
+        },
+        {
+            label: 'Edit',
+            route: '/setting/um/user/edit',
+            active: true
+        }
+    ];
+    
+    title: string = 'Edit';
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,

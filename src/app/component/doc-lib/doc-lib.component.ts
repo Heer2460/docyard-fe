@@ -9,6 +9,7 @@ import {RequestService} from "../../service/request.service";
 import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.component";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
+import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 
 @Component({
     selector: 'doc-lib-component',
@@ -30,6 +31,21 @@ export class DocLibComponent implements OnInit {
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     showDocInfoPane: boolean = true;
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Document Library',
+            route: '/doc-lib',
+            active: true
+        }
+    ];
+    
+    title: string = 'Document Library';
     
     constructor(public appService: AppService,
                 private fb: FormBuilder,

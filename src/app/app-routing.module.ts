@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from "./component/page-not-found/page-not-found.component";
 import {AuthGuard} from "./guard/auth.guard";
+import {LayoutComponent} from "./component/layout/layout.component";
 
 const routes: Routes = [
     {
@@ -15,6 +16,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
+        component: LayoutComponent,
         children: [
             {
                 path: '',
@@ -24,6 +26,7 @@ const routes: Routes = [
     },
     {
         path: 'doc-lib',
+        component: LayoutComponent,
         children: [
             {
                 path: '',
@@ -33,6 +36,7 @@ const routes: Routes = [
     },
     {
         path: 'setting',
+        component: LayoutComponent,
         children: [
             {
                 path: '', canActivate: [AuthGuard],

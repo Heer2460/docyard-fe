@@ -9,6 +9,7 @@ import {HttpResponse} from "@angular/common/http";
 import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
+import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
     selector: 'user-profile-component',
@@ -22,6 +23,36 @@ export class ViewUserComponent implements OnInit {
     groups: GroupDTO[] = [];
     departments: DepartmentDTO[] = [];
     selectedUser: UserDTO = new UserDTO();
+    
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Settings',
+            route: '/setting',
+            active: false
+        },
+        {
+            label: 'User Management',
+            route: '/setting/um',
+            active: false
+        },
+        {
+            label: 'Users',
+            route: '/setting/um/user',
+            active: false
+        },
+        {
+            label: 'View',
+            route: '/setting/um/user/view',
+            active: true
+        }
+    ];
+    
+    title: string = 'View';
 
     constructor(private requestsService: RequestService,
                 private appService: AppService,

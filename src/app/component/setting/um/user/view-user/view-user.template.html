@@ -1,54 +1,67 @@
-<layout-component>
-    <ng-container pageBody>
-        <table class="table table-data-view">
-            <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{selectedUser.name}}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{selectedUser.username}}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{selectedUser.email}}</td>
-            </tr>
-            <tr>
-                <th>Mobile Number</th>
-                <td>{{selectedUser.mobileNumber}}</td>
-            </tr>
-            <tr>
-                <th>Phone Number</th>
-                <td>{{selectedUser.phoneNumber}}</td>
-            </tr>
-            <tr>
-                <th>Group</th>
-                <td>{{selectedUser.groupId | filterObject: groups : 'single' }}</td>
-            </tr>
-            <tr>
-                <th>Department</th>
-                <td>{{selectedUser.departmentIds | filterObject: departments : 'multiple' }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{selectedUser.address}}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{selectedUser.status | titlecase}}</td>
-            </tr>
-            <tr>
-                <th>Logo</th>
-                <td><img *ngIf="selectedUser?.profilePhoto" alt="Logo"
-                         class="img-table-view p-0"
-                         src="data:image/jpeg;base64,{{selectedUser.profilePhoto}}"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </ng-container>
-    <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
-    </ng-container>
-</layout-component>
+<section class="main-page-wrapper">
+    <div class="left">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <h3 class="title">{{title}}</h3>
+                </div>
+                <div class="container-breadcrumb-and-list-view">
+                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <table class="table table-data-view">
+                    <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{selectedUser.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td>{{selectedUser.username}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{selectedUser.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile Number</th>
+                        <td>{{selectedUser.mobileNumber}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>{{selectedUser.phoneNumber}}</td>
+                    </tr>
+                    <tr>
+                        <th>Group</th>
+                        <td>{{selectedUser.groupId | filterObject: groups : 'single' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Department</th>
+                        <td>{{selectedUser.departmentIds | filterObject: departments : 'multiple' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{selectedUser.address}}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{selectedUser.status | titlecase}}</td>
+                    </tr>
+                    <tr>
+                        <th>Logo</th>
+                        <td><img *ngIf="selectedUser?.profilePhoto" alt="Logo"
+                                 class="img-table-view p-0"
+                                 src="data:image/jpeg;base64,{{selectedUser.profilePhoto}}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="page-footer">
+            <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
+        </div>
+    </div>
+</section>

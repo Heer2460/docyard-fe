@@ -1,102 +1,113 @@
-<layout-component>
-    <ng-container pageBody>
-        <form [formGroup]="editUserForm">
-            <fieldset>
-                <header>Personal information</header>
-                <div class="row">
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
-                            <label for="name" class="required">Name</label>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'required')">
-                                {{ appUtility.makeErrorMessage("Name", 'required') }}
-                            </small>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'maxlength')">
-                                {{ appUtility.makeErrorMessage("Name", 'maxlength', 70) }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <input autocomplete="new-password" class="form-control" formControlName="username" id="username"
-                                   placeholder="Username" type="text">
-                            <label for="username">Username</label>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="email" id="email" placeholder="Email"
-                                   type="email">
-                            <label for="email" class="required">Email</label>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'required')">
-                                {{ appUtility.makeErrorMessage("Email", 'required') }}
-                            </small>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'email')">
-                                {{ 'Invalid Email.' }}
-                            </small>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'pattern')">
-                                {{ appUtility.makeErrorMessage("Email", 'pattern', 'formatted') }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
-                                   placeholder="Phone Number" type="text">
-                            <label for="name">Phone Number</label>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'required')">
-                                {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
-                            </small>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
-                                {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
-                                   placeholder="Mobile Number" type="text">
-                            <label for="mobileNumber">Mobile Number</label>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'required')">
-                                {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
-                            </small>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
-                                {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="form-floating">
-                            <textarea type="text" class="form-control" formControlName="address" id="address" placeholder="Address"></textarea>
-                            <label for="address">Address</label>
-                            <small *ngIf="appUtility.getFormError(editUserForm, 'address', 'address', 'maxlength')">
-                                {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <div class="custom-file">
-                            <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
-                            <input #file (change)="setAttachment($event)" class="form-control" id="file" onclick="this.value = null"
-                                   type="file">
-                            <div class="file-viewer">
-                                <button (click)="clearFiles()" *ngIf="logoImageDataUrl" class="btn">
-                                    <i class="icon-times"></i>
-                                </button>
-                                <img
-                                        *ngIf="logoImageDataUrl"
-                                        alt="Logo"
-                                        src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
-                                <i *ngIf="!logoImageDataUrl" class="icon-image"></i>
+<section class="main-page-wrapper">
+    <div class="left">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <h3 class="title">{{title}}</h3>
+                </div>
+                <div class="container-breadcrumb-and-list-view">
+                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <form [formGroup]="editUserForm">
+                    <fieldset>
+                        <header>Personal information</header>
+                        <div class="row">
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                                    <label for="name" class="required">Name</label>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'required')">
+                                        {{ appUtility.makeErrorMessage("Name", 'required') }}
+                                    </small>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'maxlength')">
+                                        {{ appUtility.makeErrorMessage("Name", 'maxlength', 70) }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <input autocomplete="new-password" class="form-control" formControlName="username" id="username"
+                                           placeholder="Username" type="text">
+                                    <label for="username">Username</label>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <input class="form-control" formControlName="email" id="email" placeholder="Email"
+                                           type="email">
+                                    <label for="email" class="required">Email</label>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'required')">
+                                        {{ appUtility.makeErrorMessage("Email", 'required') }}
+                                    </small>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'email')">
+                                        {{ 'Invalid Email.' }}
+                                    </small>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'email', 'email', 'pattern')">
+                                        {{ appUtility.makeErrorMessage("Email", 'pattern', 'formatted') }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
+                                           placeholder="Phone Number" type="text">
+                                    <label for="name">Phone Number</label>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'required')">
+                                        {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
+                                    </small>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
+                                        {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
+                                           placeholder="Mobile Number" type="text">
+                                    <label for="mobileNumber">Mobile Number</label>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'required')">
+                                        {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
+                                    </small>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
+                                        {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="form-floating">
+                                    <textarea type="text" class="form-control" formControlName="address" id="address" placeholder="Address"></textarea>
+                                    <label for="address">Address</label>
+                                    <small *ngIf="appUtility.getFormError(editUserForm, 'address', 'address', 'maxlength')">
+                                        {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-3">
+                                <div class="custom-file">
+                                    <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
+                                    <input #file (change)="setAttachment($event)" class="form-control" id="file" onclick="this.value = null"
+                                           type="file">
+                                    <div class="file-viewer">
+                                        <button (click)="clearFiles()" *ngIf="logoImageDataUrl" class="btn">
+                                            <i class="icon-times"></i>
+                                        </button>
+                                        <img
+                                                *ngIf="logoImageDataUrl"
+                                                alt="Logo"
+                                                src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
+                                        <i *ngIf="!logoImageDataUrl" class="icon-image"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="mt-30px">
-                <header>Others</header>
-                <div class="row">
-                    <div class="col-3 mb-3">
+                    </fieldset>
+                    <fieldset class="mt-30px">
+                        <header>Others</header>
+                        <div class="row">
+                            <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
                                         optionLabel="name" optionValue="id"  placeholder="Select group"></p-dropdown>
@@ -105,8 +116,8 @@
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
                             </small>
                         </span>
-                    </div>
-                    <div class="col-3 mb-3">
+                            </div>
+                            <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-multiSelect [filter]="true" [options]="departments" [showClear]="true"
                                            appendTo="body" filterBy="name" formControlName="departmentIds"
@@ -114,19 +125,21 @@
                                            placeholder="Select department"></p-multiSelect>
                             <label for="departmentIds">Department</label>
                         </span>
-                    </div>
-                    <div class="col-3 mb-3">
+                            </div>
+                            <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown inputId="status" [options]="statuses" id="status" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
                             <label for="status">Status</label>
                         </span>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </ng-container>
-    <ng-container pageFooter>
-        <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid" (click)="updateUser()">Update</button>
-    </ng-container>
-</layout-component>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="page-footer">
+            <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
+            <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid" (click)="updateUser()">Update</button>
+        </div>
+    </div>
+</section>
