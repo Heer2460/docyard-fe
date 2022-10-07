@@ -8,6 +8,7 @@ export class AppConstants {
     public static AUTH_USER_ID = 'loggedInUserId';
     public static AUTH_PERMISSIONS = 'permissions';
     public static SELECTED_FOLDER_ID = 'selectedFolderId';
+    public static SELECTED_FOLDER_BREADCRUMB = 'selectedFolderBreadcrumb';
     public static VALID_EXTENSIONS = ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'png', 'gif', 'jpg', 'bmp', 'jpeg', 'flv', 'txt', 'html', 'xhtml', 'pdf', 'sql', 'rar', 'zip', '7z', 'svg', 'psd'];
 
     //Frequently used route

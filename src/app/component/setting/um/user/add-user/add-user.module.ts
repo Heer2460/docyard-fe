@@ -7,7 +7,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {CustomDirectiveModule} from "../../../../../shared/directive/custom.directive.module";
 import {MultiSelectModule} from "primeng/multiselect";
-import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module";
 
 
 
@@ -23,7 +22,6 @@ import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module"
         DropdownModule,
         CustomDirectiveModule,
         MultiSelectModule,
-        BreadcrumbModule
     ]
 })
 export class AddUserModule { }

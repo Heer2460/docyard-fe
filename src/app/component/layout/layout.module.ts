@@ -7,7 +7,6 @@ import {BannerModule} from "./banner/banner.module";
 import {NavModule} from "./nav/nav.module";
 import {RightPaneComponent} from './right-pane/right-pane.component';
 import {MenuModule} from "primeng/menu";
-import {BreadcrumbModule} from "./breadcrumb/breadcrumb.module";
 import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
 
 @NgModule({
@@ -26,7 +25,6 @@ import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
         CommonModule,
         RouterModule,
         MenuModule,
-        BreadcrumbModule,
         DocInfoPaneModule,
     ]
 })

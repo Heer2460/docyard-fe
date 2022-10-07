@@ -4,6 +4,7 @@ import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {AppService} from "../../service/app.service";
+import {AppConstants} from "../../util/app.constants";
 
 @Component({
     selector: 'home-component',
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
         }
     ];
     recentDocs: any[] = [];
+    validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
 
     constructor(private requestsService: RequestService,
                 private appService: AppService) {

@@ -97,15 +97,15 @@
                             <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
                                 <div class="file-card">
                                     <div class="icon-thumbnail">
-                                        <ng-container>
-                                            <!--<ng-container *ngSwitchCase="'directory'">
-                                                <i *ngIf="!gridItem.shared" class="icon-folder-filled"></i>
-                                                <i *ngIf="gridItem.shared" class="icon-folder-shared-filled"></i>
-                                            </ng-container>-->
-                                            <img *ngIf="gridItem.isFolder == false" src="./assets/images/svg/icons/{{gridItem.extension}}.svg"
-                                                 alt="{{gridItem.extension}}">
-                                            <img *ngIf="gridItem.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                        <ng-container *ngIf="gridItem.isFolder == false">
+                                            <ng-container *ngIf="validExtensions.indexOf(gridItem.extension) > -1; else otherFileElseCase">
+                                                <img  src="./assets/images/svg/icons/{{gridItem.extension}}.svg" alt="{{gridItem.extension}}">
+                                            </ng-container>
+                                            <ng-template #otherFileElseCase>
+                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                            </ng-template>
                                         </ng-container>
+                                        <img *ngIf="gridItem.isFolder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
                                     </div>
                                     <div class="file-details">
                                         <p class="title">{{gridItem?.name}}</p>

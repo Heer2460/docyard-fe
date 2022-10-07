@@ -7,7 +7,6 @@ import {LayoutModule} from "../../../../layout/layout.module";
 import {AccordionModule} from "primeng/accordion";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module";
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import {BreadcrumbModule} from "../../../../layout/breadcrumb/breadcrumb.module"
         DropdownModule,
         ReactiveFormsModule,
         FormsModule,
-        BreadcrumbModule
     ]
 })
 export class AddRoleModule { }
