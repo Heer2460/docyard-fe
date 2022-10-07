@@ -204,8 +204,7 @@ export class DocLibComponent implements OnInit {
                 });
         }
     }
-    
-    
+
     openFolder(rowData: any) {
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
@@ -260,11 +259,23 @@ export class DocLibComponent implements OnInit {
                     }
                 }
             );
-        
     }
 
     onDeleteDocument(data: any) {
-        // console.log('Delete', data)
+        let url = ApiUrlConstants.DL_DOCUMENT_ARCHIVED_API_URL.replace("{dlDocumentId}", String(data.id))
+            .replace("{archived}", 'true');
+        this.requestsService.putRequest(url, {})
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successDeleteMessage('Document');
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Document');
+                    }
+                }
+            );
     }
 
     onRenameDocument(data: any) {
