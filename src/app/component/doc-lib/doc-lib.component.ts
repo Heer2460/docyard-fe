@@ -29,6 +29,7 @@ export class DocLibComponent implements OnInit {
     visibleAddFolderDialog: boolean = false;
     //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
+    selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = true;
     showGridDisplay: boolean = false;
     dlFolderId: any;
@@ -84,13 +85,12 @@ export class DocLibComponent implements OnInit {
             {
                 label: 'Delete',
                 icon: 'icon-trash',
-                command: () => this.onDeleteIDocument()
+                command: () => this.onDeleteDocument(this.selectedDoc)
             },
             {
                 label: 'Rename',
                 icon: 'icon-edit',
-                command: () => {
-                }
+                command: () => this.onRenameDocument(this.selectedDoc)
             }
         ];
     }
@@ -175,6 +175,10 @@ export class DocLibComponent implements OnInit {
                 }
             });
     }
+
+    onMenuClicked(data: DlDocumentDTO) {
+        this.selectedDoc = data;
+    }
     
     createFolder() {
         if (this.addFolderForm.invalid) {
@@ -241,11 +245,6 @@ export class DocLibComponent implements OnInit {
         }
     }
     
-
-    onDeleteIDocument() {
-        console.log('abc')
-    }
-    
     favouriteDocument(event: any, id: any) {
         const isChecked = event.target.checked;
         let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(id)) + '/?favourite=' + isChecked;
@@ -262,6 +261,14 @@ export class DocLibComponent implements OnInit {
                 }
             );
         
+    }
+
+    onDeleteDocument(data: any) {
+        // console.log('Delete', data)
+    }
+
+    onRenameDocument(data: any) {
+        // console.log('Rename', data)
     }
 
 }
