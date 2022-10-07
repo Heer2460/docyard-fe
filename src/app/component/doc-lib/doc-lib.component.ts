@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
     templateUrl: './doc-lib.template.html',
     styleUrls: ['./doc-lib.component.less']
 })
-export class DocLibComponent implements OnInit {
+export class DocLibComponent implements OnInit, OnDestroy {
     
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
@@ -27,7 +27,6 @@ export class DocLibComponent implements OnInit {
     uploadMenuItems: MenuItem[] = [];
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
-    //visibleAddFileDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = true;
@@ -36,18 +35,9 @@ export class DocLibComponent implements OnInit {
     
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     
-    breadcrumbs: BreadcrumbDTO[] = [
-        {
-            label: 'Home',
-            route: '/home',
-            active: false
-        },
-        {
-            label: 'Document Library',
-            route: '/doc-lib',
-            active: true
-        }
-    ];
+    breadcrumbs: BreadcrumbDTO[] = [];
+    breadcrumbItemsToShow: any = 4;
+    breadcrumbCollapsedItems: any[] = [];
     
     title: string = 'Document Library';
     
@@ -66,6 +56,8 @@ export class DocLibComponent implements OnInit {
         this.buildOptionItems();
         this.buildForms();
         this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+        this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
+        this.updateCollapsedBreadcrumbItems();
     }
     
     buildDocumentActions() {
@@ -102,11 +94,6 @@ export class DocLibComponent implements OnInit {
                 icon: 'icon-folder-plus',
                 command: () => this.showAddFolderPopup()
             },
-            /*{
-                label: 'Text File',
-                icon: 'icon-file-plus',
-                command: () => this.showAddFilePopup()
-            }*/
         ];
         this.uploadMenuItems = [
             {
@@ -209,7 +196,6 @@ export class DocLibComponent implements OnInit {
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
             this.loadDocumentLibrary(this.dlFolderId, false);
-            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), this.dlFolderId);
             this.updateBreadcrumb(rowData);
         }
     }
@@ -229,19 +215,65 @@ export class DocLibComponent implements OnInit {
             id: rowData.id,
             active: true
         });
+        this.setBreadcrumbAndSelectedItemToLocalStorage();
+    }
+    
+    updateCollapsedBreadcrumbItems() {
+        if(this.breadcrumbs.length < this.breadcrumbItemsToShow) return;
+        
+        if(this.breadcrumbs.length > this.breadcrumbItemsToShow) {
+            this.breadcrumbCollapsedItems = this.breadcrumbs.slice(0, this.breadcrumbs.length - this.breadcrumbItemsToShow);
+            this.breadcrumbCollapsedItems = this.breadcrumbCollapsedItems.map((item: BreadcrumbDTO, index: number) => ({
+                label: item.label,
+                command: () => this.navigateToRoute(item, index)
+            }))
+        }
     }
     
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
-        
-        if(breadcrumb.id) {
+        if (breadcrumb.id) {
             this.loadDocumentLibrary(breadcrumb.id, false);
             this.breadcrumbs.pop();
-            this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
-        }else if(index == 1) {
-            this.loadDocumentLibrary('0', false);
-        }else {
+        } else if (index == 1) {
+            this.dlFolderId = '0';
+            this.loadDocumentLibrary(this.dlFolderId, false);
+        } else {
             this.router.navigate([breadcrumb.route]);
         }
+        
+        this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
+        this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+        this.setBreadcrumbAndSelectedItemToLocalStorage();
+    }
+    
+    getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
+        const breadcrumbs: any = localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
+        
+        if (breadcrumbs) {
+            return JSON.parse(breadcrumbs);
+        } else {
+            return [
+                {
+                    label: 'Home',
+                    route: '/home',
+                    active: false
+                },
+                {
+                    label: 'Document Library',
+                    route: '/doc-lib',
+                    active: true
+                }
+            ];
+        }
+    }
+    
+    setBreadcrumbAndSelectedItemToLocalStorage() {
+        this.updateCollapsedBreadcrumbItems();
+        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), this.dlFolderId);
+        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
+    }
+    
+    onDeleteIDocument() {
     }
     
     favouriteDocument(event: any, id: any) {
@@ -260,6 +292,12 @@ export class DocLibComponent implements OnInit {
                 }
             );
     }
+    
+    ngOnDestroy(): void {
+        localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
+        localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
+    }
+    
 
     onDeleteDocument(data: any) {
         let url = ApiUrlConstants.DL_DOCUMENT_ARCHIVED_API_URL.replace("{dlDocumentId}", String(data.id))

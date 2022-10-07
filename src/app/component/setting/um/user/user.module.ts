@@ -10,7 +10,6 @@ import {DropdownModule} from "primeng/dropdown";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {CustomDirectiveModule} from "../../../../shared/directive/custom.directive.module";
-import {BreadcrumbModule} from "../../../layout/breadcrumb/breadcrumb.module";
 
 @NgModule({
     declarations: [
@@ -27,7 +26,6 @@ import {BreadcrumbModule} from "../../../layout/breadcrumb/breadcrumb.module";
         ReactiveFormsModule,
         ConfirmDialogModule,
         CustomDirectiveModule,
-        BreadcrumbModule
     ]
 })
 export class UserModule {
