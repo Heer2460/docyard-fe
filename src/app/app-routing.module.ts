@@ -35,6 +35,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'favourite',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/favourite/favourite.module').then(m => m.FavouriteModule)
+            }
+        ]
+    },
+    {
         path: 'setting',
         component: LayoutComponent,
         children: [

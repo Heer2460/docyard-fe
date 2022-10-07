@@ -1,23 +1,23 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, MenuItem} from "primeng/api";
-import {AppService} from "../../service/app.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AppUtility} from "../../util/app.utility";
-import {ApiUrlConstants} from "../../util/api.url.constants";
-import {HttpResponse} from "@angular/common/http";
-import {RequestService} from "../../service/request.service";
-import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
-import {AppConstants} from "../../util/app.constants";
-import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
+import {ConfirmationService, MenuItem} from "primeng/api";
+import {DlDocumentDTO} from "../../../model/settings/doc-handling/dl-document.dto";
+import {AppConstants} from "../../../util/app.constants";
+import {BreadcrumbDTO} from "../../../model/breadcrumb.dto";
+import {AppService} from "../../../service/app.service";
 import {Router} from "@angular/router";
+import {AppUtility} from "../../../util/app.utility";
+import {RequestService} from "../../../service/request.service";
 import {ToastrService} from "ngx-toastr";
+import {ApiUrlConstants} from "../../../util/api.url.constants";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
-    selector: 'doc-lib-component',
-    templateUrl: './doc-lib.template.html',
-    styleUrls: ['./doc-lib.component.less']
+    selector: 'app-favourite',
+    templateUrl: './favourite.component.html',
+    styleUrls: ['./favourite.component.less']
 })
-export class DocLibComponent implements OnInit, OnDestroy {
+export class FavouriteComponent implements OnInit {
 
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
@@ -26,8 +26,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
     renameDocumentForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
     menuItems: MenuItem[] = [];
-    uploadMenuItems: MenuItem[] = [];
-    createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     renameDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
@@ -42,7 +40,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
 
-    title: string = 'Document Library';
+    title: string = 'Favourite';
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -58,9 +56,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.buildDocumentActions();
-        this.buildOptionItems();
         this.buildForms();
-        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+        // this.loadDocumentLibrary('0', false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
     }
@@ -84,28 +81,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 icon: 'icon-edit',
                 command: () => this.showRenameDocumentPopup(this.selectedDoc)
             },
-        ];
-    }
-
-    buildOptionItems() {
-        this.createMenuItems = [
-            {
-                label: 'Folder',
-                icon: 'icon-folder-plus',
-                command: () => this.showAddFolderPopup()
-            },
-        ];
-        this.uploadMenuItems = [
-            {
-                label: 'File',
-                icon: 'icon-file-plus',
-                command: () => this.fileUpload?.nativeElement.click()
-            },
-            {
-                label: 'Folder',
-                icon: 'icon-folder-plus',
-                command: () => this.folderUpload?.nativeElement.click()
-            }
         ];
     }
 

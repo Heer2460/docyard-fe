@@ -6,30 +6,6 @@
                     <ng-container>
                         <h3 class="title">{{title}}</h3>
                     </ng-container>
-                    <div class="action-items">
-                        <button class="btn btn-sm btn-secondary" (click)="uploadMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems"
-                                          [popup]="true"></p-tieredMenu>
-                            <i class="icon-upload"></i>
-                            Upload
-                            <i class="icon-arrow-down"></i>
-                        </button>
-                        <button class="btn btn-sm btn-primary" (click)="createMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #createMenu [model]="createMenuItems"
-                                          [popup]="true"></p-tieredMenu>
-                            <i class="icon-plus"></i>
-                            Create
-                            <i class="icon-arrow-down"></i>
-                        </button>
-                        <button class="btn btn-sm btn-primary" [disabled]="true">
-                            <i class="icon-manage"></i>
-                            Manage
-                        </button>
-                        <button class="btn btn-sm btn-primary" [disabled]="true">
-                            <i class="icon-share"></i>
-                            Share
-                        </button>
-                    </div>
                 </div>
                 <div class="container-breadcrumb-and-list-view">
                     <ng-container *ngIf="breadcrumbs.length > 0">

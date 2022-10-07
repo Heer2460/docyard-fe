@@ -9,6 +9,7 @@ import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FileUploaderModule} from "./file-uploader/file-uploader.module";
 import {TableModule} from "primeng/table";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {TableModule} from "primeng/table";
         ReactiveFormsModule,
         FileUploaderModule,
         TableModule,
+        ConfirmDialogModule,
     ]
 })
 export class DocLibModule {
