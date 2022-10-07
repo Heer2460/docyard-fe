@@ -8,13 +8,15 @@
                     </ng-container>
                     <div class="action-items">
                         <button class="btn btn-sm btn-secondary" (click)="uploadMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems" [popup]="true"></p-tieredMenu>
+                            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems"
+                                          [popup]="true"></p-tieredMenu>
                             <i class="icon-upload"></i>
                             Upload
                             <i class="icon-arrow-down"></i>
                         </button>
                         <button class="btn btn-sm btn-primary" (click)="createMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #createMenu [model]="createMenuItems" [popup]="true"></p-tieredMenu>
+                            <p-tieredMenu appendTo="body" #createMenu [model]="createMenuItems"
+                                          [popup]="true"></p-tieredMenu>
                             <i class="icon-plus"></i>
                             Create
                             <i class="icon-arrow-down"></i>
@@ -30,7 +32,17 @@
                     </div>
                 </div>
                 <div class="container-breadcrumb-and-list-view">
-                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                    <ng-container *ngIf="breadcrumbs.length > 0">
+                        <ol class="breadcrumb">
+                            <ng-container *ngFor="let breadcrumb of breadcrumbs; let lastIndex = last; let index = index;">
+                                <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                                    <a type="button" (click)="navigateToRoute(breadcrumb, index)">
+                                        {{breadcrumb.label}}
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ol>
+                    </ng-container>
                     <div class="btn-group input-group-display-listing">
                         <button class="btn btn-primary" [ngClass]="showGridDisplay ? 'active': ''"
                                 (click)="setGridDisplay()">
@@ -45,7 +57,7 @@
             </header>
 
             <div class="page-body">
-                <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments">
+                <data-table-component #docDataTableComponent [actionItems]="menuItems" [dlDocuments]="dlDocuments" (openFolderEmitter)="openFolder($event)">
                 </data-table-component>
             </div>
         </div>
@@ -55,7 +67,7 @@
     </div>
     <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
                              [selectedDocId]="docDataTableComponent?.selectedDocumentId"></doc-info-pane-component>
-<!--    <file-uploader-component></file-uploader-component>-->
+    <!--    <file-uploader-component></file-uploader-component>-->
 </section>
 
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">

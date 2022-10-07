@@ -1,5 +1,5 @@
 export class BreadcrumbDTO {
-    id?: number = undefined;
+    id?: string = '';
     label: string = '';
     route?: string = '';
     slug?: string = '';

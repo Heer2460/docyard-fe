@@ -6,7 +6,17 @@
                     <h3 class="title">{{title}}</h3>
                 </div>
                 <div class="container-breadcrumb-and-list-view">
-                    <breadcrumb-component [breadcrumbs]="breadcrumbs"></breadcrumb-component>
+                    <ng-container *ngIf="breadcrumbs.length > 0">
+                        <ol class="breadcrumb">
+                            <ng-container *ngFor="let breadcrumb of breadcrumbs; let lastIndex = last;">
+                                <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                                    <a type="button" [routerLink]="breadcrumb.route">
+                                        {{breadcrumb.label}}
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ol>
+                    </ng-container>
                 </div>
             </header>
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,6 +10,7 @@ import {DocDataTableComponent} from "../shared/doc-data-table/doc-data-table.com
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
 import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'doc-lib-component',
@@ -49,13 +50,13 @@ export class DocLibComponent implements OnInit {
     title: string = 'Document Library';
     
     constructor(public appService: AppService,
+                private router: Router,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
-        this.openFolder();
     }
     
     ngOnInit(): void {
@@ -200,21 +201,44 @@ export class DocLibComponent implements OnInit {
         }
     }
     
-    openFolder() {
-        this.appService.currentFolderIdSubject.subscribe((dlFolderId: any) => {
-            if (dlFolderId != '') {
-                this.loadDocumentLibrary(dlFolderId, false);
-                localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
-            }
-        });
+    
+    openFolder(rowData: any) {
+        const dlFolderId: string = rowData.id;
+        if (dlFolderId != '') {
+            this.loadDocumentLibrary(dlFolderId, false);
+            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), dlFolderId);
+            this.updateBreadcrumb(rowData);
+        }
     }
     
     setGridDisplay() {
-        this.appService.setGridDisplaySubjectState(true);
+        this.showGridDisplay = true;
     }
     
     setListDisplay() {
-        this.appService.setGridDisplaySubjectState(false);
+        this.showGridDisplay = false;
+    }
+    
+    updateBreadcrumb(rowData: any) {
+        this.breadcrumbs[this.breadcrumbs.length - 1].active = false;
+        this.breadcrumbs.push({
+            label: rowData.title,
+            id: rowData.id,
+            active: true
+        });
+    }
+    
+    navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
+        
+        if(breadcrumb.id) {
+            this.loadDocumentLibrary(breadcrumb.id, false);
+            this.breadcrumbs.pop();
+            this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+        }else if(index == 1) {
+            this.loadDocumentLibrary('0', false);
+        }else {
+            this.router.navigate([breadcrumb.route]);
+        }
     }
     
 }
