@@ -12,7 +12,7 @@ import {UserDTO} from "../../../../../model/settings/um/user/user.dto";
 import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
 @Component({
-    selector: 'user-profile-component',
+    selector: 'view-user-component',
     templateUrl: './view-user.template.html',
     styleUrls: ['./view-user.component.less']
 })

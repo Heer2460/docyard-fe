@@ -179,8 +179,8 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
-                             [selectedDocId]="dlFolderId">
+    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'"
+                             [selectedDoc]="dlFolderId">
     </doc-info-pane-component>
 </section>
 <p-confirmDialog #cd styleClass="dialog-danger">

@@ -17,7 +17,7 @@ export class ImagePreviewComponent implements OnInit {
     stared: boolean = false;
     
     constructor(public appService: AppService) {
-        this.appService.setDocInfoPaneSubjectState(this.docInfoPane);
+        this.appService.setShowDocInfoPaneSubjectState(this.docInfoPane);
     }
     
     ngOnInit(): void {

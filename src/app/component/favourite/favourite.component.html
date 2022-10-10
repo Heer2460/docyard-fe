@@ -186,7 +186,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
-                             [selectedDocId]="dlFolderId"></doc-info-pane-component>
+    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'"
+                             [selectedDoc]="dlFolderId"></doc-info-pane-component>
     <!--    <file-uploader-component></file-uploader-component>-->
 </section>

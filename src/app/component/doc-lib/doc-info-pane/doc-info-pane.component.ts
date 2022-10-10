@@ -2,9 +2,10 @@ import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core'
 import {AppService} from "../../../service/app.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUtility} from "../../../util/app.utility";
 import {RequestService} from "../../../service/request.service";
+import {CustomValidations} from "../../../util/custom.validations";
 
 @Component({
     selector: 'doc-info-pane-component',
@@ -13,14 +14,15 @@ import {RequestService} from "../../../service/request.service";
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
 
-    @Input() selectedDocId: any = null;
+    @Input() selectedDoc: any = null;
 
     documentMeta: any;
     users: any[] = [];
-    showDocInfoPane: boolean = true;
-    showAll: boolean = false;
-    paneData: any;
-    comments: any = [];
+    showDocInfoPane: boolean = false;
+    enableEditComment: boolean = false;
+    
+    postCommentForm: FormGroup = new FormGroup({});
+    editCommentForm: FormGroup = new FormGroup({});
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -35,18 +37,26 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-
+        this.buildForms();
+    }
+    
+    buildForms() {
+        this.postCommentForm = this.fb.group({
+            comments: [''],
+        });
+        this.editCommentForm = this.fb.group({
+            comments: [''],
+        });
     }
 
     getMetaDocumentByID() {
-        if (this.selectedDocId && this.selectedDocId > 0) {
+        if (this.selectedDoc && this.selectedDoc > 0) {
             this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
-                .replace("{dlDocumentId}", String(this.selectedDocId)))
+                .replace("{dlDocumentId}", String(this.selectedDoc)))
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.documentMeta = response.body.data;
-                            this.populatePane(response.body.data);
                         } else {
                             this.documentMeta = [];
                         }
@@ -58,33 +68,24 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         }
     }
 
-    getUserName(id: any) {
-        if (id != null) {
-            return this.users.find(item => item.id == id)?.username;
-        }
-    }
-
-    populatePane(data: any) {
-        this.paneData = {
-            title: data?.title,
-            savedIn: data?.location,
-            size: data?.size,
-            modified: data?.updatedOn,
-            type: data?.extention,
-            description: data?.description,
-            currentVersion: data?.currentVersion,
-            createdByName: data?.createdByName,
-            updatedByName: data?.updatedByName,
-        };
-        this.comments = data?.dlDocumentCommentDTOList;
-    }
-
     toggleDocInfoPane() {
-        this.appService.setDocInfoPaneSubjectState(!this.showDocInfoPane);
+        this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
-
-    toggleShowAllAction() {
-        this.showAll = !this.showAll;
+    
+    onEditCommentBtnClicked() {
+        this.enableEditComment = true;
+        this.editCommentForm.patchValue({
+            comments: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra`
+        });
+    }
+    
+    onCancelEditCommentBtnClicked(){
+        this.enableEditComment = false;
+    }
+    
+    updateUserComment() {
+        this.appService.successUpdateMessage('Comment Update');
+        this.enableEditComment = false;
     }
 
 }
