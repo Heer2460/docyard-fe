@@ -158,6 +158,6 @@ export class AppService {
     }
 
     public getLoggedInUserId(): number {
-        return Number.parseInt(localStorage.getItem(btoa('loggedInUserId')) + '');
+        return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
     }
 }
