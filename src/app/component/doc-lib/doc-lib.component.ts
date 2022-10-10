@@ -443,7 +443,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
     
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        console.log(event.data);
         this.appService.setShowDocInfoPaneSubjectState(true);
     }
 
