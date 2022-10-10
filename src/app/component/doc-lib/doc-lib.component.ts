@@ -328,18 +328,22 @@ export class DocLibComponent implements OnInit, OnDestroy {
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
 
-    favouriteDocument(event: any, id: any) {
+    favouriteDocument(event: any, row: any) {
         const isChecked = event.target.checked;
-        let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(id)) + '/?favourite=' + isChecked;
+        let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(row.id)) + '/?favourite=' + isChecked;
         this.requestsService.putRequest(url, {})
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successUpdateMessage('Document');
+                            if (isChecked) {
+                                this.toastService.success(row.title + ' has been starred successfully.', 'Document Library');
+                            } else {
+                                this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
+                            }
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Document');
+                        this.appService.handleError(error, 'Document Library');
                     }
                 }
             );

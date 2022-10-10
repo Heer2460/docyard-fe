@@ -35,7 +35,7 @@ export class AppRouteConstants {
 
         },
         {
-            label: 'Favourite',
+            label: 'Starred',
             route: '/favourite',
             icon: 'icon-star',
             expended: false,
