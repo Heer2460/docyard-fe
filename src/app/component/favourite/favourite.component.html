@@ -62,11 +62,11 @@
                                                          alt="{{item.extension}}">
                                                 </ng-container>
                                                 <ng-template #otherFileElseCase>
-                                                    <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                    <img src="../../../assets/images/svg/icons/other.svg" alt="other">
                                                 </ng-template>
                                             </ng-container>
                                             <img *ngIf="item.folder == true"
-                                                 src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                                 src="../../../assets/images/svg/icons/folder.svg" alt="icon">
                                         </div>
                                         <div class="file-details">
                                             <p class="title" role="button" (click)="openFolder(item)">{{item?.name}}</p>
@@ -130,10 +130,10 @@
                                                      alt="{{row.extension}}">
                                             </ng-container>
                                             <ng-template #otherFileElseCase>
-                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                <img src="../../../assets/images/svg/icons/other.svg" alt="other">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
+                                        <img *ngIf="row.folder == true" src="../../../assets/images/svg/icons/folder.svg"
                                              alt="icon">
 
                                         <ng-container *ngIf="row.folder == true; else elseCase">

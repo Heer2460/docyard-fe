@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {FavouriteRoutingModule} from './favourite-routing.module';
-import {FavouriteComponent} from './favourite/favourite.component';
+import {FavouriteComponent} from './favourite.component';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {TableModule} from "primeng/table";
 import {TieredMenuModule} from "primeng/tieredmenu";

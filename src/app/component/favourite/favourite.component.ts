@@ -1,15 +1,15 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfirmationService, MenuItem} from "primeng/api";
-import {DlDocumentDTO} from "../../../model/settings/doc-handling/dl-document.dto";
-import {AppConstants} from "../../../util/app.constants";
-import {BreadcrumbDTO} from "../../../model/breadcrumb.dto";
-import {AppService} from "../../../service/app.service";
+import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
+import {AppConstants} from "../../util/app.constants";
+import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
+import {AppService} from "../../service/app.service";
 import {Router} from "@angular/router";
-import {AppUtility} from "../../../util/app.utility";
-import {RequestService} from "../../../service/request.service";
+import {AppUtility} from "../../util/app.utility";
+import {RequestService} from "../../service/request.service";
 import {ToastrService} from "ngx-toastr";
-import {ApiUrlConstants} from "../../../util/api.url.constants";
+import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 
 @Component({
