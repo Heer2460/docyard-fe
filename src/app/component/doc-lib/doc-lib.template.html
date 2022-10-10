@@ -36,10 +36,11 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li class="breadcrumb-item" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body" [popup]="true"></p-tieredMenu>
+                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
+                                                          [popup]="true"></p-tieredMenu>
                                             <i role="button" class="icon-menu-horizontal"></i>
                                         </li>
                                     </ng-container>
@@ -81,7 +82,7 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img src="./assets/images/svg/icons/{{item.extension}}.svg"
                                                          alt="{{item.extension}}">
                                                 </ng-container>
@@ -95,7 +96,7 @@
                                         <div class="file-details">
                                             <p class="title" role="button" (click)="openFolder(item)">{{item?.name}}</p>
                                             <p class="date-and-author">
-                                                <span>{{item?.updatedOn | date:'mediumDate'}} by </span>
+                                                <span>{{item?.updatedOnDetail}} by </span>
                                                 <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
@@ -149,7 +150,7 @@
 
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
-                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
                                                 <img src="./assets/images/svg/icons/{{row.extension}}.svg"
                                                      alt="{{row.extension}}">
                                             </ng-container>
@@ -170,7 +171,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOn | date:'medium'}} by </span>
+                                    <span>{{row.updatedOnDetail}} by </span>
                                     <a role="button" class="author">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
@@ -183,7 +184,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event);onMenuClicked(row)">
+                                    <button class="btn btn-tiered-menu"
+                                            (click)="menu.toggle($event);onMenuClicked(row)">
                                         <p-tieredMenu appendTo="body" #menu [model]="menuItems"
                                                       [popup]="true"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>

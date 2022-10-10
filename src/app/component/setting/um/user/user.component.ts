@@ -123,27 +123,24 @@ export class UserComponent implements OnInit {
 
     buildForms() {
         this.searchUserForm = this.fb.group({
-            username: [null],
-            name: [null],
-            group: [null],
-            department: [null],
+            username: [''],
+            name: [''],
+            group: [''],
+            department: [''],
             status: ['Active'],
         });
-
         this.resetPasswordForm = this.fb.group({
             passwords: this.fb.group({
                 password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
                 confirmPassword: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(32), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,32}$/)]],
             }, {validators: CustomValidations.passwordConfirming}),
-            // groupId: [null, Validators.required],
-            // departmentIds: ['']
         });
     }
 
     searchUsers() {
         let url = ApiUrlConstants.USER_API_URL + 'search' + '?username=' + this.searchUserForm.value.username +
-            '&name=' + this.searchUserForm.value.name + '&group=' + this.searchUserForm.value.group +
-            '&department=' + this.searchUserForm.value.department + '&status=' + this.searchUserForm.value.status;
+            '&name=' + this.searchUserForm.value.name + '&groupId=' + this.searchUserForm.value.group +
+            '&departmentId=' + this.searchUserForm.value.department + '&status=' + this.searchUserForm.value.status;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
