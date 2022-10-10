@@ -39,7 +39,8 @@
                                         *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li class="breadcrumb-item" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body" [popup]="true"></p-tieredMenu>
+                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
+                                                          [popup]="true"></p-tieredMenu>
                                             <i role="button" class="icon-menu-horizontal"></i>
                                         </li>
                                     </ng-container>
@@ -183,7 +184,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event);onMenuClicked(row)">
+                                    <button class="btn btn-tiered-menu"
+                                            (click)="menu.toggle($event);onMenuClicked(row)">
                                         <p-tieredMenu appendTo="body" #menu [model]="menuItems"
                                                       [popup]="true"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>
@@ -208,7 +210,63 @@
     </div>
     <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
                              [selectedDocId]="dlFolderId"></doc-info-pane-component>
-    <!--    <file-uploader-component></file-uploader-component>-->
+
+    <ng-container *ngIf="filesToUpload.length > 0">
+        <div class="file-uploader-container">
+            <div class="file-uploader" [ngClass]="showFileUploader ? '' : 'collapsed'">
+                <header>
+                    <div class="header-content">
+                        <h4>6 of 12 files are being uploaded</h4>
+                        <div class="progress-container">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                            <span>67%</span>
+                        </div>
+                    </div>
+                    <div class="action-items">
+                        <button class="btn btn-toggle btn-transparent" (click)="showFileUploaderAction()">
+                            <i class="icon-arrow-down" *ngIf="showFileUploader"></i>
+                            <i class="icon-arrow-up" *ngIf="!showFileUploader"></i>
+                        </button>
+                        <button class="btn btn-transparent" (click)="removeAllFilesFromList()">
+                            <i class="icon-times"></i>
+                        </button>
+                    </div>
+                </header>
+                <div class="body">
+                    <ul>
+                        <ng-container *ngFor="let file of filesToUpload; let index = index;">
+                            <li>
+                                <div class="file-metadata">
+                                    <div class="file-icon-container">
+                                        <img src="./assets/images/svg/icons/{{file.name.split('.').pop()}}.svg" alt="Docx">
+                                    </div>
+                                    <div class="file-detail">
+                                        <div class="info-and-percentage">
+                                            <h5>{{file.name}}</h5>
+                                            <span class="percentage">67%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 67%" aria-valuenow="67"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="btn btn-transparent" (click)="removeFileFromList(index)">
+                                        <i class="icon-times"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
 </section>
 
 <p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
@@ -286,7 +344,7 @@
     </ng-template>
 </p-confirmDialog>
 <ng-container>
-    <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file"
+    <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file" [multiple]="true"
            onclick="this.value = null" type="file" [hidden]="true">
     <input #folderUpload (change)="uploadFolder($event)" class="form-control" id="folder"
            onclick="this.value = null" type="file" webkitdirectory directory multiple [hidden]="true">
