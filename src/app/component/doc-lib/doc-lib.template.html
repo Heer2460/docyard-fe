@@ -211,18 +211,18 @@
     <doc-info-pane-component [ngClass]="showDocInfoPane ? 'collapsed': ''"
                              [selectedDocId]="dlFolderId"></doc-info-pane-component>
 
-    <ng-container *ngIf="filesToUpload.length > 0">
+    <ng-container *ngIf="files.length > 0">
         <div class="file-uploader-container">
             <div class="file-uploader" [ngClass]="showFileUploader ? '' : 'collapsed'">
                 <header>
                     <div class="header-content">
-                        <h4>6 of 12 files are being uploaded</h4>
+                        <h4>Files are being uploaded</h4>
                         <div class="progress-container">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                <div class="progress-bar" role="progressbar" style="width: {{averageProgress}}%" aria-valuenow="25" aria-valuemin="0"
                                      aria-valuemax="100"></div>
                             </div>
-                            <span>67%</span>
+                            <span>{{averageProgress}}%</span>
                         </div>
                     </div>
                     <div class="action-items">
@@ -230,9 +230,9 @@
                             <i class="icon-arrow-down" *ngIf="showFileUploader"></i>
                             <i class="icon-arrow-up" *ngIf="!showFileUploader"></i>
                         </button>
-                        <button class="btn btn-transparent" (click)="removeAllFilesFromList()">
+                        <!--<button class="btn btn-transparent" (click)="removeAllFilesFromList()">
                             <i class="icon-times"></i>
-                        </button>
+                        </button>-->
                     </div>
                 </header>
                 <div class="body">
@@ -253,16 +253,16 @@
                                     <div class="file-detail">
                                         <div class="info-and-percentage">
                                             <h5>{{file?.orgFile.name}}</h5>
-                                            <span class="percentage">67%</span>
+                                            <span class="percentage">{{file.progress}}%</span>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 67%" aria-valuenow="67"
+                                            <div class="progress-bar" role="progressbar" style="width: {{file.progress}}%" aria-valuenow="67"
                                                  aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="file-actions">
-                                    <button class="btn btn-transparent" (click)="removeFileFromList(index)">
+                                    <button class="btn btn-transparent" (click)="onCancelClick(index)">
                                         <i class="icon-times"></i>
                                     </button>
                                 </div>

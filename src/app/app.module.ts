@@ -54,7 +54,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderRouterModule,
-        NgxUiLoaderHttpModule.forRoot({showForeground: true})
+        NgxUiLoaderHttpModule.forRoot({
+            showForeground: true, exclude: [
+                'http://192.168.78.87:8080/dl/dl-document/upload'
+            ]
+        })
     ],
     providers: [
         AppUtility,
