@@ -11,6 +11,7 @@ import {AppConstants} from "../../util/app.constants";
 import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+// @ts-ignore
 import * as FileSaver from 'file-saver';
 
 @Component({
