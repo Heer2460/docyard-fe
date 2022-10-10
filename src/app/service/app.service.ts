@@ -16,7 +16,7 @@ export class AppService {
 
     public showMenuBSubject = new BehaviorSubject(false);
     public showRightPaneSubject = new BehaviorSubject(false);
-    public showDocInfoPaneSubject = new BehaviorSubject(true);
+    public showDocInfoPaneSubject = new BehaviorSubject(false);
 
     routes: RoutesDTO[] = [];
 
@@ -32,7 +32,7 @@ export class AppService {
         this.showRightPaneSubject.next(state);
     }
 
-    setDocInfoPaneSubjectState(state: boolean) {
+    setShowDocInfoPaneSubjectState(state: boolean) {
         this.showDocInfoPaneSubject.next(state);
     }
 

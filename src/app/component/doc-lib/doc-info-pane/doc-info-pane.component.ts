@@ -13,11 +13,11 @@ import {RequestService} from "../../../service/request.service";
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
 
-    @Input() selectedDocId: any = null;
+    @Input() selectedDoc: any = null;
 
     documentMeta: any;
     users: any[] = [];
-    showDocInfoPane: boolean = true;
+    showDocInfoPane: boolean = false;
     showAll: boolean = false;
     paneData: any;
     comments: any = [];
@@ -39,14 +39,13 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     getMetaDocumentByID() {
-        if (this.selectedDocId && this.selectedDocId > 0) {
+        if (this.selectedDoc && this.selectedDoc > 0) {
             this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
-                .replace("{dlDocumentId}", String(this.selectedDocId)))
+                .replace("{dlDocumentId}", String(this.selectedDoc)))
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.documentMeta = response.body.data;
-                            this.populatePane(response.body.data);
                         } else {
                             this.documentMeta = [];
                         }
@@ -64,23 +63,8 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         }
     }
 
-    populatePane(data: any) {
-        this.paneData = {
-            title: data?.title,
-            savedIn: data?.location,
-            size: data?.size,
-            modified: data?.updatedOn,
-            type: data?.extention,
-            description: data?.description,
-            currentVersion: data?.currentVersion,
-            createdByName: data?.createdByName,
-            updatedByName: data?.updatedByName,
-        };
-        this.comments = data?.dlDocumentCommentDTOList;
-    }
-
     toggleDocInfoPane() {
-        this.appService.setDocInfoPaneSubjectState(!this.showDocInfoPane);
+        this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
 
     toggleShowAllAction() {

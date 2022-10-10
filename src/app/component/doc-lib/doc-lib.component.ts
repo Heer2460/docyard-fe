@@ -35,7 +35,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     renameDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
-    showDocInfoPane: boolean = true;
+    showDocInfoPane: boolean = false;
     showGridDisplay: boolean = false;
     dlFolderId: any;
     showFileUploader: boolean = true;
@@ -438,6 +438,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     removeAllFilesFromList() {
         this.filesToUpload = [];
+    }
+    
+    onRowSelect(event: any) {
+        this.selectedDoc = event.data;
+        console.log(event.data);
+        this.appService.setShowDocInfoPaneSubjectState(true);
     }
 
 }
