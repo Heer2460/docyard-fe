@@ -6,29 +6,28 @@
                     <ng-container>
                         <h3 class="title">{{title}}</h3>
                     </ng-container>
+                    <div class="action-items">
+                        <button class="btn btn-sm btn-secondary">
+                            <i class="icon-restore"></i>
+                            Restore All
+                        </button>
+                        <button class="btn btn-sm btn-danger">
+                            <i class="icon-trash"></i>
+                            Delete All
+                        </button>
+                    </div>
                 </div>
                 <div class="container-breadcrumb-and-list-view">
                     <ng-container *ngIf="breadcrumbs.length > 0">
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
-                                    <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
-                                        <li class="breadcrumb-item" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
-                                                          [popup]="true"></p-tieredMenu>
-                                            <i role="button" class="icon-menu-horizontal"></i>
-                                        </li>
-                                    </ng-container>
-                                    <ng-container *ngIf="index >= breadcrumbs.length -breadcrumbItemsToShow">
-                                        <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
-                                            <ng-container *ngIf="lastIndex; else elseBlock">
-                                                <a>{{breadcrumb.label}}</a>
-                                            </ng-container>
-                                            <ng-template #elseBlock>
-                                            </ng-template>
-                                        </li>
-                                    </ng-container>
+                                    *ngFor="let breadcrumb of breadcrumbs; let index = index;">
+                                    <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                                        <ng-container>
+                                            <a>{{breadcrumb.label}}</a>
+                                        </ng-container>
+                                    </li>
                                 </ng-container>
                             </ol>
                         </div>
@@ -69,7 +68,7 @@
                                         <div class="file-details">
                                             <p class="title" role="button">{{item?.name}}</p>
                                             <p class="date-and-author">
-                                                <span>{{item?.updatedOn | date:'mediumDate'}} by </span>
+                                                <span>{{item?.updatedOnDetail}} by </span>
                                                 <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
@@ -99,8 +98,8 @@
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updated">Updated
-                                    <p-sortIcon field="updated"></p-sortIcon>
+                                <th pSortableColumn="updatedOn">Updated
+                                    <p-sortIcon field="updatedOn"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
@@ -144,7 +143,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOn | date:'medium'}} by </span>
+                                    <span>{{row.updatedOnDetail}} by </span>
                                     <a role="button" class="author">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>

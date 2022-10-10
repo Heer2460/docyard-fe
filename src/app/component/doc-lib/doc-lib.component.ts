@@ -154,8 +154,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
     
     loadDocumentLibrary(folderId: string, archived: boolean) {
-        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_API_URL
-            .replace("{folderId}", folderId).replace("{archived}", String(archived)))
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
+            .replace('{ownerId}', String(loggedInUserId))
+            .replace("{folderId}", folderId)
+            .replace("{archived}", String(archived)))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {

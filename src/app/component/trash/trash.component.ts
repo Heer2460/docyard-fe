@@ -29,7 +29,18 @@ export class TrashComponent implements OnInit {
     showGridDisplay: boolean = false;
     dlFolderId: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
-    breadcrumbs: BreadcrumbDTO[] = [];
+    breadcrumbs: BreadcrumbDTO[] = [
+        {
+            label: 'Home',
+            route: '/home',
+            active: false
+        },
+        {
+            label: 'Trash',
+            route: '/trash',
+            active: true
+        }
+    ];
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Trash';
@@ -49,7 +60,6 @@ export class TrashComponent implements OnInit {
     ngOnInit(): void {
         this.buildDocumentActions();
         this.loadTrashDLDocuments();
-        this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
     }
 
     buildDocumentActions() {
@@ -96,22 +106,6 @@ export class TrashComponent implements OnInit {
 
     setListDisplay() {
         this.showGridDisplay = false;
-    }
-
-    getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
-        return [
-            {
-                label: 'Home',
-                route: '/home',
-                active: false
-            },
-            {
-                label: 'Trash',
-                route: '/trash',
-                active: true
-            }
-        ];
-
     }
 
     onItemDeleteAction(data: any) {
