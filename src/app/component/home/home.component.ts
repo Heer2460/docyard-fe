@@ -12,6 +12,7 @@ import {AppConstants} from "../../util/app.constants";
     styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
+    userInfo: any;
 
     menuItems: MenuItem[] = [
         {
@@ -44,6 +45,8 @@ export class HomeComponent implements OnInit {
 
     constructor(private requestsService: RequestService,
                 private appService: AppService) {
+        let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
+        this.userInfo = JSON.parse(userData);
     }
 
     ngOnInit(): void {

@@ -32,7 +32,7 @@ export class EditUserComponent implements OnInit {
     files: any[] = [];
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.userStatuses;
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -60,7 +60,7 @@ export class EditUserComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Edit';
 
     constructor(private fb: FormBuilder,
@@ -110,8 +110,8 @@ export class EditUserComponent implements OnInit {
             username: [{ value: null, disabled: true }],
             name: [null, [Validators.required, Validators.maxLength(70)]],
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
-            phoneNumber: [null, Validators.maxLength(32)],
-            mobileNumber: [null, Validators.maxLength(32)],
+            phoneNumber: [null, Validators.maxLength(17)],
+            mobileNumber: [null, Validators.maxLength(17)],
             passwords: this.fb.group({
                 password: [null],
             }),
@@ -189,12 +189,12 @@ export class EditUserComponent implements OnInit {
         if (event.target.files.length > 0) {
             size = event.target.files[0].size / 1024 / 1024;
             if (size > 1) {
-                this.toastService.error('File size not valid.', 'Logo');
+                this.toastService.error('File size not valid.', 'Profile Picture');
                 return;
             }
             format = event.target.files[0].type;
             if (!format.includes('image/')) {
-                this.toastService.error('Image format not valid.', 'Logo');
+                this.toastService.error('Image format not valid.', 'Profile Picture');
                 return;
             }
             let obj = {
