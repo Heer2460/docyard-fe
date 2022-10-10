@@ -45,7 +45,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {

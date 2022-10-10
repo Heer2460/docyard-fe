@@ -38,7 +38,6 @@ export class EditRoleComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {
