@@ -10,11 +10,11 @@ import {AppRouteConstants} from "../../../util/app.route.constants";
     styleUrls: ['./sidebar.component.less']
 })
 export class SidebarComponent implements OnInit {
-    
+
     routes: RoutesDTO[] = [];
     currentRoute: string = '';
     menus: RoutesDTO[] = [];
-    
+
     constructor(public appService: AppService, private router: Router) {
         router.events.subscribe((route: any) => {
             if (route instanceof NavigationEnd) {
@@ -23,60 +23,60 @@ export class SidebarComponent implements OnInit {
             }
         });
     }
-    
+
     ngOnInit(): void {
         this.setActiveRoute();
     }
-    
+
     setActiveRoute() {
         this.setCurrentRoute(null, this.routes, this.currentRoute);
     }
-    
+
     setCurrentRoute(parent: any = null, routes: any, currentRouteUrl: string) {
         return routes.map((route: any) => {
-            
+
             //False all previous active routes;
             route.active = false;
             route.expended = false;
-            
+
             //Expending all parents of current child
             if (parent) {
-                
+
                 if (currentRouteUrl.includes(parent.route)) {
                     parent.active = true;
                     parent.expended = true;
                 }
-                
+
             }
-            
+
             if (route?.children?.length > 0) {
                 const routes: any = this.setCurrentRoute(route, route.children, currentRouteUrl);
                 if (routes) {
                     return routes;
                 }
             } else {
-                
+
                 if (currentRouteUrl.includes(route.route)) {
-                    
+
                     route.active = true;
                     return route;
-                    
+
                 }
-                
+
             }
-            
+
         });
     }
-    
+
     toggleDropdown(route: any) {
         this.routes.map((route: any) => {
             route.expended = false;
         });
         route.expended = !route.expended;
     }
-    
+
     switchRouteTypes() {
-        
+
         const mappedMenu = this.appService.permissions.map((item: any) => {
             return {
                 label: item.name,
@@ -98,7 +98,7 @@ export class SidebarComponent implements OnInit {
         this.routes = [
             ...AppRouteConstants.mainRoutes,
             {
-                label: 'Setting',
+                label: 'Settings',
                 route: '/setting',
                 icon: 'icon-cog',
                 expended: false,
@@ -106,7 +106,7 @@ export class SidebarComponent implements OnInit {
                 children: mappedMenu
             }
         ];
-        
+
     }
-    
+
 }
