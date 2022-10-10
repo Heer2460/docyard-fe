@@ -38,7 +38,6 @@ export class AddRoleComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {

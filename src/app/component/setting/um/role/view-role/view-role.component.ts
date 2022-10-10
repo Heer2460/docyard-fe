@@ -31,7 +31,6 @@ export class ViewRoleComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {
