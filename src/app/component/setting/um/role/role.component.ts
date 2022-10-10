@@ -61,7 +61,6 @@ export class RoleComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {

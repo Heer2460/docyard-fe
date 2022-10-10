@@ -46,7 +46,6 @@ export class DeptComponent implements OnInit {
         },
         {
             label: 'Reference',
-            route: '/setting/ref',
             active: false
         },
         {

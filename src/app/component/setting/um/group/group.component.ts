@@ -67,7 +67,6 @@ export class GroupComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {
