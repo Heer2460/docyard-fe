@@ -33,7 +33,7 @@
                                         {{ appUtility.makeErrorMessage("Name", 'required') }}
                                     </small>
                                     <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'maxlength')">
-                                        {{ appUtility.makeErrorMessage("Name", 'maxlength', 70) }}
+                                        {{ appUtility.makeErrorMessage("Name", 'maxlength', 32) }}
                                     </small>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                         {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
                                     </small>
                                     <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
-                                        {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 32) }}
+                                        {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                         {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
                                     </small>
                                     <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
-                                        {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 32) }}
+                                        {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
                             </div>
