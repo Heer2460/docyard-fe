@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
 
     searchUserForm: FormGroup = new FormGroup({});
     resetPasswordForm: FormGroup = new FormGroup({});
-    searchPopupToggle: boolean = false;
+    searchPopupToggle: boolean = true;
     resetPasswordDialog: boolean = false;
     users: UserDTO[] = [];
     groups: GroupDTO[] = [];
@@ -61,7 +61,7 @@ export class UserComponent implements OnInit {
         }
     ];
     statuses = ReferencesStatuses.userSearchStatuses;
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -84,7 +84,7 @@ export class UserComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Users';
 
     constructor(private fb: FormBuilder, private router: Router,

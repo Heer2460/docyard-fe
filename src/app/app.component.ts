@@ -4,7 +4,6 @@ import {AppService} from "./service/app.service";
 import {AppUtility} from "./util/app.utility";
 import {environment} from "../environments/environment";
 import {getMessaging, getToken} from "firebase/messaging";
-import {ToastrService} from "ngx-toastr";
 import {AppConstants} from "./util/app.constants";
 
 @Component({
@@ -16,8 +15,7 @@ export class AppComponent implements OnInit {
 
     constructor(private primengConfig: PrimeNGConfig,
                 private appService: AppService,
-                public appUtility: AppUtility,
-                private toastService: ToastrService) {
+                public appUtility: AppUtility) {
 
         let userObj: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
         this.appService.userInfo = JSON.parse(userObj);
@@ -44,10 +42,8 @@ export class AppComponent implements OnInit {
                     //console.log('No registration token available. Request permission to generate one.');
                 }
             }).catch((err) => {
-            //console.log('An error occurred while retrieving token. ', err);
         });
     }
-
 
 
 }

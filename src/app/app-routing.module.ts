@@ -45,6 +45,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'trash',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/trash/trash.module').then(m => m.TrashModule)
+            }
+        ]
+    },
+    {
         path: 'setting',
         component: LayoutComponent,
         children: [

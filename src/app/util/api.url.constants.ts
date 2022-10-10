@@ -10,14 +10,12 @@ export class ApiUrlConstants {
     // User Management API URLS
     public static USER_API_URL = '/um/user/';
     public static FORGOT_PASSWORD_API_URL = '/um/user/forgot-password';
-    public static GET_ALL_USERS = '/um/user/';
     public static UPLOAD_IMAGE_API_URL = '/um/user/profile-picture';
     public static USER_STATUS_API_URL = '/um/user/update-user-status/';
     public static USER_RESET_PASS_API_URL = '/um/user/reset-password/';
     public static CHANGE_PASSWORD_API_URL = '/um/user/change-password';
     public static DEPARTMENT_API_URL = '/um/department/';
     public static ROLE_API_URL = '/um/role/';
-    public static PERMISSIONS_API_URL = '/um/permission/';
     public static MODULE_API_URL = '/um/module/';
     public static GROUP_API_URL = '/um/group/';
 
@@ -28,6 +26,5 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_API_URL = '/dl/dl-document/{dlDocumentId}';
     public static DL_DOCUMENT_ARCHIVED_API_URL = '/dl/dl-document/archive/{dlDocumentId}?archive={archived}';
     public static DL_DOCUMENT_RENAME_API_URL = '/dl/dl-document/rename/';
-
-
+    public static GET_ALL_TRASH_DL_DOCUMENTS_API_URL = '/dl/dl-document/trash/owner/';
 }
