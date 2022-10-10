@@ -206,6 +206,7 @@ export class FavouriteComponent implements OnInit {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.appService.successUpdateMessage('Document');
+                            this.loadAllFavouriteDlDocuments(this.dlFolderId, false);
                         }
                     },
                     error: (error: any) => {

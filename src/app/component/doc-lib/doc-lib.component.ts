@@ -4,7 +4,7 @@ import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
-import {HttpResponse} from "@angular/common/http";
+import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
@@ -12,6 +12,7 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
+import {BehaviorSubject} from "rxjs";
 
 @Component({
     selector: 'doc-lib-component',
@@ -39,6 +40,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
     showGridDisplay: boolean = false;
     dlFolderId: any;
     showFileUploader: boolean = true;
+    files: any[] = [];
+    averageProgress = 0;
+    public cancelAllUploads = new BehaviorSubject<number>(0);
+
 
 
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
@@ -104,7 +109,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             {
                 label: 'File',
                 icon: 'icon-file-plus',
-                command: () => this.fileUpload?.nativeElement.click()
+                command: () => this.onUploadFilesInitialize()
             },
             {
                 label: 'Folder',
@@ -139,10 +144,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.visibleAddFolderDialog = false;
     }
 
-    // updating
-    uploadFile(event: any) {
-        this.filesToUpload = [...event.target.files];
-    }
+    // updloading
 
     uploadFolder(event: any) {
         // console.log('Dir: ', event.target.files);
@@ -440,4 +442,98 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.filesToUpload = [];
     }
 
+    // uploading files code start
+
+    uploadFile(event: any) {
+        this.filesToUpload = [...event.target.files];
+    }
+
+    onUploadFilesInitialize() {
+        let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
+        uploadInput.click();
+    }
+
+    onUploadProcessStarted(event: any) {
+        let files = event.target.files;
+        if (files && files.length > 0) {
+            for (let file of files) {
+                let obj: any = {};
+                obj['orgFile'] = file;
+                obj['progress'] = 0;
+                obj['uploaded'] = false;
+                this.files.push(obj);
+            }
+            // this.uploadPopupVisible = true;
+            this.startUploadingFiles();
+        }
+    }
+
+    startUploadingFiles() {
+        console.log('2nd func', this.files);
+        this.files.forEach((file, i) => {
+            if (file.uploaded === false) {
+                this.makeUploadRequest(file,
+                    (res) => {
+                        file['uploaded'] = true;
+                    },
+                    (value) => {
+                        file.progress = value;
+                        this.getAverageProgress();
+                    }, this.cancelAllUploads, i)
+            }
+        });
+    }
+
+    onCancelClick(index: number) {
+        this.cancelAllUploads.next(index);
+        this.files.splice(index, 1);
+    }
+
+    getAverageProgress() {
+        let totalProgress = 0;
+        this.files.forEach((file) => {
+            totalProgress += file.progress;
+        });
+        this.averageProgress = Math.round(totalProgress / this.files.length);
+    }
+
+    makeUploadRequest(file: any[], oncomplete: (response: any) => void,
+                      onprogress: (progress: any) => void,
+                      onCancel: BehaviorSubject<number>, index: number) {
+        // console.log('file', file);
+        // return;
+        let subscription = this.requestsService.postRequestMultipartFormAndDataUpload(ApiUrlConstants.UPLOAD_FILES_API_URL,
+            file, {
+                "creatorId": this.appService.userInfo.id,
+                "ownerId": this.appService.userInfo.id,
+                "folderId": Number.parseInt(window.atob(localStorage.getItem(window.btoa('folderId')) + ''))
+            })
+            .subscribe({
+                next: (event: any) => {
+                    if (event.type == HttpEventType.UploadProgress) {
+                        let progress = Math.round(100 * event.loaded / event.total);
+                        onprogress(progress);
+                    } else if (event.type == HttpEventType.Response) {
+                        oncomplete(event.body);
+                        let folderId = Number.parseInt(window.atob(localStorage.getItem(window.btoa('folderId')) +''));
+                        // this.loadAllDocsFolders(folderId);
+                    }
+                }, error: err => {
+                    oncomplete(err);
+                }
+            });
+        onCancel.subscribe(res => {
+            if (res == index) {
+                subscription.unsubscribe();
+            }
+        })
+    }
+
+    closeUploadPopup() {
+        // this.uploadPopupVisible = false;
+    }
+
+    expandPopup(status: boolean) {
+        // this.isUploadPopupExpanded = status;
+    }
 }
