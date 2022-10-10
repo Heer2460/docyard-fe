@@ -33,7 +33,7 @@
                                         {{ appUtility.makeErrorMessage("Name", 'required') }}
                                     </small>
                                     <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'maxlength')">
-                                        {{ appUtility.makeErrorMessage("Name", 'maxlength', 70) }}
+                                        {{ appUtility.makeErrorMessage("Name", 'maxlength', 32) }}
                                     </small>
                                 </div>
                             </div>
