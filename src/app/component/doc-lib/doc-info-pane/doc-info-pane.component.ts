@@ -13,7 +13,6 @@ import {RequestService} from "../../../service/request.service";
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
 
-
     @Input() selectedDocId: any = null;
 
     documentMeta: any;
@@ -21,7 +20,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     showDocInfoPane: boolean = true;
     showAll: boolean = false;
     paneData: any;
-    comments : any= [];
+    comments: any = [];
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -33,15 +32,14 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
 
     ngOnChanges(): void {
         this.getMetaDocumentByID();
-        this.getAllUsers();
     }
 
     ngOnInit(): void {
 
     }
 
-    getMetaDocumentByID(){
-        if(this.selectedDocId && this.selectedDocId > 0 ){
+    getMetaDocumentByID() {
+        if (this.selectedDocId && this.selectedDocId > 0) {
             this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
                 .replace("{dlDocumentId}", String(this.selectedDocId)))
                 .subscribe({
@@ -60,48 +58,27 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         }
     }
 
-    getAllUsers(){
-
-            this.requestsService.getRequest(ApiUrlConstants.USER_API_URL)
-                .subscribe({
-                    next: (response: HttpResponse<any>) => {
-                        if (response.status === 200) {
-                            this.users = response.body.data;
-                        } else {
-                            this.users = [];
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Get All Users');
-                    }
-                });
-
-    }
-
     getUserName(id: any) {
         if (id != null) {
-            console.log(this.users.find(item => item.userId == id)?.username);
             return this.users.find(item => item.id == id)?.username;
         }
     }
 
-    populatePane(data:any){
-
+    populatePane(data: any) {
         this.paneData = {
-            title:data?.title,
-            savedIn:data?.location,
-            size:data?.size,
-            modified:data?.updatedOn,
-            type:data?.extention,
+            title: data?.title,
+            savedIn: data?.location,
+            size: data?.size,
+            modified: data?.updatedOn,
+            type: data?.extention,
             description: data?.description,
             currentVersion: data?.currentVersion,
-            createdByName:data?.createdByName,
-            updatedByName:data?.updatedByName,
-
+            createdByName: data?.createdByName,
+            updatedByName: data?.updatedByName,
         };
-
         this.comments = data?.dlDocumentCommentDTOList;
     }
+
     toggleDocInfoPane() {
         this.appService.setDocInfoPaneSubjectState(!this.showDocInfoPane);
     }

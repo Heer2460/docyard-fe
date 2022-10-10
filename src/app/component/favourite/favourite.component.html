@@ -12,10 +12,12 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li class="breadcrumb-item" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body" [popup]="true"></p-tieredMenu>
+                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
+                                                          [popup]="true">
+                                            </p-tieredMenu>
                                             <i role="button" class="icon-menu-horizontal"></i>
                                         </li>
                                     </ng-container>
@@ -57,21 +59,21 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img src="./assets/images/svg/icons/{{item.extension}}.svg"
                                                          alt="{{item.extension}}">
                                                 </ng-container>
                                                 <ng-template #otherFileElseCase>
-                                                    <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                    <img src="../../../assets/images/svg/icons/other.svg" alt="other">
                                                 </ng-template>
                                             </ng-container>
                                             <img *ngIf="item.folder == true"
-                                                 src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                                 src="../../../assets/images/svg/icons/folder.svg" alt="icon">
                                         </div>
                                         <div class="file-details">
                                             <p class="title" role="button" (click)="openFolder(item)">{{item?.name}}</p>
                                             <p class="date-and-author">
-                                                <span>{{item?.updatedOn | date:'mediumDate'}} by </span>
+                                                <span>{{item?.updatedOnDetail}} by </span>
                                                 <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
@@ -125,15 +127,16 @@
 
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
-                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
                                                 <img src="./assets/images/svg/icons/{{row.extension}}.svg"
                                                      alt="{{row.extension}}">
                                             </ng-container>
                                             <ng-template #otherFileElseCase>
-                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                <img src="../../../assets/images/svg/icons/other.svg" alt="other">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
+                                        <img *ngIf="row.folder == true"
+                                             src="../../../assets/images/svg/icons/folder.svg"
                                              alt="icon">
 
                                         <ng-container *ngIf="row.folder == true; else elseCase">
@@ -146,7 +149,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOn | date:'medium'}} by </span>
+                                    <span>{{row.updatedOnDetail}} by </span>
                                     <a role="button" class="author">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
@@ -159,7 +162,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu" (click)="menu.toggle($event);onMenuClicked(row)">
+                                    <button class="btn btn-tiered-menu"
+                                            (click)="menu.toggle($event);onMenuClicked(row)">
                                         <p-tieredMenu appendTo="body" #menu [model]="menuItems"
                                                       [popup]="true"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>
@@ -186,84 +190,3 @@
                              [selectedDocId]="dlFolderId"></doc-info-pane-component>
     <!--    <file-uploader-component></file-uploader-component>-->
 </section>
-
-<p-dialog [(visible)]="visibleAddFolderDialog" [modal]="true" styleClass="">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-folder"></i>
-            <span>Create Folder</span>
-        </div>
-    </ng-template>
-    <form [formGroup]="addFolderForm">
-        <div class="row">
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
-                    <label>Name</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'required')">
-                    {{ appUtility.makeErrorMessage("Name", 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
-                </small>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideAddFolderPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid"
-                (click)="createFolder()">
-            Create
-        </button>
-    </ng-template>
-</p-dialog>
-
-<p-dialog [(visible)]="renameDocumentDialog" [modal]="true" styleClass="">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
-            <span>Rename {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
-        </div>
-    </ng-template>
-    <form [formGroup]="renameDocumentForm">
-        <div class="row">
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
-                    <label>Name</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'required')">
-                    {{ appUtility.makeErrorMessage("Name", 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
-                </small>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
-                (click)="onRenameDocument()">Update
-        </button>
-    </ng-template>
-</p-dialog>
-<p-confirmDialog #cd styleClass="dialog-danger">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
-            <span>Delete {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Delete</button>
-    </ng-template>
-</p-confirmDialog>
-<ng-container>
-    <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file"
-           onclick="this.value = null" type="file" [hidden]="true">
-    <input #folderUpload (change)="uploadFolder($event)" class="form-control" id="folder"
-           onclick="this.value = null" type="file" webkitdirectory directory multiple [hidden]="true">
-</ng-container>

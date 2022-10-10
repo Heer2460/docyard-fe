@@ -46,7 +46,6 @@ export class EditUserComponent implements OnInit {
         },
         {
             label: 'User Management',
-            route: '/setting/um',
             active: false
         },
         {

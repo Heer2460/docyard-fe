@@ -1,30 +1,31 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DocLibRoutingModule} from "./doc-lib-routing.module";
-import {DocLibComponent} from "./doc-lib.component";
+
+import {TrashRoutingModule} from './trash-routing.module';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {TableModule} from "primeng/table";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
-import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
+import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
-import {TableModule} from "primeng/table";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {TrashComponent} from "./trash.component";
 
 @NgModule({
     declarations: [
-        DocLibComponent
+        TrashComponent
     ],
     imports: [
         CommonModule,
-        DocLibRoutingModule,
+        TrashRoutingModule,
+        ConfirmDialogModule,
+        TableModule,
         TieredMenuModule,
         LayoutModule,
         DocInfoPaneModule,
         DialogModule,
         ReactiveFormsModule,
-        TableModule,
-        ConfirmDialogModule,
     ]
 })
-export class DocLibModule {
+export class TrashModule {
 }

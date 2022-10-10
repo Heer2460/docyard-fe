@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {FavouriteComponent} from "./favourite.component";
+import {TrashComponent} from "./trash.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: FavouriteComponent
+        component: TrashComponent
     }
 ];
 
@@ -13,5 +13,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class FavouriteRoutingModule {
+export class TrashRoutingModule {
 }

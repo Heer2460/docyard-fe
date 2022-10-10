@@ -54,7 +54,8 @@ export class HomeComponent implements OnInit {
     }
 
     getRecentDocument() {
-        let url = ApiUrlConstants.GET_RECENT_DOCUMENT_API_URL + '6';
+        let loggedInUser = this.appService.getLoggedInUserId();
+        let url = ApiUrlConstants.GET_RECENT_DOCUMENT_API_URL + loggedInUser;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
