@@ -41,8 +41,6 @@ export class TrashComponent implements OnInit {
             active: true
         }
     ];
-    breadcrumbItemsToShow: any = 4;
-    breadcrumbCollapsedItems: any[] = [];
     title: string = 'Trash';
 
     constructor(public appService: AppService,
