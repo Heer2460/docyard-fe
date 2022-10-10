@@ -102,6 +102,23 @@ export class RequestService {
         return this.http.post(this.getBEAPIServer() + url, formData, {headers: headers, observe: 'response'});
     }
 
+    postRequestMultipartFormAndDataUpload(url: any, files: any[], data: any) {
+        let headers = this.getBasicMultipartHeaders();
+        let formData: FormData = new FormData();
+        formData.append('reqObj', new Blob([JSON.stringify(data)], {
+            type: 'application/json'
+        }));
+        Array.from(files).forEach((file, index) => {
+            formData.append('doc', file.orgFile, file.orgFile.name);
+        });
+        return this.http.post(this.getBEAPIServer() + url, formData, {
+            headers: headers,
+            reportProgress: true,
+            observe: 'events',
+            responseType: 'text'
+        });
+    }
+
     putRequest(url: any, params?: any) {
         let headers = this.getBasicHeaders();
         if (params instanceof BaseDTO) {
@@ -140,6 +157,6 @@ export class RequestService {
     }
 
     public getLoggedInUserId(): number {
-        return Number.parseInt(localStorage.getItem(btoa('loggedInUserId')) + '');
+        return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
     }
 }

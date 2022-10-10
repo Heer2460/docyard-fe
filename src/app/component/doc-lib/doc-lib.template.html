@@ -126,8 +126,8 @@
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updated">Updated
-                                    <p-sortIcon field="updated"></p-sortIcon>
+                                <th pSortableColumn="updatedOn">Updated
+                                    <p-sortIcon field="updatedOn"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
@@ -179,7 +179,7 @@
                                     <div class="form-check form-check-only form-check-star">
                                         <input class="form-check-input" type="checkbox" [checked]="row.favourite"
                                                [attr.id]="'stared-' + row.id"
-                                               (change)="favouriteDocument($event, row.id)">
+                                               (change)="favouriteDocument($event, row)">
                                         <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
                                     </div>
                                 </td>
@@ -237,14 +237,14 @@
                 </header>
                 <div class="body">
                     <ul>
-                        <ng-container *ngFor="let file of filesToUpload; let index = index;">
+                        <ng-container *ngFor="let file of files; let index = index;">
                             <li>
                                 <div class="file-metadata">
                                     <div class="file-icon-container">
                                         <ng-container
-                                                *ngIf="validExtensions.indexOf(file.name.split('.').pop()) > -1; else otherFileElseCase">
-                                            <img src="./assets/images/svg/icons/{{file.name.split('.').pop()}}.svg"
-                                                 alt="{{file.name.split('.').pop()}}">
+                                                *ngIf="validExtensions.indexOf(file?.orgFile.name.split('.').pop()) > -1; else otherFileElseCase">
+                                            <img src="./assets/images/svg/icons/{{file?.orgFile.name.split('.').pop()}}.svg"
+                                                 alt="{{file?.orgFile.name.split('.').pop()}}">
                                         </ng-container>
                                         <ng-template #otherFileElseCase>
                                             <img src="./assets/images/svg/icons/other.svg" alt="other">
@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="file-detail">
                                         <div class="info-and-percentage">
-                                            <h5>{{file.name}}</h5>
+                                            <h5>{{file?.orgFile.name}}</h5>
                                             <span class="percentage">67%</span>
                                         </div>
                                         <div class="progress">
@@ -351,7 +351,7 @@
     </ng-template>
 </p-confirmDialog>
 <ng-container>
-    <input #fileUpload (change)="uploadFile($event)" class="form-control" id="file" [multiple]="true"
+    <input #fileUpload (change)="onUploadProcessStarted($event)" class="form-control" id="files" [multiple]="true"
            onclick="this.value = null" type="file" [hidden]="true">
     <input #folderUpload (change)="uploadFolder($event)" class="form-control" id="folder"
            onclick="this.value = null" type="file" webkitdirectory directory multiple [hidden]="true">

@@ -30,4 +30,5 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_RENAME_API_URL = '/dl/dl-document/rename/';
     public static GET_ALL_TRASH_DL_DOCUMENTS_API_URL = '/dl/dl-document/trash/owner/';
     public static DOWNLOAD_DL_DOCUMENT_API_URL = '/dl/dl-document/download/{dlDocumentId}';
+    public static UPLOAD_FILES_API_URL = '/dl/dl-document/upload';
 }
