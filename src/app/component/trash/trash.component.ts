@@ -25,9 +25,7 @@ export class TrashComponent implements OnInit {
     menuItems: MenuItem[] = [];
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
-    showDocInfoPane: boolean = true;
     showGridDisplay: boolean = false;
-    dlFolderId: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -50,9 +48,6 @@ export class TrashComponent implements OnInit {
                 private requestsService: RequestService,
                 private toastService: ToastrService,
                 private confirmationService: ConfirmationService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
     }
 
     ngOnInit(): void {
