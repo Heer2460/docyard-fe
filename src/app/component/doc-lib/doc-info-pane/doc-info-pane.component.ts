@@ -1,11 +1,10 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AppUtility} from "../../../util/app.utility";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {RequestService} from "../../../service/request.service";
-import {CustomValidations} from "../../../util/custom.validations";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'doc-info-pane-component',
@@ -18,29 +17,32 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
 
     documentMeta: any;
     users: any[] = [];
+    comments: any[] = [];
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
-    
+
     commentForm: FormGroup = new FormGroup({});
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                private toastService: ToastrService) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
+    }
+
+    ngOnInit(): void {
+        this.buildForms();
     }
 
     ngOnChanges(): void {
         this.getMetaDocumentByID();
     }
 
-    ngOnInit(): void {
-        this.buildForms();
-    }
-    
     buildForms() {
         this.commentForm = this.fb.group({
+            id: [''],
             comments: [''],
         });
     }
@@ -67,25 +69,81 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     toggleDocInfoPane() {
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
-    
-    addUserComment() {
-        this.appService.successAddMessage('Add Comment');
+
+    loadComments() {
+        let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.comments = response.body.data;
+                    } else {
+                        this.comments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Comment');
+                }
+            });
     }
-    
-    onEditCommentBtnClicked() {
+
+    addUserComment() {
+        let data = {
+            message: this.commentForm.value.comments,
+            docId: this.selectedDoc.id,
+            userId: this.appService.userInfo.id,
+            createdBy: this.appService.userInfo.id,
+            updatedBy: this.appService.userInfo.id
+        };
+        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL, data)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.commentForm.reset();
+                        this.toastService.success('Comment added successfully', 'Comment');
+                        this.loadComments();
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Comment');
+                }
+            });
+    }
+
+    onEditCommentBtnClicked(selectedComment: any) {
         this.enableEditComment = true;
         this.commentForm.patchValue({
-            comments: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra`
+            id: selectedComment.id,
+            comments: selectedComment.message
         });
     }
-    
-    onCancelEditCommentBtnClicked(){
-        this.enableEditComment = false;
-    }
-    
+
     updateUserComment() {
-        this.appService.successUpdateMessage('Comment Update');
-        this.commentForm.reset();
+        let data = {
+            id: this.commentForm.value.id,
+            message: this.commentForm.value.comments,
+            docId: this.selectedDoc.id,
+            userId: this.appService.userInfo.id,
+            createdBy: this.appService.userInfo.id,
+            updatedBy: this.appService.userInfo.id
+        };
+        this.requestsService.putRequest(ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL, data)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.commentForm.reset();
+                        this.enableEditComment = false;
+                        this.toastService.success('Comment updated successfully', 'Comment');
+                        this.loadComments();
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Comment');
+                }
+            });
+    }
+
+    onCancelEditCommentBtnClicked() {
         this.enableEditComment = false;
     }
 
