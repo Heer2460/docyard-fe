@@ -2245,141 +2245,109 @@ image-preview-component {
                 Comments timeline
 ==============================================*/
 
-ul.activity-timeline {
-	margin: 15px 0 0 0;
-	padding: 0;
-	position: relative;
+.comments-wrapper {
+	padding-top: 15px;
 	
-	&:before {
-		content: "";
-		position: absolute;
-		height: 100%;
-		border-left: 1px solid hsl(var(--color-blue-05));
-		left: 12px;
-		z-index: 0;
-	}
-	
-	li {
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
+	ul {
+		margin: 15px 0 0 0;
+		padding: 0;
 		position: relative;
-		z-index: 1;
 		
-		+ li {
-			margin-top: 20px;
-		}
-		
-		&.has-comments {
+		li {
 			display: flex;
 			align-items: flex-start;
+			justify-content: flex-start;
+			position: relative;
+			z-index: 1;
 			flex-direction: column;
 			
-			.activity-box {
+			+ li {
+				margin-top: 20px;
+			}
+			
+			.user-details-and-actions {
 				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				
+				.user-details {
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					
+					img {
+						width: 24px;
+						height: 24px;
+						object-fit: cover;
+						border-radius: 50%;
+						margin-right: 5px;
+					}
+					
+					span {
+						color: hsl(var(--color-blue-01)) !important;
+						
+						+ span {
+							margin-left: 3px;
+						}
+						
+						&.text-muted {
+							color: hsl(var(--color-blue-06)) !important;
+							font-size: 12px;
+						}
+						
+					}
+					
+				}
+				
+				.comment-actions {
+					.mixin-transition();
+					visibility: hidden;
+					opacity: 0;
+					
+					.btn {
+						padding: 0 5px;
+						font-size: 14px;
+					}
+					
+				}
+				
 			}
-			
-		}
-		
-		img {
-			width: 24px;
-			height: 24px;
-			object-fit: cover;
-			border-radius: 50%;
-			margin-right: 15px;
-		}
-		
-		span {
-			color: hsl(var(--color-blue-01)) !important;
-			
-			+ span {
-				margin-left: 3px;
-			}
-			
-			&.text-muted {
-				color: hsl(var(--color-blue-06)) !important;
-				font-size: 12px;
-			}
-			
-		}
-		
-	}
-	
-}
-
-.comment-box {
-	display: flex;
-	flex-direction: column;
-	width: calc(100% - 40px);
-	transform: translateX(40px);
-	margin-top: 0;
-	
-	p {
-		margin: 0;
-		padding: 0;
-		background-color: var(--color-white-02);
-		border: none;
-		color: hsl(var(--color-bloue-01));
-		font-size: 14px;
-		
-	}
-	
-	.comment-actions {
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		border-top: 1px dashed hsla(var(--color-blue-01), 20%);
-		margin-top: 5px;
-		padding-top: 10px;
-		
-		.btn {
-			padding: 2px 10px;
-			font-size: 10px;
-		}
-		
-	}
-	
-	.replies-tab {
-		display: flex;
-		align-items: center;
-		color: hsl(var(--color-blue-06));
-		margin-top: 5px;
-		
-		i,
-		a {
-			font-size: 12px;
-			margin-right: 5px;
-		}
-		
-		a {
 			
 			&:hover {
-				text-decoration: underline;
-			}
-			
-		}
-		
-		ul {
-			margin: 0;
-			padding: 0;
-			display: flex;
-			align-items: center;
-			
-			li {
-				margin: 0 !important;
 				
-				img {
-					width: 20px;
-					height: 20px;
-					object-fit: cover;
-					margin-right: -10px;
-					border: 2px solid var(--color-white);
+				.user-details-and-actions {
+					
+					.comment-actions {
+						visibility: visible;
+						opacity: 1;
+					}
+					
 				}
 				
 			}
 			
 		}
 		
+	}
+	
+	.form-floating {
+		
+		> .form-control {
+			.mixin-transition(@duration: 0);
+			line-height: 20px;
+			font-size: 12px;
+			
+			&:not(:placeholder-shown) {
+				transition: all 0ms ease-in-out !important;
+			}
+			
+			&:focus ~ label,
+			&:not(:placeholder-shown) ~ label {
+				background-color: var(--color-white-02);
+			}
+			
+		}
 	}
 	
 }
@@ -2931,6 +2899,38 @@ ul.activity-timeline {
 						
 					}
 					
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.comments-wrapper {
+		
+		.btn-post {
+			font-size: 10px;
+			height: initial;
+			line-height: 12px;
+		}
+		
+		ul {
+			
+			li {
+				
+				.user-details-and-actions {
+					
+					.comment-actions {
+						
+						.btn {
+							padding: 2px 4px;
+							font-size: 10px;
+							height: initial;
+						}
+						
+					}
 					
 				}
 				
