@@ -275,6 +275,7 @@ export class UserComponent implements OnInit {
 
     deleteUser(id: any) {
         if (id) {
+
             this.requestsService.deleteRequest(ApiUrlConstants.USER_API_URL + id).subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status == 200) {

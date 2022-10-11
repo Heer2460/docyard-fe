@@ -78,7 +78,7 @@ export class AppService {
     }
 
     successDeleteMessage(title: string): void {
-        this.toastService.success('Deleted Successfully', title);
+        this.toastService.success('The record has been deleted successfully', title);
     }
 
     successMessage(message: string): void {
