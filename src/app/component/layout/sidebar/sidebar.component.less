@@ -16,6 +16,20 @@
 	justify-content: space-between;
 	min-height: calc(100vh - 70px);
 	
+	> ul {
+		
+		> li {
+			border: 1px solid transparent;
+			
+			&.active,
+			&:hover {
+				border-color: hsl(var(--color-blue-02));
+			}
+			
+		}
+		
+	}
+	
 	ul {
 		margin: 0;
 		padding: 15px 30px;
@@ -28,12 +42,9 @@
 			align-items: center;
 			justify-content: flex-start;
 			
-			a {
-				.mixin-transition();
-			}
-			
 			&.active,
 			&:hover {
+				background-color: hsl(var(--color-blue-02));
 				
 				> a {
 					background-color: hsl(var(--color-blue-02));
@@ -72,6 +83,7 @@
 				align-items: center;
 				justify-content: flex-start;
 				width: 100%;
+				.mixin-transition();
 				
 				span {
 					
@@ -107,6 +119,7 @@
 			&.has-children {
 				flex-direction: column;
 				
+				&.active,
 				&.expended {
 					
 					> a {
@@ -167,28 +180,21 @@
 					li {
 						position: relative;
 						
-						
-						&.active {
+						&.has-children {
 							
-							> a {
-								background-color: hsla(var(--color-blue-02), 50%);
+							&:hover,
+							&.active,
+							&.expended {
+								
+								a {
+									background-color: hsl(var(--color-blue-03), 20%);
+								}
+								
 							}
 							
 						}
 						
 						a {
-							
-							&:hover {
-								background-color: hsla(var(--color-blue-02), 50%);
-							}
-							
-							span {
-								
-								&.icon-holder {
-									margin-left: 10px;
-								}
-								
-							}
 							
 							i[class^="icon-arrow"] {
 								font-size: 10px;
@@ -196,11 +202,20 @@
 							
 						}
 						
-						&:hover {
+						ul {
 							
-							.lvl-3 {
-								visibility: visible;
-								opacity: 1;
+							li {
+								background-color: transparent;
+								
+								&:hover,
+								&.active {
+									
+									a {
+										background-color: hsl(var(--color-blue-03), 40%);
+									}
+									
+								}
+								
 							}
 							
 						}
