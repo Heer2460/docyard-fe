@@ -50,7 +50,7 @@ export class UserComponent implements OnInit {
         {
             label: 'Reset Password',
             icon: 'icon-edit',
-            visible: this.roleActions.USER_EDIT.value,
+            visible: this.roleActions.RESET_PASSWORD.value,
             command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
@@ -158,6 +158,13 @@ export class UserComponent implements OnInit {
     }
 
     showSearchPopupAction() {
+        this.searchUserForm.patchValue({
+            username: [''],
+            name: [''],
+            group: [''],
+            department: [''],
+            status: ['Active'],
+        });
         this.searchPopupToggle = true;
     }
 
@@ -190,7 +197,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.USER_EDIT.value,
+                    visible: this.roleActions.RESET_PASSWORD.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
@@ -248,7 +255,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.USER_EDIT.value,
+                    visible: this.roleActions.RESET_PASSWORD.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {

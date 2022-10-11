@@ -3,6 +3,54 @@ import {AppConstants} from "./app.constants";
 
 export class AppUtility {
 
+    static getMimeTypeByFileName(fileName: string) {
+        let ext = fileName.substring(fileName.indexOf(".") + 1);
+
+        if (AppConstants.EXT_BMP === ext) {
+            return AppConstants.MIME_BMP;
+        } else if (AppConstants.EXT_DOC === ext) {
+            return AppConstants.MIME_DOC;
+        } else if (AppConstants.EXT_DOCX === ext) {
+            return AppConstants.MIME_DOCX;
+        } else if (AppConstants.EXT_FLV === ext) {
+            return AppConstants.MIME_FLV;
+        } else if (AppConstants.EXT_GIF === ext) {
+            return AppConstants.MIME_GIF;
+        } else if (AppConstants.EXT_JPEG === ext) {
+            return AppConstants.MIME_JPEG;
+        } else if (AppConstants.EXT_JPG === ext) {
+            return AppConstants.MIME_JPG;
+        } else if (AppConstants.EXT_PNG === ext) {
+            return AppConstants.MIME_PNG;
+        } else if (AppConstants.EXT_PPT === ext) {
+            return AppConstants.MIME_PPT;
+        } else if (AppConstants.EXT_PPTX === ext) {
+            return AppConstants.MIME_PPTX;
+        } else if (AppConstants.EXT_XLS === ext) {
+            return AppConstants.MIME_XLS;
+        } else if (AppConstants.EXT_XLSX === ext) {
+            return AppConstants.MIME_XLSX;
+        } else if (AppConstants.EXT_HTML === ext) {
+            return AppConstants.MIME_HTML;
+        } else if (AppConstants.EXT_TXT === ext) {
+            return AppConstants.MIME_TXT;
+        } else if (AppConstants.EXT_XHTML === ext) {
+            return AppConstants.MIME_XHTML;
+        } else if (AppConstants.EXT_PDF === ext) {
+            return AppConstants.MIME_PDF;
+        } else if (AppConstants.EXT_SQL === ext) {
+            return AppConstants.MIME_SQL;
+        } else if (AppConstants.EXT_RAR === ext) {
+            return AppConstants.MIME_RAR;
+        } else if (AppConstants.EXT_ZIP === ext) {
+            return AppConstants.MIME_ZIP;
+        } else if (AppConstants.EXT_7ZIP === ext) {
+            return AppConstants.MIME_7ZIP;
+        } else {
+            return AppConstants.MIME_UNKNOWN;
+        }
+    }
+
     // handle form-control errors
     public getFormError(userForm: any, control: any, name: any, rule: any, type: string = '') {
         let error;
@@ -179,6 +227,9 @@ export class AppUtility {
                 case RoleActionConstants.USER_UNLOCK.key:
                     RoleActionConstants.USER_UNLOCK.value = true;
                     break;
+                case RoleActionConstants.RESET_PASSWORD.key:
+                    RoleActionConstants.RESET_PASSWORD.value = true;
+                    break;
             }
         });
     }
@@ -247,54 +298,6 @@ export class AppUtility {
                     break;
             }
         });
-    }
-
-    static getMimeTypeByFileName(fileName: string) {
-        let ext = fileName.substring(fileName.indexOf(".") + 1);
-
-        if (AppConstants.EXT_BMP === ext) {
-            return AppConstants.MIME_BMP;
-        } else if (AppConstants.EXT_DOC === ext) {
-            return AppConstants.MIME_DOC;
-        } else if (AppConstants.EXT_DOCX === ext) {
-            return AppConstants.MIME_DOCX;
-        } else if (AppConstants.EXT_FLV === ext) {
-            return AppConstants.MIME_FLV;
-        } else if (AppConstants.EXT_GIF === ext) {
-            return AppConstants.MIME_GIF;
-        } else if (AppConstants.EXT_JPEG === ext) {
-            return AppConstants.MIME_JPEG;
-        } else if (AppConstants.EXT_JPG === ext) {
-            return AppConstants.MIME_JPG;
-        } else if (AppConstants.EXT_PNG === ext) {
-            return AppConstants.MIME_PNG;
-        } else if (AppConstants.EXT_PPT === ext) {
-            return AppConstants.MIME_PPT;
-        } else if (AppConstants.EXT_PPTX === ext) {
-            return AppConstants.MIME_PPTX;
-        } else if (AppConstants.EXT_XLS === ext) {
-            return AppConstants.MIME_XLS;
-        } else if (AppConstants.EXT_XLSX === ext) {
-            return AppConstants.MIME_XLSX;
-        } else if (AppConstants.EXT_HTML === ext) {
-            return AppConstants.MIME_HTML;
-        } else if (AppConstants.EXT_TXT === ext) {
-            return AppConstants.MIME_TXT;
-        } else if (AppConstants.EXT_XHTML === ext) {
-            return AppConstants.MIME_XHTML;
-        } else if (AppConstants.EXT_PDF === ext) {
-            return AppConstants.MIME_PDF;
-        } else if (AppConstants.EXT_SQL === ext) {
-            return AppConstants.MIME_SQL;
-        } else if (AppConstants.EXT_RAR === ext) {
-            return AppConstants.MIME_RAR;
-        } else if (AppConstants.EXT_ZIP === ext) {
-            return AppConstants.MIME_ZIP;
-        } else if (AppConstants.EXT_7ZIP === ext) {
-            return AppConstants.MIME_7ZIP;
-        } else {
-            return AppConstants.MIME_UNKNOWN;
-        }
     }
 
 }

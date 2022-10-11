@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
         let menu: any = localStorage.getItem(window.btoa(AppConstants.AUTH_PERMISSIONS));
         this.appService.permissions = JSON.parse(menu);
         this.appUtility.setRoles(this.appService.permissions);
-
     }
 
     ngOnInit() {
