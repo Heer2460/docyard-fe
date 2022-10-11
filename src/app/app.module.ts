@@ -56,7 +56,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderRouterModule,
         NgxUiLoaderHttpModule.forRoot({
             showForeground: true, exclude: [
-                'http://192.168.78.87:8080/dl/dl-document/upload'
+                `${environment.http_protocol + environment.http_separator + environment.api_end_point_url + ':' + environment.api_end_point_port}/dl/dl-document/upload`,
             ]
         })
     ],
