@@ -32,7 +32,8 @@ export class DeptComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     selectedDepartment: DepartmentDTO = new DepartmentDTO();
-    
+    confirmationHeader: string = "Delete Department";
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -54,7 +55,7 @@ export class DeptComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Department';
 
     actionItems: MenuItem[] = [
@@ -90,21 +91,21 @@ export class DeptComponent implements OnInit {
 
     buildForms() {
         this.searchDepartmentForm = this.fb.group({
-            code: [''],
-            name: [''],
+            code: ['',  Validators.pattern(/^[a-zA-Z0-9_-]*$/)],
+            name: ['',  Validators.pattern(/^[a-zA-Z0-9_-]*$/)],
             status: [''],
         });
 
         this.addDepartmentForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(50)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: ['Active'],
         });
 
         this.updateDepartmentForm = this.fb.group({
             id: [null, Validators.required],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(50)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: [null, Validators.required],
         });
     }
@@ -142,7 +143,7 @@ export class DeptComponent implements OnInit {
                         if (response.status === 200) {
                             this.appService.successAddMessage('Department');
                             this.searchDepartments();
-                            this.hideAddPopupAction();
+                            this.addDialog = false;
                         }
                     },
                     error: (error: any) => {
@@ -165,7 +166,7 @@ export class DeptComponent implements OnInit {
                         if (response.status === 200) {
                             this.appService.successUpdateMessage('Department');
                             this.searchDepartments();
-                            this.hideUpdatePopupAction();
+                            this.updateDialog = false;
                         }
                     },
                     error: (error: any) => {
@@ -244,7 +245,19 @@ export class DeptComponent implements OnInit {
     }
 
     hideAddPopupAction() {
-        this.addDialog = false;
+        this.confirmationHeader = "Add Department";
+        if(this.addDepartmentForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.addDialog = false;
+                }
+            });
+        }else{
+            this.addDialog = false;
+        }
+
     }
 
     showUpdatePopupAction() {
@@ -258,10 +271,22 @@ export class DeptComponent implements OnInit {
     }
 
     hideUpdatePopupAction() {
-        this.updateDialog = false;
+        this.confirmationHeader = "Update Department";
+        if(this.updateDepartmentForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.updateDialog = false;
+                }
+            });
+        }else{
+            this.updateDialog = false;
+        }
     }
 
     onItemDeleteAction(data: any) {
+        this.confirmationHeader = "Delete Department";
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this record?',
             accept: () => {

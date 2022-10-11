@@ -85,15 +85,19 @@
                 <div class="form-floating">
                     <input class="form-control" formControlName="code" placeholder="Code" type="text">
                     <label>Code</label>
+                    <small *ngIf="appUtility.getFormError(searchDepartmentForm, 'code', 'code', 'pattern')">
+                        {{ appUtility.makeErrorMessage('Code', 'onlySpace') }}
+                    </small>
                 </div>
-                <small *ngIf="appUtility.getFormError(searchDepartmentForm, 'code', 'code', 'required')">
-                    {{ appUtility.makeErrorMessage('Code', 'required') }}
-                </small>
+
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
                     <label for="name">Name</label>
+                    <small *ngIf="appUtility.getFormError(searchDepartmentForm, 'name', 'name', 'pattern')">
+                        {{ appUtility.makeErrorMessage('Name', 'onlySpace') }}
+                    </small>
                 </div>
             </div>
             <div class="col-6 mb-3">
@@ -106,7 +110,7 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideSearchPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="searchDepartments()" class="btn btn-sm btn-primary" type="button">Search</button>
+        <button (click)="searchDepartments()" class="btn btn-sm btn-primary" [disabled]="searchDepartmentForm.invalid" type="button">Search</button>
     </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="viewDialog" [modal]="true" styleClass="p-dialog-md p-dialog-view">
@@ -155,6 +159,9 @@
                     <small *ngIf="appUtility.getFormError(addDepartmentForm, 'code', 'code', 'maxlength')">
                         {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                     </small>
+                    <small *ngIf="appUtility.getFormError(addDepartmentForm, 'code', 'code', 'pattern')">
+                        {{ appUtility.makeErrorMessage('Code', 'onlySpace') }}
+                    </small>
                 </div>
             </div>
             <div class="col-6 mb-3">
@@ -167,13 +174,16 @@
                     <small *ngIf="appUtility.getFormError(addDepartmentForm, 'name', 'name', 'maxlength')">
                         {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                     </small>
+                    <small *ngIf="appUtility.getFormError(addDepartmentForm, 'name', 'name', 'pattern')">
+                        {{ appUtility.makeErrorMessage('Name', 'onlySpace') }}
+                    </small>
                 </div>
             </div>
         </div>
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideAddPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="createDepartment()" [disabled]="addDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Add
+        <button (click)="createDepartment()" [disabled]="addDepartmentForm.invalid" class="btn btn-sm btn-primary" type="button">Save
         </button>
     </ng-template>
 </p-dialog>
@@ -197,6 +207,9 @@
                 <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'code', 'code', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'code', 'code', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Code', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -208,6 +221,9 @@
                 </small>
                 <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
+                </small>
+                <small *ngIf="appUtility.getFormError(updateDepartmentForm, 'name', 'name', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Name', 'onlySpace') }}
                 </small>
             </div>
             <div class="col-6 mb-3">
@@ -231,11 +247,11 @@
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Delete department</span>
+            <span>{{confirmationHeader}}</span>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Delete</button>
+        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">No</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Yes</button>
     </ng-template>
 </p-confirmDialog>
