@@ -25,7 +25,7 @@ export class GroupComponent implements OnInit {
     searchGroupForm: FormGroup = new FormGroup({});
     groups: GroupDTO[] = [];
     roles: RoleDTO[] = [];
-    message: string = 'Click search to get groups.';
+    message: string = 'Click search to view groups.';
     visibleSearchGroupDialog: boolean = false;
     visibleAddGroupDialog: boolean = false;
     visibleUpdateGroupDialog: boolean = false;
@@ -336,13 +336,18 @@ export class GroupComponent implements OnInit {
 
     onItemDeleteAction(data: any) {
         this.confirmationHeader = "Delete Group";
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteGroup(data.id);
-            }
-        });
+        if (this.selectedGroup.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'Group')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteGroup(data.id);
+                }
+            });
+        }
+
     }
 
     addGroup() {

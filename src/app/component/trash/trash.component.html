@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div class="left" [ngClass]="showDocInfoPane ? 'collapsed' : ''">
+    <div class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -7,11 +7,13 @@
                         <h3 class="title">{{title}}</h3>
                     </ng-container>
                     <div class="action-items">
-                        <button class="btn btn-sm btn-secondary">
+                        <button class="btn btn-sm btn-secondary" (click)="onConfirmDialogueOpen(dlDocuments, 'restore', false)"
+                        [disabled]="dlDocuments.length < 1">
                             <i class="icon-restore"></i>
                             Restore All
                         </button>
-                        <button class="btn btn-sm btn-danger">
+                        <button class="btn btn-sm btn-danger" (click)="onConfirmDialogueOpen(dlDocuments,'delete', false)"
+                                [disabled]="dlDocuments.length < 1">
                             <i class="icon-trash"></i>
                             Delete All
                         </button>
@@ -179,19 +181,16 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'"
-                             [selectedDoc]="dlFolderId">
-    </doc-info-pane-component>
 </section>
-<p-confirmDialog #cd styleClass="dialog-danger">
-    <ng-template pTemplate="header">
+<p-confirmDialog #cd styleClass="{{deleteFlag ? 'dialog-danger' : 'dialog-primary'}}">
+    <!--<ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
-            <span>Delete {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+            <span>Restore {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
         </div>
-    </ng-template>
+    </ng-template>-->
     <ng-template pTemplate="footer">
         <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Delete</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">{{deleteFlag ? "Delete" : "Restore"}}</button>
     </ng-template>
 </p-confirmDialog>

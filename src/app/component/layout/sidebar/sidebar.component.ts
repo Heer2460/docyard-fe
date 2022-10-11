@@ -20,12 +20,13 @@ export class SidebarComponent implements OnInit {
             if (route instanceof NavigationEnd) {
                 this.currentRoute = route.url;
                 this.switchRouteTypes();
+                this.setActiveRoute();
             }
         });
     }
 
     ngOnInit(): void {
-        this.setActiveRoute();
+    
     }
 
     setActiveRoute() {
@@ -68,44 +69,56 @@ export class SidebarComponent implements OnInit {
         });
     }
 
-    toggleDropdown(route: any) {
-        this.routes.map((route: any) => {
-            route.expended = false;
-        });
-        route.expended = !route.expended;
+    toggleDropdownMenu(routes: any, menuItem: any, parent: any = null) {
+        routes.map((route: any) => {
+            
+            if(route.route == menuItem.route) {
+                parent.expended = true;
+                menuItem.expended = !menuItem.expended;
+            }else {
+                route.expended = false;
+                if(route.children) {
+                    this.toggleDropdownMenu(route.children, menuItem, route);
+                }
+            }
+        })
     }
 
     switchRouteTypes() {
 
-        const mappedMenu = this.appService.permissions.map((item: any) => {
-            return {
-                label: item.name,
-                route: item.route,
-                icon: item.icon,
-                expended: false,
-                active: false,
-                children: item.children.map((child: any) => {
-                    return {
-                        label: child.name,
-                        route: child.route,
-                        icon: child.icon,
-                        expended: false,
-                        active: false,
-                    };
-                }),
-            }
-        });
-        this.routes = [
-            ...AppRouteConstants.mainRoutes,
-            {
-                label: 'Settings',
-                route: '/setting',
-                icon: 'icon-cog',
-                expended: false,
-                active: false,
-                children: mappedMenu
-            }
-        ];
+        if (this.appService.permissions.length > 1) {
+            const mappedMenu = this.appService.permissions.map((item: any) => {
+                return {
+                    label: item.name,
+                    route: item.route,
+                    icon: item.icon,
+                    expended: false,
+                    active: false,
+                    children: item.children.map((child: any) => {
+                        return {
+                            label: child.name,
+                            route: child.route,
+                            icon: child.icon,
+                            expended: false,
+                            active: false,
+                        };
+                    }),
+                }
+            });
+            this.routes = [
+                ...AppRouteConstants.mainRoutes,
+                {
+                    label: 'Settings',
+                    route: '/setting',
+                    icon: 'icon-cog',
+                    expended: false,
+                    active: false,
+                    children: mappedMenu
+                }
+            ];
+        } else {
+            this.routes = AppRouteConstants.mainRoutes;
+        }
 
     }
 

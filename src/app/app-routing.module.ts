@@ -55,6 +55,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'search',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/search/search.module').then(m => m.SearchModule)
+            }
+        ]
+    },
+    {
         path: 'setting',
         component: LayoutComponent,
         children: [

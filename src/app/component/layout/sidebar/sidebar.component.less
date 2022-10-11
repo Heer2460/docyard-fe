@@ -17,23 +17,34 @@
 	min-height: calc(100vh - 70px);
 	
 	> ul {
+		
+		> li {
+			border: 1px solid transparent;
+			
+			&.active,
+			&:hover {
+				border-color: hsl(var(--color-blue-02));
+			}
+			
+		}
+		
+	}
+	
+	ul {
 		margin: 0;
 		padding: 15px 30px;
 		border-bottom: 1px dashed hsl(var(--color-blue-04));
 		width: 100%;
 		
-		> li {
+		li {
 			list-style: none;
 			display: flex;
 			align-items: center;
 			justify-content: flex-start;
 			
-			a {
-				.mixin-transition();
-			}
-			
 			&.active,
 			&:hover {
+				background-color: hsl(var(--color-blue-02));
 				
 				> a {
 					background-color: hsl(var(--color-blue-02));
@@ -72,6 +83,7 @@
 				align-items: center;
 				justify-content: flex-start;
 				width: 100%;
+				.mixin-transition();
 				
 				span {
 					
@@ -107,9 +119,10 @@
 			&.has-children {
 				flex-direction: column;
 				
+				&.active,
 				&.expended {
 					
-					a {
+					> a {
 						
 						span {
 							
@@ -149,44 +162,39 @@
                     
                 }
 				
-				> ul {
+				ul {
 					padding: 0;
 					max-height: 0;
 					visibility: hidden;
+					opacity: 0;
 					border-bottom: none;
 					width: 100%;
-					.mixin-transition();
+					transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
 					
 					&.show {
 						max-height: 1000px;
 						visibility: visible;
+						opacity: 1;
 					}
 					
-					> li {
+					li {
 						position: relative;
 						
-						
-						&.active {
+						&.has-children {
 							
-							> a {
-								background-color: hsla(var(--color-blue-02), 50%);
+							&:hover,
+							&.active,
+							&.expended {
+								
+								a {
+									background-color: hsl(var(--color-blue-03), 20%);
+								}
+								
 							}
 							
 						}
 						
-						> a {
-							
-							&:hover {
-								background-color: hsla(var(--color-blue-02), 50%);
-							}
-							
-							span {
-								
-								&.icon-holder {
-									margin-left: 10px;
-								}
-								
-							}
+						a {
 							
 							i[class^="icon-arrow"] {
 								font-size: 10px;
@@ -194,61 +202,20 @@
 							
 						}
 						
-						.lvl-3 {
-							position: absolute;
-							z-index: 999;
-							visibility: hidden;
-							opacity: 0;
-							top: 0;
-							right: 0;
-							transform: translateX(calc(100% + 10px));
-							background-color: hsl(var(--color-blue-01));
-							.mixin-transition();
-							display: flex;
-							flex-direction: column;
-							margin: 0;
-							padding: 0;
-							width: 100%;
-							
-							&:before {
-								content: "";
-								border-top: 10px solid transparent;
-								border-right: 10px solid hsl(var(--color-blue-03));
-								border-bottom: 10px solid transparent;
-								border-left: 10px solid transparent;
-								position: absolute;
-								top: 15px;
-								left: -20px;
-								width: 0;
-								height: 0;
-							}
+						ul {
 							
 							li {
-								background-color: hsl(var(--color-blue-03));
-								border: 1px solid hsl(var(--color-blue-03));
-								
-								+ li {
-									border-top: none;
-								}
+								background-color: transparent;
 								
 								&:hover,
 								&.active {
 									
-									> a {
-										background-color: hsla(var(--color-blue-02), 50%);
+									a {
+										background-color: hsl(var(--color-blue-03), 40%);
 									}
 									
 								}
 								
-							}
-							
-						}
-						
-						&:hover {
-							
-							.lvl-3 {
-								visibility: visible;
-								opacity: 1;
 							}
 							
 						}

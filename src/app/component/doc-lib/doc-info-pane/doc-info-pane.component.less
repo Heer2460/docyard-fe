@@ -52,6 +52,7 @@
 				
 				th {
 					font-weight: 700;
+					white-space: nowrap;
 					
 					.btn-show-all {
 						cursor: pointer;
@@ -67,6 +68,10 @@
 						
 					}
 					
+				}
+				
+				td {
+					width: 100%;
 				}
 				
 			}
@@ -90,35 +95,6 @@
 			border-color: hsl(var(--color-green-02));
 			background-color: hsl(var(--color-green-02));
 			color:hsl(var(--color-blue-01));
-		}
-		
-	}
-	
-	.comments-wrapper {
-		padding: 15px 0;
-		
-		.form-floating {
-			
-			> .form-control {
-				.mixin-transition(@duration: 0.1ms);
-				font-size: 14px;
-				
-				&:focus ~ label,
-				&:not(:placeholder-shown) ~ label {
-					background-color: @color-white-02;
-				}
-				
-			}
-			
-			label {
-				font-size: 14px;
-			}
-			
-		}
-		
-		.btn {
-			padding: 2px 10px;
-			font-size: 10px;
 		}
 		
 	}
@@ -167,48 +143,6 @@
 			line-height: 14px;
 			font-size: 14px;
 			height: 22px;
-		}
-		
-		.comments-wrapper {
-			
-			.form-floating {
-				
-				label,
-				> .form-control {
-					font-size: 12px;
-				}
-				
-			}
-			
-			.btn {
-				padding: 4px 10px;
-				font-size: 10px;
-				height: initial;
-				line-height: 8px;
-			}
-			
-		}
-		
-		.comment-box {
-			width: calc(100% - 34px);
-			transform: translateX(34px);
-			
-			p {
-				font-size: 12px;
-			}
-			
-		}
-		
-		ul.activity-timeline {
-			
-			li {
-				
-				img {
-					margin-right: 10px;
-				}
-				
-			}
-			
 		}
 		
 	}
