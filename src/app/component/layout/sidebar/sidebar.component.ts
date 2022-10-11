@@ -20,12 +20,13 @@ export class SidebarComponent implements OnInit {
             if (route instanceof NavigationEnd) {
                 this.currentRoute = route.url;
                 this.switchRouteTypes();
+                this.setActiveRoute();
             }
         });
     }
 
     ngOnInit(): void {
-        this.setActiveRoute();
+    
     }
 
     setActiveRoute() {

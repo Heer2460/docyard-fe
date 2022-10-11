@@ -65,7 +65,7 @@
                                         <li [ngClass]="subChild.active ? 'active' : ''" *ngFor="let subChild of child.children">
                                             <a role="button" [routerLink]="subChild.route">
                                                 <span class="icon-holder">
-                                                    <i [attr.class]=" 'default ' + subChild.icon"></i>
+                                                    <i [attr.class]="subChild.icon"></i>
                                                 </span>
                                                 <span>{{subChild.label}}</span>
                                             </a>

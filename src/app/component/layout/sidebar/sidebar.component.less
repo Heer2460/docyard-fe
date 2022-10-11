@@ -30,6 +30,7 @@
 			
 			a {
 				.mixin-transition();
+				padding-left: 35px;
 			}
 			
 			&.active,
@@ -177,6 +178,7 @@
 						}
 						
 						a {
+							padding-left: 35px;
 							
 							&:hover {
 								background-color: hsla(var(--color-blue-02), 50%);
@@ -196,11 +198,18 @@
 							
 						}
 						
-						&:hover {
+						ul {
 							
-							.lvl-3 {
-								visibility: visible;
-								opacity: 1;
+							li {
+								
+								&.active {
+									background-color: hsla(var(--color-blue-03), 50%);
+								}
+								
+								a {
+									padding-left: 65px;
+								}
+								
 							}
 							
 						}
