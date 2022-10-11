@@ -21,7 +21,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     comments: any[] = [];
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
-sharingMenuItems: MenuItem[] = [];
+    sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
 
     commentForm: FormGroup = new FormGroup({});
@@ -106,6 +106,7 @@ sharingMenuItems: MenuItem[] = [];
     }
 
     loadComments(event: any) {
+        this.activeTabIndex = event.index;
         if (event.index == 1) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
@@ -177,14 +178,6 @@ sharingMenuItems: MenuItem[] = [];
                     this.appService.handleError(error, 'Comment');
                 }
             });
-    }
-
-    onCancelEditCommentBtnClicked() {
-        this.enableEditComment = false;
-    }
-
-    onAccordionOpen(event: any) {
-        this.activeTabIndex = event.index
     }
 
 }
