@@ -14,16 +14,13 @@ import {MenuItem} from "primeng/api";
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
 
-    @Input() _selectedDoc: any = null;
-
     documentMeta: any;
     users: any[] = [];
     comments: any[] = [];
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
-sharingMenuItems: MenuItem[] = [];
+    sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
-
     commentForm: FormGroup = new FormGroup({});
 
     constructor(public appService: AppService,
@@ -34,9 +31,11 @@ sharingMenuItems: MenuItem[] = [];
             this.showDocInfoPane = value;
         });
     }
-    ngOnInit(): void {
-        this.buildForms();
-        this.buildOptionItems();
+
+    @Input() _selectedDoc: any = null;
+
+    get selectedDoc(): any {
+        return this._selectedDoc;
     }
 
     @Input('selectedDoc') set selectedDoc(selectedDoc: any) {
@@ -44,8 +43,9 @@ sharingMenuItems: MenuItem[] = [];
         this.activeTabIndex = 0;
     }
 
-    get selectedDoc(): any {
-        return this._selectedDoc;
+    ngOnInit(): void {
+        this.buildForms();
+        this.buildOptionItems();
     }
 
     buildOptionItems() {
@@ -154,6 +154,7 @@ sharingMenuItems: MenuItem[] = [];
             comments: selectedComment.message
         });
     }
+
     updateUserComment() {
         let data = {
             id: this.commentForm.value.id,
