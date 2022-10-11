@@ -115,7 +115,7 @@ export class GroupComponent implements OnInit {
         });
 
         this.addGroupForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: ['Active'],
@@ -124,7 +124,7 @@ export class GroupComponent implements OnInit {
 
         this.updateGroupForm = this.fb.group({
             id: [''],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
             status: [null, Validators.required],

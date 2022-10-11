@@ -51,7 +51,7 @@ export class EditRoleComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Edit';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
@@ -88,7 +88,7 @@ export class EditRoleComponent implements OnInit {
     buildForms() {
         this.editRoleForm = this.fb.group({
             id: [null],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
             remarks: ['', Validators.maxLength(256)],
@@ -109,7 +109,7 @@ export class EditRoleComponent implements OnInit {
                 }
             });
     }
-    
+
     populateRoleForm(roleDto: RoleDTO) {
         this.editRoleForm.get('id')?.setValue(roleDto.id);
         this.editRoleForm.get('code')?.setValue(roleDto.code);

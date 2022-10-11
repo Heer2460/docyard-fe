@@ -96,14 +96,14 @@ export class DeptComponent implements OnInit {
         });
 
         this.addDepartmentForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(50)]],
             status: ['Active'],
         });
 
         this.updateDepartmentForm = this.fb.group({
             id: [null, Validators.required],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [{ value:null,disabled: true}],
             name: [null, [Validators.required, Validators.maxLength(50)]],
             status: [null, Validators.required],
         });

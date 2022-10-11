@@ -24,7 +24,7 @@ export class AddRoleComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     permissions: any = [];
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -51,7 +51,7 @@ export class AddRoleComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Add';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
@@ -83,7 +83,7 @@ export class AddRoleComponent implements OnInit {
 
     buildForms() {
         this.addRoleForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
             remarks: ['', Validators.maxLength(256)],
