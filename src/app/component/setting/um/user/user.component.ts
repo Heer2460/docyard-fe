@@ -200,7 +200,17 @@ export class UserComponent implements OnInit {
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
             ];
-        } else if (this.selectedUser.status === 'Suspend') {
+        } else if (this.selectedUser.status === 'Terminate') {
+            this.actionItems = [
+                {
+                    label: 'View',
+                    icon: 'icon-eye',
+                    visible: this.roleActions.USER_VIEW.value,
+                    command: () => this.onViewOptionSelected(this.selectedUser)
+                },
+            ];
+        }
+         else if (this.selectedUser.status === 'Suspend') {
             this.actionItems = [
                 {
                     label: 'View',
