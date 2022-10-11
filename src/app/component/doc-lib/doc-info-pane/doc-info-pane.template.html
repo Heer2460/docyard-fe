@@ -5,7 +5,7 @@
 <div class="pane-wrapper">
     <i class="icon-folder-filled img-file-type"></i>
     <p-accordion (onOpen)="loadComments($event)">
-        <p-accordionTab [selected]="true">
+        <p-accordionTab [selected]="activeTabIndex === 0">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-properties"></i>
@@ -51,7 +51,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 1" *ngIf="!selectedDoc?.folder">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>
@@ -101,7 +101,7 @@
                 </div>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 2">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-share"></i>

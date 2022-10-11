@@ -106,6 +106,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     loadComments(event: any) {
+        this.activeTabIndex = event.index;
         if (event.index == 1) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
@@ -200,14 +201,6 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                     this.appService.handleError(error, 'Comment');
                 }
             });
-    }
-
-    onCancelEditCommentBtnClicked() {
-        this.enableEditComment = false;
-    }
-
-    onAccordionOpen(event: any) {
-        this.activeTabIndex = event.index
     }
 
 }
