@@ -4,8 +4,8 @@
 
 <div class="pane-wrapper">
     <i class="icon-folder-filled img-file-type"></i>
-    <p-accordion>
-        <p-accordionTab [selected]="true">
+    <p-accordion (onOpen)="onAccordionOpen($event)">
+        <p-accordionTab [selected]="activeTabIndex === 0">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-properties"></i>
@@ -16,8 +16,8 @@
                 <table class="table">
                     <tbody>
                     <tr>
-                        <th>Title</th>
-                        <td>{{selectedDoc?.title}}</td>
+                        <th>Name</th>
+                        <td>{{selectedDoc?.name}}</td>
                     </tr>
                     <tr>
                         <th>Saved in</th>
@@ -51,7 +51,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 1">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>
@@ -106,14 +106,54 @@
                 </div>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 2">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-share"></i>
                     <span>Sharing</span>
                 </div>
             </ng-template>
-            <ng-template pTemplate="content">Body Content</ng-template>
+            <ng-template pTemplate="content">
+                <ul class="info-pane-sharing-list">
+                    <li>
+                        <div class="user-meta">
+                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
+                            <div class="meta">
+                                <p>Umar Farooq</p>
+                                <p class="text-muted">Owner</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                          [popup]="true"></p-tieredMenu>
+                            <i class="icon-menu-horizontal"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="user-meta">
+                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
+                            <div class="meta">
+                                <p>Irfan Nasim</p>
+                                <p class="text-muted">Editor</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                          [popup]="true"></p-tieredMenu>
+                            <i class="icon-menu-horizontal"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="user-meta">
+                            <i class="icon-link-filled"></i>
+                            <div class="meta">
+                                <p>Shared Link</p>
+                                <a role="button" class="btn-link">Create Link</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
         </p-accordionTab>
     </p-accordion>
 </div>

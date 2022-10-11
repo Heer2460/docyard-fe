@@ -17,7 +17,7 @@
             <ng-container *ngIf="route?.children">
                 <li class="has-children" [ngClass]="[route.expended ? 'expended active' : '']">
 
-                    <ng-container *ngIf="route.route == '/setting'; else elseCase">
+                    <ng-container *ngIf="route.route == '/setting'; else settingElseCase">
                         <a role="button" (click)="toggleDropdown(route)" [routerLink]="route.route">
                         <span class="icon-holder">
                             <i [attr.class]=" 'default ' + route.icon"></i>
@@ -30,36 +30,38 @@
                         </a>
                     </ng-container>
 
-                    <ng-template #elseCase>
+                    <ng-template #settingElseCase>
                         <a role="button" (click)="toggleDropdown(route)">
-                        <span class="icon-holder">
-                            <i [attr.class]=" 'default ' + route.icon"></i>
-                            <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
-                        </span>
+                            <span class="icon-holder">
+                                <i [attr.class]=" 'default ' + route.icon"></i>
+                                <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
+                            </span>
                             <span>
-                            <span>{{route.label}}</span>
-                            <i class="icon-arrow-left"></i>
-                        </span>
+                                <span>{{route.label}}</span>
+                                <i class="icon-arrow-left"></i>
+                            </span>
                         </a>
                     </ng-template>
 
                     <ul [ngClass]="route.expended ? 'show' : ''">
 
-                        <ng-container *ngFor="let child of route.children;">
+                        <ng-container *ngFor="let child of route.children; let index = index;">
 
                             <ng-container *ngIf="child?.children; else elseCase">
 
-                                <li [ngClass]="child.active ? 'active' : ''">
-                                    <a role="button">
+                                <li class="has-children" [ngClass]="[child.expended ? 'expended active' : '']">
+                                    <a role="button" (click)="toggleChildDropdown(index, child)">
                                         <span class="icon-holder">
                                             <i [attr.class]=" 'default ' + child.icon"></i>
                                             <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
                                         </span>
-                                        <span>{{child.label}}</span>
-                                        <i class="icon-arrow-right"></i>
+                                        <span>
+                                            <span>{{child.label}}</span>
+                                            <i class="icon-arrow-left"></i>
+                                        </span>
                                     </a>
 
-                                    <ul class="lvl-3">
+                                    <ul [ngClass]="child.expended ? 'show' : ''">
                                         <li [ngClass]="subChild.active ? 'active' : ''" *ngFor="let subChild of child.children">
                                             <a role="button" [routerLink]="subChild.route">
                                                 <span class="icon-holder">
