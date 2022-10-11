@@ -24,7 +24,7 @@ export class DeptComponent implements OnInit {
     updateDepartmentForm: FormGroup = new FormGroup({});
     searchDepartmentForm: FormGroup = new FormGroup({});
     departments: any[] = [];
-    message: string = 'Click search to get departments.';
+    message: string = 'Click search to view departments.';
     searchDialog: boolean = false;
     addDialog: boolean = false;
     updateDialog: boolean = false;
@@ -32,7 +32,7 @@ export class DeptComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     selectedDepartment: DepartmentDTO = new DepartmentDTO();
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -54,7 +54,7 @@ export class DeptComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Department';
 
     actionItems: MenuItem[] = [

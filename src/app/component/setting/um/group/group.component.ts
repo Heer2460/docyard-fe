@@ -25,7 +25,7 @@ export class GroupComponent implements OnInit {
     searchGroupForm: FormGroup = new FormGroup({});
     groups: GroupDTO[] = [];
     roles: RoleDTO[] = [];
-    message: string = 'Click search to get groups.';
+    message: string = 'Click search to view groups.';
     visibleSearchGroupDialog: boolean = false;
     visibleAddGroupDialog: boolean = false;
     visibleUpdateGroupDialog: boolean = false;
@@ -53,7 +53,7 @@ export class GroupComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedGroup)
         }
     ];
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -75,7 +75,7 @@ export class GroupComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Group';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
