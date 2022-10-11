@@ -5,6 +5,7 @@ import {HttpResponse} from "@angular/common/http";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {RequestService} from "../../../service/request.service";
 import {ToastrService} from "ngx-toastr";
+import {MenuItem} from "primeng/api";
 
 @Component({
     selector: 'doc-info-pane-component',
@@ -13,13 +14,15 @@ import {ToastrService} from "ngx-toastr";
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
 
-    @Input() selectedDoc: any = null;
+    @Input() _selectedDoc: any = null;
 
     documentMeta: any;
     users: any[] = [];
     comments: any[] = [];
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
+sharingMenuItems: MenuItem[] = [];
+    activeTabIndex: number = 0;
 
     commentForm: FormGroup = new FormGroup({});
 
@@ -31,9 +34,41 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             this.showDocInfoPane = value;
         });
     }
-
     ngOnInit(): void {
         this.buildForms();
+        this.buildOptionItems();
+    }
+
+    @Input('selectedDoc') set selectedDoc(selectedDoc: any) {
+        this._selectedDoc = selectedDoc;
+        this.activeTabIndex = 0;
+    }
+
+    get selectedDoc(): any {
+        return this._selectedDoc;
+    }
+
+    buildOptionItems() {
+        this.sharingMenuItems = [
+            {
+                label: 'Viewer',
+                icon: 'icon-eye',
+                command: () => {
+                }
+            },
+            {
+                label: 'Editor',
+                icon: 'icon-edit',
+                command: () => {
+                }
+            },
+            {
+                label: 'Remove',
+                icon: 'icon-trash',
+                command: () => {
+                }
+            }
+        ];
     }
 
     ngOnChanges(): void {
@@ -117,7 +152,6 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             comments: selectedComment.message
         });
     }
-
     updateUserComment() {
         let data = {
             id: this.commentForm.value.id,
@@ -145,6 +179,10 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
 
     onCancelEditCommentBtnClicked() {
         this.enableEditComment = false;
+    }
+
+    onAccordionOpen(event: any) {
+        this.activeTabIndex = event.index
     }
 
 }

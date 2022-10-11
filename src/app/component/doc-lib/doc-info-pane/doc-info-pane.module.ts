@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {DocInfoPaneComponent} from './doc-info-pane.component';
 import {AccordionModule} from "primeng/accordion";
 import {ReactiveFormsModule} from "@angular/forms";
+import {TieredMenuModule} from "primeng/tieredmenu";
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     imports: [
         CommonModule,
         AccordionModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TieredMenuModule
     ]
 })
 export class DocInfoPaneModule {

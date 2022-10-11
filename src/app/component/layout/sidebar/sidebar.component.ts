@@ -74,6 +74,13 @@ export class SidebarComponent implements OnInit {
         });
         route.expended = !route.expended;
     }
+    
+    toggleChildDropdown(index: number, route: any) {
+        this.routes[index]?.children?.map((route: any) => {
+            route.expended = false;
+        });
+        route.expended = !route.expended;
+    }
 
     switchRouteTypes() {
 

@@ -16,13 +16,13 @@
 	justify-content: space-between;
 	min-height: calc(100vh - 70px);
 	
-	> ul {
+	ul {
 		margin: 0;
 		padding: 15px 30px;
 		border-bottom: 1px dashed hsl(var(--color-blue-04));
 		width: 100%;
 		
-		> li {
+		li {
 			list-style: none;
 			display: flex;
 			align-items: center;
@@ -109,7 +109,7 @@
 				
 				&.expended {
 					
-					a {
+					> a {
 						
 						span {
 							
@@ -149,20 +149,22 @@
                     
                 }
 				
-				> ul {
+				ul {
 					padding: 0;
 					max-height: 0;
 					visibility: hidden;
+					opacity: 0;
 					border-bottom: none;
 					width: 100%;
-					.mixin-transition();
+					transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
 					
 					&.show {
 						max-height: 1000px;
 						visibility: visible;
+						opacity: 1;
 					}
 					
-					> li {
+					li {
 						position: relative;
 						
 						
@@ -174,7 +176,7 @@
 							
 						}
 						
-						> a {
+						a {
 							
 							&:hover {
 								background-color: hsla(var(--color-blue-02), 50%);
@@ -190,56 +192,6 @@
 							
 							i[class^="icon-arrow"] {
 								font-size: 10px;
-							}
-							
-						}
-						
-						.lvl-3 {
-							position: absolute;
-							z-index: 999;
-							visibility: hidden;
-							opacity: 0;
-							top: 0;
-							right: 0;
-							transform: translateX(calc(100% + 10px));
-							background-color: hsl(var(--color-blue-01));
-							.mixin-transition();
-							display: flex;
-							flex-direction: column;
-							margin: 0;
-							padding: 0;
-							width: 100%;
-							
-							&:before {
-								content: "";
-								border-top: 10px solid transparent;
-								border-right: 10px solid hsl(var(--color-blue-03));
-								border-bottom: 10px solid transparent;
-								border-left: 10px solid transparent;
-								position: absolute;
-								top: 15px;
-								left: -20px;
-								width: 0;
-								height: 0;
-							}
-							
-							li {
-								background-color: hsl(var(--color-blue-03));
-								border: 1px solid hsl(var(--color-blue-03));
-								
-								+ li {
-									border-top: none;
-								}
-								
-								&:hover,
-								&.active {
-									
-									> a {
-										background-color: hsla(var(--color-blue-02), 50%);
-									}
-									
-								}
-								
 							}
 							
 						}

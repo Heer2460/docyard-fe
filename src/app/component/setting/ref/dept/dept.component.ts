@@ -1,15 +1,15 @@
-import { HttpResponse } from "@angular/common/http";
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
-import { ConfirmationService, MenuItem } from "primeng/api";
-import { DepartmentDTO } from "../../../../model/settings/ref/department/department.dto";
-import { AppService } from "../../../../service/app.service";
-import { RequestService } from "../../../../service/request.service";
-import { ApiUrlConstants } from "../../../../util/api.url.constants";
-import { AppUtility } from "../../../../util/app.utility";
-import { ReferencesStatuses } from "../../../../util/references.statuses";
+import {HttpResponse} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ConfirmationService, MenuItem} from "primeng/api";
+import {DepartmentDTO} from "../../../../model/settings/ref/department/department.dto";
+import {AppService} from "../../../../service/app.service";
+import {RequestService} from "../../../../service/request.service";
+import {ApiUrlConstants} from "../../../../util/api.url.constants";
+import {AppUtility} from "../../../../util/app.utility";
+import {ReferencesStatuses} from "../../../../util/references.statuses";
 import {RoleActionConstants} from "../../../../util/role.actions.constants";
 import {BreadcrumbDTO} from "../../../../model/breadcrumb.dto";
 
@@ -216,7 +216,7 @@ export class DeptComponent implements OnInit {
             code: '',
             name: '',
             status: '',
-            roles:''
+            roles: ''
         });
         this.searchDialog = true;
     }
@@ -262,13 +262,17 @@ export class DeptComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteDepartment(data.id)
-            }
-        });
+        if (this.selectedDepartment.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted ', 'Department')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteDepartment(data.id)
+                }
+            });
+        }
     }
 
     addDepartment() {
