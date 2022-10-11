@@ -247,5 +247,10 @@ export class FavouriteComponent implements OnInit {
         this.selectedDoc = event.data;
         this.appService.setShowDocInfoPaneSubjectState(true);
     }
+    
+    onRowUnselect(event: any) {
+        this.selectedDoc = new DlDocumentDTO();
+        this.appService.setShowDocInfoPaneSubjectState(false);
+    }
 
 }

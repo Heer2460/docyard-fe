@@ -114,7 +114,8 @@
                 </ng-container>
                 <ng-container *ngIf="!showGridDisplay">
                     <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
-                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()">
+                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" selectionMode="single" (onRowSelect)="onRowSelect($event)"
+                             (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>
