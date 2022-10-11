@@ -177,21 +177,21 @@ export class TrashComponent implements OnInit {
     }
 
     onDeleteDocument(ids: any[]) {
-        /*let data = {
+        let data = {
             dlDocumentIds: ids
         };
-        this.requestsService.putRequest(ApiUrlConstants.RESTORE_DOCUMENT_API_URL, data)
+        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_DELETE_API_URL, data)
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been deleted successfully.', 'Trash');
+                            this.toastService.success('Document has been deleted successfully.', 'Delete');
                             this.loadTrashDLDocuments();
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Trash');
+                        this.appService.handleError(error, 'Delete');
                     }
                 }
-            );*/
+            );
     }
 }
