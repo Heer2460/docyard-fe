@@ -2244,7 +2244,6 @@ image-preview-component {
 /*==============================================
                 Comments timeline
 ==============================================*/
-
 .comments-wrapper {
 	padding-top: 15px;
 	
@@ -2348,6 +2347,85 @@ image-preview-component {
 			}
 			
 		}
+	}
+	
+}
+
+/*==============================================
+                Comments timeline
+==============================================*/
+.info-pane-sharing-list {
+	margin: 0;
+	padding: 15px 0;
+	
+	li {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		list-style: none;
+		
+		+ li {
+			margin-top: 20px;
+		}
+		
+		.user-meta {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			
+			img {
+				width: 36px;
+				height: 36px;
+				object-fit: cover;
+			}
+			
+			i {
+				width: 36px;
+				height: 36px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 50%;
+				border: 1px solid hsl(var(--color-blue-03));
+				color: hsl(var(--color-blue-03));
+			}
+			
+			.meta {
+				margin-left: 15px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: flex-end;
+				
+				p {
+					font-size: 14px;
+					font-weight: 600;
+					
+					&.text-muted {
+						font-size: 12px;
+						font-weight: 400;
+						color: @color-grey-02 !important;
+					}
+					
+				}
+				
+			}
+			
+			.btn-link {
+				color: hsl(var(--color-blue-03));
+				text-decoration: none;
+				font-size: 12px;
+				font-weight: 400;
+			}
+			
+		}
+		
+		.btn-tiered-menu {
+			height: initial;
+			padding: 0;
+			line-height: 0;
+		}
+		
 	}
 	
 }
@@ -2932,6 +3010,51 @@ image-preview-component {
 						
 					}
 					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	.info-pane-sharing-list {
+		
+		
+		li {
+			
+			
+			+ li {
+				margin-top: 10px;
+			}
+			
+			.user-meta {
+				
+				img {
+					width: 30px;
+					height: 30px;
+				}
+				
+				i {
+					width: 30px;
+					height: 30px;
+				}
+				
+				.meta {
+					
+					p {
+						font-size: 12px;
+						
+						&.text-muted {
+							font-size: 10px;
+						}
+						
+					}
+					
+				}
+				
+				.btn-link {
+					font-size: 10px;
 				}
 				
 			}
