@@ -43,7 +43,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     showFileUploader: boolean = true;
     files: any[] = [];
     averageProgress = 0;
-    public cancelAllUploads = new BehaviorSubject<number>(0);
+    public cancelAllUploads = new BehaviorSubject<number>(-1);
 
 
 
@@ -437,12 +437,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.showFileUploader = !this.showFileUploader;
     }
 
-    removeFileFromList(index: number) {
-        if (index !== -1) {
-            this.filesToUpload.splice(index, 1);
-        }
-    }
-
     removeAllFilesFromList() {
         this.filesToUpload = [];
     }
@@ -459,10 +453,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     // uploading files code start
 
-    uploadFile(event: any) {
-        this.filesToUpload = [...event.target.files];
-    }
-
     onUploadFilesInitialize() {
         let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
         uploadInput.click();
@@ -478,13 +468,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 obj['uploaded'] = false;
                 this.files.push(obj);
             }
-            // this.uploadPopupVisible = true;
             this.startUploadingFiles();
         }
     }
 
     startUploadingFiles() {
-        console.log('2nd func', this.files);
         this.files.forEach((file, i) => {
             if (file.uploaded === false) {
                 this.makeUploadRequest(file,
@@ -512,16 +500,15 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.averageProgress = Math.round(totalProgress / this.files.length);
     }
 
-    makeUploadRequest(file: any[], oncomplete: (response: any) => void,
+    makeUploadRequest(file: any, oncomplete: (response: any) => void,
                       onprogress: (progress: any) => void,
                       onCancel: BehaviorSubject<number>, index: number) {
-        // console.log('file', file);
-        // return;
         let subscription = this.requestsService.postRequestMultipartFormAndDataUpload(ApiUrlConstants.UPLOAD_FILES_API_URL,
             file, {
-                "creatorId": this.appService.userInfo.id,
+                "createdBy": this.appService.userInfo.id,
+                "updatedBy": this.appService.userInfo.id,
                 "ownerId": this.appService.userInfo.id,
-                "folderId": Number.parseInt(window.atob(localStorage.getItem(window.btoa('folderId')) + ''))
+                "folderId": Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)))
             })
             .subscribe({
                 next: (event: any) => {
@@ -530,8 +517,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
                         onprogress(progress);
                     } else if (event.type == HttpEventType.Response) {
                         oncomplete(event.body);
-                        let folderId = Number.parseInt(window.atob(localStorage.getItem(window.btoa('folderId')) +''));
-                        // this.loadAllDocsFolders(folderId);
+                        let folderId = Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)));
+                        this.loadDocumentLibrary(String(folderId), false);
                     }
                 }, error: err => {
                     oncomplete(err);

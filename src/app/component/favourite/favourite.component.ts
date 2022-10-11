@@ -45,6 +45,7 @@ export class FavouriteComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.appService.setShowDocInfoPaneSubjectState(false);
         this.buildDocumentActions();
         this.loadAllFavouriteDlDocuments('0', false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
@@ -118,6 +119,7 @@ export class FavouriteComponent implements OnInit {
     }
 
     openFolder(rowData: any) {
+        console.log('open')
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
             this.loadAllFavouriteDlDocuments(this.dlFolderId, false);
@@ -210,6 +212,7 @@ export class FavouriteComponent implements OnInit {
                             } else {
                                 this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
                             }
+                            this.dlFolderId = this.dlFolderId ? this.dlFolderId : '0';
                             this.loadAllFavouriteDlDocuments(this.dlFolderId, false);
                         }
                     },

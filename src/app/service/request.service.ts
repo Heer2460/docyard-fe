@@ -20,6 +20,7 @@ export class RequestService {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
             {
+                'Authorization': 'Bearer ' + this.getToken(),
                 'auth_token': 'Bearer ' + this.getToken(),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -33,6 +34,7 @@ export class RequestService {
         reqHeader = new HttpHeaders(
             {
                 'auth_token': 'Bearer ' + this.getToken(),
+                'Authorization': 'Bearer ' + this.getToken(),
             }
         );
         return reqHeader;
@@ -102,15 +104,16 @@ export class RequestService {
         return this.http.post(this.getBEAPIServer() + url, formData, {headers: headers, observe: 'response'});
     }
 
-    postRequestMultipartFormAndDataUpload(url: any, files: any[], data: any) {
+    postRequestMultipartFormAndDataUpload(url: any, file: any, data: any) {
         let headers = this.getBasicMultipartHeaders();
         let formData: FormData = new FormData();
         formData.append('reqObj', new Blob([JSON.stringify(data)], {
             type: 'application/json'
         }));
-        Array.from(files).forEach((file, index) => {
+        if (file) {
             formData.append('doc', file.orgFile, file.orgFile.name);
-        });
+        }
+
         return this.http.post(this.getBEAPIServer() + url, formData, {
             headers: headers,
             reportProgress: true,
