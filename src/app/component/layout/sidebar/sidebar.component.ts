@@ -69,18 +69,19 @@ export class SidebarComponent implements OnInit {
         });
     }
 
-    toggleDropdown(route: any) {
-        this.routes.map((route: any) => {
-            route.expended = false;
-        });
-        route.expended = !route.expended;
-    }
-    
-    toggleChildDropdown(index: number, route: any) {
-        this.routes[index]?.children?.map((route: any) => {
-            route.expended = false;
-        });
-        route.expended = !route.expended;
+    toggleDropdownMenu(routes: any, menuItem: any, parent: any = null) {
+        routes.map((route: any) => {
+            
+            if(route.route == menuItem.route) {
+                parent.expended = true;
+                menuItem.expended = !menuItem.expended;
+            }else {
+                route.expended = false;
+                if(route.children) {
+                    this.toggleDropdownMenu(route.children, menuItem, route);
+                }
+            }
+        })
     }
 
     switchRouteTypes() {

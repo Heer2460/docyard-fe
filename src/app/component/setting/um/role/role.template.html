@@ -72,21 +72,6 @@
     </div>
 </section>
 
-
-<layout-component>
-    <ng-container actionItems>
-        <a role="button" (click)="addRole()" class="btn btn-sm btn-primary">
-            <i class="icon-plus"></i> Add
-        </a>
-        <button (click)="searchRole()" class="btn btn-sm btn-secondary">
-            <i class="icon-search"></i> Search
-        </button>
-    </ng-container>
-    <ng-container pageBody>
-
-    </ng-container>
-</layout-component>
-
 <p-dialog [(visible)]="searchDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">

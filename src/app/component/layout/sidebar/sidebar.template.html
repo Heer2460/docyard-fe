@@ -18,7 +18,7 @@
                 <li class="has-children" [ngClass]="[route.expended ? 'expended active' : '']">
 
                     <ng-container *ngIf="route.route == '/setting'; else settingElseCase">
-                        <a role="button" (click)="toggleDropdown(route)" [routerLink]="route.route">
+                        <a role="button" (click)="toggleDropdownMenu(routes, route)" [routerLink]="route.route">
                         <span class="icon-holder">
                             <i [attr.class]=" 'default ' + route.icon"></i>
                             <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
@@ -31,7 +31,7 @@
                     </ng-container>
 
                     <ng-template #settingElseCase>
-                        <a role="button" (click)="toggleDropdown(route)">
+                        <a role="button" (click)="toggleDropdownMenu(routes, route)">
                             <span class="icon-holder">
                                 <i [attr.class]=" 'default ' + route.icon"></i>
                                 <i [attr.class]="'filled ' + route.icon + '-filled'"></i>
@@ -50,7 +50,7 @@
                             <ng-container *ngIf="child?.children; else elseCase">
 
                                 <li class="has-children" [ngClass]="[child.expended ? 'expended active' : '']">
-                                    <a role="button" (click)="toggleChildDropdown(index, child)">
+                                    <a role="button" (click)="toggleDropdownMenu(routes, child)">
                                         <span class="icon-holder">
                                             <i [attr.class]=" 'default ' + child.icon"></i>
                                             <i [attr.class]="'filled ' + child.icon + '-filled'"></i>
