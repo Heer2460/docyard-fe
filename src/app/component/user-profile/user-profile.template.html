@@ -19,13 +19,14 @@
                     </ng-container>
                 </div>
             </header>
-
             <div class="page-body">
                 <div class="card">
                     <div class="card-body">
                         <div class="profile-container">
-                            <img *ngIf="profileImage === null" src="./assets/images/svg/user-image-placeholder.svg" alt="User Image"/>
-                            <img *ngIf="profileImage != null" src="{{'data:image/jpg;base64,' + profileImage}}" alt="User Image"/>
+                            <img *ngIf="profileImage === null" src="./assets/images/svg/user-image-placeholder.svg"
+                                 alt="User Image"/>
+                            <img *ngIf="profileImage != null" src="{{'data:image/jpg;base64,' + profileImage}}"
+                                 alt="User Image"/>
                             <button (click)="signatureImg.click()" class="btn btn-secondary">
                                 <i class="icon-edit"></i>
                             </button>
@@ -39,11 +40,12 @@
                             <div class="left-container">
                                 <div>
                                     <h1>{{selectedUserProfile.name}}</h1>
-                                    <h4>{{selectedGroups.rolesNameList}}</h4>
+                                    <h4>{{selectedUserProfile.groupName}}</h4>
                                 </div>
                                 <div class="actions">
-                                    <!--                            <button class="btn btn-sm btn-primary">Edit profile</button>-->
-                                    <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-primary">Change Password</button>
+                                    <button (click)="showChangePasswordPopup()" class="btn btn-sm btn-primary">
+                                        Change Password
+                                    </button>
                                 </div>
                             </div>
                             <div class="right-container">
@@ -63,8 +65,16 @@
                                         <td>{{selectedUserProfile.mobileNumber}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Phone #</th>
+                                        <th>Phone No.</th>
                                         <td>{{selectedUserProfile.phoneNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{selectedUserProfile.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>{{selectedUserProfile.status}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -109,9 +119,12 @@
                         </div>
                         <div class="comment-box">
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
-                                mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
-                                interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie,
+                                dictum est a,
+                                mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin
+                                lacus, ut
+                                interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
+                                lectus. Class
                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                             </p>
                             <div class="replies-tab">
@@ -153,11 +166,11 @@
                     <label class="required">Current password</label>
                 </div>
                 <small
-                        *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'required')">
+                    *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'required')">
                     {{ appUtility.makeErrorMessage('Current Password ', 'required') }}
                 </small>
                 <small
-                        *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'maxlength')">
+                    *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
             </div>
@@ -168,13 +181,16 @@
                                type="password">
                         <label class="required">New password</label>
                     </div>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'required', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'required', 'password')">
                         {{ appUtility.makeErrorMessage("Password", 'required') }}
                     </small>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'maxlength', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'maxlength', 'password')">
                         {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
                     </small>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'minlength', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'minlength', 'password')">
                         {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
                     </small>
                     <small *ngIf="changePasswordForm.controls['passwords'].get('password')?.touched &&
@@ -188,16 +204,20 @@
                                type="password">
                         <label class="required">Confirm password</label>
                     </div>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">
                         {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
                     </small>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
                         {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
                     </small>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
                         {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
                     </small>
-                    <small *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'match', 'password')">
+                    <small
+                        *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'match', 'password')">
                         {{ 'Password & Confirm Password must be same' }}
                     </small>
                 </div>

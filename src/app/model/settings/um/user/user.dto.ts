@@ -9,6 +9,7 @@ export class UserDTO extends BaseDTO {
     phoneNumber: string | undefined;
     mobileNumber: string | undefined;
     groupId: null | undefined;
+    groupName: null | undefined;
     departmentIds: null | undefined;
     address: string | undefined;
     password: string | undefined;

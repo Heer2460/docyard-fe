@@ -89,9 +89,9 @@ export class EditRoleComponent implements OnInit {
         this.editRoleForm = this.fb.group({
             id: [null],
             code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
+            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: ['Active', Validators.required],
-            remarks: ['', Validators.maxLength(256)],
+            remarks: ['', [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             moduleActionList: []
         });
     }
@@ -213,4 +213,18 @@ export class EditRoleComponent implements OnInit {
                 });
         }
     }
+    onCancelButtonClicked() {
+        if(this.editRoleForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.router.navigate(['/setting/um/role']);
+                }
+            });
+        }else{
+            this.router.navigate(['/setting/um/role']);
+        }
+    }
+
 }

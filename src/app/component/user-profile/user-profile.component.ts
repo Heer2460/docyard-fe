@@ -24,18 +24,15 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 export class UserProfileComponent implements OnInit {
 
     changePasswordForm: FormGroup = new FormGroup({});
-    userProfile: ProfileDTO[] = [];
     selectedUserProfile: UserDTO = new UserDTO();
     groups: GroupDTO[] = [];
-    selectedGroups: GroupDTO = new GroupDTO;
     message: string = 'Click search to get user Profile.';
     visibleChangePasswordDialog: boolean = false;
     files: any[] = [];
     url = '';
     profileImage: any = null;
-    profilePicture: any;
     userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -48,16 +45,15 @@ export class UserProfileComponent implements OnInit {
             active: true
         }
     ];
-    
     title: string = 'Profile';
-
 
     constructor(private router: Router,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder,
                 private requestsService: RequestService,
                 private appService: AppService,
-                public appUtility: AppUtility, private toastService: ToastrService) {
+                public appUtility: AppUtility,
+                private toastService: ToastrService) {
     }
 
     ngOnInit(): void {
@@ -76,7 +72,7 @@ export class UserProfileComponent implements OnInit {
                         }
                     }
                 }, error: (error: any) => {
-                    this.appService.handleError(error, 'User');
+                    this.appService.handleError(error, 'User Profile');
                 }
             });
     }
@@ -155,10 +151,10 @@ export class UserProfileComponent implements OnInit {
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successMessage('Change Profile');
+                            this.appService.successMessage('Change Profile Picture');
                         }
                     }, error: (error: any) => {
-                        this.appService.handleError(error, 'Change Profile');
+                        this.appService.handleError(error, 'Change Profile Picture');
                     }
                 });
         }

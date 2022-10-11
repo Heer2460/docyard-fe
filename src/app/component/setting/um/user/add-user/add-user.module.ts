@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {CustomDirectiveModule} from "../../../../../shared/directive/custom.directive.module";
 import {MultiSelectModule} from "primeng/multiselect";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 
@@ -20,6 +21,7 @@ import {MultiSelectModule} from "primeng/multiselect";
         LayoutModule,
         ReactiveFormsModule,
         DropdownModule,
+        ConfirmDialogModule,
         CustomDirectiveModule,
         MultiSelectModule,
     ]
