@@ -40,6 +40,7 @@ export class TrashComponent implements OnInit {
         }
     ];
     title: string = 'Trash';
+    deleteFlag: boolean = false;
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -60,14 +61,12 @@ export class TrashComponent implements OnInit {
             {
                 label: 'Restore',
                 icon: 'icon-restore',
-                command: () => {
-                }
+                command: () => this.onConfirmDialogueOpen(this.selectedDoc, 'restore', true)
             },
             {
                 label: 'Delete',
                 icon: 'icon-trash',
-                command: () => {
-                }
+                command: () => this.onConfirmDialogueOpen(this.selectedDoc, 'delete', true)
             }
         ];
     }
@@ -101,23 +100,91 @@ export class TrashComponent implements OnInit {
         this.showGridDisplay = false;
     }
 
-    onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: `Are you sure you want to delete this ${data.folder == true ? 'folder' : 'file'}?`,
-            accept: () => {
-                this.onDeleteDocument(data.id)
-            }
-        });
+    onConfirmDialogueOpen(data: any, type: string, single: boolean) {
+        let array: any[] = [];
+        switch (type) {
+            case "delete":
+                this.deleteFlag = true;
+                switch (single) {
+                    case true:
+                        array.push(data.id);
+                        this.confirmationService.confirm({
+                            message: `Are you sure you want to delete this ${data.folder == true ? 'folder' : 'file'}?`,
+                            header: `Delete ${data.folder == true ? 'Folder' : 'File'}`,
+                            accept: () => {
+                                this.onDeleteDocument(array)
+                            }
+                        });
+                        break;
+                    case false:
+                        this.dlDocuments.map(item => array.push(item.id));
+                        this.confirmationService.confirm({
+                            message: 'Are you sure you want to delete all documents?',
+                            header: 'Delete All',
+                            accept: () => {
+                                this.onDeleteDocument(array)
+                            }
+                        });
+                        break;
+                }
+                break;
+
+            case "restore":
+                this.deleteFlag = false;
+                switch (single) {
+                    case true:
+                        array.push(data.id);
+                        this.confirmationService.confirm({
+                            message: `Are you sure you want to restore this ${data.folder == true ? 'folder' : 'file'}?`,
+                            header: `Restore ${data.folder == true ? 'Folder' : 'File'}`,
+                            accept: () => {
+                                this.onRestoreDocument(array)
+                            }
+                        });
+                        break;
+                    case false:
+                        this.dlDocuments.map(item => array.push(item.id));
+                        this.confirmationService.confirm({
+                            message: 'Are you sure you want to restore all documents?',
+                            header: 'Restore All',
+                            accept: () => {
+                                this.onRestoreDocument(array)
+                            }
+                        });
+                        break;
+                }
+                break;
+        }
     }
 
-    onDeleteDocument(id: any) {
-        let url = ApiUrlConstants.DL_DOCUMENT_ARCHIVED_API_URL.replace("{dlDocumentId}", String(id))
-            .replace("{archived}", 'true');
-        this.requestsService.putRequest(url, {})
+    onRestoreDocument(ids: any[]) {
+        let data = {
+            dlDocumentIds: ids
+        };
+        this.requestsService.putRequest(ApiUrlConstants.RESTORE_DOCUMENT_API_URL, data)
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successDeleteMessage('Trash');
+                            this.toastService.success('Document has been restore successfully.', 'Restore');
+                            this.loadTrashDLDocuments();
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Restore');
+                    }
+                }
+            );
+    }
+
+    onDeleteDocument(ids: any) {
+        /*let data = {
+            dlDocumentIds: ids
+        };
+        this.requestsService.putRequest(ApiUrlConstants.RESTORE_DOCUMENT_API_URL, data)
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.toastService.success('Document has been deleted successfully.', 'Trash');
                             this.loadTrashDLDocuments();
                         }
                     },
@@ -125,6 +192,6 @@ export class TrashComponent implements OnInit {
                         this.appService.handleError(error, 'Trash');
                     }
                 }
-            );
+            );*/
     }
 }
