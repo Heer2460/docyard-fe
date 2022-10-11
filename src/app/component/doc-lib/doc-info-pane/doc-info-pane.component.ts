@@ -105,21 +105,23 @@ sharingMenuItems: MenuItem[] = [];
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
 
-    loadComments() {
-        let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
-        this.requestsService.getRequest(url)
-            .subscribe({
-                next: (response: any) => {
-                    if (response.status === 200) {
-                        this.comments = response.body.data;
-                    } else {
-                        this.comments = [];
+    loadComments(event: any) {
+        if (event.index == 1) {
+            let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
+            this.requestsService.getRequest(url)
+                .subscribe({
+                    next: (response: any) => {
+                        if (response.status === 200) {
+                            this.comments = response.body.data;
+                        } else {
+                            this.comments = [];
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Comment');
                     }
-                },
-                error: (error: any) => {
-                    this.appService.handleError(error, 'Comment');
-                }
-            });
+                });
+        }
     }
 
     addUserComment() {
@@ -136,7 +138,7 @@ sharingMenuItems: MenuItem[] = [];
                     if (response.status === 200) {
                         this.commentForm.reset();
                         this.toastService.success('Comment added successfully', 'Comment');
-                        this.loadComments();
+                        this.loadComments({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -168,7 +170,7 @@ sharingMenuItems: MenuItem[] = [];
                         this.commentForm.reset();
                         this.enableEditComment = false;
                         this.toastService.success('Comment updated successfully', 'Comment');
-                        this.loadComments();
+                        this.loadComments({index: 1});
                     }
                 },
                 error: (error: any) => {
