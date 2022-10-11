@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
     roleActions = RoleActionConstants;
-    message: string = 'Click search to get users.';
+    message: string = 'Click search to view users.';
     actionItems: MenuItem[] = [
         {
             label: 'View',
