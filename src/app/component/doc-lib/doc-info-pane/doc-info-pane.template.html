@@ -40,11 +40,7 @@
                         <td>{{selectedDoc?.currentVersion}}</td>
                     </tr>
                     <tr>
-                        <th>Copyright</th>
-                        <td>Copyright (c) 2022 Infotech/Lahore No use without permission.</td>
-                    </tr>
-                    <tr>
-                        <th>Last Updated By</th>
+                        <th>Updated By</th>
                         <td>{{selectedDoc?.updatedByName}}</td>
                     </tr>
                     <tr>
@@ -64,50 +60,46 @@
             </ng-template>
             <ng-template pTemplate="content">
                 <div class="comments-wrapper">
-                    <ng-container [formGroup]="postCommentForm">
+                    <ng-container [formGroup]="commentForm">
                         <div class="form-floating mb-2">
                             <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Comments</label>
                         </div>
                     </ng-container>
-
                     <div class="text-end">
-                        <button class="btn btn-sm btn-outline-secondary me-2">Cancel</button>
-                        <button class="btn btn-sm btn-primary">Post</button>
+                        <ng-container *ngIf="!enableEditComment">
+                            <button class="btn btn-sm btn-primary btn-post" (click)="addUserComment()">Post</button>
+                        </ng-container>
+                        <ng-container *ngIf="enableEditComment">
+                            <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update</button>
+                        </ng-container>
                     </div>
-                    <ul class="activity-timeline">
-                        <li class="has-comments">
-                            <div class="activity-box">
-                                <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                                <p>
-                                    <span>Umar Farooq</span>
-                                    <span class="text-muted">3:31 PM, Today</span>
-                                </p>
+                    <ul>
+                        <li *ngIf="!enableEditComment">
+                            <div class="user-details-and-actions">
+                                <div class="user-details">
+                                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                                    <p>
+                                        <span>Umar Farooq</span>
+                                        <span class="text-muted">3:31 PM, Today</span>
+                                    </p>
+                                </div>
+                                <div class="comment-actions btn-group btn-group-sm">
+                                    <button class="btn btn-sm btn-primary" (click)="onEditCommentBtnClicked()">
+                                        <i class="icon-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="comment-box">
-                                <ng-container *ngIf="!enableEditComment; else elseCase">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
-                                        mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
-                                        interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
-                                        aptent taciti sociosqu ad litora torquent per conubia nostra
-                                    </p>
-                                    <div class="comment-actions">
-                                        <button class="btn btn-sm btn-primary me-2" (click)="onEditCommentBtnClicked()">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </div>
-                                </ng-container>
-
-                                <ng-template #elseCase>
-                                    <ng-container [formGroup]="editCommentForm">
-                                        <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"></textarea>
-                                    </ng-container>
-                                    <div class="comment-actions justify-content-end">
-                                        <button class="btn btn-sm btn-outline-secondary me-2" (click)="onCancelEditCommentBtnClicked()">Cancel</button>
-                                        <button class="btn btn-sm btn-primary" (click)="updateUserComment()">Update</button>
-                                    </div>
-                                </ng-template>
-
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a,
+                                    mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
+                                    interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class
+                                    aptent taciti sociosqu ad litora torquent per conubia nostra
+                                </p>
                             </div>
                         </li>
                     </ul>

@@ -239,5 +239,10 @@ export class FavouriteComponent implements OnInit {
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
     }
+    
+    onRowSelect(event: any) {
+        this.selectedDoc = event.data;
+        this.appService.setShowDocInfoPaneSubjectState(true);
+    }
 
 }

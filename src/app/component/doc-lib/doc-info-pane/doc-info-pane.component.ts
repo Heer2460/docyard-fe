@@ -21,8 +21,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
     
-    postCommentForm: FormGroup = new FormGroup({});
-    editCommentForm: FormGroup = new FormGroup({});
+    commentForm: FormGroup = new FormGroup({});
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -41,10 +40,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
     
     buildForms() {
-        this.postCommentForm = this.fb.group({
-            comments: [''],
-        });
-        this.editCommentForm = this.fb.group({
+        this.commentForm = this.fb.group({
             comments: [''],
         });
     }
@@ -72,9 +68,13 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
     
+    addUserComment() {
+        this.appService.successAddMessage('Add Comment');
+    }
+    
     onEditCommentBtnClicked() {
         this.enableEditComment = true;
-        this.editCommentForm.patchValue({
+        this.commentForm.patchValue({
             comments: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra`
         });
     }
@@ -85,6 +85,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     
     updateUserComment() {
         this.appService.successUpdateMessage('Comment Update');
+        this.commentForm.reset();
         this.enableEditComment = false;
     }
 

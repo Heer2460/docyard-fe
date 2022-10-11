@@ -449,8 +449,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
     
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        console.log(event.data);
         this.appService.setShowDocInfoPaneSubjectState(true);
+    }
+    
+    onRowUnselect(event: any) {
+        this.selectedDoc = new DlDocumentDTO();
+        this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
     // uploading files code start
