@@ -176,7 +176,7 @@ export class TrashComponent implements OnInit {
             );
     }
 
-    onDeleteDocument(ids: any) {
+    onDeleteDocument(ids: any[]) {
         /*let data = {
             dlDocumentIds: ids
         };
