@@ -147,7 +147,11 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             });
     }
 
-    onEditCommentBtnClicked(selectedComment: any) {
+    onEditComment(selectedComment: any) {
+        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id) ) {
+            this.appService.noRightsMessage();
+            return;
+        }
         this.enableEditComment = true;
         this.commentForm.patchValue({
             id: selectedComment.id,
@@ -171,6 +175,24 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.commentForm.reset();
                         this.enableEditComment = false;
                         this.toastService.success('Comment updated successfully', 'Comment');
+                        this.loadComments({index: 1});
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Comment');
+                }
+            });
+    }
+
+    onDeleteComment(selectedComment: any) {
+        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id) ) {
+            this.appService.noRightsMessage();
+            return;
+        }
+        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '/' + selectedComment.id)
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
                         this.loadComments({index: 1});
                     }
                 },
