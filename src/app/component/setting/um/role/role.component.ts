@@ -22,7 +22,7 @@ export class RoleComponent implements OnInit {
 
     searchRoleForm: FormGroup = new FormGroup({});
     roles: any[] = [];
-    message: string = 'Click search to get roles.';
+    message: string = 'Click search to view roles.';
     searchDialog: boolean = false;
     statuses = ReferencesStatuses.statuses;
     selectedRole: RoleDTO = new RoleDTO();
@@ -47,7 +47,7 @@ export class RoleComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedRole)
         }
     ];
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -69,7 +69,7 @@ export class RoleComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Role';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
@@ -154,13 +154,17 @@ export class RoleComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteRole(data.id)
-            }
-        });
+        if (this.selectedRole.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'Role')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteRole(data.id)
+                }
+            });
+        }
     }
 
     addRole() {

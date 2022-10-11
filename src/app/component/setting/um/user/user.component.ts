@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
     selectedUser: any;
     destroy: Subject<boolean> = new Subject();
     roleActions = RoleActionConstants;
-    message: string = 'Click search to get users.';
+    message: string = 'Click search to view users.';
     actionItems: MenuItem[] = [
         {
             label: 'View',
@@ -200,6 +200,27 @@ export class UserComponent implements OnInit {
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
             ];
+        } else if (this.selectedUser.status === 'Suspend') {
+            this.actionItems = [
+                {
+                    label: 'View',
+                    icon: 'icon-eye',
+                    visible: this.roleActions.USER_VIEW.value,
+                    command: () => this.onViewOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Edit',
+                    icon: 'icon-edit',
+                    visible: this.roleActions.USER_EDIT.value,
+                    command: () => this.onEditOptionSelected(this.selectedUser)
+                },
+                {
+                    label: 'Delete',
+                    icon: 'icon-trash',
+                    visible: this.roleActions.USER_DEL.value,
+                    command: () => this.onItemDeleteAction(this.selectedUser)
+                }
+            ];
         } else {
             this.actionItems = [
                 {
@@ -239,13 +260,17 @@ export class UserComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteUser(data.id)
-            }
-        });
+        if (this.selectedUser.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'User')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteUser(data.id)
+                }
+            });
+        }
     }
 
     deleteUser(id: any) {

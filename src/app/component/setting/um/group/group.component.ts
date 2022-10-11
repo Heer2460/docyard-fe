@@ -25,7 +25,7 @@ export class GroupComponent implements OnInit {
     searchGroupForm: FormGroup = new FormGroup({});
     groups: GroupDTO[] = [];
     roles: RoleDTO[] = [];
-    message: string = 'Click search to get groups.';
+    message: string = 'Click search to view groups.';
     visibleSearchGroupDialog: boolean = false;
     visibleAddGroupDialog: boolean = false;
     visibleUpdateGroupDialog: boolean = false;
@@ -53,7 +53,7 @@ export class GroupComponent implements OnInit {
             command: () => this.onItemDeleteAction(this.selectedGroup)
         }
     ];
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -75,7 +75,7 @@ export class GroupComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Group';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
@@ -123,7 +123,7 @@ export class GroupComponent implements OnInit {
         });
 
         this.updateGroupForm = this.fb.group({
-            id:[''],
+            id: [''],
             code: [null, [Validators.required, Validators.maxLength(17)]],
             name: [null, [Validators.required, Validators.maxLength(35)]],
             remarks: [null, [Validators.maxLength(256)]],
@@ -310,13 +310,18 @@ export class GroupComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteGroup(data.id);
-            }
-        });
+        if (this.selectedGroup.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'Group')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteGroup(data.id);
+                }
+            });
+        }
+
     }
 
     addGroup() {
