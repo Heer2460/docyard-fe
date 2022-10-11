@@ -154,13 +154,17 @@ export class RoleComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteRole(data.id)
-            }
-        });
+        if (this.selectedRole.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'Role')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteRole(data.id)
+                }
+            });
+        }
     }
 
     addRole() {

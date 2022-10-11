@@ -200,7 +200,7 @@ export class UserComponent implements OnInit {
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
             ];
-        } else if(this.selectedUser.status === 'Suspend'){
+        } else if (this.selectedUser.status === 'Suspend') {
             this.actionItems = [
                 {
                     label: 'View',
@@ -260,13 +260,17 @@ export class UserComponent implements OnInit {
     }
 
     onItemDeleteAction(data: any) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this record?',
-            accept: () => {
-                //Actual logic to perform a confirmation
-                this.deleteUser(data.id)
-            }
-        });
+        if (this.selectedUser.status === 'Active') {
+            this.toastService.error('Active record cannot be deleted', 'User')
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete this record?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.deleteUser(data.id)
+                }
+            });
+        }
     }
 
     deleteUser(id: any) {
