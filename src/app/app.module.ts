@@ -20,6 +20,7 @@ import {AppUtility} from "./util/app.utility";
 import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
 import {environment} from "../environments/environment";
 import {initializeApp} from "firebase/app";
+import {ResetPasswordComponent} from "./component/reset-password/reset.password.component";
 
 initializeApp(environment.firebase);
 
@@ -36,7 +37,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 @NgModule({
     declarations: [
         AppComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        ResetPasswordComponent
     ],
     imports: [
         RouterModule,
