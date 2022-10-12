@@ -8,6 +8,7 @@ import {TableModule} from "primeng/table";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {MultiSelectModule} from "primeng/multiselect";
         ReactiveFormsModule,
         DropdownModule,
         MultiSelectModule,
+        ConfirmDialogModule,
     ]
 })
 export class EditUserModule { }

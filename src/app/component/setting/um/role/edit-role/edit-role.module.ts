@@ -7,7 +7,7 @@ import {AccordionModule} from "primeng/accordion";
 import {LayoutModule} from "../../../../layout/layout.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
-
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import {DropdownModule} from "primeng/dropdown";
         EditRoleRoutingModule,
         AccordionModule,
         LayoutModule,
+        ConfirmDialogModule,
         ReactiveFormsModule,
         DropdownModule,
         FormsModule,

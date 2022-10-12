@@ -148,8 +148,20 @@
             </div>
         </div>
         <div class="page-footer">
-            <button class="btn btn-sm btn-danger" routerLink="/setting/um/user">Cancel</button>
+            <button class="btn btn-sm btn-danger" (click)="onCancelButtonClicked()">Cancel</button>
             <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid" (click)="updateUser()">Update</button>
         </div>
     </div>
 </section>
+<p-confirmDialog #cd styleClass="dialog-danger">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-building"></i>
+            <span>Edit User</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">No</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Yes</button>
+    </ng-template>
+</p-confirmDialog>

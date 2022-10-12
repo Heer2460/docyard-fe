@@ -31,7 +31,8 @@
             </header>
 
             <div class="page-body">
-                <p-table [value]="groups" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
+                <p-table [value]="groups" [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]"
+                         [rows]="10">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="code">Code
@@ -57,7 +58,8 @@
                             <td>{{row.status}}</td>
                             <td>
                                 <button (click)="menu.toggle($event);onMenuClicked(row)" class="btn btn-tiered-menu">
-                                    <p-tieredMenu #menu [model]="actionItems" [popup]="true" appendTo="body"></p-tieredMenu>
+                                    <p-tieredMenu #menu [model]="actionItems" [popup]="true"
+                                                  appendTo="body"></p-tieredMenu>
                                     <i class="icon-menu-horizontal"></i>
                                 </button>
                             </td>
@@ -100,14 +102,27 @@
             <div class="col-6 mb-3">
                 <span class="p-float-label">
 <!--                <p-dropdown inputId="roles" [options]="roles" formControlName="roles" appendTo="body" optionLabel="name" optionValue="name"></p-dropdown>-->
-                    <p-multiSelect [options]="roles" formControlName="roles" optionLabel="code" optionValue="id"
-                                   appendTo="body" [filter]="true"></p-multiSelect>
-                    <label >Roles</label>
+                    <!--                    <p-multiSelect [options]="roles" formControlName="roles" optionLabel="code" optionValue="id"-->
+                    <!--                                   appendTo="body" [filter]="true"></p-multiSelect>-->
+
+                    <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="roles"
+                                   optionLabel="code" appendTo="body"
+                                   optionValue="id">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            {{item.code}}
+                                        </ng-template>
+                                        <ng-template let-item pTemplate="item">
+                                            {{item.code}} - {{item.name}}
+                                        </ng-template>
+                                    </p-multiSelect>
+
+                    <label>Roles</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body"
+                                optionLabel="value" optionValue="value"></p-dropdown>
                     <label for="status">Status</label>
                 </span>
             </div>
@@ -173,6 +188,9 @@
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'code', 'code', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'code', 'code', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Code', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -185,6 +203,9 @@
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 35) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'name', 'name', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Name', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -194,13 +215,23 @@
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Remarks', 'maxlength', 256) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Remarks', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
-                   <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
-                                  [showClear]="true" appendTo="body" filterBy="name" placeholder="Select role"
-                                  [filter]="true"></p-multiSelect>
+                  <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="role"
+                                 optionLabel="code" appendTo="body"
+                                 optionValue="id">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            {{item.code}}
+                                        </ng-template>
+                                        <ng-template let-item pTemplate="item">
+                                            {{item.code}} - {{item.name}}
+                                        </ng-template>
+                                    </p-multiSelect>
                     <label class="required">Roles</label>
                 </span>
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'role', 'role', 'required')">
@@ -209,7 +240,8 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body"
+                                optionLabel="value" optionValue="value"></p-dropdown>
                     <label for="status">Status</label>
                 </span>
             </div>
@@ -218,7 +250,8 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideAddGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="createGroup()" [disabled]="addGroupForm.invalid" class="btn btn-sm btn-primary" type="button">Add
+        <button (click)="createGroup()" [disabled]="addGroupForm.invalid" class="btn btn-sm btn-primary" type="button">
+            Add
         </button>
     </ng-template>
 </p-dialog>
@@ -242,6 +275,9 @@
                 <small *ngIf="appUtility.getFormError(updateGroupForm, 'code', 'code', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Code', 'maxlength', 17) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'code', 'code', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Code', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -254,6 +290,9 @@
                 <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Name', 'maxlength', 50) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'name', 'name', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Name', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <div class="form-floating">
@@ -263,18 +302,30 @@
                 <small *ngIf="appUtility.getFormError(addGroupForm, 'remarks', 'remarks', 'maxlength')">
                     {{ appUtility.makeErrorMessage('Remarks', 'maxlength', 256) }}
                 </small>
+                <small *ngIf="appUtility.getFormError(updateGroupForm, 'remarks', 'remarks', 'pattern')">
+                    {{ appUtility.makeErrorMessage('Remarks', 'onlySpace') }}
+                </small>
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
-                   <p-multiSelect [options]="roles" formControlName="role" optionLabel="code" optionValue="id"
-                                  appendTo="body" [filter]="true"></p-multiSelect>
+                   <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="role"
+                                  optionLabel="code" appendTo="body"
+                                  optionValue="id">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            {{item.code}}
+                                        </ng-template>
+                                        <ng-template let-item pTemplate="item">
+                                            {{item.code}} - {{item.name}}
+                                        </ng-template>
+                                    </p-multiSelect>
                     <label class="required">Roles</label>
                 </span>
             </div>
             <div class="col-6 mb-3">
                 <div class="p-float-label">
-                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body" optionLabel="value" optionValue="value" [filter]="false">
+                    <p-dropdown inputId="status" [options]="statuses" formControlName="status" appendTo="body"
+                                optionLabel="value" optionValue="value" [filter]="false">
                     </p-dropdown>
                     <label>Status</label>
                 </div>
@@ -283,7 +334,8 @@
     </form>
     <ng-template pTemplate="footer">
         <button (click)="hideUpdateGroupPopupAction()" class="btn btn-sm btn-danger me-2">Close</button>
-        <button (click)="updateGroup()" [disabled]="updateGroupForm.invalid" class="btn btn-sm btn-primary" type="button">Update
+        <button (click)="updateGroup()" [disabled]="updateGroupForm.invalid" class="btn btn-sm btn-primary"
+                type="button">Update
         </button>
     </ng-template>
 </p-dialog>
@@ -293,7 +345,7 @@
     <ng-template pTemplate="header">
         <div class="header-title">
             <i class="icon-building"></i>
-            <span>Delete Group</span>
+            <span>{{confirmationHeader}}</span>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">

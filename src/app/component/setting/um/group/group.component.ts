@@ -33,6 +33,7 @@ export class GroupComponent implements OnInit {
     statuses = ReferencesStatuses.statuses;
     roleActions = RoleActionConstants;
     selectedGroup: GroupDTO = new GroupDTO();
+    confirmationHeader: string = "Delete Group";
     actionItems: MenuItem[] = [
         {
             label: 'View',
@@ -115,20 +116,20 @@ export class GroupComponent implements OnInit {
         });
 
         this.addGroupForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
-            remarks: [null, [Validators.maxLength(256)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            remarks: [null, [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: ['Active'],
-            role: ['', Validators.required]
+            role: [null, Validators.required]
         });
 
         this.updateGroupForm = this.fb.group({
             id: [''],
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
-            remarks: [null, [Validators.maxLength(256)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            remarks: [null, [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: [null, Validators.required],
-            role: ['']
+            role: [null, Validators.required]
         });
     }
 
@@ -168,7 +169,7 @@ export class GroupComponent implements OnInit {
                         if (response.status === 200) {
                             this.appService.successAddMessage('Group');
                             this.searchGroup();
-                            this.hideAddGroupPopupAction();
+                            this.performHideAddAction();
                         }
                     },
                     error: (error: any) => {
@@ -191,7 +192,7 @@ export class GroupComponent implements OnInit {
                         if (response.status === 200) {
                             this.appService.successUpdateMessage('Group');
                             this.searchGroup();
-                            this.hideUpdateGroupPopupAction();
+                            this.visibleUpdateGroupDialog = false;
                         }
                     },
                     error: (error: any) => {
@@ -280,13 +281,26 @@ export class GroupComponent implements OnInit {
         this.addGroupForm.markAsUntouched();
         this.visibleAddGroupDialog = true;
     }
-
     hideAddGroupPopupAction() {
+        this.confirmationHeader = "Add Group";
+        if(this.addGroupForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.performHideAddAction();
+                }
+            });
+        }else{
+            this.performHideAddAction();
+        }
+    }
+    performHideAddAction() {
         this.addGroupForm.patchValue({
             code: '',
             name: '',
             remarks: '',
-            role: [],
+            role: '',
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
@@ -306,10 +320,22 @@ export class GroupComponent implements OnInit {
     }
 
     hideUpdateGroupPopupAction() {
-        this.visibleUpdateGroupDialog = false;
+        this.confirmationHeader = "Update Group";
+        if(this.updateGroupForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.visibleUpdateGroupDialog = false;
+                }
+            });
+        }else{
+            this.visibleUpdateGroupDialog = false;
+        }
     }
 
     onItemDeleteAction(data: any) {
+        this.confirmationHeader = "Delete Group";
         if (this.selectedGroup.status === 'Active') {
             this.toastService.error('Active record cannot be deleted', 'Group')
         } else {
