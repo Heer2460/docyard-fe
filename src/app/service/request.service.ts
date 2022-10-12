@@ -29,6 +29,16 @@ export class RequestService {
         return reqHeader;
     }
 
+    getUnAuthBasicHeaders(): HttpHeaders {
+        const reqHeader = new HttpHeaders(
+            {
+                'Authorization': 'Basic ' +
+                    btoa(environment.api_access_client + ':' + environment.api_secret_client)
+            }
+        );
+        return reqHeader;
+    }
+
     getBasicMultipartHeaders(): HttpHeaders {
         let reqHeader = null;
         reqHeader = new HttpHeaders(
@@ -161,5 +171,9 @@ export class RequestService {
 
     public getLoggedInUserId(): number {
         return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
+    }
+    putUnAuthRequest(url: any, _params?: any) {
+        let headers = this.getUnAuthBasicHeaders();
+        return this.http.put(this.getBEAPIServer() + url, _params, {headers: headers, observe: 'response'});
     }
 }

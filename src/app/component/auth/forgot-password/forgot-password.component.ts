@@ -6,6 +6,7 @@ import {RequestService} from "../../../service/request.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {AppUtility} from "../../../util/app.utility";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'forgot-password-component',
@@ -34,11 +35,9 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     forgotPassword(data1: any) {
-        let data = {
-            passwordResetLink: 'http://localhost:4200/reset-password'
-        }
+
         let url = ApiUrlConstants.FORGOT_PASSWORD_API_URL + '?email=' + data1.email
-        this.requestsService.putRequest(url, data)
+        this.requestsService.putRequest(url)
             .subscribe(
                 (response: HttpResponse<any>) => {
                     if (response.status === 200) {
