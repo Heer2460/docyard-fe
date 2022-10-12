@@ -151,9 +151,6 @@ export class EditUserComponent implements OnInit {
         this.editUserForm.get('profilePhoto')?.setValue(userDto.profilePhoto);
         userDto.profilePhoto ? this.logoImageDataUrl = userDto.profilePhoto : this.logoImageDataUrl = '';
         this.editUserForm.markAllAsTouched();
-
-        console.log(this.editUserForm.value.departmentIds)
-        console.log(this.departments)
     }
 
     setDepartmentIds(ids: any) {
