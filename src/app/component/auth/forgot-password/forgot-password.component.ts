@@ -16,12 +16,10 @@ export class ForgotPasswordComponent implements OnInit {
 
     forgotPasswordForm: FormGroup = new FormGroup({});
 
-    constructor(
-        private toastService: ToastrService,
-        private fb: FormBuilder,
-        public appService: AppService, public appUtility: AppUtility,
-        private requestsService: RequestService,
-        ) {
+    constructor(private toastService: ToastrService,
+                private fb: FormBuilder,
+                public appService: AppService, public appUtility: AppUtility,
+                private requestsService: RequestService) {
 
     }
 
@@ -30,43 +28,17 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     buildForms() {
-
-
         this.forgotPasswordForm = this.fb.group({
             email: [null, [Validators.required, Validators.maxLength(50)]],
         });
     }
 
-    // forgotPassword(data: any) {
-    //     if (this.forgotPasswordForm.invalid) {
-    //         return;
-    //     }
-    //     let data1 = {
-    //         userId: 10,
-    //         passwordResetLink:'http://localhost:4200/reset-password'
-    //     }
-    //     if (data) {
-    //         this.requestsService.putRequest(ApiUrlConstants.FORGOT_PASSWORD_API_URL, data1)
-    //             .subscribe({
-    //                 next: (response: HttpResponse<any>) => {
-    //                     if (response.status === 200) {
-    //                         this.appService.successUpdateMessage('Group');
-    //
-    //                     }
-    //                 },
-    //                 error: (error: any) => {
-    //                     this.appService.handleError(error, 'Group');
-    //                 }
-    //             });
-    //     }
-    // }
-
     forgotPassword(data1: any) {
-        let data ={
-            passwordResetLink:'http://localhost:4200/reset-password'
+        let data = {
+            passwordResetLink: 'http://localhost:4200/reset-password'
         }
         let url = ApiUrlConstants.FORGOT_PASSWORD_API_URL + '?email=' + data1.email
-        this.requestsService.putRequest(url,data)
+        this.requestsService.putRequest(url, data)
             .subscribe(
                 (response: HttpResponse<any>) => {
                     if (response.status === 200) {
