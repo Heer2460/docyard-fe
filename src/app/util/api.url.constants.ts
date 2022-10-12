@@ -18,6 +18,7 @@ export class ApiUrlConstants {
     public static ROLE_API_URL = '/um/role/';
     public static MODULE_API_URL = '/um/module/';
     public static GROUP_API_URL = '/um/group/';
+    public static USER_ACTIVITY_LOGS_API_URL = '/dl/dl-doc-activity/?userId={userId}';
 
     // Document Handling API URLS
     public static GET_RECENT_DOCUMENT_API_URL = '/dl/dl-document/recent/owner/';

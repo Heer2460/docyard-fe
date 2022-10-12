@@ -25,7 +25,9 @@ export class SearchBarComponent implements OnInit {
 	}
 
 	navigateToSearch(event: any) {
-		console.log(event.target.value);
-		this.router.navigate(['/search']);
+		let searchValue = event.target.value;
+		if (searchValue) {
+			this.router.navigate(['/search'], { queryParams: { value: searchValue } });
+		}
 	}
 }

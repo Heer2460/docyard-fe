@@ -20,10 +20,9 @@ export class AppSettingComponent implements OnInit {
     @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
 
     constructor(public appService: AppService, private router: Router) {
-        let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
-        this.userInfo = JSON.parse(userData);
-        if (this.userInfo.profilePhoto) {
-            this.profileImage = this.userInfo.profilePhoto;
+        if (this.appService.userInfo) {
+            this.userInfo = this.appService.userInfo;
+            this.profileImage = this.appService.userInfo.profilePhoto ? this.appService.userInfo.profilePhoto : '';
         }
     }
 
