@@ -4,12 +4,16 @@ export class ApiUrlConstants {
     public static OAUTH_TOKEN_API_URL = '/oauth/token';
     public static SIGN_IN_API_URL = '/um/auth/sign-in';
 
+    // Un Auth API URL
+    public static UN_AUTH_RESET_PASSWORD_API_URL = '/um/un-auth/reset-password';
+    public static UN_AUTH_CHECK_TOKEN_EXPIRY_API_URL = '/um/un-auth/check-token-expiry?token=';
+    public static FORGOT_PASSWORD_API_URL = '/um/un-auth/forgot-password';
+
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
 
     // User Management API URLS
     public static USER_API_URL = '/um/user/';
-    public static FORGOT_PASSWORD_API_URL = '/um/user/forgot-password';
     public static UPLOAD_IMAGE_API_URL = '/um/user/profile-picture';
     public static USER_STATUS_API_URL = '/um/user/update-user-status/';
     public static USER_RESET_PASS_API_URL = '/um/user/reset-password/';

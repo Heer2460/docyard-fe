@@ -3,8 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from "./component/page-not-found/page-not-found.component";
 import {AuthGuard} from "./guard/auth.guard";
 import {LayoutComponent} from "./component/layout/layout.component";
+import {ResetPasswordComponent} from "./component/reset-password/reset.password.component";
 
 const routes: Routes = [
+    {path: 'reset-password', component: ResetPasswordComponent},
     {
         path: '',
         children: [
