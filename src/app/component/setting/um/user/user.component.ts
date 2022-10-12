@@ -216,8 +216,7 @@ export class UserComponent implements OnInit {
                     command: () => this.onViewOptionSelected(this.selectedUser)
                 },
             ];
-        }
-         else if (this.selectedUser.status === 'Suspend') {
+        } else if (this.selectedUser.status === 'Suspend') {
             this.actionItems = [
                 {
                     label: 'View',
