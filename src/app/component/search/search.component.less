@@ -1,0 +1,48 @@
+
+.file-types {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 10px;
+    }
+
+}
+
+.row-items {
+
+    .col-item {
+
+        &:not(:nth-last-child(1)),
+        &:not(:nth-last-child(2)),
+        &:not(:nth-last-child(3)),
+        &:not(:nth-last-child(4))
+        {
+            margin-bottom: 30px;
+        }
+
+    }
+
+}
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+
+    .file-types {
+
+        i {
+            font-size: 26px;
+            line-height: 26px;
+            width: 26px;
+        }
+
+        img {
+            width: 26px;
+            height: 26px;
+        }
+
+    }
+
+}

@@ -4,7 +4,7 @@ import {ViewRoleComponent} from "./view-role.component";
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: ViewRoleComponent
   }
 ];

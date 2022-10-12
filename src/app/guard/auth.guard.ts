@@ -18,8 +18,7 @@ export class AuthGuard implements CanActivate {
         if (this.validateRoute(state.url.split('?')[0])) {
             return this.validateRoute(state.url.split('?')[0]);
         } else {
-            this.router.navigate(['/home']);
-            // this.appService.logout();
+            this.appService.logout();
             return false;
         }
     }
@@ -73,8 +72,7 @@ export class AuthGuard implements CanActivate {
                 return RoleActionConstants.DEPARTMENT_EDIT_ROUTE.valid;
 
             default:
-                this.appService.logout();
-                this.router.navigate(['/login']);
+                this.router.navigate(['/home']);
                 return false;
         }
     }

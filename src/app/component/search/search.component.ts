@@ -6,6 +6,8 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {HttpResponse} from "@angular/common/http";
 import {AppService} from "../../service/app.service";
 import {RequestService} from "../../service/request.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ApiUrlConstants} from "../../util/api.url.constants";
 
 @Component({
     selector: 'app-search',
@@ -37,17 +39,30 @@ export class SearchComponent implements OnInit {
         }
     ];
     title: string = 'Search';
+    searchValue: string = '';
 
     constructor(private appService: AppService,
-                private requestsService: RequestService) {
+                private requestsService: RequestService,
+                private activatedRoute: ActivatedRoute,
+                private router: Router) {
     }
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe((params) => {
+            this.searchValue = params['value'];
+            if (this.searchValue) {
+                console.log(this.searchValue)
+                this.searchAllDocuments();
+            }
+        });
     }
 
-    searchDLDocuments() {
-        let loggedInUser = this.appService.getLoggedInUserId();
-        this.requestsService.getRequest('')
+    searchAllDocuments(folderId = '0', archived = false) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
+            .replace('{ownerId}', String(loggedInUserId))
+            .replace("{folderId}", folderId)
+            .replace("{archived}", String(archived)))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -57,7 +72,7 @@ export class SearchComponent implements OnInit {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Trash');
+                    this.appService.handleError(error, 'Document Library');
                 }
             });
     }
@@ -72,5 +87,9 @@ export class SearchComponent implements OnInit {
 
     setListDisplay() {
         this.showGridDisplay = false;
+    }
+
+    navigateToRoute(breadcrumb: BreadcrumbDTO) {
+        this.router.navigate([breadcrumb.route]);
     }
 }

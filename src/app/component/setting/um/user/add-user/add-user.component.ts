@@ -33,6 +33,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     logoImageDataUrl: any;
     files: any[] = [];
     roleActions = RoleActionConstants;
+    passwordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
 
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -74,6 +76,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.preloadedData();
         this.buildForms();
+    }
+
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
     preloadedData(): void {

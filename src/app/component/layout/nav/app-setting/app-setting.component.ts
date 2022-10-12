@@ -2,9 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../../../service/app.service";
 import {Router} from "@angular/router";
-import {RoleActionConstants} from "../../../../util/role.actions.constants";
-import {AppConstants} from "../../../../util/app.constants";
-import {ProfileDTO} from "../../../../model/settings/profile/profile.dto";
 
 @Component({
     selector: 'app-setting-component',
@@ -20,10 +17,9 @@ export class AppSettingComponent implements OnInit {
     @Output() userProfileMenuItemsEvent = new EventEmitter<MenuItem[]>();
 
     constructor(public appService: AppService, private router: Router) {
-        let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
-        this.userInfo = JSON.parse(userData);
-        if (this.userInfo.profilePhoto) {
-            this.profileImage = this.userInfo.profilePhoto;
+        if (this.appService.userInfo) {
+            this.userInfo = this.appService.userInfo;
+            this.profileImage = this.appService.userInfo.profilePhoto ? this.appService.userInfo.profilePhoto : '';
         }
     }
 

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'search-bar-component',
@@ -9,7 +10,7 @@ export class SearchBarComponent implements OnInit {
 	
 	searchBarToggle: boolean = false;
 	
-	constructor() {
+	constructor(private router: Router) {
 	}
 	
 	ngOnInit(): void {
@@ -22,5 +23,11 @@ export class SearchBarComponent implements OnInit {
 	hideSearchBarDialog() {
 		this.searchBarToggle = false;
 	}
-	
+
+	navigateToSearch(event: any) {
+		let searchValue = event.target.value;
+		if (searchValue) {
+			this.router.navigate(['/search'], { queryParams: { value: searchValue } });
+		}
+	}
 }

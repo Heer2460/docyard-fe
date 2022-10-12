@@ -74,9 +74,11 @@ export class EditUserComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.activeRoute.snapshot.paramMap.get('id')) {
-            this.userId = this.activeRoute.snapshot.paramMap.get('id')
-        }
+        this.activeRoute.queryParams.subscribe((params) => {
+            if (params['id']) {
+                this.userId = params['id'];
+            }
+        });
         this.preloadedData();
         this.buildForms();
     }

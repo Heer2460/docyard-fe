@@ -88,62 +88,23 @@
                 <h2>
                     <span>Activity</span>
                 </h2>
-                <ul class="activity-timeline">
-                    <li>
-                        <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                        <p>
-                            <span>Umar Farooq</span>
-                            <span class="text-muted">has changed</span>
-                            <span>2 attributes</span>
-                            <span class="text-muted">on jan 21, 2021</span>
-                        </p>
-                    </li>
-                    <li>
-                        <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
-                        <p>
-                            <span>Umar Farooq</span>
-                            <span class="text-muted">moved</span>
-                            <span>Tour-pic.jpeg</span>
-                            <span class="text-muted">to</span>
-                            <span>Tour 2021</span>
-                            <span class="text-muted">on Jan 21, 2021</span>
-                        </p>
-                    </li>
-                    <li class="has-comments">
-                        <div class="activity-box">
-                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                <ul class="activity-timeline" >
+                    <ng-container *ngFor="let activity of activityLogs">
+                        <li>
+                            <img alt="user image" src="./assets/images/svg/user-image-placeholder.svg">
                             <p>
-                                <span>Umar Farooq</span>
-                                <span class="text-muted">commented on Jan 21, 2021</span>
+                                <span>{{activity.userName}}</span>
+                                <span class="text-muted">{{activity.action}}</span>
+                                <span>{{activity.docName}}</span>
+                                <span class="text-muted">on {{activity.activityPerformedOn}}</span>
                             </p>
-                        </div>
-                        <div class="comment-box">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie,
-                                dictum est a,
-                                mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin
-                                lacus, ut
-                                interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-                                lectus. Class
-                                aptent taciti sociosqu ad litora torquent per conubia nostra
-                            </p>
-                            <div class="replies-tab">
-                                <i class="icon-arrow-right-curved"></i>
-                                <a role="button">Show 3 replies</a>
-                                <ul>
-                                    <li>
-                                        <img src="./assets/images/image.png" alt="Avatar">
-                                    </li>
-                                    <li>
-                                        <img src="./assets/images/image.png" alt="Avatar">
-                                    </li>
-                                    <li>
-                                        <img src="./assets/images/image.png" alt="Avatar">
-                                    </li>
-                                </ul>
+                        </li>
+                        <li class="has-comments" *ngIf="activity.comment">
+                            <div class="comment-box">
+                                <p>{{activity.comment}}</p>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </ng-container>
                 </ul>
             </div>
         </div>
