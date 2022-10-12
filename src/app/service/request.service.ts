@@ -164,9 +164,9 @@ export class RequestService {
         return this.http.patch(this.getBEAPIServer() + url, params, {headers: headers, observe: 'response'});
     }
 
-    deleteRequest(url: any) {
+    deleteRequest(url: any, params?: any) {
         let headers = this.getBasicHeaders();
-        return this.http.delete(this.getBEAPIServer() + url, {headers: headers, observe: 'response'});
+        return this.http.delete(this.getBEAPIServer() + url, {headers: headers,  body: params, observe: 'response'});
     }
 
     public getLoggedInUserId(): number {

@@ -37,4 +37,5 @@ export class ApiUrlConstants {
     public static UPLOAD_FILES_API_URL = '/dl/dl-document/upload';
     public static RESTORE_DOCUMENT_API_URL = '/dl/dl-document/restore-archived';
     public static DL_DOCUMENT_COMMENT_API_URL = '/dl/dl-doc-comment/';
+    public static DL_DOCUMENT_DELETE_API_URL = '/dl/dl-document/delete';
 }
