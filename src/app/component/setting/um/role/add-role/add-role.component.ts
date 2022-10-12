@@ -83,8 +83,8 @@ export class AddRoleComponent implements OnInit {
 
     buildForms() {
         this.addRoleForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
-            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(35)]],
             status: ['Active', Validators.required],
             remarks: ['', [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             moduleActionList: []
