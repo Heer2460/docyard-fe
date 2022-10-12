@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
-import {ProfileDTO} from "../../model/settings/profile/profile.dto";
 import {AppService} from "../../service/app.service";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -32,7 +31,7 @@ export class UserProfileComponent implements OnInit {
     url = '';
     profileImage: any = null;
     userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
-
+    activityLogs: any[] = [];
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -83,8 +82,7 @@ export class UserProfileComponent implements OnInit {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        console.log('activity', response);
-
+                        this.activityLogs = response.body.data;
                     }
                 }, error: (error: any) => {
                     this.appService.handleError(error, 'User Activity');

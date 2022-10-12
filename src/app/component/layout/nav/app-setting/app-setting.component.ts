@@ -2,9 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {AppService} from "../../../../service/app.service";
 import {Router} from "@angular/router";
-import {RoleActionConstants} from "../../../../util/role.actions.constants";
-import {AppConstants} from "../../../../util/app.constants";
-import {ProfileDTO} from "../../../../model/settings/profile/profile.dto";
 
 @Component({
     selector: 'app-setting-component',

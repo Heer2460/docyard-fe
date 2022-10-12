@@ -269,11 +269,11 @@ export class UserComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/view/' + data.id]);
+        this.router.navigateByUrl('/setting/um/user/view?id=' + data.id);
     }
 
     onEditOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/edit/' + data.id]);
+        this.router.navigateByUrl('/setting/um/user/edit?id=' + data.id);
     }
 
     onItemDeleteAction(data: any) {

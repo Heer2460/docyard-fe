@@ -4,7 +4,7 @@ import {EditUserComponent} from "./edit-user.component";
 
 const routes: Routes = [
     {
-        path: ':id',
+        path: '',
         component: EditUserComponent
     }
 ];

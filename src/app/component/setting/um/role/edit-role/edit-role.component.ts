@@ -61,9 +61,11 @@ export class EditRoleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.activeRoute.snapshot.paramMap.get('id')) {
-            this.roleId = this.activeRoute.snapshot.paramMap.get('id')
-        }
+        this.activeRoute.queryParams.subscribe((params) => {
+            if (params['id']) {
+                this.roleId = params['id'];
+            }
+        });
         this.preLoadedData();
         this.buildForms();
     }
