@@ -8,6 +8,7 @@ export class ApiUrlConstants {
     public static UN_AUTH_RESET_PASSWORD_API_URL = '/um/un-auth/reset-password';
     public static UN_AUTH_CHECK_TOKEN_EXPIRY_API_URL = '/um/un-auth/check-token-expiry?token=';
     public static FORGOT_PASSWORD_API_URL = '/um/un-auth/forgot-password';
+    public static UNSUCCESSFUL_ATTEMPT_API_URL = '/um/un-auth//un-success/{username}';
 
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
