@@ -58,6 +58,7 @@ export class UserProfileComponent implements OnInit {
 
     ngOnInit(): void {
         this.getUserById(this.userId);
+        this.getActivityLogsByUser(this.userId);
         this.buildForms();
     }
 
@@ -73,6 +74,20 @@ export class UserProfileComponent implements OnInit {
                     }
                 }, error: (error: any) => {
                     this.appService.handleError(error, 'User Profile');
+                }
+            });
+    }
+
+    getActivityLogsByUser(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.USER_ACTIVITY_LOGS_API_URL.replace("{userId}", id))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        console.log('activity', response);
+
+                    }
+                }, error: (error: any) => {
+                    this.appService.handleError(error, 'User Activity');
                 }
             });
     }
