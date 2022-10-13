@@ -106,11 +106,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
             },
-            {
+           /* {
                 label: 'Folder',
                 icon: 'icon-folder-plus',
                 command: () => this.folderUpload?.nativeElement.click()
-            }
+            }*/
         ];
     }
 
