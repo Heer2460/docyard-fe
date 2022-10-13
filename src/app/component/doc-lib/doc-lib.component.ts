@@ -106,11 +106,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
             },
-           /* {
-                label: 'Folder',
-                icon: 'icon-folder-plus',
-                command: () => this.folderUpload?.nativeElement.click()
-            }*/
+            /* {
+                 label: 'Folder',
+                 icon: 'icon-folder-plus',
+                 command: () => this.folderUpload?.nativeElement.click()
+             }*/
         ];
     }
 
@@ -494,8 +494,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.averageProgress = Math.round(totalProgress / this.files.length);
     }
 
-    makeUploadRequest(file: any, oncomplete: (response: any) => void,
-                      onprogress: (progress: any) => void,
+    makeUploadRequest(file: any, oncomplete: (response: any) => void, onprogress: (progress: any) => void,
                       onCancel: BehaviorSubject<number>, index: number) {
         let subscription = this.requestsService.postRequestMultipartFormAndDataUpload(ApiUrlConstants.UPLOAD_FILES_API_URL,
             file, {
