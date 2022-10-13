@@ -105,7 +105,18 @@ export class LoginComponent implements OnInit {
                 error: (error: any) => {
                     if (error?.error?.error === 'invalid_grant') {
                         this.toastService.error('Invalid credentials provided, please verify.', 'Sign In User');
-                        this.requestsService.putRequest( ApiUrlConstants.UNSUCCESSFUL_ATTEMPT_API_URL.replace('{username}', data.username)).subscribe();
+                        this.requestsService.putRequest( ApiUrlConstants.UNSUCCESSFUL_ATTEMPT_API_URL.replace('{username}', data.username)).subscribe(
+                            {
+                                next: (response: HttpResponse<any>) => {
+                                    if (response.status === 200) {
+
+                                    }
+                                },
+                                error: (error: any) => {
+                                    this.appService.handleError(error,'Sign In User');
+                                }
+                            }
+                        );
                     } else {
                         if (error.status === 0 && error?.error instanceof ProgressEvent) {
                             this.toastService.error('Connection Refused, May be server is down.', 'Sign In User');
