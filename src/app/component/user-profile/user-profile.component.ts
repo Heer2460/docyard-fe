@@ -32,6 +32,9 @@ export class UserProfileComponent implements OnInit {
     profileImage: any = null;
     userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
     activityLogs: any[] = [];
+    currPasswordVisibility: boolean = true;
+    newPasswordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -59,6 +62,19 @@ export class UserProfileComponent implements OnInit {
         this.getUserById(this.userId);
         this.getActivityLogsByUser(this.userId);
         this.buildForms();
+    }
+
+
+    toggleCurrPasswordVisibility() {
+        this.currPasswordVisibility = !this.currPasswordVisibility;
+    }
+
+    toggleNewPasswordVisibility() {
+        this.newPasswordVisibility = !this.newPasswordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
     getUserById(id: any) {
@@ -137,7 +153,7 @@ export class UserProfileComponent implements OnInit {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        this.toastService.success(response.body.message, 'Change Password')
+                        this.toastService.success(response.body.message, 'Change Password');
                         this.hideChangePasswordPopup();
                     }
                 },
