@@ -24,7 +24,7 @@ export class AddRoleComponent implements OnInit {
     roleActions = RoleActionConstants;
     statuses = ReferencesStatuses.statuses;
     permissions: any = [];
-    
+
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -51,7 +51,7 @@ export class AddRoleComponent implements OnInit {
             active: true
         }
     ];
-    
+
     title: string = 'Add';
 
     constructor(private router: Router, private confirmationService: ConfirmationService,
@@ -83,10 +83,10 @@ export class AddRoleComponent implements OnInit {
 
     buildForms() {
         this.addRoleForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17)]],
-            name: [null, [Validators.required, Validators.maxLength(35)]],
+            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             status: ['Active', Validators.required],
-            remarks: ['', Validators.maxLength(256)],
+            remarks: ['', [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             moduleActionList: []
         });
     }
@@ -163,5 +163,19 @@ export class AddRoleComponent implements OnInit {
 
     counter(i: number) {
         return new Array(i);
+    }
+
+    onCancelButtonClicked() {
+        if(this.addRoleForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.router.navigate(['/setting/um/role']);
+                }
+            });
+        }else{
+            this.router.navigate(['/setting/um/role']);
+        }
     }
 }

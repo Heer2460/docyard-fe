@@ -1,5 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ConfirmationService} from "primeng/api";
 import {ReferencesStatuses} from "../../../../../util/references.statuses";
 import {CustomValidations} from "../../../../../util/custom.validations";
 import {ApiUrlConstants} from "../../../../../util/api.url.constants";
@@ -16,6 +17,7 @@ import {DepartmentDTO} from "../../../../../model/settings/ref/department/depart
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 
+
 @Component({
     selector: 'add-user-component',
     templateUrl: './add-user.template.html',
@@ -31,6 +33,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     logoImageDataUrl: any;
     files: any[] = [];
     roleActions = RoleActionConstants;
+    passwordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
 
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -61,7 +65,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     title: string = 'Add';
 
-    constructor(private fb: FormBuilder,
+    constructor(private fb: FormBuilder,private confirmationService: ConfirmationService,
                 private requestsService: RequestService,
                 private appService: AppService,
                 public appUtility: AppUtility,
@@ -72,6 +76,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.preloadedData();
         this.buildForms();
+    }
+
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
     preloadedData(): void {
@@ -170,6 +182,20 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.logoImageDataUrl = window.btoa(binaryString);
     }
 
+    onCancelButtonClicked() {
+        if(this.addUserForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.router.navigate(['/setting/um/user']);
+                }
+            });
+        }else{
+            this.router.navigate(['/setting/um/user']);
+        }
+    }
+
     clearFiles() {
         this.logoImageDataUrl = null;
         this.files = [];
@@ -178,5 +204,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy.next(true);
     }
+
+
 
 }

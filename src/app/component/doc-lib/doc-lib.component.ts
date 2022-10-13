@@ -11,7 +11,6 @@ import {AppConstants} from "../../util/app.constants";
 import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-// @ts-ignore
 import * as FileSaver from 'file-saver';
 import {BehaviorSubject} from "rxjs";
 
@@ -44,13 +43,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
     files: any[] = [];
     averageProgress = 0;
     public cancelAllUploads = new BehaviorSubject<number>(-1);
-    
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
-    
     breadcrumbs: BreadcrumbDTO[] = [];
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
-    
     title: string = 'Document Library';
     
     constructor(public appService: AppService,
@@ -110,11 +106,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
             },
-            {
+           /* {
                 label: 'Folder',
                 icon: 'icon-folder-plus',
                 command: () => this.folderUpload?.nativeElement.click()
-            }
+            }*/
         ];
     }
     
@@ -446,12 +442,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
     removeAllFilesFromList() {
         this.filesToUpload = [];
     }
-    
+
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setShowDocInfoPaneSubjectState(true);
     }
-    
+
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setShowDocInfoPaneSubjectState(false);

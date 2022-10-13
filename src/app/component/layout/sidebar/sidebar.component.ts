@@ -87,36 +87,39 @@ export class SidebarComponent implements OnInit {
     }
 
     switchRouteTypes() {
-
-        const mappedMenu = this.appService.permissions.map((item: any) => {
-            return {
-                label: item.name,
-                route: item.route,
-                icon: item.icon,
-                expended: false,
-                active: false,
-                children: item.children.map((child: any) => {
-                    return {
-                        label: child.name,
-                        route: child.route,
-                        icon: child.icon,
-                        expended: false,
-                        active: false,
-                    };
-                }),
-            }
-        });
-        this.routes = [
-            ...AppRouteConstants.mainRoutes,
-            {
-                label: 'Settings',
-                route: '/setting',
-                icon: 'icon-cog',
-                expended: false,
-                active: false,
-                children: mappedMenu
-            }
-        ];
+        if (this.appService.permissions.length >= 1) {
+            const mappedMenu = this.appService.permissions.map((item: any) => {
+                return {
+                    label: item.name,
+                    route: item.route,
+                    icon: item.icon,
+                    expended: false,
+                    active: false,
+                    children: item.children.map((child: any) => {
+                        return {
+                            label: child.name,
+                            route: child.route,
+                            icon: child.icon,
+                            expended: false,
+                            active: false,
+                        };
+                    }),
+                }
+            });
+            this.routes = [
+                ...AppRouteConstants.mainRoutes,
+                {
+                    label: 'Settings',
+                    route: '/setting',
+                    icon: 'icon-cog',
+                    expended: false,
+                    active: false,
+                    children: mappedMenu
+                }
+            ];
+        } else {
+            this.routes = AppRouteConstants.mainRoutes;
+        }
 
     }
 

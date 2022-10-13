@@ -133,11 +133,11 @@ export class RoleComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/role/view/' + data.id]);
+        this.router.navigateByUrl('/setting/um/role/view?id=' + data.id);
     }
 
     onEditOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/role/edit/' + data.id]);
+        this.router.navigateByUrl('/setting/um/role/edit?id=' + data.id);
     }
 
     showSearchPopupAction() {

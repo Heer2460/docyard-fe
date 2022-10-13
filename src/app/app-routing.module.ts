@@ -3,8 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from "./component/page-not-found/page-not-found.component";
 import {AuthGuard} from "./guard/auth.guard";
 import {LayoutComponent} from "./component/layout/layout.component";
+import {ResetPasswordComponent} from "./component/reset-password/reset.password.component";
 
 const routes: Routes = [
+    {path: 'reset-password', component: ResetPasswordComponent},
     {
         path: '',
         children: [
@@ -60,6 +62,16 @@ const routes: Routes = [
             {
                 path: '',
                 loadChildren: () => import('./component/trash/trash.module').then(m => m.TrashModule)
+            }
+        ]
+    },
+    {
+        path: 'search',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/search/search.module').then(m => m.SearchModule)
             }
         ]
     },

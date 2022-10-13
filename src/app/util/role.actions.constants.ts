@@ -64,7 +64,12 @@ export class RoleActionConstants {
         key: 'USER_UNLOCK',
         value: false
     };
-    
+
+    public static RESET_PASSWORD = {
+        key: 'RESET_PASSWORD',
+        value: false
+    };
+
     // Group Actions
     public static GROUP_ADD = {
         key: 'GROUP_ADD',
@@ -154,6 +159,7 @@ export class RoleActionConstants {
         RoleActionConstants.USER_EDIT.value = false;
         RoleActionConstants.USER_DEL.value = false;
         RoleActionConstants.USER_UNLOCK.value = false;
+        RoleActionConstants.RESET_PASSWORD.value = false;
 
         RoleActionConstants.GROUP_ADD.value = false;
         RoleActionConstants.GROUP_VIEW.value = false;

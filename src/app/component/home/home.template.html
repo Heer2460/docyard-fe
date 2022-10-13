@@ -115,7 +115,7 @@
                                         </p>
                                         <p class="file-size">{{gridItem?.size}}</p>
                                     </div>
-                                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
+                                    <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event);onMenuClicked(gridItem)">
                                         <p-tieredMenu #menu [model]="menuItems" appendTo="body" [popup]="true"></p-tieredMenu>
                                         <i class="icon-menu-vertical"></i>
                                     </button>
@@ -128,4 +128,47 @@
         </div>
     </div>
 </section>
+
+<p-dialog [(visible)]="renameDocumentDialog" [modal]="true" styleClass="">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <span>Rename {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <form [formGroup]="renameDocumentForm">
+        <div class="row">
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                    <label>Name</label>
+                </div>
+                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'required')">
+                    {{ appUtility.makeErrorMessage("Name", 'required') }}
+                </small>
+                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'maxlength')">
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
+                </small>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
+                (click)="onRenameDocument()">Update
+        </button>
+    </ng-template>
+</p-dialog>
+<p-confirmDialog #cd styleClass="dialog-danger">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <span>Delete {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="cd.reject()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="cd.accept()" class="btn btn-sm btn-primary">Delete</button>
+    </ng-template>
+</p-confirmDialog>
 

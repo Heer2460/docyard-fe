@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
     loginFrom!: FormGroup;
     permissions: any[] = [];
+    passwordVisibility: boolean = true;
 
     constructor(private fb: FormBuilder,
                 private requestsService: RequestService,
@@ -40,6 +41,10 @@ export class LoginComponent implements OnInit {
 
     forgetPassword() {
         this.router.navigate(['/forgot-password']);
+    }
+
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
     }
 
     login(data: any) {
@@ -100,6 +105,18 @@ export class LoginComponent implements OnInit {
                 error: (error: any) => {
                     if (error?.error?.error === 'invalid_grant') {
                         this.toastService.error('Invalid credentials provided, please verify.', 'Sign In User');
+                        this.requestsService.putRequest( ApiUrlConstants.UNSUCCESSFUL_ATTEMPT_API_URL.replace('{username}', data.username)).subscribe(
+                            {
+                                next: (response: HttpResponse<any>) => {
+                                    if (response.status === 200) {
+
+                                    }
+                                },
+                                error: (error: any) => {
+                                    this.appService.handleError(error,'Sign In User');
+                                }
+                            }
+                        );
                     } else {
                         if (error.status === 0 && error?.error instanceof ProgressEvent) {
                             this.toastService.error('Connection Refused, May be server is down.', 'Sign In User');
@@ -110,5 +127,6 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
+
 
 }

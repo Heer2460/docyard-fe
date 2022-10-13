@@ -14,6 +14,7 @@ import {DepartmentDTO} from "../../../../../model/settings/ref/department/depart
 import {ToastrService} from "ngx-toastr";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
+import {ConfirmationService} from "primeng/api";
 
 @Component({
     selector: 'edit-user-component',
@@ -63,6 +64,7 @@ export class EditUserComponent implements OnInit {
     title: string = 'Edit';
 
     constructor(private fb: FormBuilder,
+                private confirmationService:ConfirmationService,
                 private requestsService: RequestService,
                 private appService: AppService,
                 public appUtility: AppUtility,
@@ -72,9 +74,11 @@ export class EditUserComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.activeRoute.snapshot.paramMap.get('id')) {
-            this.userId = this.activeRoute.snapshot.paramMap.get('id')
-        }
+        this.activeRoute.queryParams.subscribe((params) => {
+            if (params['id']) {
+                this.userId = params['id'];
+            }
+        });
         this.preloadedData();
         this.buildForms();
     }
@@ -153,7 +157,7 @@ export class EditUserComponent implements OnInit {
 
     setDepartmentIds(ids: any) {
         let idsArray: number[] = [];
-        if (ids.length > 0) {
+        if (ids && ids.length > 0) {
             ids.map((item: number) => idsArray.push(Number(item)));
         }
         return idsArray;
@@ -210,6 +214,20 @@ export class EditUserComponent implements OnInit {
     handleReaderLoadedProfileImage(readerEvt: any) {
         let binaryString = readerEvt.target.result;
         this.logoImageDataUrl = window.btoa(binaryString);
+    }
+
+    onCancelButtonClicked() {
+        if(this.editUserForm.dirty){
+            this.confirmationService.confirm({
+                message: 'Form shall be closed without saving data. Do you want to proceed?',
+                accept: () => {
+                    //Actual logic to perform a confirmation
+                    this.router.navigate(['/setting/um/user']);
+                }
+            });
+        }else{
+            this.router.navigate(['/setting/um/user']);
+        }
     }
 
     clearFiles() {

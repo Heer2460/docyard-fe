@@ -27,10 +27,10 @@
                     </small>
                 </div>
                 <div class="form-floating mt-3">
-                    <input type="password" class="form-control" formControlName="password" autocomplete="new-password" id="password" placeholder="Password">
+                    <input [attr.type]="passwordVisibility ? 'password' : 'text'" class="form-control" formControlName="password" autocomplete="new-password" id="password" placeholder="Password">
                     <label for="password" class="required">Password</label>
-                    <div class="input-group-text">
-                        <i class="icon-lock"></i>
+                    <div class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                        <i class="{{passwordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
                     </div>
                     <small *ngIf="loginFrom.get('password')?.errors && loginFrom.get('password')?.touched"
                            class="error-msg">

@@ -50,7 +50,7 @@ export class UserComponent implements OnInit {
         {
             label: 'Reset Password',
             icon: 'icon-edit',
-            visible: this.roleActions.USER_EDIT.value,
+            visible: this.roleActions.RESET_PASSWORD.value,
             command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
@@ -158,6 +158,13 @@ export class UserComponent implements OnInit {
     }
 
     showSearchPopupAction() {
+        this.searchUserForm.patchValue({
+            username: [''],
+            name: [''],
+            group: [''],
+            department: [''],
+            status: ['Active'],
+        });
         this.searchPopupToggle = true;
     }
 
@@ -190,7 +197,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.USER_EDIT.value,
+                    visible: this.roleActions.RESET_PASSWORD.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
@@ -199,6 +206,15 @@ export class UserComponent implements OnInit {
                     visible: this.roleActions.USER_DEL.value,
                     command: () => this.onItemDeleteAction(this.selectedUser)
                 }
+            ];
+        } else if (this.selectedUser.status === 'Terminate') {
+            this.actionItems = [
+                {
+                    label: 'View',
+                    icon: 'icon-eye',
+                    visible: this.roleActions.USER_VIEW.value,
+                    command: () => this.onViewOptionSelected(this.selectedUser)
+                },
             ];
         } else if (this.selectedUser.status === 'Suspend') {
             this.actionItems = [
@@ -238,7 +254,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.USER_EDIT.value,
+                    visible: this.roleActions.RESET_PASSWORD.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
@@ -252,11 +268,11 @@ export class UserComponent implements OnInit {
     }
 
     onViewOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/view/' + data.id]);
+        this.router.navigateByUrl('/setting/um/user/view?id=' + data.id);
     }
 
     onEditOptionSelected(data: any) {
-        this.router.navigate(['/setting/um/user/edit/' + data.id]);
+        this.router.navigateByUrl('/setting/um/user/edit?id=' + data.id);
     }
 
     onItemDeleteAction(data: any) {

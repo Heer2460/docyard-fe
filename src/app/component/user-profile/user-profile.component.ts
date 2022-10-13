@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
-import {ProfileDTO} from "../../model/settings/profile/profile.dto";
 import {AppService} from "../../service/app.service";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -24,18 +23,18 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 export class UserProfileComponent implements OnInit {
 
     changePasswordForm: FormGroup = new FormGroup({});
-    userProfile: ProfileDTO[] = [];
     selectedUserProfile: UserDTO = new UserDTO();
     groups: GroupDTO[] = [];
-    selectedGroups: GroupDTO = new GroupDTO;
     message: string = 'Click search to get user Profile.';
     visibleChangePasswordDialog: boolean = false;
     files: any[] = [];
     url = '';
     profileImage: any = null;
-    profilePicture: any;
     userId = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID));
-    
+    activityLogs: any[] = [];
+    currPasswordVisibility: boolean = true;
+    newPasswordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -48,21 +47,34 @@ export class UserProfileComponent implements OnInit {
             active: true
         }
     ];
-    
     title: string = 'Profile';
-
 
     constructor(private router: Router,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder,
                 private requestsService: RequestService,
                 private appService: AppService,
-                public appUtility: AppUtility, private toastService: ToastrService) {
+                public appUtility: AppUtility,
+                private toastService: ToastrService) {
     }
 
     ngOnInit(): void {
         this.getUserById(this.userId);
+        this.getActivityLogsByUser(this.userId);
         this.buildForms();
+    }
+
+
+    toggleCurrPasswordVisibility() {
+        this.currPasswordVisibility = !this.currPasswordVisibility;
+    }
+
+    toggleNewPasswordVisibility() {
+        this.newPasswordVisibility = !this.newPasswordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
     getUserById(id: any) {
@@ -76,7 +88,20 @@ export class UserProfileComponent implements OnInit {
                         }
                     }
                 }, error: (error: any) => {
-                    this.appService.handleError(error, 'User');
+                    this.appService.handleError(error, 'User Profile');
+                }
+            });
+    }
+
+    getActivityLogsByUser(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.USER_ACTIVITY_LOGS_API_URL.replace("{userId}", id))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.activityLogs = response.body.data;
+                    }
+                }, error: (error: any) => {
+                    this.appService.handleError(error, 'User Activity');
                 }
             });
     }
@@ -128,7 +153,7 @@ export class UserProfileComponent implements OnInit {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        this.toastService.success(response.body.message, 'Change Password')
+                        this.toastService.success(response.body.message, 'Change Password');
                         this.hideChangePasswordPopup();
                     }
                 },
@@ -155,10 +180,10 @@ export class UserProfileComponent implements OnInit {
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successMessage('Change Profile');
+                            this.appService.successMessage('Change Profile Picture');
                         }
                     }, error: (error: any) => {
-                        this.appService.handleError(error, 'Change Profile');
+                        this.appService.handleError(error, 'Change Profile Picture');
                     }
                 });
         }
