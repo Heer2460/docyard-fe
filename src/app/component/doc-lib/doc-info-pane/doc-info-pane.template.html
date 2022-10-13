@@ -51,7 +51,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab [selected]="activeTabIndex === 1" *ngIf="!selectedDoc?.folder">
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>

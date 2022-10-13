@@ -116,10 +116,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     buildForms() {
         this.addFolderForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.renameDocumentForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.addFileForm = this.fb.group({
             name: [null, [Validators.required, Validators.maxLength(17)]],

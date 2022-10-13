@@ -57,7 +57,9 @@ export class SearchComponent implements OnInit {
     }
 
     searchAllDocuments(searchKey: string) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
         this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_API_URL
+            .replace('{userid}', String(loggedInUserId))
             .replace('{searchKey}', searchKey))
             .subscribe({
                 next: (response: HttpResponse<any>) => {

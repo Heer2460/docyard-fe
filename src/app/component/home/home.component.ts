@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
 
     buildForms() {
         this.renameDocumentForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
     }
 

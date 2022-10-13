@@ -106,6 +106,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     loadComments(event: any) {
+        console.log('event', event);
         this.activeTabIndex = event.index;
         if (event.index == 1) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
