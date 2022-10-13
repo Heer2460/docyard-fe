@@ -252,6 +252,14 @@ export class DocLibComponent implements OnInit, OnDestroy {
         }
     }
 
+    openFile(rowData: any) {
+        const params = {
+            id: rowData.id,
+            folderId: rowData.parentId,
+        }
+        this.router.navigate([`/preview`], {queryParams: params});
+    }
+
     setGridDisplay() {
         this.showGridDisplay = true;
     }

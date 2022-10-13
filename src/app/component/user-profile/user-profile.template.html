@@ -88,7 +88,7 @@
                 <h2>
                     <span>Activity</span>
                 </h2>
-                <ul class="activity-timeline" >
+                <ul class="activity-timeline">
                     <ng-container *ngFor="let activity of activityLogs">
                         <li>
                             <img alt="user image" src="./assets/images/svg/user-image-placeholder.svg">
@@ -123,8 +123,11 @@
             <div class="col-6 mb-3">
                 <div class="form-floating">
                     <input class="form-control" formControlName="currentPassword" placeholder="Current password"
-                           type="password">
+                           [attr.type]="currPasswordVisibility ? 'password' : 'text'">
                     <label class="required">Current password</label>
+                    <div class="input-group-text cursor-pointer" (click)="toggleCurrPasswordVisibility()">
+                        <i class="{{currPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                    </div>
                 </div>
                 <small
                     *ngIf="appUtility.getFormError(changePasswordForm, 'currentPassword', 'currentPassword', 'required')">
@@ -139,8 +142,11 @@
                 <div class="col-6 mb-3">
                     <div class="form-floating">
                         <input class="form-control" formControlName="password" placeholder="New password"
-                               type="password">
+                               [attr.type]="newPasswordVisibility ? 'password' : 'text'">
                         <label class="required">New password</label>
+                        <div class="input-group-text cursor-pointer" (click)="toggleNewPasswordVisibility()">
+                            <i class="{{newPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                        </div>
                     </div>
                     <small
                         *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'password', 'required', 'password')">
@@ -162,8 +168,11 @@
                 <div class="col-6 mb-3">
                     <div class="form-floating">
                         <input class="form-control" formControlName="confirmPassword" placeholder="Confirm password"
-                               type="password">
+                               [attr.type]="confirmPasswordVisibility ? 'password' : 'text'">
                         <label class="required">Confirm password</label>
+                        <div class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+                            <i class="{{confirmPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                        </div>
                     </div>
                     <small
                         *ngIf="appUtility.getFormError(changePasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">

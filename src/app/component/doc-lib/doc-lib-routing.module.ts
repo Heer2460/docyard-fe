@@ -6,15 +6,6 @@ const routes: Routes = [
     {
         path: '',
         component: DocLibComponent
-    },
-    {
-        path: 'preview',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./image-preview/image-preview.module').then(m => m.ImagePreviewModule)
-            }
-        ]
     }
 ];
 

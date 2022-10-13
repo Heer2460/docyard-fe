@@ -1,0 +1,72 @@
+<div class="layout-wrapper">
+    <div class="content-wrapper">
+        <nav-component [showImageViewSettings]="true">
+            <ng-container imagePreviewActions>
+                <preview-actions-component></preview-actions-component>
+            </ng-container>
+        </nav-component>
+        <section class="main-page-wrapper">
+            <div class="left" [ngClass]="showDocInfoPane ? 'collapsed': ''">
+                <div class="image-container">
+                    <ng-container
+                            *ngIf="getValidExtension(); else otherFileElseCase">
+                        <ng-container *ngIf="checkValidImageFile(); else elseFileCase">
+                            <img class="file-type-thumbnail" src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                                 alt="{{selectedDoc.extension}}">
+                        </ng-container>
+                        <ng-template #elseFileCase>
+                            <img class="file-type-thumbnail" src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                                 alt="{{selectedDoc.extension}}">
+                        </ng-template>
+                    </ng-container>
+                    <ng-template #otherFileElseCase>
+                        <img class="file-type-thumbnail" src="./assets/images/svg/icons/other.svg" alt="other">
+                    </ng-template>
+
+                </div>
+                <div class="image-controls">
+                    <div class="controllers">
+                        <button class="btn btn-control btn-prev" (click)="openPrevFileAction()">
+                            <i class="icon-arrow-left"></i>
+                        </button>
+                        <button class="btn btn-control btn-next" (click)="openNextFileAction()">
+                            <i class="icon-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="image-control-pane">
+                        <div class="metadata">
+                            <div class="image-meta">
+                                <p class="image-name">{{selectedDoc?.name}}</p>
+                                <button class="btn btn-star" (click)="favouriteDocument(selectedDoc)">
+                                    <i class="icon-star-filled" *ngIf="selectedDoc?.favourite"></i>
+                                    <i class="icon-star" *ngIf="!selectedDoc?.favourite"></i>
+                                </button>
+                            </div>
+                            <p class="image-counter">{{currentDocIndex + 1}} of {{dlDocuments.length}}</p>
+                        </div>
+                        <div class="image-magnifier" *ngIf="checkValidImageFile()">
+                            <ul>
+                                <li>
+                                    <button class="btn btn-zoom-out" (click)="magnifierZoomOutAction()">
+                                        <i class="icon-minus"></i>
+                                    </button>
+                                </li>
+                                <li class="zoom-percentage">
+                                    {{magnifierZoom + 100}}%
+                                </li>
+                                <li>
+                                    <button class="btn btn-zoom-in" (click)="magnifierZoomInAction()">
+                                        <i class="icon-plus"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <doc-info-pane-component [_selectedDoc]="selectedDoc"
+                                     [ngClass]="showDocInfoPane ? '': 'collapsed'"></doc-info-pane-component>
+        </section>
+    </div>
+</div>
+

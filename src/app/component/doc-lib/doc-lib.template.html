@@ -159,7 +159,7 @@
                                             <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button" (click)="openFile(row)">{{row.name}}</span>
                                         </ng-template>
                                     </div>
                                 </td>
@@ -212,7 +212,7 @@
                         <h4>Files are being uploaded</h4>
                         <div class="progress-container">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{averageProgress}}%" aria-valuenow="25" aria-valuemin="0"
+                                <div class="progress-bar" role="progressbar"  style="width: {{averageProgress}}%" aria-valuenow="25" aria-valuemin="0"
                                      aria-valuemax="100"></div>
                             </div>
                             <span>{{averageProgress}}%</span>

@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ImagePreviewComponent} from "./image-preview.component";
+import {PreviewComponent} from "./preview.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: ImagePreviewComponent
+        component: PreviewComponent
     }
 ];
 
@@ -13,5 +13,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ImagePreviewRoutingModule {
+export class PreviewRoutingModule {
 }
