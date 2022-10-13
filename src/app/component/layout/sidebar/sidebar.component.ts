@@ -87,8 +87,7 @@ export class SidebarComponent implements OnInit {
     }
 
     switchRouteTypes() {
-
-        if (this.appService.permissions.length > 1) {
+        if (this.appService.permissions.length >= 1) {
             const mappedMenu = this.appService.permissions.map((item: any) => {
                 return {
                     label: item.name,
