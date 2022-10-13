@@ -109,7 +109,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
             groupId: [null, Validators.required],
             departmentIds: [''],
             address: [null, Validators.maxLength(256)],
-            status: ['Active'],
+            status: [{value: 'Active', disabled: true}],
         });
     }
 
