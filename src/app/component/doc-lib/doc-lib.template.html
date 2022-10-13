@@ -22,10 +22,6 @@
                             <i class="icon-arrow-down"></i>
                         </button>
                         <button class="btn btn-sm btn-primary" [disabled]="true">
-                            <i class="icon-manage"></i>
-                            Manage
-                        </button>
-                        <button class="btn btn-sm btn-primary" [disabled]="true">
                             <i class="icon-share"></i>
                             Share
                         </button>
@@ -148,7 +144,6 @@
                                 </td>
                                 <td>
                                     <div class="file-types">
-
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
                                                 *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
@@ -159,16 +154,13 @@
                                                 <img src="./assets/images/svg/icons/other.svg" alt="other">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
-                                             alt="icon">
-
+                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
                                         <ng-container *ngIf="row.folder == true; else elseCase">
                                             <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
                                             <span role="button">{{row.name}}</span>
                                         </ng-template>
-
                                     </div>
                                 </td>
                                 <td>
