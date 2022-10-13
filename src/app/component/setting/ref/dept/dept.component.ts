@@ -92,20 +92,20 @@ export class DeptComponent implements OnInit {
     buildForms() {
         this.searchDepartmentForm = this.fb.group({
             code: ['',  Validators.pattern(/^[a-zA-Z0-9_-]*$/)],
-            name: ['',  Validators.pattern(/^[a-zA-Z0-9_-]*$/)],
+            name: ['',  Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)],
             status: [''],
         });
 
         this.addDepartmentForm = this.fb.group({
             code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
-            name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             status: ['Active'],
         });
 
         this.updateDepartmentForm = this.fb.group({
             id: [null, Validators.required],
             code: [{ value:null,disabled: true}],
-            name: [null, [Validators.required, Validators.maxLength(50)]],
+            name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             status: [null, Validators.required],
         });
     }
