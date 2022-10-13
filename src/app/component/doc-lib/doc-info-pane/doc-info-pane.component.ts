@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {RequestService} from "../../../service/request.service";
 import {ToastrService} from "ngx-toastr";
 import {MenuItem} from "primeng/api";
+import {AppConstants} from "../../../util/app.constants";
 
 @Component({
     selector: 'doc-info-pane-component',
@@ -13,7 +14,7 @@ import {MenuItem} from "primeng/api";
     styleUrls: ['./doc-info-pane.component.less']
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
-
+    
     documentMeta: any;
     users: any[] = [];
     comments: any[] = [];
@@ -21,8 +22,9 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
+    validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
-
+    
     constructor(public appService: AppService,
                 private requestsService: RequestService,
                 private fb: FormBuilder,
@@ -31,23 +33,23 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             this.showDocInfoPane = value;
         });
     }
-
+    
     @Input() _selectedDoc: any = null;
-
+    
     get selectedDoc(): any {
         return this._selectedDoc;
     }
-
+    
     @Input('selectedDoc') set selectedDoc(selectedDoc: any) {
         this._selectedDoc = selectedDoc;
         this.activeTabIndex = 0;
     }
-
+    
     ngOnInit(): void {
         this.buildForms();
         this.buildOptionItems();
     }
-
+    
     buildOptionItems() {
         this.sharingMenuItems = [
             {
@@ -70,18 +72,18 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             }
         ];
     }
-
+    
     ngOnChanges(): void {
         this.getMetaDocumentByID();
     }
-
+    
     buildForms() {
         this.commentForm = this.fb.group({
             id: [''],
             comments: [''],
         });
     }
-
+    
     getMetaDocumentByID() {
         if (this.selectedDoc && this.selectedDoc > 0) {
             this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
@@ -100,11 +102,11 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 });
         }
     }
-
+    
     toggleDocInfoPane() {
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
-
+    
     loadComments(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1) {
@@ -124,7 +126,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 });
         }
     }
-
+    
     addUserComment() {
         let data = {
             message: this.commentForm.value.comments,
@@ -147,7 +149,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 }
             });
     }
-
+    
     onEditComment(selectedComment: any) {
         if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id) ) {
             this.appService.noRightsMessage();
@@ -159,7 +161,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             comments: selectedComment.message
         });
     }
-
+    
     updateUserComment() {
         let data = {
             id: this.commentForm.value.id,
@@ -203,4 +205,9 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             });
     }
 
+    
+    checkValidImageFile() {
+        return this.selectedDoc?.mimeType?.split('/')[0] == 'image'
+    }
+    
 }

@@ -175,7 +175,7 @@ export class AppUtility {
         return errorMessage;
     }
 
-    // set roles & image-preview-actions
+    // set roles & preview-actions
     setRoles(roles: any) {
         if (roles && roles.length > 0) {
             roles.forEach((menu: any) => {

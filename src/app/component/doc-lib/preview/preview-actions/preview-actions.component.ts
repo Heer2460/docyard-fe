@@ -4,11 +4,11 @@ import {MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'image-preview-actions-component',
-    templateUrl: './image-preview-actions.template.html',
-    styleUrls: ['./image-preview-actions.component.less'],
+    selector: 'preview-actions-component',
+    templateUrl: './preview-actions.template.html',
+    styleUrls: ['./preview-actions.component.less'],
 })
-export class ImagePreviewActionsComponent implements OnInit {
+export class PreviewActionsComponent implements OnInit {
     
     uploadMenuItems: MenuItem[] = [];
     

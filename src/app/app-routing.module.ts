@@ -37,6 +37,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'preview',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/doc-lib/preview/preview.module').then(m => m.PreviewModule)
+            }
+        ]
+    },
+    {
         path: 'favourite',
         component: LayoutComponent,
         children: [
