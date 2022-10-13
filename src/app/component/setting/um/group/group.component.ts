@@ -126,7 +126,7 @@ export class GroupComponent implements OnInit {
         this.updateGroupForm = this.fb.group({
             id: [''],
             code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
-            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             remarks: [null, [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: [null, Validators.required],
             role: [null, Validators.required]

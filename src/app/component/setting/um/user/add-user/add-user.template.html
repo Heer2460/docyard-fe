@@ -78,6 +78,9 @@
                                                placeholder="Password"
                                                [attr.type]="passwordVisibility ? 'password' : 'text'">
                                         <label for="password" class="required">Password</label>
+                                        <div class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                            <i class="{{passwordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                                        </div>
                                         <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'required', 'password')">
                                             {{ appUtility.makeErrorMessage("Password", 'required') }}
                                         </small>
@@ -91,16 +94,6 @@
                                         addUserForm.controls['passwords'].get('password')?.errors">
                                             {{ 'Password must contain 1 alpha numeric key and 1 special char' }}
                                         </small>
-                                        <div class="text">
-                                            <!--                        <i class="icon-lock"></i>-->
-                                            <button (click)="togglePasswordVisibility()"
-                                                    class="input-group-append btn-icon-eye"
-                                                    type="button">
-                                                <div class="input-group-text">
-                                                    <i class="{{passwordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
-                                                </div>
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-3 mb-3">
@@ -108,6 +101,9 @@
                                         <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
                                                placeholder="Confirm Password" [attr.type]="confirmPasswordVisibility ? 'password' : 'text'">
                                         <label for="confirmPassword" class="required">Confirm Password</label>
+                                        <div class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+                                            <i class="{{confirmPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                                        </div>
                                         <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'required', 'password')">
                                             {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
                                         </small>
@@ -120,16 +116,6 @@
                                         <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
                                             {{ 'Password & Confirm Password must be same' }}
                                         </small>
-                                        <div class="text">
-                                            <!--                        <i class="icon-lock"></i>-->
-                                            <button (click)="toggleConfirmPasswordVisibility()"
-                                                    class="input-group-append btn-icon-eye"
-                                                    type="button">
-                                                <div class="input-group-text">
-                                                    <i class="{{confirmPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
-                                                </div>
-                                            </button>
-                                        </div>
                                     </div>
 
                                 </div>
