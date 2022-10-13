@@ -114,7 +114,6 @@
                                 </td>
                                 <td>
                                     <div class="file-types">
-
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
                                                     *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
@@ -125,16 +124,8 @@
                                                 <img src="./assets/images/svg/icons/other.svg" alt="other">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
-                                             alt="icon">
-
-                                        <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span role="button">{{row.name}}</span>
-                                        </ng-container>
-                                        <ng-template #elseCase>
-                                            <span role="button">{{row.name}}</span>
-                                        </ng-template>
-
+                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                        <span role="button" (click)="navigateToDocLib(row.id)">{{row.name}}</span>
                                     </div>
                                 </td>
                                 <td>

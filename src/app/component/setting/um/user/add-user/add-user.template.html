@@ -52,6 +52,9 @@
                                     <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Username", 'maxlength', 35) }}
                                     </small>
+                                    <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'pattern')">
+                                        {{ appUtility.makeErrorMessage("Username", 'onlySpace') }}
+                                    </small>
                                 </div>
                             </div>
                             <div class="col-3 mb-3">
