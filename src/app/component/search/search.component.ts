@@ -51,18 +51,14 @@ export class SearchComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe((params) => {
             this.searchValue = params['value'];
             if (this.searchValue) {
-                console.log(this.searchValue)
-                this.searchAllDocuments();
+                this.searchAllDocuments(this.searchValue);
             }
         });
     }
 
-    searchAllDocuments(folderId = '0', archived = false) {
-        let loggedInUserId = this.appService.getLoggedInUserId();
-        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
-            .replace('{ownerId}', String(loggedInUserId))
-            .replace("{folderId}", folderId)
-            .replace("{archived}", String(archived)))
+    searchAllDocuments(searchKey: string) {
+        this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_API_URL
+            .replace('{searchKey}', searchKey))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -91,5 +87,10 @@ export class SearchComponent implements OnInit {
 
     navigateToRoute(breadcrumb: BreadcrumbDTO) {
         this.router.navigate([breadcrumb.route]);
+    }
+
+    navigateToDocLib(id: any) {
+        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), id);
+        this.router.navigate(['/doc-lib']);
     }
 }

@@ -157,7 +157,7 @@ export class EditUserComponent implements OnInit {
 
     setDepartmentIds(ids: any) {
         let idsArray: number[] = [];
-        if (ids.length > 0) {
+        if (ids && ids.length > 0) {
             ids.map((item: number) => idsArray.push(Number(item)));
         }
         return idsArray;
