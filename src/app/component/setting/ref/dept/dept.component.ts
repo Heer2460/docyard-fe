@@ -97,7 +97,7 @@ export class DeptComponent implements OnInit {
         });
 
         this.addDepartmentForm = this.fb.group({
-            code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+            code: ['null', [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             status: ['Active'],
         });
@@ -158,7 +158,7 @@ export class DeptComponent implements OnInit {
             return;
         }
         let departmentDTO: DepartmentDTO = new DepartmentDTO();
-        departmentDTO.convertToDTO(this.updateDepartmentForm.value);
+        departmentDTO.convertToDTO(this.updateDepartmentForm.getRawValue());
         if (departmentDTO) {
             this.requestsService.putRequest(ApiUrlConstants.DEPARTMENT_API_URL, departmentDTO)
                 .subscribe({
