@@ -93,7 +93,7 @@ export class EditRoleComponent implements OnInit {
             code: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(35), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
             status: ['Active', Validators.required],
-            remarks: ['', [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]],
+            remarks: ['', [Validators.maxLength(256), Validators.pattern(/^[a-zA-Z0-9\s_-]*$/)]],
             moduleActionList: []
         });
     }
