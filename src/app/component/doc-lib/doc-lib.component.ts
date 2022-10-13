@@ -34,6 +34,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     renameDocumentDialog: boolean = false;
+    shareDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = false;
@@ -48,6 +49,17 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
+shareWithUserForm: FormGroup = new FormGroup({});
+    showMessageBox: boolean = false;
+    createSharedLink: boolean = false;
+    shareRights = [
+        {name: 'can view', code: 0},
+        {name: 'can edit', code: 1},
+    ];
+    copyLinkRights = [
+        {name: 'Can view and download', code: 0},
+        {name: 'Can view only', code: 1},
+    ];
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -68,6 +80,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
+        this.shareWithUserForm.controls['sharedWithChips'].valueChanges.subscribe((value) => {
+            if (value.length > 0) {
+                this.showMessageBox = true;
+            } else {
+                this.showMessageBox = false;
+            }
+        })
     }
 
     buildDocumentActions() {
@@ -105,12 +124,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 label: 'File',
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
-            },
-            /* {
-                 label: 'Folder',
-                 icon: 'icon-folder-plus',
-                 command: () => this.folderUpload?.nativeElement.click()
-             }*/
+            }
         ];
     }
 
@@ -123,6 +137,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
         });
         this.addFileForm = this.fb.group({
             name: [null, [Validators.required, Validators.maxLength(17)]],
+        });
+
+        this.shareWithUserForm = this.fb.group({
+            sharedWithChips: [null],
+            message: [null],
         });
     }
 
@@ -391,6 +410,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
     hideRenameDocumentPopup() {
         this.renameDocumentDialog = false;
     }
+showShareDocumentDialog() {
+        this.shareDocumentDialog = true;
+    }
+
+    hideShareDocumentDialog() {
+        this.shareDocumentDialog = false;
+    }
 
     onRenameDocument() {
         let data = {
@@ -532,11 +558,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
         })
     }
 
-    closeUploadPopup() {
-        // this.uploadPopupVisible = false;
+    createSharedLinkAction() {
+        this.createSharedLink = !this.createSharedLink;
     }
 
-    expandPopup(status: boolean) {
-        // this.isUploadPopupExpanded = status;
+    copyLinkToClipboardAction() {
+        this.toastService.success('Link copied to clipboard.', 'Link copy');
     }
+
 }
