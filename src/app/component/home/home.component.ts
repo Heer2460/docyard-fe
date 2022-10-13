@@ -107,12 +107,12 @@ export class HomeComponent implements OnInit {
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successDeleteMessage('Document');
+                            this.appService.successDeleteMessage('Recent Documents');
                             this.getRecentDocument();
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Document');
+                        this.appService.handleError(error, 'Recent Documents');
                     }
                 }
             );
@@ -132,20 +132,20 @@ export class HomeComponent implements OnInit {
     onRenameDocument() {
         let data = {
             id: this.selectedDoc.id,
-            name: this.renameDocumentForm.value.name,
+            title: this.renameDocumentForm.value.name,
             updatedBy: localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID))
         };
         this.requestsService.putRequest(ApiUrlConstants.DL_DOCUMENT_RENAME_API_URL, data)
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successUpdateMessage('Document');
+                            this.appService.successUpdateMessage('Rename Document');
                             this.hideRenameDocumentPopup();
                             this.getRecentDocument();
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Document');
+                        this.appService.handleError(error, 'Rename Document');
                     }
                 }
             );
@@ -159,10 +159,10 @@ export class HomeComponent implements OnInit {
                     let mimeType = AppUtility.getMimeTypeByFileName(data.name);
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, data.name);
-                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                    this.toastService.success('Document downloaded successfully.', 'Recent Documents');
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Document Library');
+                    this.appService.handleError(error, 'Recent Documents');
                 }
             });
     }
