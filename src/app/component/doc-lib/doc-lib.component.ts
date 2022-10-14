@@ -74,6 +74,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.appService.setShowDocInfoPaneSubjectState(false);
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
@@ -488,7 +489,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     onUploadProcessStarted(event: any) {
-        let files = event.target.files;
+        let files:any [] = event.target.files;
+        if (files.length > 10) {
+            this.toastService.error('Maximum 10 files allowed', 'Upload file');
+            return;
+        }
         if (files && files.length > 0) {
             for (let file of files) {
                 let obj: any = {};

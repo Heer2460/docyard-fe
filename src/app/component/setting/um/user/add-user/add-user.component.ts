@@ -134,7 +134,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
             return;
         }
         let userDTO: UserDTO = new UserDTO();
-        userDTO = userDTO.convertToNewDTO(this.addUserForm.value);
+        userDTO = userDTO.convertToNewDTO(this.addUserForm.getRawValue());
         userDTO.password = this.appService.encryptUsingAES256(userDTO.password);
         if (userDTO) {
             this.requestsService.postRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
