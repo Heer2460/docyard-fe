@@ -1,4 +1,4 @@
-<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()">
+<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()" [disabled]="!selectedDoc?.id">
     <i class="icon-pane-toggle"></i>
 </button>
 
@@ -63,7 +63,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab [selected]="activeTabIndex === 1" *ngIf="!selectedDoc?.folder">
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>

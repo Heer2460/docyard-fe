@@ -20,12 +20,12 @@ import {BehaviorSubject} from "rxjs";
     styleUrls: ['./doc-lib.component.less']
 })
 export class DocLibComponent implements OnInit, OnDestroy {
-    
+
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
-    
+
     filesToUpload: any[] = [];
-    
+
     addFolderForm: FormGroup = new FormGroup({});
     renameDocumentForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
@@ -49,7 +49,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
-    
     shareWithUserForm: FormGroup = new FormGroup({});
     showMessageBox: boolean = false;
     createSharedLink: boolean = false;
@@ -61,7 +60,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         {name: 'Can view and download', code: 0},
         {name: 'Can view only', code: 1},
     ];
-    
+
     constructor(public appService: AppService,
                 private router: Router,
                 private fb: FormBuilder,
@@ -73,8 +72,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.showDocInfoPane = value;
         });
     }
-    
+
     ngOnInit(): void {
+        this.appService.setShowDocInfoPaneSubjectState(false);
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
@@ -89,7 +89,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }
         })
     }
-    
+
     buildDocumentActions() {
         this.menuItems = [
             {
@@ -111,7 +111,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             },
         ];
     }
-    
+
     buildOptionItems() {
         this.createMenuItems = [
             {
@@ -128,24 +128,24 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }
         ];
     }
-    
+
     buildForms() {
         this.addFolderForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.renameDocumentForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.addFileForm = this.fb.group({
             name: [null, [Validators.required, Validators.maxLength(17)]],
         });
-        
+
         this.shareWithUserForm = this.fb.group({
             sharedWithChips: [null],
             message: [null],
         });
     }
-    
+
     // creating
     showAddFolderPopup() {
         this.addFolderForm.patchValue({
@@ -154,23 +154,23 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.addFolderForm.markAsUntouched();
         this.visibleAddFolderDialog = true;
     }
-    
+
     hideAddFolderPopup() {
         this.visibleAddFolderDialog = false;
     }
-    
+
     // updloading
-    
+
     uploadFolder(event: any) {
         // console.log('Dir: ', event.target.files);
-        
+
         // for (let i = 0; i < event.target.files.length; i++) {
         //     const file = event.target.files[i];
         //     const path = file.webkitRelativePath.split('/');
         //
         // }
     }
-    
+
     loadDocumentLibrary(folderId: string, archived: boolean) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
@@ -190,7 +190,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 }
             });
     }
-    
+
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
         if (this.selectedDoc.folder == true) {
@@ -238,7 +238,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             ];
         }
     }
-    
+
     createFolder() {
         if (this.addFolderForm.invalid) {
             return;
@@ -246,7 +246,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         let dlDocumentDTO: DlDocumentDTO = new DlDocumentDTO();
         dlDocumentDTO.convertToDTO(this.addFolderForm.value);
         dlDocumentDTO.parentId = this.appService.getSelectedFolderId() == '0' ? null : this.appService.getSelectedFolderId();
-        
+
         if (dlDocumentDTO) {
             this.requestsService.postRequest(ApiUrlConstants.CREATE_FOLDER_API_URL, dlDocumentDTO)
                 .subscribe({
@@ -263,7 +263,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 });
         }
     }
-    
+
     openFolder(rowData: any) {
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
@@ -271,23 +271,23 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.updateBreadcrumb(rowData);
         }
     }
-    
+
     openFile(rowData: any) {
-        const params = {
-            id: rowData.id,
-            folderId: rowData.parentId,
+        if(rowData.parentId == null){
+            rowData.parentId = '';
+
         }
-        this.router.navigate([`/preview`], {queryParams: params});
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}`, '_blank');
     }
-    
+
     setGridDisplay() {
         this.showGridDisplay = true;
     }
-    
+
     setListDisplay() {
         this.showGridDisplay = false;
     }
-    
+
     updateBreadcrumb(rowData: any) {
         this.breadcrumbs[this.breadcrumbs.length - 1].active = false;
         this.breadcrumbs.push({
@@ -297,10 +297,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
         });
         this.setBreadcrumbAndSelectedItemToLocalStorage();
     }
-    
+
     updateCollapsedBreadcrumbItems() {
         if (this.breadcrumbs.length < this.breadcrumbItemsToShow) return;
-        
+
         if (this.breadcrumbs.length > this.breadcrumbItemsToShow) {
             this.breadcrumbCollapsedItems = this.breadcrumbs.slice(0, this.breadcrumbs.length - this.breadcrumbItemsToShow);
             this.breadcrumbCollapsedItems = this.breadcrumbCollapsedItems.map((item: BreadcrumbDTO, index: number) => ({
@@ -309,7 +309,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }))
         }
     }
-    
+
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
         if (breadcrumb.id) {
             this.loadDocumentLibrary(breadcrumb.id, false);
@@ -320,15 +320,15 @@ export class DocLibComponent implements OnInit, OnDestroy {
         } else {
             this.router.navigate([breadcrumb.route]);
         }
-        
+
         this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
         this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
         this.setBreadcrumbAndSelectedItemToLocalStorage();
     }
-    
+
     getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
         const breadcrumbs: any = localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
-        
+
         if (breadcrumbs) {
             return JSON.parse(breadcrumbs);
         } else {
@@ -346,13 +346,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
             ];
         }
     }
-    
+
     setBreadcrumbAndSelectedItemToLocalStorage() {
         this.updateCollapsedBreadcrumbItems();
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), this.dlFolderId);
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
-    
+
     favouriteDocument(event: any, row: any) {
         const isChecked = event.target.checked;
         let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(row.id)) + '/?favourite=' + isChecked;
@@ -373,7 +373,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    
+
     onItemDeleteAction(data: any) {
         this.confirmationService.confirm({
             message: `Are you sure you want to delete this ${data.folder == true ? 'folder' : 'file'}?`,
@@ -382,7 +382,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     onDeleteDocument(id: any) {
         let url = ApiUrlConstants.DL_DOCUMENT_ARCHIVED_API_URL.replace("{dlDocumentId}", String(id))
             .replace("{archived}", 'true');
@@ -400,26 +400,26 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    
+
     showRenameDocumentPopup(data: any) {
         this.renameDocumentForm.patchValue({name: ''});
         this.renameDocumentForm.markAsUntouched();
         this.renameDocumentForm.patchValue({name: data.title});
         this.renameDocumentDialog = true;
     }
-    
+
     hideRenameDocumentPopup() {
         this.renameDocumentDialog = false;
     }
-    
+
     showShareDocumentDialog() {
         this.shareDocumentDialog = true;
     }
-    
+
     hideShareDocumentDialog() {
         this.shareDocumentDialog = false;
     }
-    
+
     onRenameDocument() {
         let data = {
             id: this.selectedDoc.id,
@@ -440,9 +440,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     }
                 }
             );
-        
+
     }
-    
+
     downloadFile(data: any) {
         this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
             .subscribe({
@@ -457,39 +457,43 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 }
             });
     }
-    
+
     ngOnDestroy(): void {
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
     }
-    
+
     showFileUploaderAction() {
         this.showFileUploader = !this.showFileUploader;
     }
-    
+
     removeAllFilesFromList() {
         this.filesToUpload = [];
     }
-    
+
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setShowDocInfoPaneSubjectState(true);
     }
-    
+
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
-    
+
     // uploading files code start
-    
+
     onUploadFilesInitialize() {
         let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
         uploadInput.click();
     }
-    
+
     onUploadProcessStarted(event: any) {
-        let files = event.target.files;
+        let files:any [] = event.target.files;
+        if (files.length > 10) {
+            this.toastService.error('Maximum 10 files allowed', 'Upload file');
+            return;
+        }
         if (files && files.length > 0) {
             for (let file of files) {
                 let obj: any = {};
@@ -501,7 +505,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.startUploadingFiles();
         }
     }
-    
+
     startUploadingFiles() {
         this.files.forEach((file, i) => {
             if (file.uploaded === false) {
@@ -516,12 +520,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     onCancelClick(index: number) {
         this.cancelAllUploads.next(index);
         this.files.splice(index, 1);
     }
-    
+
     getAverageProgress() {
         let totalProgress = 0;
         this.files.forEach((file) => {
@@ -529,9 +533,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
         });
         this.averageProgress = Math.round(totalProgress / this.files.length);
     }
-    
-    makeUploadRequest(file: any, oncomplete: (response: any) => void,
-                      onprogress: (progress: any) => void,
+
+    makeUploadRequest(file: any, oncomplete: (response: any) => void, onprogress: (progress: any) => void,
                       onCancel: BehaviorSubject<number>, index: number) {
         let subscription = this.requestsService.postRequestMultipartFormAndDataUpload(ApiUrlConstants.UPLOAD_FILES_API_URL,
             file, {
@@ -560,13 +563,20 @@ export class DocLibComponent implements OnInit, OnDestroy {
             }
         })
     }
-    
+
     createSharedLinkAction() {
         this.createSharedLink = !this.createSharedLink;
     }
-    
+
     copyLinkToClipboardAction() {
         this.toastService.success('Link copied to clipboard.', 'Link copy');
     }
-    
+
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
+
 }

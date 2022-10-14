@@ -75,6 +75,8 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     
     ngOnChanges(): void {
         this.getMetaDocumentByID();
+        // this.checkDocExist = !this.selectedDoc.id;
+        // console.log('abc', this._selectedDoc.id)
     }
     
     buildForms() {
