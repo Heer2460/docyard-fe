@@ -488,7 +488,12 @@ shareWithUserForm: FormGroup = new FormGroup({});
     }
 
     onUploadProcessStarted(event: any) {
-        let files = event.target.files;
+        // this.files = [];
+        let files:any [] = event.target.files;
+        if (files.length > 10) {
+            this.toastService.error('Maximum 10 files allowed', 'Upload file');
+            return;
+        }
         if (files && files.length > 0) {
             for (let file of files) {
                 let obj: any = {};
