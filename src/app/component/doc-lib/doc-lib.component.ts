@@ -49,7 +49,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
-shareWithUserForm: FormGroup = new FormGroup({});
+    shareWithUserForm: FormGroup = new FormGroup({});
     showMessageBox: boolean = false;
     createSharedLink: boolean = false;
     shareRights = [
@@ -272,11 +272,11 @@ shareWithUserForm: FormGroup = new FormGroup({});
     }
 
     openFile(rowData: any) {
-        const params = {
-            id: rowData.id,
-            folderId: rowData.parentId,
+        if(rowData.parentId == null){
+            rowData.parentId = '';
+
         }
-        this.router.navigate([`/preview`], {queryParams: params});
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}`, '_blank');
     }
 
     setGridDisplay() {
