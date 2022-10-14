@@ -40,5 +40,5 @@ export class ApiUrlConstants {
     public static RESTORE_DOCUMENT_API_URL = '/dl/dl-document/restore-archived';
     public static DL_DOCUMENT_COMMENT_API_URL = '/dl/dl-doc-comment/';
     public static DL_DOCUMENT_DELETE_API_URL = '/dl/dl-document/delete';
-    public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search?searchKey={searchKey}';
+    public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search/{userid}?searchKey={searchKey}';
 }

@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit {
         routes.map((route: any) => {
             
             if(route.route == menuItem.route) {
-                if (parent) {
+                if(parent) {
                     parent.expended = true;
                 }
                 menuItem.expended = !menuItem.expended;

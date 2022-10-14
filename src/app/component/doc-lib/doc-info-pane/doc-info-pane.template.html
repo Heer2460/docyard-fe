@@ -1,9 +1,21 @@
-<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()">
+<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()" [disabled]="!selectedDoc?.id">
     <i class="icon-pane-toggle"></i>
 </button>
 
 <div class="pane-wrapper">
-    <i class="icon-folder-filled img-file-type"></i>
+    <ng-container *ngIf="selectedDoc.folder == false">
+        <ng-container
+                *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
+            <img src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                 alt="{{selectedDoc.extension}}">
+        </ng-container>
+        <ng-template #otherFileElseCase>
+            <img src="./assets/images/svg/icons/other.svg" alt="other">
+        </ng-template>
+    </ng-container>
+    <img *ngIf="selectedDoc.folder == true"
+         src="./assets/images/svg/icons/folder.svg" alt="icon">
+
     <p-accordion (onOpen)="loadComments($event)">
         <p-accordionTab [selected]="activeTabIndex === 0">
             <ng-template pTemplate="header">
@@ -51,7 +63,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab [selected]="activeTabIndex === 1" *ngIf="!selectedDoc?.folder">
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>

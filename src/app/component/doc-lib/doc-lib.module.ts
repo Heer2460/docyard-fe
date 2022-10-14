@@ -6,9 +6,11 @@ import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
 import {DocInfoPaneModule} from "./doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TableModule} from "primeng/table";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ChipsModule} from "primeng/chips";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
     declarations: [
@@ -24,6 +26,9 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         ReactiveFormsModule,
         TableModule,
         ConfirmDialogModule,
+        ChipsModule,
+        FormsModule,
+        DropdownModule
     ]
 })
 export class DocLibModule {

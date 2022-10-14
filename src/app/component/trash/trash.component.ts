@@ -194,4 +194,11 @@ export class TrashComponent implements OnInit {
                 }
             );
     }
+
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
 }

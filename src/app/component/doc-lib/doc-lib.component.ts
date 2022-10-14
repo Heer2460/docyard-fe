@@ -34,6 +34,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     createMenuItems: MenuItem[] = [];
     visibleAddFolderDialog: boolean = false;
     renameDocumentDialog: boolean = false;
+    shareDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = false;
@@ -48,6 +49,17 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
+shareWithUserForm: FormGroup = new FormGroup({});
+    showMessageBox: boolean = false;
+    createSharedLink: boolean = false;
+    shareRights = [
+        {name: 'can view', code: 0},
+        {name: 'can edit', code: 1},
+    ];
+    copyLinkRights = [
+        {name: 'Can view and download', code: 0},
+        {name: 'Can view only', code: 1},
+    ];
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -68,6 +80,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
+        this.shareWithUserForm.controls['sharedWithChips'].valueChanges.subscribe((value) => {
+            if (value.length > 0) {
+                this.showMessageBox = true;
+            } else {
+                this.showMessageBox = false;
+            }
+        })
     }
 
     buildDocumentActions() {
@@ -105,24 +124,24 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 label: 'File',
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
-            },
-           /* {
-                label: 'Folder',
-                icon: 'icon-folder-plus',
-                command: () => this.folderUpload?.nativeElement.click()
-            }*/
+            }
         ];
     }
 
     buildForms() {
         this.addFolderForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.renameDocumentForm = this.fb.group({
-            name: [null, [Validators.required, Validators.maxLength(17)]],
+            name: [null, [Validators.required, Validators.maxLength(255)]],
         });
         this.addFileForm = this.fb.group({
             name: [null, [Validators.required, Validators.maxLength(17)]],
+        });
+
+        this.shareWithUserForm = this.fb.group({
+            sharedWithChips: [null],
+            message: [null],
         });
     }
 
@@ -250,6 +269,14 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.loadDocumentLibrary(this.dlFolderId, false);
             this.updateBreadcrumb(rowData);
         }
+    }
+
+    openFile(rowData: any) {
+        const params = {
+            id: rowData.id,
+            folderId: rowData.parentId,
+        }
+        this.router.navigate([`/preview`], {queryParams: params});
     }
 
     setGridDisplay() {
@@ -384,6 +411,14 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.renameDocumentDialog = false;
     }
 
+    showShareDocumentDialog() {
+        this.shareDocumentDialog = true;
+    }
+
+    hideShareDocumentDialog() {
+        this.shareDocumentDialog = false;
+    }
+
     onRenameDocument() {
         let data = {
             id: this.selectedDoc.id,
@@ -494,8 +529,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.averageProgress = Math.round(totalProgress / this.files.length);
     }
 
-    makeUploadRequest(file: any, oncomplete: (response: any) => void,
-                      onprogress: (progress: any) => void,
+    makeUploadRequest(file: any, oncomplete: (response: any) => void, onprogress: (progress: any) => void,
                       onCancel: BehaviorSubject<number>, index: number) {
         let subscription = this.requestsService.postRequestMultipartFormAndDataUpload(ApiUrlConstants.UPLOAD_FILES_API_URL,
             file, {
@@ -525,11 +559,19 @@ export class DocLibComponent implements OnInit, OnDestroy {
         })
     }
 
-    closeUploadPopup() {
-        // this.uploadPopupVisible = false;
+    createSharedLinkAction() {
+        this.createSharedLink = !this.createSharedLink;
     }
 
-    expandPopup(status: boolean) {
-        // this.isUploadPopupExpanded = status;
+    copyLinkToClipboardAction() {
+        this.toastService.success('Link copied to clipboard.', 'Link copy');
     }
+
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
+
 }

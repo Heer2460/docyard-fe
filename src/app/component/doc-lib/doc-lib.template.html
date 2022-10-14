@@ -21,7 +21,7 @@
                             Create
                             <i class="icon-arrow-down"></i>
                         </button>
-                        <button class="btn btn-sm btn-primary" [disabled]="true">
+                        <button class="btn btn-sm btn-primary" (click)="showShareDocumentDialog()">
                             <i class="icon-share"></i>
                             Share
                         </button>
@@ -93,7 +93,7 @@
                                             <p class="title" role="button" (click)="openFolder(item)">{{item?.name}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
-                                                <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
+                                                <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
@@ -159,13 +159,13 @@
                                             <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button" (click)="openFile(row)">{{row.name}}</span>
                                         </ng-template>
                                     </div>
                                 </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author">{{row.updatedByName}}</a>
+                                    <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
@@ -212,7 +212,7 @@
                         <h4>Files are being uploaded</h4>
                         <div class="progress-container">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{averageProgress}}%" aria-valuenow="25" aria-valuemin="0"
+                                <div class="progress-bar" role="progressbar" [attr.style]="'width: ' + averageProgress + '%'"  style="" aria-valuenow="25" aria-valuemin="0"
                                      aria-valuemax="100"></div>
                             </div>
                             <span>{{averageProgress}}%</span>
@@ -249,7 +249,7 @@
                                             <span class="percentage">{{file.progress}}%</span>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: {{file.progress}}%" aria-valuenow="67"
+                                            <div class="progress-bar" role="progressbar" [attr.style]="'width: ' + file.progress + '%'" aria-valuenow="67"
                                                  aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
@@ -331,6 +331,58 @@
         </button>
     </ng-template>
 </p-dialog>
+
+<p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-sm">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <span>Share {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <ng-container [formGroup]="shareWithUserForm">
+        <div class="mb-3">
+            <p-chips formControlName="sharedWithChips"></p-chips>
+        </div>
+        <div class="share-rights-dropdown mb-3">
+            <label class="mr-5px">Anyone with this link:</label>
+            <p-dropdown appendTo="body" [options]="shareRights" optionLabel="name"></p-dropdown>
+        </div>
+        <ng-container *ngIf="showMessageBox">
+            <div class="form-floating">
+                <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
+                <label for="message">Message</label>
+            </div>
+        </ng-container>
+        <hr>
+        <div class="mb-3">
+            <label>Share link</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="shareLinkSwitch" [checked]="createSharedLink" (change)="createSharedLinkAction()">
+                <label class="form-check-label" for="shareLinkSwitch">
+                    <span>Create shared link</span>
+                </label>
+            </div>
+        </div>
+        <ng-container *ngIf="createSharedLink">
+            <div class="input-group mb-1">
+                <input type="text" class="form-control">
+                <div class="input-group-text">
+                    <button class="btn btn-sm btn-transparent" (click)="copyLinkToClipboardAction()">Copy</button>
+                </div>
+            </div>
+            <div class="share-rights-dropdown">
+                <p-dropdown appendTo="body" [options]="copyLinkRights" optionLabel="name"></p-dropdown>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-template pTemplate="footer">
+        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
+                (click)="onRenameDocument()">Update
+        </button>
+    </ng-template>
+</p-dialog>
+
 <p-confirmDialog #cd styleClass="dialog-danger">
     <ng-template pTemplate="header">
         <div class="header-title">

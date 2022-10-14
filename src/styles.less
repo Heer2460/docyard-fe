@@ -142,7 +142,8 @@ fieldset {
 	
 	&:focus {
 		border-color: hsl(var(--color-blue-01));
-		box-shadow: 0 0 0 .25rem hsla(var(--color-blue-01), 25%);
+		box-shadow: none;
+		background-color: transparent;
 	}
 
 	&.ng-invalid {
@@ -507,14 +508,16 @@ textarea.form-control {
 }
 
 .btn-transparent {
-	color: var(--color-white);
-	background-color: hsl(var(--color-green-06));
+	color: @color-grey-01;
+	background-color: transparent;
+	box-shadow: none;
 	
 	&:focus,
 	&:active,
 	&:hover {
-		color: var(--color-white);
-		background-color: hsl(var(--color-green-06));
+		color: @color-grey-01;
+		border-color: transparent;
+		background-color: transparent;
 	}
 	
 }
@@ -649,6 +652,66 @@ textarea.form-control {
 }
 
 /*====================================================
+        Switches
+====================================================*/
+.form-switch {
+	padding-left: 0;
+	
+	input[type="checkbox"] {
+		
+		&:checked {
+			
+			~ label {
+				
+				&:before {
+					background-color: hsl(var(--color-blue-01));
+					transform: translate(20px, -50%);
+				}
+				
+				&:after {
+					background-color: hsla(var(--color-blue-03), 50%);
+				}
+				
+			}
+			
+		}
+		
+		~ label {
+			
+			&:after,
+			&:before {
+				content: "";
+				background: none;
+				border: 1px solid hsl(var(--color-blue-01));
+				height: 14px;
+				opacity: 1;
+				transform: translate(0, -50%);
+			}
+			
+			&:before {
+				width: 18px;
+				height: 18px;
+				background-color: #98aab3;
+				border: 1px solid @color-grey-01;
+				z-index: 1;
+			}
+			
+			&:after {
+				width: 38px;
+				background-color: hsla(var(--color-blue-05));
+			}
+			
+			span {
+				margin-left: 50px;
+			}
+			
+		}
+		
+	}
+	
+}
+
+/*====================================================
         Utilities
 ====================================================*/
 h2 {
@@ -751,6 +814,10 @@ hr {
 
 .mb-30px {
 	margin-bottom: 30px !important;
+}
+
+.mr-5px {
+	margin-right: 5px !important;
 }
 
 .ngx-foreground-spinner {
@@ -1468,6 +1535,7 @@ doc-info-pane-component {
 
 			.p-accordion-header {
 
+				&.p-disabled,
 				&:not(.p-disabled) {
 
 					&.p-highlight {
@@ -1823,6 +1891,86 @@ doc-info-pane-component {
 }
 
 /*==============================================
+                P-chips
+==============================================*/
+.p-chips {
+	width: 100%;
+	
+	.p-chips-multiple-container {
+		width: 100%;
+		padding: 5px;
+		overflow: initial;
+		height: initial;
+		column-gap: 10px;
+		row-gap: 10px;
+		
+		&:not(.p-disabled) {
+		
+			&:hover,
+			&.p-focus {
+				box-shadow: none;
+				border-color: hsl(var(--color-blue-01));
+			}
+			
+		}
+		
+		.p-chips-input-token {
+			padding: 0;
+			height: initial;
+			min-height: initial;
+			margin-right: 0;
+			
+			input {
+				height: 28px;
+				min-height: initial;
+				padding: 0;
+				line-height: 28px;
+			}
+			
+		}
+		
+		.p-chips-token {
+			padding: 0 10px;
+			height: 28px;
+			background-color: hsla(var(--color-blue-05), 50%);
+			color: hsl(var(--color-blue-01));
+			border-radius: 0;
+			border: 1px solid hsl(var(--color-blue-05));
+		}
+		
+	}
+	
+}
+
+.share-rights-dropdown {
+	display: flex;
+	align-items: center;
+	
+	.p-dropdown {
+		border-left: none;
+		border-top: none;
+		border-right: none;
+		
+		.p-dropdown-label {
+			padding: 0;
+			height: initial;
+			line-height: initial;
+		}
+		
+		.p-dropdown-trigger {
+			margin: 0 0 0 5px;
+			
+			.pi {
+				font-size: 12px;
+			}
+			
+		}
+		
+	}
+	
+}
+
+/*==============================================
                 Accordion
 ==============================================*/
 .p-accordion {
@@ -2012,11 +2160,15 @@ doc-info-pane-component {
 
 }
 
-image-preview-component {
+/*==============================================
+                Image Preview
+==============================================*/
+preview-component {
 	
 	.layout-wrapper {
 		
 		.content-wrapper {
+			width: calc(100%);
 			
 			.main-page-wrapper {
 				min-height: calc(100vh - 70px);
@@ -2959,7 +3111,7 @@ image-preview-component {
 		
 	}
 	
-	image-preview-component {
+	preview-component {
 		
 		.layout-wrapper {
 			

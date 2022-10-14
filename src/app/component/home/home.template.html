@@ -111,7 +111,7 @@
                                         <p class="title">{{gridItem?.name}}</p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
-                                            <a role="button" routerLink="/link">{{gridItem?.updatedByName}}</a>
+                                            <a role="button" (click)="openProfile(gridItem)" >{{gridItem?.updatedByName}}</a>
                                         </p>
                                         <p class="file-size">{{gridItem?.size}}</p>
                                     </div>
