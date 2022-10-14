@@ -410,7 +410,8 @@ shareWithUserForm: FormGroup = new FormGroup({});
     hideRenameDocumentPopup() {
         this.renameDocumentDialog = false;
     }
-showShareDocumentDialog() {
+
+    showShareDocumentDialog() {
         this.shareDocumentDialog = true;
     }
 
@@ -564,6 +565,13 @@ showShareDocumentDialog() {
 
     copyLinkToClipboardAction() {
         this.toastService.success('Link copied to clipboard.', 'Link copy');
+    }
+
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
     }
 
 }

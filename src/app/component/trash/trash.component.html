@@ -71,7 +71,7 @@
                                             <p class="title" role="button">{{item?.name}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
-                                                <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
+                                                <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
@@ -146,7 +146,7 @@
                                 </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author">{{row.updatedByName}}</a>
+                                    <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>

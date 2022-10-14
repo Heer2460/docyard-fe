@@ -1,4 +1,4 @@
-<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()">
+<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()" [disabled]="!selectedDoc?.id">
     <i class="icon-pane-toggle"></i>
 </button>
 

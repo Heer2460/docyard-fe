@@ -10,6 +10,7 @@ import * as FileSaver from "file-saver";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'home-component',
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit {
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private toastService: ToastrService,
+                private router: Router,
                 private confirmationService: ConfirmationService) {
         let userData: any = localStorage.getItem(window.btoa(AppConstants.AUTH_USER_INFO));
         this.userInfo = JSON.parse(userData);
@@ -167,4 +169,10 @@ export class HomeComponent implements OnInit {
             });
     }
 
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
 }
