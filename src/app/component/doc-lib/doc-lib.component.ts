@@ -49,7 +49,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
-shareWithUserForm: FormGroup = new FormGroup({});
+    shareWithUserForm: FormGroup = new FormGroup({});
     showMessageBox: boolean = false;
     createSharedLink: boolean = false;
     shareRights = [
@@ -74,6 +74,7 @@ shareWithUserForm: FormGroup = new FormGroup({});
     }
 
     ngOnInit(): void {
+        this.appService.setShowDocInfoPaneSubjectState(false);
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
@@ -488,7 +489,6 @@ shareWithUserForm: FormGroup = new FormGroup({});
     }
 
     onUploadProcessStarted(event: any) {
-        // this.files = [];
         let files:any [] = event.target.files;
         if (files.length > 10) {
             this.toastService.error('Maximum 10 files allowed', 'Upload file');
