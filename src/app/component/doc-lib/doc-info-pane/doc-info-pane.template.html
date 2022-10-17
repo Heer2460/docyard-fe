@@ -3,7 +3,7 @@
 </button>
 
 <div class="pane-wrapper">
-    <ng-container *ngIf="selectedDoc.folder == false">
+    <ng-container *ngIf="selectedDoc?.folder == false">
         <ng-container
                 *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
             <img src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
@@ -13,7 +13,7 @@
             <img src="./assets/images/svg/icons/other.svg" alt="other">
         </ng-template>
     </ng-container>
-    <img *ngIf="selectedDoc.folder == true"
+    <img *ngIf="selectedDoc?.folder == true"
          src="./assets/images/svg/icons/folder.svg" alt="icon">
 
     <p-accordion (onOpen)="loadComments($event)">

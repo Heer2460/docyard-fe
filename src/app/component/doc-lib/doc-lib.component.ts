@@ -457,6 +457,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             externalUserShareLink: '',
             userId: String(userId),
         };
+        console.log(obj)
     }
 
     downloadFile(data: any) {
