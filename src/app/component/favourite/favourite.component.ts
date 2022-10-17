@@ -11,6 +11,7 @@ import {RequestService} from "../../service/request.service";
 import {ToastrService} from "ngx-toastr";
 import {ApiUrlConstants} from "../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
+import * as FileSaver from "file-saver";
 
 @Component({
     selector: 'favourite-component',
@@ -111,8 +112,7 @@ export class FavouriteComponent implements OnInit {
                 {
                     label: 'Download',
                     icon: 'icon-download',
-                    command: () => {
-                    }
+                    command: () => this.downloadFile(this.selectedDoc)
                 },
             ];
         }
@@ -223,17 +223,32 @@ export class FavouriteComponent implements OnInit {
             );
     }
 
-    downloadFile() {
-        // let url = ApiUrlConstants.REPORT_API_URL + 'pm/{pmId}';
-        this.requestsService.getRequestFile('')
+    // downloadFile() {
+    //     // let url = ApiUrlConstants.REPORT_API_URL + 'pm/{pmId}';
+    //     this.requestsService.getRequestFile('')
+    //         .subscribe({
+    //             next: (response: any) => {
+    //                 // let blob = new Blob([response], {type: 'application/pdf'});
+    //                 // FileSaver.saveAs(blob, 'File.pdf');
+    //                 this.toastService.success('Downloaded successfully.', 'File');
+    //             },
+    //             error: (error: any) => {
+    //                 this.appService.handleError(error, 'File');
+    //             }
+    //         });
+    // }
+
+    downloadFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
             .subscribe({
                 next: (response: any) => {
-                    // let blob = new Blob([response], {type: 'application/pdf'});
-                    // FileSaver.saveAs(blob, 'File.pdf');
-                    this.toastService.success('Downloaded successfully.', 'File');
+                    let mimeType = AppUtility.getMimeTypeByFileName(data.name);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, data.name);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'File');
+                    this.appService.handleError(error, 'Document Library');
                 }
             });
     }
@@ -242,12 +257,12 @@ export class FavouriteComponent implements OnInit {
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
     }
-    
+
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setShowDocInfoPaneSubjectState(true);
     }
-    
+
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setShowDocInfoPaneSubjectState(false);
