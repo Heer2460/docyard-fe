@@ -273,7 +273,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     openFile(rowData: any) {
-        if(rowData.parentId == null){
+        if (rowData.parentId == null) {
             rowData.parentId = '';
 
         }
@@ -412,14 +412,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.renameDocumentDialog = false;
     }
 
-    showShareDocumentDialog() {
-        this.shareDocumentDialog = true;
-    }
-
-    hideShareDocumentDialog() {
-        this.shareDocumentDialog = false;
-    }
-
     onRenameDocument() {
         let data = {
             id: this.selectedDoc.id,
@@ -441,6 +433,31 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 }
             );
 
+    }
+
+    showShareDocumentDialog(selectedDoc: any) {
+        this.shareDocumentDialog = true;
+    }
+
+    hideShareDocumentDialog() {
+        this.shareDocumentDialog = false;
+    }
+
+    onShareDocument() {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        let obj = {
+            dlDocId: this.selectedDoc.id,
+            folder: this.selectedDoc.folder,
+            shareType: '',
+            shareLink: '',
+            message: this.shareWithUserForm.value.message,
+            dlCollaborators: this.shareWithUserForm.value.sharedWithChips,
+            sharePermission: '',
+            appContextPath: '',
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
+        console.log(obj)
     }
 
     downloadFile(data: any) {
@@ -489,7 +506,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     onUploadProcessStarted(event: any) {
-        let files:any [] = event.target.files;
+        let files: any [] = event.target.files;
         if (files.length > 10) {
             this.toastService.error('Maximum 10 files allowed', 'Upload file');
             return;

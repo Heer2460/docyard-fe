@@ -21,7 +21,7 @@
                             Create
                             <i class="icon-arrow-down"></i>
                         </button>
-                        <button class="btn btn-sm btn-primary" (click)="showShareDocumentDialog()">
+                        <button class="btn btn-sm btn-primary" (click)="showShareDocumentDialog(selectedDoc)" [disabled]="!selectedDoc.id">
                             <i class="icon-share"></i>
                             Share
                         </button>
@@ -376,9 +376,9 @@
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
-                (click)="onRenameDocument()">Update
+        <button class="btn btn-sm btn-danger me-2" (click)="hideShareDocumentDialog()">Cancel</button>
+        <button class="btn btn-sm btn-primary" type="button"
+                (click)="onShareDocument()">Share
         </button>
     </ng-template>
 </p-dialog>
