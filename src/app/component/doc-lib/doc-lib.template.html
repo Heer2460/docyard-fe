@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div class="left" [ngClass]="showDocInfoPane ? 'collapsed' : ''">
+    <div [ngClass]="showDocInfoPane ? 'collapsed' : ''" class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -7,21 +7,22 @@
                         <h3 class="title">{{title}}</h3>
                     </ng-container>
                     <div class="action-items">
-                        <button class="btn btn-sm btn-secondary" (click)="uploadMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #uploadMenu [model]="uploadMenuItems"
-                                          [popup]="true"></p-tieredMenu>
+                        <button (click)="uploadMenu.toggle($event)" class="btn btn-sm btn-secondary">
+                            <p-tieredMenu #uploadMenu [model]="uploadMenuItems" [popup]="true"
+                                          appendTo="body"></p-tieredMenu>
                             <i class="icon-upload"></i>
                             Upload
                             <i class="icon-arrow-down"></i>
                         </button>
-                        <button class="btn btn-sm btn-primary" (click)="createMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #createMenu [model]="createMenuItems"
-                                          [popup]="true"></p-tieredMenu>
+                        <button (click)="createMenu.toggle($event)" class="btn btn-sm btn-primary">
+                            <p-tieredMenu #createMenu [model]="createMenuItems" [popup]="true"
+                                          appendTo="body"></p-tieredMenu>
                             <i class="icon-plus"></i>
                             Create
                             <i class="icon-arrow-down"></i>
                         </button>
-                        <button class="btn btn-sm btn-primary" (click)="showShareDocumentDialog(selectedDoc)" [disabled]="!selectedDoc.id">
+                        <button (click)="showShareDocumentDialog(selectedDoc)" [disabled]="!selectedDoc.id"
+                                class="btn btn-sm btn-primary">
                             <i class="icon-share"></i>
                             Share
                         </button>
@@ -32,21 +33,21 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
-                                        <li class="breadcrumb-item" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
-                                                          [popup]="true"></p-tieredMenu>
-                                            <i role="button" class="icon-menu-horizontal"></i>
+                                        <li (click)="menu.toggle($event)" class="breadcrumb-item">
+                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" [popup]="true"
+                                                          appendTo="body"></p-tieredMenu>
+                                            <i class="icon-menu-horizontal" role="button"></i>
                                         </li>
                                     </ng-container>
                                     <ng-container *ngIf="index >= breadcrumbs.length -breadcrumbItemsToShow">
-                                        <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                                        <li [ngClass]="breadcrumb.active ? 'active' : ''" class="breadcrumb-item">
                                             <ng-container *ngIf="lastIndex; else elseBlock">
                                                 <a>{{breadcrumb.label}}</a>
                                             </ng-container>
                                             <ng-template #elseBlock>
-                                                <a role="button" (click)="navigateToRoute(breadcrumb, index)">
+                                                <a (click)="navigateToRoute(breadcrumb, index)" role="button">
                                                     {{breadcrumb.label}}
                                                 </a>
                                             </ng-template>
@@ -57,12 +58,12 @@
                         </div>
                     </ng-container>
                     <div class="btn-group input-group-display-listing">
-                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? 'active': ''"
-                                (click)="setGridDisplay()">
+                        <button (click)="setGridDisplay()" [ngClass]="showGridDisplay ? 'active': ''"
+                                class="btn btn-primary">
                             <i class="icon-display-grid"></i>
                         </button>
-                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? '': 'active'"
-                                (click)="setListDisplay()">
+                        <button (click)="setListDisplay()" [ngClass]="showGridDisplay ? '': 'active'"
+                                class="btn btn-primary">
                             <i class="icon-display-listing"></i>
                         </button>
                     </div>
@@ -78,28 +79,28 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
-                                                    <img src="./assets/images/svg/icons/{{item.extension}}.svg"
-                                                         alt="{{item.extension}}">
+                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                    <img alt="{{item.extension}}"
+                                                         src="./assets/images/svg/icons/{{item.extension}}.svg">
                                                 </ng-container>
                                                 <ng-template #otherFileElseCase>
-                                                    <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                    <img alt="other" src="./assets/images/svg/icons/other.svg">
                                                 </ng-template>
                                             </ng-container>
                                             <img *ngIf="item.folder == true"
-                                                 src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                                 alt="icon" src="./assets/images/svg/icons/folder.svg">
                                         </div>
                                         <div class="file-details">
-                                            <p class="title" role="button" (click)="openFolder(item)">{{item?.name}}</p>
+                                            <p (click)="openFolder(item)" class="title" role="button">{{item?.name}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
-                                                <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
+                                                <a (click)="openProfile(item)" role="button">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="menuItems" appendTo="body"
-                                                          [popup]="true"></p-tieredMenu>
+                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                            <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                          appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
                                         </button>
                                     </div>
@@ -109,14 +110,15 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!showGridDisplay">
-                    <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
-                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" selectionMode="single" (onRowSelect)="onRowSelect($event)"
-                             (onRowUnselect)="onRowUnselect($event)">
+                    <p-table (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [paginator]="true"
+                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" [value]="dlDocuments"
+                             selectionMode="single"
+                             styleClass="doc-data-table">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>
                                     <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
                                         <label class="form-check-label" for="flexCheckDefault"></label>
                                     </div>
                                 </th>
@@ -133,54 +135,55 @@
                                 <th></th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-row>
+                        <ng-template let-row pTemplate="body">
                             <tr [pSelectableRow]="row">
                                 <td>
                                     <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.selected"
-                                               [attr.id]="'checkbox-' + row.id">
-                                        <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
+                                        <input [attr.id]="'checkbox-' + row.id" [checked]="row.selected" class="form-check-input"
+                                               type="checkbox">
+                                        <label [attr.for]="'checkbox-' + row.id" class="form-check-label"></label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
-                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
-                                                <img src="./assets/images/svg/icons/{{row.extension}}.svg"
-                                                     alt="{{row.extension}}">
+                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                <img alt="{{row.extension}}"
+                                                     src="./assets/images/svg/icons/{{row.extension}}.svg">
                                             </ng-container>
                                             <ng-template #otherFileElseCase>
-                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                <img alt="other" src="./assets/images/svg/icons/other.svg">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                        <img *ngIf="row.folder == true" alt="icon"
+                                             src="./assets/images/svg/icons/folder.svg">
                                         <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span role="button" (click)="openFolder(row)">{{row.name}}</span>
+                                            <span (click)="openFolder(row)" role="button">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span role="button" (click)="openFile(row)">{{row.name}}</span>
+                                            <span (click)="openFile(row)" role="button">{{row.name}}</span>
                                         </ng-template>
                                     </div>
                                 </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
+                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
                                     <div class="form-check form-check-only form-check-star">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.favourite"
-                                               [attr.id]="'stared-' + row.id"
-                                               (change)="favouriteDocument($event, row)">
-                                        <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
+                                        <input (change)="favouriteDocument($event, row)" [attr.id]="'stared-' + row.id" [checked]="row.favourite"
+                                               class="form-check-input"
+                                               type="checkbox">
+                                        <label [attr.for]="'stared-' + row.id" class="form-check-label"></label>
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu"
-                                            (click)="menu.toggle($event);onMenuClicked(row)">
-                                        <p-tieredMenu appendTo="body" #menu [model]="menuItems"
-                                                      [popup]="true"></p-tieredMenu>
+                                    <button (click)="menu.toggle($event);onMenuClicked(row)"
+                                            class="btn btn-tiered-menu">
+                                        <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                      appendTo="body"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>
                                     </button>
                                 </td>
@@ -206,22 +209,24 @@
 
     <ng-container *ngIf="files.length > 0">
         <div class="file-uploader-container">
-            <div class="file-uploader" [ngClass]="showFileUploader ? '' : 'collapsed'">
+            <div [ngClass]="showFileUploader ? '' : 'collapsed'" class="file-uploader">
                 <header>
                     <div class="header-content">
                         <h4>Files are being uploaded</h4>
                         <div class="progress-container">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" [attr.style]="'width: ' + averageProgress + '%'"  style="" aria-valuenow="25" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
+                                <div [attr.style]="'width: ' + averageProgress + '%'" aria-valuemax="100"
+                                     aria-valuemin="0" aria-valuenow="25" class="progress-bar"
+                                     role="progressbar"
+                                     style=""></div>
                             </div>
                             <span>{{averageProgress}}%</span>
                         </div>
                     </div>
                     <div class="action-items">
-                        <button class="btn btn-toggle btn-transparent" (click)="showFileUploaderAction()">
-                            <i class="icon-arrow-down" *ngIf="showFileUploader"></i>
-                            <i class="icon-arrow-up" *ngIf="!showFileUploader"></i>
+                        <button (click)="showFileUploaderAction()" class="btn btn-toggle btn-transparent">
+                            <i *ngIf="showFileUploader" class="icon-arrow-down"></i>
+                            <i *ngIf="!showFileUploader" class="icon-arrow-up"></i>
                         </button>
                         <!--<button class="btn btn-transparent" (click)="removeAllFilesFromList()">
                             <i class="icon-times"></i>
@@ -236,11 +241,11 @@
                                     <div class="file-icon-container">
                                         <ng-container
                                                 *ngIf="validExtensions.indexOf(file?.orgFile.name.split('.').pop()) > -1; else otherFileElseCase">
-                                            <img src="./assets/images/svg/icons/{{file?.orgFile.name.split('.').pop()}}.svg"
-                                                 alt="{{file?.orgFile.name.split('.').pop()}}">
+                                            <img alt="{{file?.orgFile.name.split('.').pop()}}"
+                                                 src="./assets/images/svg/icons/{{file?.orgFile.name.split('.').pop()}}.svg">
                                         </ng-container>
                                         <ng-template #otherFileElseCase>
-                                            <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                            <img alt="other" src="./assets/images/svg/icons/other.svg">
                                         </ng-template>
                                     </div>
                                     <div class="file-detail">
@@ -249,13 +254,14 @@
                                             <span class="percentage">{{file.progress}}%</span>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" [attr.style]="'width: ' + file.progress + '%'" aria-valuenow="67"
-                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div [attr.style]="'width: ' + file.progress + '%'" aria-valuemax="100"
+                                                 aria-valuemin="0" aria-valuenow="67"
+                                                 class="progress-bar" role="progressbar"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="file-actions">
-                                    <button class="btn btn-transparent" (click)="onCancelClick(index)">
+                                    <button (click)="onCancelClick(index)" class="btn btn-transparent">
                                         <i class="icon-times"></i>
                                     </button>
                                 </div>
@@ -293,9 +299,9 @@
         </div>
     </form>
     <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideAddFolderPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="addFolderForm.invalid"
-                (click)="createFolder()">
+        <button (click)="hideAddFolderPopup()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="createFolder()" [disabled]="addFolderForm.invalid" class="btn btn-sm btn-primary"
+                type="button">
             Create
         </button>
     </ng-template>
@@ -304,7 +310,7 @@
 <p-dialog [(visible)]="renameDocumentDialog" [modal]="true" styleClass="">
     <ng-template pTemplate="header">
         <div class="header-title">
-            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
             <span>Rename {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
         </div>
     </ng-template>
@@ -325,9 +331,9 @@
         </div>
     </form>
     <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideRenameDocumentPopup()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
-                (click)="onRenameDocument()">Update
+        <button (click)="hideRenameDocumentPopup()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="onRenameDocument()" [disabled]="renameDocumentForm.invalid" class="btn btn-sm btn-primary"
+                type="button">Update
         </button>
     </ng-template>
 </p-dialog>
@@ -335,29 +341,45 @@
 <p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-sm">
     <ng-template pTemplate="header">
         <div class="header-title">
-            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
             <span>Share {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
         </div>
     </ng-template>
     <ng-container [formGroup]="shareWithUserForm">
         <div class="mb-3">
-            <p-chips formControlName="sharedWithChips"></p-chips>
+            <p-dropdown (onChange)="onShareTypeChange()" [options]="shareTypes"
+                        formControlName="shareType"></p-dropdown>
+        </div>
+        <div class="mb-3">
+            <label for="collaborators">Invite People</label>
+            <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
+                     [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Anyone with this link:</label>
-            <p-dropdown appendTo="body" [options]="shareRights" optionLabel="name"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission" optionLabel="label"
+                        optionValue="value"></p-dropdown>
         </div>
-        <ng-container *ngIf="showMessageBox">
-            <div class="form-floating">
-                <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
-                <label for="message">Message</label>
-            </div>
-        </ng-container>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
+            <label for="message">Message</label>
+        </div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [filter]="true" [options]="departments" [showClear]="true"
+                            appendTo="body" filterBy="name" formControlName="departmentId"
+                            id="departmentId" optionLabel="name" optionValue="id"
+                            placeholder="Select department"></p-dropdown>
+                <label class="required" for="departmentId">Department</label>
+            </span>
+        </div>
         <hr>
         <div class="mb-3">
             <label>Share link</label>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="shareLinkSwitch" [checked]="createSharedLink" (change)="createSharedLinkAction()">
+                <input (change)="createSharedLinkAction();onShareTypeChange()" [checked]="createSharedLink" class="form-check-input" id="shareLinkSwitch"
+                       role="switch"
+                       type="checkbox">
                 <label class="form-check-label" for="shareLinkSwitch">
                     <span>Create shared link</span>
                 </label>
@@ -365,28 +387,132 @@
         </div>
         <ng-container *ngIf="createSharedLink">
             <div class="input-group mb-1">
-                <input type="text" class="form-control">
+                <input #shareLinkInput [readOnly]="true" class="form-control" formControlName="publicUrlLink"
+                       type="text">
                 <div class="input-group-text">
-                    <button class="btn btn-sm btn-transparent" (click)="copyLinkToClipboardAction()">Copy</button>
+                    <button (click)="copyLinkToClipboard(shareLinkInput)" class="btn btn-sm btn-transparent">Copy
+                    </button>
                 </div>
             </div>
             <div class="share-rights-dropdown">
-                <p-dropdown appendTo="body" [options]="copyLinkRights" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="copyLinkRights" appendTo="body" optionLabel="name"></p-dropdown>
             </div>
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
-        <button class="btn btn-sm btn-danger me-2" (click)="hideShareDocumentDialog()">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="button"
-                (click)="onShareDocument()">Share
+        <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                type="button">Share
         </button>
     </ng-template>
+    <!--<form [formGroup]="shareWithUserForm">
+        <div class="form-group ui-fluid pbt-0">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+                    <label>Get Shareable link</label>
+                    <div class="hr select-file">
+                        <div class="fileInput">
+                            <p-dropdown [options]="shareTypes" formControlName="shareType"
+                                        (onChange)="onShareTypeChange()">
+                            </p-dropdown>
+                        </div>
+                        <div class="fileInput-btn">
+                            <button type="button" pButton label="Copy Link"
+                                    (click)="copyLinkToClipboard(shareLinkInput)">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hr inputUrl">
+                        <input type="text" pInputText #shareLinkInput formControlName="publicUrlLink"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ui-fluid pbt-0">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+                    <label>Invite People</label>
+                    <div class="hr">
+                        <p-chips formControlName="collaborators" (onAdd)="onAddCollaborator($event.value)"
+                                 [allowDuplicate]="false" [addOnTab]="true">
+                        </p-chips>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ui-fluid pbt-0">
+            <div class="ui-g">
+                <div class="ui-g-4 ui-md-4">
+                    <div class="invite-editor">
+                        <p-dropdown [options]="shareSecurityTypes" formControlName="shareSecurityType">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group ui-fluid pbt-0">
+            <div class="ui-g">
+                <div class="ui-g-2 ui-md-2">
+                    Expiry Date
+                </div>
+                <div class="ui-g-6 ui-md-6 pt-0">
+                    <p-calendar
+                            formControlName="expiryDate"
+                            [monthNavigator]="true"
+                            [showIcon]="true"
+                            [yearNavigator]="true"
+                            yearRange="1970:2099">
+                    </p-calendar>
+                </div>
+                <div class="ui-g-1 ui-md-1 pt-5">
+                    <p-checkbox [binary]="true" formControlName="doNotExpire"
+                                (onChange)="onDoNotExpireCheckBoxChange($event)">
+                    </p-checkbox>
+                </div>
+                <div class="ui-g-3 ui-md-3">
+                    Do not Expire
+                </div>
+            </div>
+        </div>
+        <div class="form-group ui-fluid pbt-0">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+                    <label>Message (optional)</label>
+                    <div class="hr">
+                        <textarea pInputTextarea placeholder="Add a message"
+                                  [rows]="3" formControlName="message">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-g">
+                <div class="ui-g-4 ui-md-4 mt-6 text-left p-0">
+                    <button type="button" pButton (click)="removeSharing()"
+                            label="Remove Sharing" class=" btn-white">
+                    </button>
+                </div>
+                <div class="ui-g-8 ui-md-8 mt-6 p-0 text-right">
+                    <button type="button" pButton
+                            label="Cancel"
+                            class=" btn-white">
+                    </button>
+                    <button type="button" pButton label="Send"
+                            [disabled]="!shareWithUserForm.valid"
+                            (click)="onShare(shareWithUserForm.getRawValue())"
+                            class="btn ml-5 btn-docs">
+                    </button>
+                </div>
+            </div>
+        </p-footer>
+    </form>-->
 </p-dialog>
 
 <p-confirmDialog #cd styleClass="dialog-danger">
     <ng-template pTemplate="header">
         <div class="header-title">
-            <i class="icon-file" [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'"></i>
+            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
             <span>Delete {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
         </div>
     </ng-template>
@@ -396,8 +522,8 @@
     </ng-template>
 </p-confirmDialog>
 <ng-container>
-    <input #fileUpload (change)="onUploadProcessStarted($event)" class="form-control" id="files" [multiple]="true"
-           onclick="this.value = null" type="file" [hidden]="true">
-    <input #folderUpload (change)="uploadFolder($event)" class="form-control" id="folder"
-           onclick="this.value = null" type="file" webkitdirectory directory multiple [hidden]="true">
+    <input #fileUpload (change)="onUploadProcessStarted($event)" [hidden]="true" [multiple]="true" class="form-control"
+           id="files" onclick="this.value = null" type="file">
+    <input #folderUpload (change)="uploadFolder($event)" [hidden]="true" class="form-control"
+           directory id="folder" multiple onclick="this.value = null" type="file" webkitdirectory>
 </ng-container>
