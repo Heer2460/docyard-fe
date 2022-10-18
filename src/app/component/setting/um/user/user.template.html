@@ -113,9 +113,12 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown [options]="groups" appendTo="body" formControlName="group"
-                                placeholder="Select group" optionLabel="name" optionValue="id"
-                                [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                    <p-dropdown [showClear]="true"
+                                [filter]="true" filterBy="name"
+                                placeholder="Select group"
+                                [options]="groups" appendTo="body" formControlName="group"
+                                 optionLabel="name" optionValue="id"
+                                ></p-dropdown>
                     <label>Group</label>
                 </span>
             </div>

@@ -275,7 +275,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: [],
+            role: null,
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
