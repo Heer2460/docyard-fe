@@ -106,7 +106,7 @@
                     <!--                                   appendTo="body" [filter]="true"></p-multiSelect>-->
 
                     <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="roles"
-                                   optionLabel="code" appendTo="body"
+                                   optionLabel="code" appendTo="body" [resetFilterOnHide]="true"
                                    optionValue="id">
                                         <ng-template let-item pTemplate="selectedItem">
                                             {{item.code}}
@@ -224,7 +224,7 @@
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                   <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="role"
                                  optionLabel="code" appendTo="body"
-                                 optionValue="id">
+                                 optionValue="id" [resetFilterOnHide]="true">
                                         <ng-template let-item pTemplate="selectedItem">
                                             {{item.code}}
                                         </ng-template>
@@ -310,7 +310,7 @@
                 <span class="p-float-label">
 <!--                    <p-multiSelect [filter]="false" inputId="status"  [options]="Roles" formControlName="role" appendTo="body" optionLabel="value" optionValue="value"></p-multiSelect >-->
                    <p-multiSelect [filter]=true [options]="roles" filterBy="code,name" formControlName="role"
-                                  optionLabel="code" appendTo="body"
+                                  optionLabel="code" appendTo="body" [resetFilterOnHide]="true"
                                   optionValue="id">
                                         <ng-template let-item pTemplate="selectedItem">
                                             {{item.code}}

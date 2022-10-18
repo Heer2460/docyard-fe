@@ -158,6 +158,7 @@ export class UserComponent implements OnInit {
     }
 
     showSearchPopupAction() {
+        this.searchUserForm.reset();
         this.searchUserForm.patchValue({
             username: [''],
             name: [''],
