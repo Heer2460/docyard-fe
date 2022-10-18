@@ -205,7 +205,7 @@ export class EditRoleComponent implements OnInit {
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successAddMessage('Role');
+                            this.appService.successUpdateMessage('Role');
                             this.router.navigate(['/setting/um/role']);
                         }
                     },
