@@ -347,16 +347,19 @@
     </ng-template>
     <ng-container [formGroup]="shareWithUserForm">
         <div class="mb-3">
-            <p-dropdown (onChange)="onShareTypeChange()" [options]="shareTypes"
-                        formControlName="shareType"></p-dropdown>
+            <span class="p-float-label">
+                <p-dropdown (onChange)="onShareTypeChange()" [options]="shareTypes"
+                            formControlName="shareType" id="shareType"></p-dropdown>
+                <label for="shareType">General Access</label>
+            </span>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
             <label for="collaborators">Invite People</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
         <div class="share-rights-dropdown mb-3">
-            <label class="mr-5px">Anyone with this link:</label>
+            <label class="mr-5px">Permissions:</label>
             <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission" optionLabel="label"
                         optionValue="value"></p-dropdown>
         </div>
@@ -374,29 +377,28 @@
             </span>
         </div>
         <hr>
-        <div class="mb-3">
-            <label>Share link</label>
-            <div class="form-check form-switch">
-                <input (change)="createSharedLinkAction();onShareTypeChange()" [checked]="createSharedLink" class="form-check-input" id="shareLinkSwitch"
-                       role="switch"
-                       type="checkbox">
-                <label class="form-check-label" for="shareLinkSwitch">
-                    <span>Create shared link</span>
-                </label>
-            </div>
-        </div>
-        <ng-container *ngIf="createSharedLink">
-            <div class="input-group mb-1">
-                <input #shareLinkInput [readOnly]="true" class="form-control" formControlName="publicUrlLink"
-                       type="text">
-                <div class="input-group-text">
-                    <button (click)="copyLinkToClipboard(shareLinkInput)" class="btn btn-sm btn-transparent">Copy
-                    </button>
+        <ng-container *ngIf="shareWithUserForm.get('shareType')?.value === 'ANYONE'">
+            <div class="mb-3">
+                <label>Share link</label>
+                <div class="form-check form-switch">
+                    <input (change)="onShareTypeChange();createSharedLinkAction()" [checked]="createSharedLink" class="form-check-input" id="shareLinkSwitch"
+                           role="switch"
+                           type="checkbox">
+                    <label class="form-check-label" for="shareLinkSwitch">
+                        <span>Create shared link</span>
+                    </label>
                 </div>
             </div>
-            <div class="share-rights-dropdown">
-                <p-dropdown [options]="copyLinkRights" appendTo="body" optionLabel="name"></p-dropdown>
-            </div>
+            <ng-container *ngIf="createSharedLink">
+                <div class="input-group mb-1">
+                    <input #shareLinkInput [readOnly]="true" class="form-control" formControlName="publicUrlLink"
+                           type="text">
+                    <div class="input-group-text">
+                        <button (click)="copyLinkToClipboard(shareLinkInput)" class="btn btn-sm btn-transparent">Copy
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
@@ -405,108 +407,6 @@
                 type="button">Share
         </button>
     </ng-template>
-    <!--<form [formGroup]="shareWithUserForm">
-        <div class="form-group ui-fluid pbt-0">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-12">
-                    <label>Get Shareable link</label>
-                    <div class="hr select-file">
-                        <div class="fileInput">
-                            <p-dropdown [options]="shareTypes" formControlName="shareType"
-                                        (onChange)="onShareTypeChange()">
-                            </p-dropdown>
-                        </div>
-                        <div class="fileInput-btn">
-                            <button type="button" pButton label="Copy Link"
-                                    (click)="copyLinkToClipboard(shareLinkInput)">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="hr inputUrl">
-                        <input type="text" pInputText #shareLinkInput formControlName="publicUrlLink"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group ui-fluid pbt-0">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-12">
-                    <label>Invite People</label>
-                    <div class="hr">
-                        <p-chips formControlName="collaborators" (onAdd)="onAddCollaborator($event.value)"
-                                 [allowDuplicate]="false" [addOnTab]="true">
-                        </p-chips>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group ui-fluid pbt-0">
-            <div class="ui-g">
-                <div class="ui-g-4 ui-md-4">
-                    <div class="invite-editor">
-                        <p-dropdown [options]="shareSecurityTypes" formControlName="shareSecurityType">
-                        </p-dropdown>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group ui-fluid pbt-0">
-            <div class="ui-g">
-                <div class="ui-g-2 ui-md-2">
-                    Expiry Date
-                </div>
-                <div class="ui-g-6 ui-md-6 pt-0">
-                    <p-calendar
-                            formControlName="expiryDate"
-                            [monthNavigator]="true"
-                            [showIcon]="true"
-                            [yearNavigator]="true"
-                            yearRange="1970:2099">
-                    </p-calendar>
-                </div>
-                <div class="ui-g-1 ui-md-1 pt-5">
-                    <p-checkbox [binary]="true" formControlName="doNotExpire"
-                                (onChange)="onDoNotExpireCheckBoxChange($event)">
-                    </p-checkbox>
-                </div>
-                <div class="ui-g-3 ui-md-3">
-                    Do not Expire
-                </div>
-            </div>
-        </div>
-        <div class="form-group ui-fluid pbt-0">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-12">
-                    <label>Message (optional)</label>
-                    <div class="hr">
-                        <textarea pInputTextarea placeholder="Add a message"
-                                  [rows]="3" formControlName="message">
-                        </textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p-footer>
-            <div class="ui-g">
-                <div class="ui-g-4 ui-md-4 mt-6 text-left p-0">
-                    <button type="button" pButton (click)="removeSharing()"
-                            label="Remove Sharing" class=" btn-white">
-                    </button>
-                </div>
-                <div class="ui-g-8 ui-md-8 mt-6 p-0 text-right">
-                    <button type="button" pButton
-                            label="Cancel"
-                            class=" btn-white">
-                    </button>
-                    <button type="button" pButton label="Send"
-                            [disabled]="!shareWithUserForm.valid"
-                            (click)="onShare(shareWithUserForm.getRawValue())"
-                            class="btn ml-5 btn-docs">
-                    </button>
-                </div>
-            </div>
-        </p-footer>
-    </form>-->
 </p-dialog>
 
 <p-confirmDialog #cd styleClass="dialog-danger">
