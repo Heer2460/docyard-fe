@@ -11,6 +11,8 @@ import {TableModule} from "primeng/table";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ChipsModule} from "primeng/chips";
 import {DropdownModule} from "primeng/dropdown";
+import {CheckboxModule} from "primeng/checkbox";
+import {CalendarModule} from "primeng/calendar";
 
 @NgModule({
     declarations: [
@@ -28,7 +30,9 @@ import {DropdownModule} from "primeng/dropdown";
         ConfirmDialogModule,
         ChipsModule,
         FormsModule,
-        DropdownModule
+        DropdownModule,
+        CheckboxModule,
+        CalendarModule
     ]
 })
 export class DocLibModule {
