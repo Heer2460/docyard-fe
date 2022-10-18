@@ -281,6 +281,8 @@ export class GroupComponent implements OnInit {
         this.addGroupForm.markAsUntouched();
         this.visibleAddGroupDialog = true;
     }
+
+
     hideAddGroupPopupAction() {
         this.confirmationHeader = "Add Group";
         if(this.addGroupForm.dirty){
@@ -295,6 +297,8 @@ export class GroupComponent implements OnInit {
             this.performHideAddAction();
         }
     }
+
+
     performHideAddAction() {
         this.addGroupForm.patchValue({
             code: '',

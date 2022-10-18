@@ -34,6 +34,8 @@ export class UserComponent implements OnInit {
     destroy: Subject<boolean> = new Subject();
     roleActions = RoleActionConstants;
     message: string = 'Click search to view users.';
+    passwordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
     actionItems: MenuItem[] = [
         {
             label: 'View',
@@ -47,10 +49,16 @@ export class UserComponent implements OnInit {
             visible: this.roleActions.USER_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
+        // { BUG 16
+        //     label: 'Reset Password',
+        //     icon: 'icon-edit',
+        //     visible: this.roleActions.RESET_PASSWORD.value,
+        //     command: () => this.showResetPasswordDialogAction(this.selectedUser)
+        // },
         {
             label: 'Reset Password',
             icon: 'icon-edit',
-            visible: this.roleActions.RESET_PASSWORD.value,
+            visible: this.roleActions.USER_EDIT.value,
             command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
@@ -158,6 +166,7 @@ export class UserComponent implements OnInit {
     }
 
     showSearchPopupAction() {
+        this.searchUserForm.reset();
         this.searchUserForm.patchValue({
             username: [''],
             name: [''],
@@ -388,6 +397,14 @@ export class UserComponent implements OnInit {
             return;
         }
         this.showSearchPopupAction();
+    }
+
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
 }
