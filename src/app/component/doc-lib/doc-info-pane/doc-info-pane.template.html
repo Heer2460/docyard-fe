@@ -120,7 +120,48 @@
                     <span>Sharing</span>
                 </div>
             </ng-template>
-            <ng-template pTemplate="content">Body Content</ng-template>
+            <ng-template pTemplate="content">
+
+                <ul class="info-pane-sharing-list">
+                    <li>
+                        <div class="user-meta">
+                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
+                            <div class="meta">
+                                <p>Umar Farooq</p>
+                                <p class="text-muted">Owner</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                          [popup]="true"></p-tieredMenu>
+                            <i class="icon-menu-horizontal"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="user-meta">
+                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
+                            <div class="meta">
+                                <p>Irfan Nasim</p>
+                                <p class="text-muted">Editor</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                          [popup]="true"></p-tieredMenu>
+                            <i class="icon-menu-horizontal"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="user-meta">
+                            <i class="icon-link-filled"></i>
+                            <div class="meta">
+                                <p>Shared Link</p>
+                                <a role="button" class="btn-link">Create Link</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
         </p-accordionTab>
     </p-accordion>
 </div>
