@@ -34,6 +34,8 @@ export class UserComponent implements OnInit {
     destroy: Subject<boolean> = new Subject();
     roleActions = RoleActionConstants;
     message: string = 'Click search to view users.';
+    passwordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
     actionItems: MenuItem[] = [
         {
             label: 'View',
@@ -47,10 +49,16 @@ export class UserComponent implements OnInit {
             visible: this.roleActions.USER_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
+        // { BUG 16
+        //     label: 'Reset Password',
+        //     icon: 'icon-edit',
+        //     visible: this.roleActions.RESET_PASSWORD.value,
+        //     command: () => this.showResetPasswordDialogAction(this.selectedUser)
+        // },
         {
             label: 'Reset Password',
             icon: 'icon-edit',
-            visible: this.roleActions.RESET_PASSWORD.value,
+            visible: this.roleActions.USER_EDIT.value,
             command: () => this.showResetPasswordDialogAction(this.selectedUser)
         },
         {
@@ -124,8 +132,8 @@ export class UserComponent implements OnInit {
         this.searchUserForm = this.fb.group({
             username: [''],
             name: [''],
-            group: [''],
-            department: [''],
+            group: null,
+            department: null,
             status: ['Active'],
         });
         this.resetPasswordForm = this.fb.group({
@@ -137,9 +145,13 @@ export class UserComponent implements OnInit {
     }
 
     searchUsers() {
+
+        let groupId = this.searchUserForm.value.group == null ? '' : this.searchUserForm.value.group;
+        let departmentId = this.searchUserForm.value.department == null ? '' : this.searchUserForm.value.department;
+
         let url = ApiUrlConstants.USER_API_URL + 'search' + '?username=' + this.searchUserForm.value.username +
-            '&name=' + this.searchUserForm.value.name + '&groupId=' + this.searchUserForm.value.group +
-            '&departmentId=' + this.searchUserForm.value.department + '&status=' + this.searchUserForm.value.status;
+            '&name=' + this.searchUserForm.value.name + '&groupId=' + groupId +
+            '&departmentId=' + departmentId + '&status=' + this.searchUserForm.value.status;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
@@ -159,14 +171,15 @@ export class UserComponent implements OnInit {
 
     showSearchPopupAction() {
         this.searchUserForm.reset();
+        this.searchPopupToggle = true;
         this.searchUserForm.patchValue({
             username: [''],
             name: [''],
-            group: [''],
-            department: [''],
+            group: null,
+            department: null,
             status: ['Active'],
         });
-        this.searchPopupToggle = true;
+
     }
 
     hideSearchPopupAction() {
@@ -331,7 +344,7 @@ export class UserComponent implements OnInit {
             const data = {
                 userId: selectedUser.id,
                 newPassword: this.appService.encryptUsingAES256(this.resetPasswordForm.value.passwords.password),
-            }
+            };
             this.requestsService.putRequest(ApiUrlConstants.USER_RESET_PASS_API_URL, data)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
@@ -355,7 +368,7 @@ export class UserComponent implements OnInit {
             const data = {
                 id: selectedUser.id,
                 status: 'Active',
-            }
+            };
             this.requestsService.putRequest(ApiUrlConstants.USER_STATUS_API_URL, data)
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
@@ -389,6 +402,14 @@ export class UserComponent implements OnInit {
             return;
         }
         this.showSearchPopupAction();
+    }
+
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
 }

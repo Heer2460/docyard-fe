@@ -113,9 +113,12 @@
             </div>
             <div class="col-6 mb-3">
                 <span class="p-float-label">
-                    <p-dropdown [options]="groups" appendTo="body" formControlName="group"
-                                placeholder="Select group" optionLabel="name" optionValue="id"
-                                [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                    <p-dropdown [showClear]="true"
+                                [filter]="true" filterBy="name"
+                                placeholder="Select group"
+                                [options]="groups" appendTo="body" formControlName="group"
+                                 optionLabel="name" optionValue="id"
+                                ></p-dropdown>
                     <label>Group</label>
                 </span>
             </div>
@@ -155,9 +158,11 @@
                     <div class="form-floating">
                         <input autocomplete="new-password" class="form-control" formControlName="password"
                                id="password"
-                               placeholder="Password"
-                               type="password">
+                               placeholder="Password"  [attr.type]="passwordVisibility ? 'password' : 'text'">
                         <label for="password">Password</label>
+                        <div class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                            <i class="{{passwordVisibility? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                                        </div>
                         <small
                             *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'password', 'required', 'password')">
                             {{ appUtility.makeErrorMessage("Password", 'required') }}
@@ -179,8 +184,10 @@
                 <div class="col-12 mb-3">
                     <div class="form-floating">
                         <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
-                               placeholder="Confirm Password" type="password">
-                        <label for="confirmPassword">Confirm Password</label>
+                               placeholder="Confirm Password" [attr.type]="confirmPasswordVisibility ? 'password' : 'text'">
+                        <label for="confirmPassword">Confirm Password</label><div class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+                                            <i class="{{confirmPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
+                                        </div>
                         <small
                             *ngIf="appUtility.getFormError(resetPasswordForm, 'passwords', 'confirmPassword', 'required', 'password')">
                             {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
