@@ -164,7 +164,19 @@ export class UserProfileComponent implements OnInit {
     }
 
     updateProfileImg(event: any) {
+        let format;
+        let size;
         if (event.target.files.length > 0) {
+            size = event.target.files[0].size / 1024 / 1024;
+            if (size > 2) {
+                this.toastService.error('Uploaded file size is not supported.', 'Profile Picture');
+                return;
+            }
+            format = event.target.files[0].type;
+            if (!format.includes('image/')) {
+                this.toastService.error('Uploaded file type is not supported.', 'Profile Picture');
+                return;
+            }
             let data = {
                 id: this.userId,
             };
