@@ -87,9 +87,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
         this.preloadedData();
-       /* this.shareWithUserForm.controls['collaborators'].valueChanges.subscribe((value) => {
-            this.showMessageBox = value.length > 0;
-        })*/
+        /* this.shareWithUserForm.controls['collaborators'].valueChanges.subscribe((value) => {
+             this.showMessageBox = value.length > 0;
+         })*/
     }
 
     preloadedData(): void {
@@ -684,23 +684,23 @@ export class DocLibComponent implements OnInit, OnDestroy {
         let regexp = new RegExp('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}');
         let valid: boolean = regexp.test(value);
         if (!valid) {
-            this.toastService.error('Email is not valid.','Share with Others');
+            this.toastService.error('Email is not valid.', 'Share with Others');
             this.shareWithUserForm.controls['collaborators'].value.pop();
         } else {
             if (value != this.appService.userInfo.email) {
                 let user = this.users.find(user => user.email === value);
                 if (!user) {
                     this.shareWithUserForm.controls['collaborators'].value.pop();
-                    this.toastService.error('Your are sharing outside the team, this is not allowed.','Share with Others');
+                    this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
                 }
             } else {
                 this.shareWithUserForm.controls['collaborators'].value.pop();
-                this.toastService.error('You can\'nt share with yourself.','Share with Others');
+                this.toastService.error('You can\'nt share with yourself.', 'Share with Others');
             }
         }
     }
 
-    copyLinkToClipboard(shareLink : any) {
+    copyLinkToClipboard(shareLink: any) {
         shareLink.select();
         document.execCommand('copy');
         shareLink.setSelectionRange(0, 0);

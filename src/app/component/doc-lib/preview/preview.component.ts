@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
     styleUrls: ['./preview.component.less'],
 })
 export class PreviewComponent implements OnInit {
-    
+
     showDocInfoPane: boolean = true;
     defaultZoom: number = 0;
     magnifierZoom: number = this.defaultZoom;
@@ -26,14 +26,14 @@ export class PreviewComponent implements OnInit {
     currentDocIndex: number = 0;
     selectedDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
-    
+
     constructor(public appService: AppService,
                 private activatedRoute: ActivatedRoute,
                 private requestsService: RequestService,
                 private toastService: ToastrService,) {
         this.appService.setShowDocInfoPaneSubjectState(this.showDocInfoPane);
     }
-    
+
     ngOnInit(): void {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
@@ -45,7 +45,7 @@ export class PreviewComponent implements OnInit {
             this.loadDocumentLibrary(folderId, false);
         })
     }
-    
+
     loadDocumentLibrary(folderId: string, archived: boolean) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
@@ -67,7 +67,7 @@ export class PreviewComponent implements OnInit {
                 }
             });
     }
-    
+
     favouriteDocument(row: any) {
         const isChecked = !row.favorite;
         let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(row.id)) + '/?favourite=' + isChecked;
@@ -88,37 +88,37 @@ export class PreviewComponent implements OnInit {
                 }
             );
     }
-    
+
     magnifierZoomInAction() {
         this.magnifierZoom += 10;
         this.generateStyleObj();
     }
-    
+
     magnifierZoomOutAction() {
         this.magnifierZoom -= 10;
         this.generateStyleObj();
     }
-    
+
     setInitialProps() {
         this.imageObj = document.querySelector('.image-container img');
         this.initialWidth = this.imageObj?.clientWidth;
         this.initialHeight = this.imageObj?.clientHeight;
     }
-    
+
     generateStyleObj() {
-        
+
         const calcWidth = ((this.initialWidth * this.magnifierZoom) / 100) + this.initialWidth;
         const calcHeight = ((this.initialHeight * this.magnifierZoom) / 100) + this.initialHeight;
-        
+
         this.imageObj.style.width = `${calcWidth}px`;
         this.imageObj.style.height = `${calcHeight}px`;
-        
+
     }
-    
+
     starFileAction() {
         this.stared = !this.stared;
     }
-    
+
     findCurrentFileFromDocs() {
         this.selectedDoc = this.dlDocuments.find((doc, index) => {
             if (this.queryParams.id == doc.id && doc.folder == false) {
@@ -127,27 +127,27 @@ export class PreviewComponent implements OnInit {
             }
         });
     }
-    
+
     openPrevFileAction() {
-        if(this.currentDocIndex > 0) {
+        if (this.currentDocIndex > 0) {
             this.currentDocIndex--;
         }
         this.selectedDoc = this.dlDocuments[this.currentDocIndex];
     }
-    
+
     openNextFileAction() {
-        if(this.currentDocIndex < this.dlDocuments.length-1) {
+        if (this.currentDocIndex < this.dlDocuments.length - 1) {
             this.currentDocIndex++;
         }
         this.selectedDoc = this.dlDocuments[this.currentDocIndex];
     }
-    
+
     checkValidImageFile() {
         return this.selectedDoc?.mimeType?.split('/')[0] == 'image'
     }
-    
+
     getValidExtension() {
         return this.validExtensions?.indexOf(this.selectedDoc?.extension) > -1
     }
-    
+
 }
