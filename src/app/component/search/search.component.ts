@@ -8,6 +8,10 @@ import {AppService} from "../../service/app.service";
 import {RequestService} from "../../service/request.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiUrlConstants} from "../../util/api.url.constants";
+import {AppUtility} from "../../util/app.utility";
+import * as FileSaver from "file-saver";
+import {ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-search',
@@ -21,6 +25,8 @@ export class SearchComponent implements OnInit {
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showGridDisplay: boolean = false;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
+    renameDocumentForm: FormGroup = new FormGroup({});
+    renameDocumentDialog: boolean = false;
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -44,6 +50,9 @@ export class SearchComponent implements OnInit {
     constructor(private appService: AppService,
                 private requestsService: RequestService,
                 private activatedRoute: ActivatedRoute,
+                public appUtility: AppUtility,
+                private toastService: ToastrService,
+                private fb: FormBuilder,
                 private router: Router) {
     }
 
@@ -54,7 +63,15 @@ export class SearchComponent implements OnInit {
                 this.searchAllDocuments(this.searchValue);
             }
         });
+        this.buildForms();
     }
+
+    buildForms() {
+        this.renameDocumentForm = this.fb.group({
+            name: [null, [Validators.required, Validators.maxLength(255)]],
+        });
+    }
+
 
     searchAllDocuments(searchKey: string) {
         let loggedInUserId = this.appService.getLoggedInUserId();
@@ -75,8 +92,45 @@ export class SearchComponent implements OnInit {
             });
     }
 
+    loadDocumentLibrary(folderId: string, archived: boolean) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
+            .replace('{ownerId}', String(loggedInUserId))
+            .replace("{folderId}", folderId)
+            .replace("{archived}", String(archived)))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
+        if (this.selectedDoc.folder == true) {
+            this.menuItems = [
+                {
+                    label: 'Rename',
+                    icon: 'icon-edit',
+                    command: () => this.showRenameDocumentPopup(this.selectedDoc)
+                },
+            ];
+        } else {
+            this.menuItems = [
+                {
+                    label: 'Download',
+                    icon: 'icon-download',
+                    command: () => this.downloadFile(this.selectedDoc)
+                },
+            ];
+        }
     }
 
     setGridDisplay() {
@@ -94,5 +148,75 @@ export class SearchComponent implements OnInit {
     navigateToDocLib(id: any) {
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), id);
         this.router.navigate(['/doc-lib']);
+    }
+
+    downloadFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+            .subscribe({
+                next: (response: any) => {
+                    let mimeType = AppUtility.getMimeTypeByFileName(data.name);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, data.name);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    favouriteDocument(event: any, row: any) {
+        const isChecked = event.target.checked;
+        let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(row.id)) + '/?favourite=' + isChecked;
+        this.requestsService.putRequest(url, {})
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            if (isChecked) {
+                                this.toastService.success(row.title + ' has been starred successfully.', 'Document Library');
+                            } else {
+                                this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
+                            }
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Document Library');
+                    }
+                }
+            );
+    }
+
+    showRenameDocumentPopup(data: any) {
+        this.renameDocumentForm.patchValue({name: ''});
+        this.renameDocumentForm.markAsUntouched();
+        this.renameDocumentForm.patchValue({name: data.title});
+        this.renameDocumentDialog = true;
+    }
+
+    hideRenameDocumentPopup() {
+        this.renameDocumentDialog = false;
+    }
+
+    onRenameDocument() {
+        let data = {
+            id: this.selectedDoc.id,
+            name: this.renameDocumentForm.value.name,
+            updatedBy: localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID))
+        };
+        this.requestsService.putRequest(ApiUrlConstants.DL_DOCUMENT_RENAME_API_URL, data)
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.appService.successUpdateMessage('Document');
+                            this.hideRenameDocumentPopup();
+                            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Document');
+                    }
+                }
+            );
+
     }
 }
