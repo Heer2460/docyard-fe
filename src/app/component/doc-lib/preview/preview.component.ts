@@ -126,6 +126,7 @@ export class PreviewComponent implements OnInit {
                 return doc;
             }
         });
+        this.selectedDoc.name = this.appService.getFileNameExtracted(this.selectedDoc.name);
     }
 
     openPrevFileAction() {

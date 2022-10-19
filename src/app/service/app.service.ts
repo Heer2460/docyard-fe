@@ -160,4 +160,9 @@ export class AppService {
     public getLoggedInUserId(): number {
         return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
     }
+
+    public getFileNameExtracted(text: any) {
+        let count = 50;
+        return text.slice(0, count) + (text.length > count ? " ... " : "");
+    }
 }
