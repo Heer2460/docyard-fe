@@ -2436,7 +2436,7 @@ preview-component {
 						height: 24px;
 						object-fit: cover;
 						border-radius: 50%;
-						margin-right: 5px;
+						margin-right: 5px !important;
 					}
 					
 					span {
@@ -2461,8 +2461,13 @@ preview-component {
 					opacity: 0;
 					
 					.btn {
-						padding: 0 5px;
+						padding: 0;
 						font-size: 14px;
+						width: 30px;
+						height: 24px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
 					}
 					
 				}
@@ -2580,6 +2585,18 @@ preview-component {
 			height: initial;
 			padding: 0;
 			line-height: 0;
+		}
+		
+	}
+	
+}
+
+app-setting-component {
+	
+	.main-wrapper {
+		
+		.p-tieredmenu.p-tieredmenu-overlay {
+			width: 300px;
 		}
 		
 	}
@@ -3156,12 +3173,33 @@ preview-component {
 				
 				.user-details-and-actions {
 					
+					.user-details {
+						
+						p {
+							line-height: 1;
+							
+							span {
+								
+								.text-muted {
+									font-size: 10px;
+								}
+								
+							}
+							
+						}
+						
+					}
+					
 					.comment-actions {
 						
 						.btn {
-							padding: 2px 4px;
+							padding: 0;
 							font-size: 10px;
-							height: initial;
+							width: 20px;
+							height: 18px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
 						}
 						
 					}
@@ -3218,6 +3256,19 @@ preview-component {
 		}
 		
 	}
+	
+	app-setting-component {
+		
+		.main-wrapper {
+			padding: 0 20px;
+			
+			.p-tieredmenu.p-tieredmenu-overlay {
+				width: 236px;
+			}
+			
+		}
+		
+	}
 
 }
 
@@ -3263,6 +3314,19 @@ preview-component {
 
 	.page-body {
 		margin-top: 20px;
+	}
+	
+	app-setting-component {
+		
+		.main-wrapper {
+			padding: 0 20px;
+			
+			.p-tieredmenu.p-tieredmenu-overlay {
+				width: 236px;
+			}
+			
+		}
+		
 	}
 
 }

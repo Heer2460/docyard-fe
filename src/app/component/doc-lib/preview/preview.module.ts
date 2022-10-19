@@ -4,13 +4,15 @@ import {PreviewComponent} from './preview.component';
 import {PreviewRoutingModule} from "./preview-routing.module";
 import {DocInfoPaneModule} from "../doc-info-pane/doc-info-pane.module";
 import {NavModule} from "../../layout/nav/nav.module";
-import {PreviewActionsComponent} from "./preview-actions/preview-actions.component";
 import {TieredMenuModule} from "primeng/tieredmenu";
+import {DialogModule} from "primeng/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
+import {ChipsModule} from "primeng/chips";
 
 @NgModule({
     declarations: [
         PreviewComponent,
-        PreviewActionsComponent
     ],
     imports: [
         CommonModule,
@@ -18,9 +20,10 @@ import {TieredMenuModule} from "primeng/tieredmenu";
         DocInfoPaneModule,
         NavModule,
         TieredMenuModule,
-    ],
-    exports: [
-        PreviewActionsComponent
+        DialogModule,
+        ReactiveFormsModule,
+        DropdownModule,
+        ChipsModule,
     ]
 })
 export class PreviewModule {

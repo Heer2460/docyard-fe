@@ -1,16 +1,15 @@
-<img *ngIf="!profileImage" src="../../../../../assets/images/svg/user-image-placeholder.svg" alt="Default user image placeholder">
-<img *ngIf="profileImage" src="data:image/jpeg;base64,{{profileImage}}" class="user-img" alt="user image">
-<div class="user-details-container">
-    <div class="user-details">
-        <h4 class="user-name">{{ userInfo?.name | titlecase }}</h4>
-        <p class="user-email">{{ userInfo?.email }}</p>
-    </div>
-    <button class="btn btn-user-settings" (click)="menu.toggle($event)">
-        <p-tieredMenu appendTo="body" #menu [model]="items" [popup]="true"></p-tieredMenu>
-        <i class="icon-cog"></i>
-    </button>
+<div class="main-wrapper" (click)="menu.toggle($event)">
+    <img *ngIf="!profileImage" src="../../../../../assets/images/svg/user-image-placeholder.svg" alt="Default user image placeholder">
+    <img *ngIf="profileImage" src="data:image/jpeg;base64,{{profileImage}}" class="user-img" alt="user image">
+    <div class="user-details-container">
+        <div class="user-details">
+            <h4 class="user-name">{{ userInfo?.name | titlecase }}</h4>
+            <p class="user-email">{{ userInfo?.email }}</p>
+        </div>
 
-    <button class="btn btn-right-pane" (click)="setToggleRightPaneState()">
-        <i class="icon-pane-toggle"></i>
-    </button>
+        <button class="btn btn-right-pane" (click)="setToggleRightPaneState()">
+            <i class="icon-pane-toggle"></i>
+        </button>
+    </div>
+    <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
 </div>
