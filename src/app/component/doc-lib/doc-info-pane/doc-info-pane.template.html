@@ -5,7 +5,7 @@
 <div class="pane-wrapper">
     <ng-container *ngIf="selectedDoc?.folder == false">
         <ng-container
-                *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
+            *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
             <img src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
                  alt="{{selectedDoc.extension}}">
         </ng-container>
@@ -15,8 +15,7 @@
     </ng-container>
     <img *ngIf="selectedDoc?.folder == true"
          src="./assets/images/svg/icons/folder.svg" alt="icon">
-
-    <p-accordion (onOpen)="loadComments($event)">
+    <p-accordion (onOpen)="loadDlDocumentDetails($event)">
         <p-accordionTab [selected]="activeTabIndex === 0">
             <ng-template pTemplate="header">
                 <div>
@@ -74,7 +73,8 @@
                 <div class="comments-wrapper">
                     <ng-container [formGroup]="commentForm">
                         <div class="form-floating mb-2">
-                            <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                            <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"
+                                      id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Comments</label>
                         </div>
                     </ng-container>
@@ -83,7 +83,8 @@
                             <button class="btn btn-sm btn-primary btn-post" (click)="addUserComment()">Post</button>
                         </ng-container>
                         <ng-container *ngIf="enableEditComment">
-                            <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update</button>
+                            <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update
+                            </button>
                         </ng-container>
                     </div>
                     <ul *ngFor="let comment of comments">
@@ -121,45 +122,30 @@
                 </div>
             </ng-template>
             <ng-template pTemplate="content">
-
                 <ul class="info-pane-sharing-list">
-                    <li>
-                        <div class="user-meta">
-                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
-                            <div class="meta">
-                                <p>Umar Farooq</p>
-                                <p class="text-muted">Owner</p>
+                    <ng-container *ngIf="_selectedDoc.shared == null">
+                        <li>No sharing detail found.</li>
+                    </ng-container>
+                    <ng-container *ngIf="_selectedDoc.shared != null">
+                        <li *ngFor="let sh of sharingDetails; let i = index">
+                            <div class="user-meta">
+                                <img *ngIf="sh.dlCollPic != null" src="data:image/jpeg;base64,{{sh.dlCollPic}}"
+                                     alt="user">
+                                <img *ngIf="sh.dlCollPic == null" src="./assets/images/svg/user-image-placeholder.svg"
+                                     alt="user">
+                                <div class="meta">
+                                    <p>{{sh.dlCollName}}</p>
+                                    <p class="text-muted">{{sh.accessRight}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
-                                          [popup]="true"></p-tieredMenu>
-                            <i class="icon-menu-horizontal"></i>
-                        </button>
-                    </li>
-                    <li>
-                        <div class="user-meta">
-                            <img src="./assets/images/svg/user-image-placeholder.svg" alt="user">
-                            <div class="meta">
-                                <p>Irfan Nasim</p>
-                                <p class="text-muted">Editor</p>
-                            </div>
-                        </div>
-                        <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
-                            <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
-                                          [popup]="true"></p-tieredMenu>
-                            <i class="icon-menu-horizontal"></i>
-                        </button>
-                    </li>
-                    <li>
-                        <div class="user-meta">
-                            <i class="icon-link-filled"></i>
-                            <div class="meta">
-                                <p>Shared Link</p>
-                                <a role="button" class="btn-link">Create Link</a>
-                            </div>
-                        </div>
-                    </li>
+                            <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                                <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                              [popup]="true">
+                                </p-tieredMenu>
+                                <i class="icon-menu-horizontal"></i>
+                            </button>
+                        </li>
+                    </ng-container>
                 </ul>
             </ng-template>
         </p-accordionTab>

@@ -213,8 +213,8 @@
         </div>
     </div>
     <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'"
-                             [selectedDoc]="selectedDoc"></doc-info-pane-component>
-
+                             [selectedDoc]="selectedDoc">
+    </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
         <div class="file-uploader-container">
             <div [ngClass]="showFileUploader ? '' : 'collapsed'" class="file-uploader">

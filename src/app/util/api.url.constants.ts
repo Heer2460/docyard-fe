@@ -42,4 +42,6 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_DELETE_API_URL = '/dl/dl-document/delete';
     public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search/{userid}?searchKey={searchKey}';
     public static DL_DOCUMENT_SHARE_API_URL = '/dl/share/';
+    public static DL_DOCUMENT_SHARE_DETAIL_API_URL = '/dl/share/dl-document/';
+
 }

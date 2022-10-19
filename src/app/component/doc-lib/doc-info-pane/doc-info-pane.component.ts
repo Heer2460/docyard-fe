@@ -14,17 +14,19 @@ import {AppConstants} from "../../../util/app.constants";
     styleUrls: ['./doc-info-pane.component.less']
 })
 export class DocInfoPaneComponent implements OnInit, OnChanges {
-    
+
     documentMeta: any;
     users: any[] = [];
     comments: any[] = [];
+    sharingDetails: any[] = [];
     showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
-    
+    @Input() _selectedDoc: any = null;
+
     constructor(public appService: AppService,
                 private requestsService: RequestService,
                 private fb: FormBuilder,
@@ -33,23 +35,21 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             this.showDocInfoPane = value;
         });
     }
-    
-    @Input() _selectedDoc: any = null;
-    
+
     get selectedDoc(): any {
         return this._selectedDoc;
     }
-    
+
     @Input('selectedDoc') set selectedDoc(selectedDoc: any) {
         this._selectedDoc = selectedDoc;
         this.activeTabIndex = 0;
     }
-    
+
     ngOnInit(): void {
         this.buildForms();
         this.buildOptionItems();
     }
-    
+
     buildOptionItems() {
         this.sharingMenuItems = [
             {
@@ -59,11 +59,17 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 }
             },
             {
-                label: 'Editor',
+                label: 'Comment',
                 icon: 'icon-edit',
                 command: () => {
                 }
             },
+            /*{
+                label: 'Editor',
+                icon: 'icon-edit',
+                command: () => {
+                }
+            },*/
             {
                 label: 'Remove',
                 icon: 'icon-trash',
@@ -72,20 +78,18 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             }
         ];
     }
-    
+
     ngOnChanges(): void {
         this.getMetaDocumentByID();
-        // this.checkDocExist = !this.selectedDoc.id;
-        // console.log('abc', this._selectedDoc.id)
     }
-    
+
     buildForms() {
         this.commentForm = this.fb.group({
             id: [''],
             comments: [''],
         });
     }
-    
+
     getMetaDocumentByID() {
         if (this.selectedDoc && this.selectedDoc > 0) {
             this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_API_URL
@@ -104,12 +108,12 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 });
         }
     }
-    
+
     toggleDocInfoPane() {
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
-    
-    loadComments(event: any) {
+
+    loadDlDocumentDetails(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
@@ -126,9 +130,26 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.appService.handleError(error, 'Comment');
                     }
                 });
+        } else if (event.index == 2) {
+            if (this.selectedDoc.shared != null) {
+                let url = ApiUrlConstants.DL_DOCUMENT_SHARE_DETAIL_API_URL + this.selectedDoc.id;
+                this.requestsService.getRequest(url)
+                    .subscribe({
+                        next: (response: any) => {
+                            if (response.status === 200) {
+                                this.sharingDetails = response.body.data;
+                            } else {
+                                this.sharingDetails = [];
+                            }
+                        },
+                        error: (error: any) => {
+                            this.appService.handleError(error, 'Sharing Details');
+                        }
+                    });
+            }
         }
     }
-    
+
     addUserComment() {
         let data = {
             message: this.commentForm.value.comments,
@@ -143,7 +164,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                     if (response.status === 200) {
                         this.commentForm.reset();
                         this.toastService.success('Comment added successfully', 'Comment');
-                        this.loadComments({index: 1});
+                        this.loadDlDocumentDetails({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -151,9 +172,9 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 }
             });
     }
-    
+
     onEditComment(selectedComment: any) {
-        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id) ) {
+        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id)) {
             this.appService.noRightsMessage();
             return;
         }
@@ -163,7 +184,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             comments: selectedComment.message
         });
     }
-    
+
     updateUserComment() {
         let data = {
             id: this.commentForm.value.id,
@@ -180,7 +201,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.commentForm.reset();
                         this.enableEditComment = false;
                         this.toastService.success('Comment updated successfully', 'Comment');
-                        this.loadComments({index: 1});
+                        this.loadDlDocumentDetails({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -190,7 +211,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     onDeleteComment(selectedComment: any) {
-        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id) ) {
+        if (selectedComment.userId !== Number.parseInt(this.appService.userInfo.id)) {
             this.appService.noRightsMessage();
             return;
         }
@@ -198,7 +219,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             .subscribe({
                 next: (response: any) => {
                     if (response.status === 200) {
-                        this.loadComments({index: 1});
+                        this.loadDlDocumentDetails({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -207,9 +228,4 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             });
     }
 
-    
-    checkValidImageFile() {
-        return this.selectedDoc?.mimeType?.split('/')[0] == 'image'
-    }
-    
 }
