@@ -9,13 +9,15 @@
             <div class="left" [ngClass]="showDocInfoPane ? 'collapsed': ''">
                 <div class="image-container">
                     <ng-container
-                            *ngIf="getValidExtension(); else otherFileElseCase">
+                        *ngIf="getValidExtension(); else otherFileElseCase">
                         <ng-container *ngIf="checkValidImageFile(); else elseFileCase">
-                            <img class="file-type-thumbnail" src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                            <img class="file-type-thumbnail"
+                                 src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
                                  alt="{{selectedDoc.extension}}">
                         </ng-container>
                         <ng-template #elseFileCase>
-                            <img class="file-type-thumbnail" src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                            <img class="file-type-thumbnail"
+                                 src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
                                  alt="{{selectedDoc.extension}}">
                         </ng-template>
                     </ng-container>
@@ -65,7 +67,8 @@
                 </div>
             </div>
             <doc-info-pane-component [_selectedDoc]="selectedDoc"
-                                     [ngClass]="showDocInfoPane ? '': 'collapsed'"></doc-info-pane-component>
+                                     [ngClass]="showDocInfoPane ? '': 'collapsed'">
+            </doc-info-pane-component>
         </section>
     </div>
 </div>
