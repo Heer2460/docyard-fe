@@ -1,8 +1,24 @@
 <div class="layout-wrapper">
     <div class="content-wrapper">
-        <nav-component [showImageViewSettings]="true">
+        <nav-component [showImageViewSettings]="true" class="preview-nav-component">
             <ng-container imagePreviewActions>
-                <preview-actions-component></preview-actions-component>
+                <div class="row actions-row">
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()">
+                            <i class="icon-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-sm btn-secondary me-2" (click)="showShareDocumentDialog()">
+                            <i class="icon-share"></i>
+                            Share
+                        </button>
+                    </div>
+                    <div class="col-6 d-flex align-items-center justify-content-end">
+                        <button class="btn btn-sm btn-transparent ms-4" (click)="backToDocLibAction()">
+                            <i class="icon-times"></i>
+                        </button>
+                    </div>
+                </div>
             </ng-container>
         </nav-component>
         <section class="main-page-wrapper">
@@ -16,9 +32,12 @@
                                  alt="{{selectedDoc.extension}}">
                         </ng-container>
                         <ng-template #elseFileCase>
-                            <img class="file-type-thumbnail"
-                                 src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
-                                 alt="{{selectedDoc.extension}}">
+                            <div class="file-and-msg-prev-container">
+                                <img class="file-type-thumbnail"
+                                     src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                                     alt="{{selectedDoc.extension}}">
+                                <p>We’re sorry, we can’t preview this file type in your web browser. To view this content please download and open it on your device.</p>
+                            </div>
                         </ng-template>
                     </ng-container>
                     <ng-template #otherFileElseCase>
@@ -72,4 +91,75 @@
         </section>
     </div>
 </div>
+
+<p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-sm">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
+            <span>Share {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <ng-container [formGroup]="shareWithUserForm">
+        <div class="mb-3">
+            <span class="p-float-label">
+                <p-dropdown (onChange)="onShareTypeChange()" [options]="shareTypes"
+                            formControlName="shareType" id="shareType"></p-dropdown>
+                <label for="shareType">General Access</label>
+            </span>
+        </div>
+        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
+            <label for="collaborators">Invite People</label>
+            <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
+                     [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
+        </div>
+        <div class="share-rights-dropdown mb-3">
+            <label class="mr-5px">Permissions:</label>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission" optionLabel="label"
+                        optionValue="value"></p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
+            <label for="message">Message</label>
+        </div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [filter]="true" [options]="departments" [showClear]="true"
+                            appendTo="body" filterBy="name" formControlName="departmentId"
+                            id="departmentId" optionLabel="name" optionValue="id"
+                            placeholder="Select department"></p-dropdown>
+                <label class="required" for="departmentId">Department</label>
+            </span>
+        </div>
+        <hr>
+        <ng-container *ngIf="shareWithUserForm.get('shareType')?.value === 'ANYONE'">
+            <div class="mb-3">
+                <label>Share link</label>
+                <div class="form-check form-switch">
+                    <input (change)="onShareTypeChange();createSharedLinkAction()" [checked]="createSharedLink" class="form-check-input" id="shareLinkSwitch"
+                           role="switch"
+                           type="checkbox">
+                    <label class="form-check-label" for="shareLinkSwitch">
+                        <span>Create shared link</span>
+                    </label>
+                </div>
+            </div>
+            <ng-container *ngIf="createSharedLink">
+                <div class="input-group mb-1">
+                    <input #shareLinkInput [readOnly]="true" class="form-control" formControlName="publicUrlLink"
+                           type="text">
+                    <div class="input-group-text">
+                        <button (click)="copyLinkToClipboard(shareLinkInput)" class="btn btn-sm btn-transparent">Copy
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    <ng-template pTemplate="footer">
+        <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+        <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                type="button">Share
+        </button>
+    </ng-template>
+</p-dialog>
 

@@ -1,13 +1,26 @@
 @import "../../../../../assets/less/_vars";
+@import "../../../../../assets/less/_mixin";
 
 :host {
-    background-color: hsl(var(--color-green-03));
-    min-width: 450px;
+    min-width: 300px;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
+    
+    .main-wrapper {
+        background-color: hsl(var(--color-green-03));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        height: 100%;
+        cursor: pointer;
+        .mixin-transition(@duration: 150ms);
+    
+        &:hover {
+            background-color: hsl(var(--color-green-06));
+        }
+        
+    }
+    
 }
 
 img {
@@ -70,8 +83,7 @@ img.user-img {
 @media (-webkit-device-pixel-ratio: 1.25) {
     
     :host {
-        min-width: 340px;
-        padding: 10px 20px;
+        min-width: 236px;
     }
     
     img {
@@ -104,8 +116,7 @@ img.user-img {
 @media screen and (max-width: 1440px) {
     
     :host {
-        min-width: 340px;
-        padding: 10px 20px;
+        min-width: 236px;
     }
     
     img {
