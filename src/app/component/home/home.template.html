@@ -16,14 +16,15 @@
                                         <i class="icon-image"></i>
                                     </div>
                                     <p>
-                                        <span>840.2 MB</span>
-                                        <span>14 GB</span>
+                                        <span>{{dashboardStats?.imageProps?.formattedOccupiedSize}}</span>
+                                        <span>{{dashboardStats?.imageProps?.formattedTotalSize}}</span>
                                     </p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                        <div class="progress-bar" role="progressbar" aria-label="Images"
+                                             [style.width.%]="dashboardStats?.imageProps?.occupiedPercentage"
+                                             [attr.aria-valuenow]="dashboardStats?.imageProps?.occupiedPercentage" aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -37,14 +38,15 @@
                                         <i class="icon-videos-filled"></i>
                                     </div>
                                     <p>
-                                        <span>840.2 MB</span>
-                                        <span>14 GB</span>
+                                        <span>{{dashboardStats?.videosProps?.formattedOccupiedSize}}</span>
+                                        <span>{{dashboardStats?.videosProps?.formattedTotalSize}}</span>
                                     </p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                        <div class="progress-bar" role="progressbar" aria-label="Videos"
+                                             [style.width.%]="dashboardStats?.videosProps?.occupiedPercentage"
+                                             [attr.aria-valuenow]="dashboardStats?.videosProps?.occupiedPercentage" aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -58,14 +60,15 @@
                                         <i class="icon-file-filled"></i>
                                     </div>
                                     <p>
-                                        <span>840.2 MB</span>
-                                        <span>14 GB</span>
+                                        <span>{{dashboardStats?.docsProps?.formattedOccupiedSize}}</span>
+                                        <span>{{dashboardStats?.docsProps?.formattedTotalSize}}</span>
                                     </p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                        <div class="progress-bar" role="progressbar" aria-label="Documents"
+                                             [style.width.%]="dashboardStats?.docsProps?.occupiedPercentage"
+                                             [attr.aria-valuenow]="dashboardStats?.docsProps?.occupiedPercentage" aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -79,14 +82,15 @@
                                         <i class="icon-folder-filled"></i>
                                     </div>
                                     <p>
-                                        <span>840.2 MB</span>
-                                        <span>14 GB</span>
+                                        <span>{{dashboardStats?.othersProps?.formattedOccupiedSize}}</span>
+                                        <span>{{dashboardStats?.othersProps?.formattedTotalSize}}</span>
                                     </p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-label="Basic example"
-                                             style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                        <div class="progress-bar" role="progressbar" aria-label="Others"
+                                             [style.width.%]="dashboardStats?.othersProps?.occupiedPercentage"
+                                             [attr.aria-valuenow]="dashboardStats?.othersProps?.occupiedPercentage" aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
