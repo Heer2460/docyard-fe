@@ -12,11 +12,6 @@
                             <i class="icon-share"></i>
                             Share
                         </button>
-                        <button (click)="onUnShareDocument(selectedDoc)" [disabled]="!selectedDoc.id"
-                                class="btn btn-sm btn-primary">
-                            <i class="icon-unshared"></i>
-                            Unshared
-                        </button>
                     </div>
                 </div>
                 <div class="container-breadcrumb-and-list-view">
@@ -24,7 +19,7 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li (click)="menu.toggle($event)" class="breadcrumb-item">
                                             <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" [popup]="true"
@@ -70,7 +65,7 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img alt="{{item.extension}}"
                                                          src="./assets/images/svg/icons/{{item.extension}}.svg">
                                                 </ng-container>
@@ -144,7 +139,7 @@
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
-                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
                                                 <img alt="{{row.extension}}"
                                                      src="./assets/images/svg/icons/{{row.extension}}.svg">
                                             </ng-container>
@@ -217,7 +212,7 @@
                 <label for="shareType">General Access</label>
             </span>
         </div>
-        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
+        <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
             <label for="collaborators">Invite People</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
@@ -269,8 +264,9 @@
     </ng-container>
     <ng-template pTemplate="footer">
         <div class="row">
-            <div class="col-6 text-left">
-                <button (click)="onUnShareDocument(selectedDoc)" class="btn btn-sm btn-primary me-2">Remove Sharing</button>
+            <div class="col-6 text-start">
+                <button (click)="onUnShareDocument(selectedDoc)" class="btn btn-sm btn-primary me-2">Remove Sharing
+                </button>
             </div>
             <div class="col-6 text-right">
                 <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
