@@ -12,7 +12,7 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {BehaviorSubject, forkJoin, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
@@ -98,24 +98,19 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
-        forkJoin([users, departments])
-            .pipe(takeUntil(this.destroy))
-            .subscribe(
-                {
-                    next: (response: HttpResponse<any>[]) => {
-                        if (response[0].status === 200) {
-                            this.users = response[0].body.data;
-                        }
-                        if (response[1].status === 200) {
-                            this.departments = response[1].body.data;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Document Library');
+        this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.departments = response.body.data;
+                    } else {
+                        this.departments = [];
                     }
-                });
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     buildDocumentActions() {
@@ -693,6 +688,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.controls['collaborators'].value.pop();
         } else {
             if (value != this.appService.userInfo.email) {
+                /*const abc = this.checkUserEmail(value);
+                console.log('abc', abc);*/
                 let user = this.users.find(user => user.email === value);
                 if (!user) {
                     this.shareWithUserForm.controls['collaborators'].value.pop();
@@ -703,6 +700,24 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 this.toastService.error('You can\'nt share with yourself.', 'Share with Others');
             }
         }
+    }
+
+    checkUserEmail(email: string): any {
+        this.requestsService.getRequest(ApiUrlConstants.USER_EMAIL_API_URL.replace('{email}', email))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        return true;
+                    } else {
+                        return false;
+                        this.shareWithUserForm.controls['collaborators'].value.pop();
+                        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     copyLinkToClipboard(shareLink: any) {
