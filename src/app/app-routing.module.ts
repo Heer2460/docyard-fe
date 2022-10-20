@@ -47,6 +47,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'shared-with-me',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/share-with-me/share-with-me.module').then(m => m.ShareWithMeModule)
+            }
+        ]
+    },
+    {
         path: 'preview',
         children: [
             {
