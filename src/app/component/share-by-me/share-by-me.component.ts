@@ -99,6 +99,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 command: () => this.showShareDocumentDialog(this.selectedDoc)
             },
             {
+                label: 'Unshared',
+                icon: 'icon-unshared',
+                visible: !!this.selectedDoc.id,
+                command: () => this.onUnShareDocument(this.selectedDoc)
+            },
+            {
                 label: 'Download',
                 icon: 'icon-download',
                 command: () => {
@@ -146,7 +152,13 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
-                }
+                },
+                {
+                    label: 'Unshared',
+                    icon: 'icon-unshared',
+                    visible: !!this.selectedDoc.id,
+                    command: () => this.onUnShareDocument(this.selectedDoc)
+                },
             ];
         } else {
             this.menuItems = [
@@ -155,6 +167,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
+                },
+                {
+                    label: 'Unshared',
+                    icon: 'icon-unshared',
+                    visible: !!this.selectedDoc.id,
+                    command: () => this.onUnShareDocument(this.selectedDoc)
                 },
                 {
                     label: 'Download',
@@ -415,22 +433,36 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.destroy.next(true);
     }
 
-    onUnShare() {
-        /*let data = {
-            dlDocumentIds: ids
-        };
-        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_DELETE_API_URL, data)
+    onUnShareDocument(data: any) {
+        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_REMOVE_SHARE_API_URL, this.buildRemoveShareRequest(data))
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been deleted successfully.', 'Delete');
-                            this.loadTrashDLDocuments();
+                            this.toastService.success('Document has been removed successfully.', 'Remove');
+                            this.loadShareByMeData(this.appService.getSelectedFolderId());
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Delete');
+                        this.appService.handleError(error, 'Remove Share Document');
                     }
                 }
-            );*/
+            );
+    }
+
+    buildRemoveShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: data.id,
+            folder: data.folder,
+            shareType: 'NO_SHARING',
+            shareLink: '',
+            message: '',
+            departmentId: '',
+            dlCollaborators: [],
+            sharePermission: '',
+            appContextPath: '',
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
     }
 }
