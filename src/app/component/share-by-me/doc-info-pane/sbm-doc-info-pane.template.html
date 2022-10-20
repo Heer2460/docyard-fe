@@ -1,0 +1,153 @@
+<button class="btn btn-pane-toggle" (click)="toggleDocInfoPane()" [disabled]="!selectedDoc?.id">
+    <i class="icon-pane-toggle"></i>
+</button>
+
+<div class="pane-wrapper">
+    <ng-container *ngIf="selectedDoc?.folder == false">
+        <ng-container
+            *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
+            <img src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
+                 alt="{{selectedDoc.extension}}">
+        </ng-container>
+        <ng-template #otherFileElseCase>
+            <img src="./assets/images/svg/icons/other.svg" alt="other">
+        </ng-template>
+    </ng-container>
+    <img *ngIf="selectedDoc?.folder == true"
+         src="./assets/images/svg/icons/folder.svg" alt="icon">
+    <p-accordion (onOpen)="loadDlDocumentDetails($event)">
+        <p-accordionTab [selected]="activeTabIndex === 0">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-properties"></i>
+                    <span>Properties</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{selectedDoc?.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>Saved in</th>
+                        <td>{{selectedDoc?.location}}</td>
+                    </tr>
+                    <tr>
+                        <th>Size</th>
+                        <td>{{selectedDoc?.size}}</td>
+                    </tr>
+                    <tr>
+                        <th>Modified</th>
+                        <td>{{selectedDoc?.updatedOnDetail}}</td>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <td>{{selectedDoc?.extension}}</td>
+                    </tr>
+                    <tr>
+                        <th>Current Version</th>
+                        <td>{{selectedDoc?.currentVersion}}</td>
+                    </tr>
+                    <tr>
+                        <th>Updated By</th>
+                        <td>{{selectedDoc?.updatedByName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>{{selectedDoc?.createdByName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-comments"></i>
+                    <span>Comments</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="comments-wrapper">
+                    <ng-container [formGroup]="commentForm">
+                        <div class="form-floating mb-2">
+                            <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"
+                                      id="floatingTextarea"></textarea>
+                            <label for="floatingTextarea">Comments</label>
+                        </div>
+                    </ng-container>
+                    <div class="text-end">
+                        <ng-container *ngIf="!enableEditComment">
+                            <button class="btn btn-sm btn-primary btn-post" (click)="addUserComment()">Post</button>
+                        </ng-container>
+                        <ng-container *ngIf="enableEditComment">
+                            <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update
+                            </button>
+                        </ng-container>
+                    </div>
+                    <ul *ngFor="let comment of comments">
+                        <li *ngIf="!enableEditComment">
+                            <div class="user-details-and-actions">
+                                <div class="user-details">
+                                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                                    <p>
+                                        <span>{{comment.nameOfUser}}</span>
+                                        <span class="text-muted">{{comment.postedOn}}</span>
+                                    </p>
+                                </div>
+                                <div class="comment-actions btn-group btn-group-sm">
+                                    <button class="btn btn-sm btn-primary" (click)="onEditComment(comment)">
+                                        <i class="icon-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" (click)="onDeleteComment(comment)">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="comment-box">
+                                <p>{{comment.message}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 2">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-share"></i>
+                    <span>Sharing</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <ul class="info-pane-sharing-list">
+                    <ng-container *ngIf="_selectedDoc.shared == null">
+                        <li>No sharing detail found.</li>
+                    </ng-container>
+                    <ng-container *ngIf="_selectedDoc.shared != null">
+                        <li *ngFor="let sh of sharingDetails; let i = index">
+                            <div class="user-meta">
+                                <img *ngIf="sh.dlCollPic != null" src="data:image/jpeg;base64,{{sh.dlCollPic}}"
+                                     alt="user">
+                                <img *ngIf="sh.dlCollPic == null" src="./assets/images/svg/user-image-placeholder.svg"
+                                     alt="user">
+                                <div class="meta">
+                                    <p>{{sh.dlCollName}}</p>
+                                    <p class="text-muted">{{sh.accessRight}}</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                                <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
+                                              [popup]="true">
+                                </p-tieredMenu>
+                                <i class="icon-menu-horizontal"></i>
+                            </button>
+                        </li>
+                    </ng-container>
+                </ul>
+            </ng-template>
+        </p-accordionTab>
+    </p-accordion>
+</div>

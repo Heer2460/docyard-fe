@@ -37,6 +37,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'shared-by-me',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/share-by-me/share-by-me.module').then(m => m.ShareByMeModule)
+            }
+        ]
+    },
+    {
         path: 'preview',
         children: [
             {
