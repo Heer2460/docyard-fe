@@ -150,27 +150,38 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="file-types">
-                                        <ng-container *ngIf="row.folder == false">
-                                            <ng-container
-                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
-                                                <img alt="{{row.extension}}"
-                                                     src="./assets/images/svg/icons/{{row.extension}}.svg">
+                                    <div class="types-and-quick-actions-container">
+                                        <div class="file-types">
+                                            <ng-container *ngIf="row.folder == false">
+                                                <ng-container
+                                                        *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                    <img alt="{{row.extension}}"
+                                                         src="./assets/images/svg/icons/{{row.extension}}.svg">
+                                                </ng-container>
+                                                <ng-template #otherFileElseCase>
+                                                    <img alt="other" src="./assets/images/svg/icons/other.svg">
+                                                </ng-template>
                                             </ng-container>
-                                            <ng-template #otherFileElseCase>
-                                                <img alt="other" src="./assets/images/svg/icons/other.svg">
+                                            <img *ngIf="row.folder == true && row.shared == null" alt="icon"
+                                                 src="./assets/images/svg/icons/folder.svg">
+                                            <img *ngIf="row.folder == true && row.shared != null" alt="icon"
+                                                 src="./assets/images/svg/icons/folder-shared-filled.svg">
+                                            <ng-container *ngIf="row.folder == true; else elseCase">
+                                                <span (click)="openFolder(row)" role="button">{{row.name}}</span>
+                                            </ng-container>
+                                            <ng-template #elseCase>
+                                                <span (click)="openFile(row)" role="button">{{row.name}}</span>
                                             </ng-template>
-                                        </ng-container>
-                                        <img *ngIf="row.folder == true && row.shared == null" alt="icon"
-                                             src="./assets/images/svg/icons/folder.svg">
-                                        <img *ngIf="row.folder == true && row.shared != null" alt="icon"
-                                             src="./assets/images/svg/icons/folder-shared-filled.svg">
-                                        <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span (click)="openFolder(row)" role="button">{{row.name}}</span>
-                                        </ng-container>
-                                        <ng-template #elseCase>
-                                            <span (click)="openFile(row)" role="button">{{row.name}}</span>
-                                        </ng-template>
+                                        </div>
+                                        <div class="quick-actions">
+                                            <div tooltipPosition="top" pTooltip="2 Comments" class="comments-count me-1">
+                                                <i class="icon-comments"></i>
+                                                <span class="comments-count">2</span>
+                                            </div>
+                                            <button tooltipPosition="top" pTooltip="Share Link" class="btn btn-transparent" (click)="showShareDocumentDialog(row)">
+                                                <i class="icon-share"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </td>
                                 <td>

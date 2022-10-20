@@ -13,6 +13,7 @@ import {ChipsModule} from "primeng/chips";
 import {DropdownModule} from "primeng/dropdown";
 import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
+import {TooltipModule} from "primeng/tooltip";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import {CalendarModule} from "primeng/calendar";
         FormsModule,
         DropdownModule,
         CheckboxModule,
-        CalendarModule
+        CalendarModule,
+        TooltipModule
     ]
 })
 export class DocLibModule {
