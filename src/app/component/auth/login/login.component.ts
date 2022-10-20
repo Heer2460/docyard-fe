@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
 
                                             // navigation between folders
                                             localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), "0");
+                                            localStorage.setItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID), "0");
 
                                             this.router.navigate(['/home']);
 
@@ -105,7 +106,7 @@ export class LoginComponent implements OnInit {
                 error: (error: any) => {
                     if (error?.error?.error === 'invalid_grant') {
                         this.toastService.error('Invalid credentials provided, please verify.', 'Sign In User');
-                        this.requestsService.putRequest( ApiUrlConstants.UNSUCCESSFUL_ATTEMPT_API_URL.replace('{username}', data.username)).subscribe(
+                        this.requestsService.putRequest(ApiUrlConstants.UNSUCCESSFUL_ATTEMPT_API_URL.replace('{username}', data.username)).subscribe(
                             {
                                 next: (response: HttpResponse<any>) => {
                                     if (response.status === 200) {
@@ -113,7 +114,7 @@ export class LoginComponent implements OnInit {
                                     }
                                 },
                                 error: (error: any) => {
-                                    this.appService.handleError(error,'Sign In User');
+                                    this.appService.handleError(error, 'Sign In User');
                                 }
                             }
                         );

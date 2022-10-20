@@ -157,6 +157,15 @@ export class AppService {
         }
     }
 
+    public getSBMSelectedFolderId(): any {
+        const sbmSelFolderId: number = Number(localStorage.getItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID)));
+        if (sbmSelFolderId) {
+            return sbmSelFolderId;
+        } else {
+            return 0;
+        }
+    }
+
     public getLoggedInUserId(): number {
         return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
     }
