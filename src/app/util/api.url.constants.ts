@@ -47,5 +47,7 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_UN_AUTH_FILE_DETAIL_API_URL = '/dl/un-auth/document/';
     public static DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL = '/dl/un-auth/folder/{folderId}';
     public static DOWNLOAD_UN_AUTH_DL_DOCUMENT_API_URL = '/dl/un-auth/document/download/{dlDocumentId}';
+    public static GET_ALL_SBM_DL_DOCUMENT_BY_USER_API_URL = '/dl/dl-document/shared-by-me/user/{userId}?folderId={folderId}';
+
 
 }
