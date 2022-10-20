@@ -85,7 +85,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                         }
                     },
                     error: (error: any) => {
-                        this.appService.handleError(error, 'Document Library');
+                        this.appService.handleError(error, 'Shared By Me');
                     }
                 });
     }
@@ -97,12 +97,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 icon: 'icon-share',
                 visible: !!this.selectedDoc.id,
                 command: () => this.showShareDocumentDialog(this.selectedDoc)
-            },
-            {
-                label: 'Unshared',
-                icon: 'icon-unshared',
-                visible: !!this.selectedDoc.id,
-                command: () => this.onUnShareDocument(this.selectedDoc)
             },
             {
                 label: 'Download',
@@ -138,7 +132,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Document Library');
+                    this.appService.handleError(error, 'Shared By Me');
                 }
             });
     }
@@ -152,13 +146,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
-                },
-                {
-                    label: 'Unshared',
-                    icon: 'icon-unshared',
-                    visible: !!this.selectedDoc.id,
-                    command: () => this.onUnShareDocument(this.selectedDoc)
-                },
+                }
             ];
         } else {
             this.menuItems = [
@@ -167,12 +155,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
-                },
-                {
-                    label: 'Unshared',
-                    icon: 'icon-unshared',
-                    visible: !!this.selectedDoc.id,
-                    command: () => this.onUnShareDocument(this.selectedDoc)
                 },
                 {
                     label: 'Download',
@@ -247,8 +229,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
-        const breadcrumbs: any = localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
-
+        const breadcrumbs: any = localStorage.getItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_BREADCRUMB));
         if (breadcrumbs) {
             return JSON.parse(breadcrumbs);
         } else {
@@ -270,7 +251,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     setBreadcrumbAndSelectedItemToLocalStorage() {
         this.updateCollapsedBreadcrumbItems();
         localStorage.setItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID), this.dlFolderId);
-        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
+        localStorage.setItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
 
 
@@ -281,10 +262,10 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     let mimeType = AppUtility.getMimeTypeByFileName(data.name);
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, data.name);
-                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                    this.toastService.success('Document downloaded successfully.', 'Download Document');
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Document Library');
+                    this.appService.handleError(error, 'Shared By Me');
                 }
             });
     }
@@ -327,6 +308,10 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        if (selectedDoc.shared) {
+            this.createSharedLink = true;
+            this.onShareTypeChange();
+        }
     }
 
     hideShareDocumentDialog() {
@@ -390,7 +375,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.toastService.success('Document has been shared successfully', 'Share Document');
-                        this.loadShareByMeData(this.appService.getSelectedFolderId());
+                        this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
                         this.hideShareDocumentDialog();
                     }
                 },
@@ -429,7 +414,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID));
-        localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
+        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_BREADCRUMB));
         this.destroy.next(true);
     }
 
@@ -439,7 +424,8 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             this.toastService.success('Document has been removed successfully.', 'Remove');
-                            this.loadShareByMeData(this.appService.getSelectedFolderId());
+                            this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
+                            this.hideShareDocumentDialog();
                         }
                     },
                     error: (error: any) => {

@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getDashboardStats();
         this.getRecentDocument();
         this.buildForms();
     }

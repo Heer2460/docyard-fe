@@ -8,8 +8,9 @@ export class AppConstants {
     public static AUTH_USER_ID = 'loggedInUserId';
     public static AUTH_PERMISSIONS = 'permissions';
     public static SELECTED_FOLDER_ID = 'selectedFolderId';
-    public static SBM_SELECTED_FOLDER_ID = 'sbmSelectedFolderId';
     public static SELECTED_FOLDER_BREADCRUMB = 'selectedFolderBreadcrumb';
+    public static SBM_SELECTED_FOLDER_ID = 'sbmSelectedFolderId';
+    public static SBM_SELECTED_FOLDER_BREADCRUMB = 'sbmSelectedFolderBreadcrumb';
     public static SELECTED_SHARED_FOLDER_ID = 'selectedSharedFolderId';
     public static SELECTED_SHARED_FOLDER_BREADCRUMB = 'selectedSharedFolderBreadcrumb';
     public static VALID_EXTENSIONS = ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'png', 'gif', 'jpg', 'bmp', 'jpeg', 'flv', 'txt', 'html', 'xhtml', 'pdf', 'sql', 'rar', 'zip', '7z', 'svg', 'psd'];
