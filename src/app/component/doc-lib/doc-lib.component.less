@@ -1,21 +1,65 @@
 @import "../../../assets/less/_mixin";
 
-.file-types {
+.types-and-quick-actions-container {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 	
-	img {
-		width: 40px;
-		height: 40px;
-		object-fit: contain;
-		margin-right: 10px;
+	.file-types {
+		display: flex;
+		align-items: center;
+		
+		img {
+			width: 40px;
+			height: 40px;
+			object-fit: contain;
+			margin-right: 10px;
+		}
+		
+		span {
+			.mixin-transition(@duration: 150ms);
+			
+			&:hover {
+				color: hsl(var(--color-blue-03));
+			}
+			
+		}
+		
 	}
 	
-	span {
-		.mixin-transition(@duration: 150ms);
+	.quick-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		
-		&:hover {
-			color: hsl(var(--color-blue-03));
+		.comments-count {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 14px;
+			font-size: 14px;
+			line-height: 14px;
+			
+			span {
+				font-size: 12px;
+				margin-left: 2px;
+				line-height: 12px;
+			}
+			
+		}
+		
+		.btn {
+			padding: 0;
+			margin: 0;
+			height: 14px;
+			width: 14px;
+			line-height: 1px;
+			
+			&:hover {
+				color: hsl(var(--color-blue-03));
+			}
+			
 		}
 		
 	}
