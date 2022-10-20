@@ -12,7 +12,7 @@ export class ApiUrlConstants {
 
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
-    public static DASHBOARD_STATS_API_URL = '/dl/dl-document/dashboard/{userId}';
+    public static DASHBOARD_STATS_API_URL = '/dl/dashboard/{userId}';
 
     // User Management API URLS
     public static USER_API_URL = '/um/user/';

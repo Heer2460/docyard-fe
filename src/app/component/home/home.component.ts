@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
     recentDocs: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
+    dashboardStats: any;
 
     constructor(private requestsService: RequestService,
                 private appService: AppService,
@@ -81,9 +82,9 @@ export class HomeComponent implements OnInit {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        this.recentDocs = response.body.data;
+                        this.dashboardStats = response.body.data;
                     } else {
-                        this.recentDocs = [];
+                        this.dashboardStats = {};
                     }
                 },
                 error: (error: any) => {
