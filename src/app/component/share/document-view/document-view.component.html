@@ -1,19 +1,21 @@
 <div class="layout-wrapper">
     <div class="content-wrapper">
-        <nav-component [showImageViewSettings]="true" class="preview-nav-component">
-            <ng-container imagePreviewActions>
-                <div class="row actions-row">
-                    <div class="col-6">
-                        <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()">
-                            <i class="icon-download"></i>
-                            Download
-                        </button>
+        <header>
+            <sidebar-header-component></sidebar-header-component>
+            <nav-component [showImageViewSettings]="true" class="preview-nav-component">
+                <ng-container imagePreviewActions>
+                    <div class="row actions-row">
+                        <div class="col-6"></div>
+                        <div class="col-6 d-flex align-items-center justify-content-end">
+                            <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()">
+                                <i class="icon-download"></i>
+                                Download
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-6 d-flex align-items-center justify-content-end">
-                    </div>
-                </div>
-            </ng-container>
-        </nav-component>
+                </ng-container>
+            </nav-component>
+        </header>
         <section class="main-page-wrapper">
             <div class="left" [ngClass]="showDocInfoPane ? 'collapsed': ''">
                 <div class="image-container">
@@ -44,3 +46,4 @@
         </section>
     </div>
 </div>
+

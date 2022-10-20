@@ -12,7 +12,10 @@ import * as FileSaver from "file-saver";
 @Component({
     selector: 'document-view-component',
     templateUrl: './document-view.component.html',
-    styleUrls: ['./document-view.component.less']
+    styleUrls: [
+        './document-view.component.less',
+        '../view.component.less'
+    ]
 })
 export class DocumentViewComponent implements OnInit {
 

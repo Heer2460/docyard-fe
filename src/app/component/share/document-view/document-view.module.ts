@@ -5,6 +5,7 @@ import { DocumentViewRoutingModule } from './document-view-routing.module';
 import { DocumentViewComponent } from './document-view.component';
 import {DocInfoPaneModule} from "../../doc-lib/doc-info-pane/doc-info-pane.module";
 import {NavModule} from "../../layout/nav/nav.module";
+import {SidebarHeaderModule} from "../../layout/sidebar/sidebar-header/sidebar-header.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {NavModule} from "../../layout/nav/nav.module";
         CommonModule,
         DocumentViewRoutingModule,
         DocInfoPaneModule,
-        NavModule
+        NavModule,
+        SidebarHeaderModule
     ]
 })
 export class DocumentViewModule { }
