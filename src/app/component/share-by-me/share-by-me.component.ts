@@ -54,8 +54,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
-                private toastService: ToastrService,
-                private confirmationService: ConfirmationService) {
+                private toastService: ToastrService) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
@@ -65,7 +64,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
         this.buildDocumentActions();
         this.buildForms();
-        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+        this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.preloadedData();
     }
@@ -119,12 +118,11 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         });
     }
 
-    loadDocumentLibrary(folderId: string, archived: boolean) {
+    loadShareByMeData(folderId: string) {
         let loggedInUserId = this.appService.getLoggedInUserId();
-        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
-            .replace('{ownerId}', String(loggedInUserId))
-            .replace("{folderId}", folderId)
-            .replace("{archived}", String(archived)))
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_SBM_DL_DOCUMENT_BY_USER_API_URL
+            .replace('{userId}', String(loggedInUserId))
+            .replace("{folderId}", folderId))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -170,7 +168,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     openFolder(rowData: any) {
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
-            this.loadDocumentLibrary(this.dlFolderId, false);
+            this.loadShareByMeData(this.dlFolderId);
             this.updateBreadcrumb(rowData);
         }
     }
@@ -214,11 +212,11 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
 
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
         if (breadcrumb.id) {
-            this.loadDocumentLibrary(breadcrumb.id, false);
+            this.loadShareByMeData(breadcrumb.id);
             this.breadcrumbs.pop();
         } else if (index == 1) {
             this.dlFolderId = '0';
-            this.loadDocumentLibrary(this.dlFolderId, false);
+            this.loadShareByMeData(this.dlFolderId);
         } else {
             this.router.navigate([breadcrumb.route]);
         }
@@ -372,7 +370,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.toastService.success('Document has been shared successfully', 'Share Document');
-                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                        this.loadShareByMeData(this.appService.getSelectedFolderId());
                         this.hideShareDocumentDialog();
                     }
                 },
