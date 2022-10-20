@@ -14,16 +14,15 @@ import {DlDocumentDTO} from "../../../model/settings/doc-handling/dl-document.dt
 @Component({
     selector: 'folder-view-component',
     templateUrl: './folder-view.component.html',
-    styleUrls: ['./folder-view.component.less']
+    styleUrls: [
+        './folder-view.component.less',
+        '../view.component.less'
+    ]
 })
 export class FolderViewComponent implements OnInit {
 
-    showDocInfoPane: boolean = true;
+    showDocInfoPane: boolean = false;
     defaultZoom: number = 0;
-    magnifierZoom: number = this.defaultZoom;
-    imageObj: any = null;
-    initialWidth: number = 0;
-    initialHeight: number = 0;
     dlDocuments: any[] = [];
     selectedDoc: any;
     previewTabs = {

@@ -1,0 +1,38 @@
+header {
+	display: flex;
+	align-items: center;
+	
+	sidebar-header-component {
+		width: 300px;
+		max-width: 300px;
+		
+		@media (-webkit-device-pixel-ratio: 1.25) {
+			
+			width: 236px;
+			max-width: 236px;
+			
+		}
+		
+		@media screen and (max-width: 1440px) {
+			
+			width: 236px;
+			max-width: 236px;
+			
+		}
+		
+	}
+	
+	nav-component {
+		background-color: hsl(var(--color-blue-02));
+	}
+	
+}
+
+.left {
+	padding: 0 30px;
+	
+	.page-header {
+		height: initial;
+	}
+	
+}

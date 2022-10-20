@@ -7,6 +7,7 @@ import {DocInfoPaneModule} from "../../doc-lib/doc-info-pane/doc-info-pane.modul
 import {NavModule} from "../../layout/nav/nav.module";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {TableModule} from "primeng/table";
+import {SidebarHeaderModule} from "../../layout/sidebar/sidebar-header/sidebar-header.module";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {TableModule} from "primeng/table";
         DocInfoPaneModule,
         NavModule,
         TieredMenuModule,
-        TableModule
+        TableModule,
+        SidebarHeaderModule
     ]
 })
 export class FolderViewModule { }
