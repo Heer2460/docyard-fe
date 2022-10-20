@@ -43,6 +43,7 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_DELETE_API_URL = '/dl/dl-document/delete';
     public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search/{userid}?searchKey={searchKey}';
     public static DL_DOCUMENT_SHARE_API_URL = '/dl/share/';
+    public static DL_DOCUMENT_REMOVE_SHARE_API_URL = '/dl/share/remove';
     public static DL_DOCUMENT_SHARE_DETAIL_API_URL = '/dl/share/dl-document/';
     public static DL_DOCUMENT_UN_AUTH_FILE_DETAIL_API_URL = '/dl/un-auth/document/';
     public static DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL = '/dl/un-auth/folder/{folderId}';

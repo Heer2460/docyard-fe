@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, MenuItem} from "primeng/api";
+import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
-import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
@@ -12,7 +12,7 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {BehaviorSubject, forkJoin, Subject, takeUntil} from "rxjs";
+import {forkJoin, Subject, takeUntil} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
@@ -99,6 +99,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 command: () => this.showShareDocumentDialog(this.selectedDoc)
             },
             {
+                label: 'Unshared',
+                icon: 'icon-unshared',
+                visible: !!this.selectedDoc.id,
+                command: () => this.onUnShareDocument(this.selectedDoc)
+            },
+            {
                 label: 'Download',
                 icon: 'icon-download',
                 command: () => {
@@ -112,7 +118,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             message: [null],
             publicUrlLink: [null],
             shareType: ['ANYONE'],
-            collaborators: [null],
+            collaborators: [],
             sharePermission: ['VIEW'],
             departmentId: [null]
         });
@@ -146,7 +152,13 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
-                }
+                },
+                {
+                    label: 'Unshared',
+                    icon: 'icon-unshared',
+                    visible: !!this.selectedDoc.id,
+                    command: () => this.onUnShareDocument(this.selectedDoc)
+                },
             ];
         } else {
             this.menuItems = [
@@ -155,6 +167,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
+                },
+                {
+                    label: 'Unshared',
+                    icon: 'icon-unshared',
+                    visible: !!this.selectedDoc.id,
+                    command: () => this.onUnShareDocument(this.selectedDoc)
                 },
                 {
                     label: 'Download',
@@ -211,6 +229,8 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
+        console.log(breadcrumb)
+        console.log(index)
         if (breadcrumb.id) {
             this.loadShareByMeData(breadcrumb.id);
             this.breadcrumbs.pop();
@@ -249,7 +269,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
 
     setBreadcrumbAndSelectedItemToLocalStorage() {
         this.updateCollapsedBreadcrumbItems();
-        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), this.dlFolderId);
+        localStorage.setItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID), this.dlFolderId);
         localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
 
@@ -301,7 +321,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             message: null,
             publicUrlLink: null,
             shareType: 'ANYONE',
-            collaborators: null,
+            collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
@@ -408,8 +428,41 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
+        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
         this.destroy.next(true);
+    }
+
+    onUnShareDocument(data: any) {
+        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_REMOVE_SHARE_API_URL, this.buildRemoveShareRequest(data))
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.toastService.success('Document has been removed successfully.', 'Remove');
+                            this.loadShareByMeData(this.appService.getSelectedFolderId());
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Remove Share Document');
+                    }
+                }
+            );
+    }
+
+    buildRemoveShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: data.id,
+            folder: data.folder,
+            shareType: 'NO_SHARING',
+            shareLink: '',
+            message: '',
+            departmentId: '',
+            dlCollaborators: [],
+            sharePermission: '',
+            appContextPath: '',
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
     }
 }
