@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getDashboardStats();
         this.getRecentDocument();
         this.buildForms();
     }
@@ -73,6 +74,23 @@ export class HomeComponent implements OnInit {
 
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
+    }
+
+    getDashboardStats() {
+        let loggedInUser = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.DASHBOARD_STATS_API_URL.replace('{userId}', String(loggedInUser)))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.recentDocs = response.body.data;
+                    } else {
+                        this.recentDocs = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Dashboard');
+                }
+            });
     }
 
     getRecentDocument() {

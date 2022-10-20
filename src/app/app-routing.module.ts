@@ -76,6 +76,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'share',
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/share/share.module').then(m => m.ShareModule)
+            }
+        ]
+    },
+    {
         path: 'setting',
         component: LayoutComponent,
         children: [

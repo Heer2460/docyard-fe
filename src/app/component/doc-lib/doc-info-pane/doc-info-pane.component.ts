@@ -26,6 +26,11 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
     @Input() _selectedDoc: any = null;
+    @Input() docTabs: any = {
+        properties: false,
+        comments: false,
+        sharing: false,
+    };
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -115,7 +120,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
 
     loadDlDocumentDetails(event: any) {
         this.activeTabIndex = event.index;
-        if (event.index == 1) {
+        if (event.index == 1 && this.selectedDoc) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
                 .subscribe({
@@ -130,7 +135,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.appService.handleError(error, 'Comment');
                     }
                 });
-        } else if (event.index == 2) {
+        } else if (event.index == 2 && this.selectedDoc) {
             if (this.selectedDoc.shared != null) {
                 let url = ApiUrlConstants.DL_DOCUMENT_SHARE_DETAIL_API_URL + this.selectedDoc.id;
                 this.requestsService.getRequest(url)
