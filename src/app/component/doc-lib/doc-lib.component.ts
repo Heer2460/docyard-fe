@@ -637,9 +637,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
         let openURl = window.location.origin;
         if (this.selectedDoc.folder) {
             openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
+            openURl += '&name=' + window.btoa(this.selectedDoc.name || '');
         } else {
             openURl += '/share/document-view?guid=';
             openURl += this.selectedDoc.versionGUId;
+            openURl += '&fromFolderShared=' + false;
         }
         return openURl;
     }

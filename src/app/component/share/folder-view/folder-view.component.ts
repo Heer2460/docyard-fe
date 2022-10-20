@@ -31,6 +31,7 @@ export class FolderViewComponent implements OnInit {
         comments: false,
         sharing: false,
     };
+    params: any;
     dlFolderId: any;
     showGridDisplay: boolean = false;
     breadcrumbs: BreadcrumbDTO[] = [];
@@ -51,13 +52,21 @@ export class FolderViewComponent implements OnInit {
             this.showDocInfoPane = value;
         });
         this.activatedRoute.queryParams.subscribe((params: any) => {
+            this.params = params;
             if (params.id) {
                 const folderId = window.atob(params.id);
                 this.dlFolderId = folderId;
                 this.getFolderById(folderId);
             }
         })
-        this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
+        this.breadcrumbs = [
+            {
+                label: this.params ? window.atob(this.params.name) : '',
+                route: '',
+                active: false
+            }
+        ];
+        // this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
     }
 
@@ -90,23 +99,17 @@ export class FolderViewComponent implements OnInit {
             this.breadcrumbs.pop();
         } else if (index == 1) {
             this.getFolderById(this.dlFolderId);
+        } else if (index == 0) {
+            const folderId = window.atob(this.params.id);
+            this.dlFolderId = folderId;
+            this.getFolderById(folderId);
         } else {
             this.router.navigate([breadcrumb.route]);
         }
 
         this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
-        this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+        this.breadcrumbs[this.breadcrumbs.length - 1].active = index !== 0;
         this.setBreadcrumbAndSelectedItemToLocalStorage();
-    }
-
-    getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
-        return [
-            {
-                label: 'Home',
-                route: '/home',
-                active: false
-            }
-        ];
     }
 
     setBreadcrumbAndSelectedItemToLocalStorage() {
