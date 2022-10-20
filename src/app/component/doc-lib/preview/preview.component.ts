@@ -39,6 +39,11 @@ export class PreviewComponent implements OnInit {
     users: UserDTO[] = [];
     destroy: Subject<boolean> = new Subject();
     departments: any[] = [];
+    previewTabs = {
+        properties: true,
+        comments: true,
+        sharing: true,
+    };
     shareTypes = [
         {label: 'Anyone with the link', value: 'ANYONE'},
         {label: 'Restricted', value: 'RESTRICTED'}
@@ -196,13 +201,9 @@ export class PreviewComponent implements OnInit {
         let openURl = window.location.origin;
         if (this.selectedDoc.folder) {
             openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
-            openURl += '&name=' + window.btoa(this.selectedDoc.name || '');
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(btoa('tenantId')));
         } else {
             openURl += '/share/document-view?guid=';
             openURl += this.selectedDoc.versionGUId;
-            // openURl += this.selectedDoc?.versionName;
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(window.btoa('tenantId')));
             openURl += '&fromFolderShared=' + false;
         }
         return openURl;

@@ -33,6 +33,11 @@ export class FavouriteComponent implements OnInit {
     breadcrumbItemsToShow: any = 4;
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Starred';
+    previewTabs = {
+        properties: true,
+        comments: true,
+        sharing: true,
+    };
 
     constructor(public appService: AppService,
                 private router: Router,

@@ -56,6 +56,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
     createSharedLink: boolean = false;
     departments: any[] = [];
     users: UserDTO[] = [];
+    previewTabs = {
+        properties: true,
+        comments: true,
+        sharing: true,
+    };
     destroy: Subject<boolean> = new Subject();
     shareTypes = [
         {label: 'Anyone with the link', value: 'ANYONE'},
@@ -167,7 +172,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             message: [null],
             publicUrlLink: [null],
             shareType: ['ANYONE'],
-            collaborators: [null],
+            collaborators: [],
             sharePermission: ['VIEW'],
             departmentId: [null]
         });
@@ -600,7 +605,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             message: null,
             publicUrlLink: null,
             shareType: 'ANYONE',
-            collaborators: null,
+            collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
@@ -632,14 +637,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
         let openURl = window.location.origin;
         if (this.selectedDoc.folder) {
             openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
-            openURl += '&name=' + window.btoa(this.selectedDoc.name || '');
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(btoa('tenantId')));
         } else {
             openURl += '/share/document-view?guid=';
             openURl += this.selectedDoc.versionGUId;
-            // openURl += this.selectedDoc?.versionName;
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(window.btoa('tenantId')));
-            openURl += '&fromFolderShared=' + false;
         }
         return openURl;
     }
@@ -647,25 +647,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
     onShare(data: any) {
         if (data.shareType === 'RESTRICTED') {
             if (data.collaborators.length <= 0) {
-                this.toastService.error('You can\'nt share without adding collaborator.', 'Share Document');
+                this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
         }
-        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
-        let shareObj = {
-            dlDocId: this.selectedDoc.id,
-            folder: this.selectedDoc.folder,
-            shareType: data.shareType,
-            shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
-            departmentId: data.departmentId,
-            dlCollaborators: data.collaborators ? data.collaborators : [],
-            sharePermission: data.sharePermission,
-            appContextPath: window.location.origin,
-            externalUserShareLink: '',
-            userId: String(userId),
-        };
-        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, shareObj)
+        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -678,6 +664,23 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.appService.handleError(error, 'Share Document');
                 }
             });
+    }
+
+    buildShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: this.selectedDoc.id,
+            folder: this.selectedDoc.folder,
+            shareType: data.shareType,
+            shareLink: this.shareLinkInput?.nativeElement.value || '',
+            message: data.message,
+            departmentId: data.departmentId,
+            dlCollaborators: data.collaborators ? data.collaborators : [],
+            sharePermission: data.sharePermission,
+            appContextPath: window.location.origin,
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
     }
 
     onAddCollaborator(value: any) {

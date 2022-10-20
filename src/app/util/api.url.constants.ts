@@ -12,6 +12,7 @@ export class ApiUrlConstants {
 
     // Dashboard API URL
     public static DASHBOARD_API_URL = '/dashboard/';
+    public static DASHBOARD_STATS_API_URL = '/dl/dl-document/dashboard/{userId}';
 
     // User Management API URLS
     public static USER_API_URL = '/um/user/';
@@ -43,6 +44,9 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search/{userid}?searchKey={searchKey}';
     public static DL_DOCUMENT_SHARE_API_URL = '/dl/share/';
     public static DL_DOCUMENT_SHARE_DETAIL_API_URL = '/dl/share/dl-document/';
+    public static DL_DOCUMENT_UN_AUTH_FILE_DETAIL_API_URL = '/dl/un-auth/document/';
+    public static DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL = '/dl/un-auth/folder/{folderId}';
+    public static DOWNLOAD_UN_AUTH_DL_DOCUMENT_API_URL = '/dl/un-auth/document/download/{dlDocumentId}';
     public static GET_ALL_SBM_DL_DOCUMENT_BY_USER_API_URL = '/dl/dl-document/shared-by-me/user/{userId}?folderId={folderId}';
 
 

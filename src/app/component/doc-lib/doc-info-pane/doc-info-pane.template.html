@@ -3,6 +3,8 @@
 </button>
 
 <div class="pane-wrapper">
+    <img *ngIf="!selectedDoc"
+         src="./assets/images/svg/icons/other.svg" alt="icon">
     <ng-container *ngIf="selectedDoc?.folder == false">
         <ng-container
             *ngIf="validExtensions.indexOf(selectedDoc.extension) > -1; else otherFileElseCase">
@@ -16,7 +18,7 @@
     <img *ngIf="selectedDoc?.folder == true"
          src="./assets/images/svg/icons/folder.svg" alt="icon">
     <p-accordion (onOpen)="loadDlDocumentDetails($event)">
-        <p-accordionTab [selected]="activeTabIndex === 0">
+        <p-accordionTab [selected]="activeTabIndex === 0" *ngIf="docTabs.properties">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-properties"></i>
@@ -62,7 +64,7 @@
                 </table>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder">
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder" *ngIf="docTabs.comments">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-comments"></i>
@@ -114,7 +116,7 @@
                 </div>
             </ng-template>
         </p-accordionTab>
-        <p-accordionTab [selected]="activeTabIndex === 2">
+        <p-accordionTab [selected]="activeTabIndex === 2" *ngIf="docTabs.sharing">
             <ng-template pTemplate="header">
                 <div>
                     <i class="icon-share"></i>
