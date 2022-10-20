@@ -239,7 +239,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                     active: false
                 },
                 {
-                    label: 'Document Library',
+                    label: 'Shared By Me',
                     route: '/doc-lib',
                     active: true
                 }
