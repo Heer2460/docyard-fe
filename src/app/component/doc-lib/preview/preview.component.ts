@@ -18,9 +18,9 @@ import {forkJoin, Subject, takeUntil} from "rxjs";
     styleUrls: ['./preview.component.less'],
 })
 export class PreviewComponent implements OnInit {
-    
+
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
-    
+
     showDocInfoPane: boolean = true;
     defaultZoom: number = 0;
     magnifierZoom: number = this.defaultZoom;
@@ -76,11 +76,11 @@ export class PreviewComponent implements OnInit {
             const folderId = this.queryParams.folderId ? this.queryParams.folderId : '0'
             this.loadDocumentLibrary(folderId, false);
         })
-    
+
         this.buildForms();
         this.preloadedData();
     }
-    
+
     buildForms() {
         this.shareWithUserForm = this.fb.group({
             message: [null],
@@ -91,7 +91,7 @@ export class PreviewComponent implements OnInit {
             departmentId: [null]
         });
     }
-    
+
     preloadedData(): void {
         const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
         const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
@@ -112,7 +112,7 @@ export class PreviewComponent implements OnInit {
                     }
                 });
     }
-    
+
     createSharedLinkAction() {
         if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
             this.createSharedLink = false;
@@ -121,14 +121,14 @@ export class PreviewComponent implements OnInit {
         }
         this.createSharedLink = !this.createSharedLink;
     }
-    
+
     copyLinkToClipboard(shareLink: any) {
         shareLink.select();
         document.execCommand('copy');
         shareLink.setSelectionRange(0, 0);
         this.toastService.success('Share Link has been copied.', 'Share Document');
     }
-    
+
     loadDocumentLibrary(folderId: string, archived: boolean) {
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_SHARED_PREVIEW_DL_DOCUMENT_API_URL
             .replace("{folderId}", folderId)
@@ -171,7 +171,7 @@ export class PreviewComponent implements OnInit {
                 }
             );
     }
-    
+
     downloadFile() {
         this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", this.selectedDoc.id))
             .subscribe({
@@ -186,7 +186,7 @@ export class PreviewComponent implements OnInit {
                 }
             });
     }
-    
+
     onShareTypeChange() {
         if (this.shareWithUserForm.get('shareType')?.value === 'ANYONE') {
             this.shareWithUserForm.get(['collaborators'])?.disable();
@@ -200,7 +200,7 @@ export class PreviewComponent implements OnInit {
             this.shareWithUserForm.get(['publicUrlLink'])?.setValue('');
         }
     }
-    
+
     generatePublicURL(): string {
         let openURl = window.location.origin;
         if (this.selectedDoc.folder) {
@@ -268,7 +268,7 @@ export class PreviewComponent implements OnInit {
                 }
             });
     }
-    
+
     magnifierZoomInAction() {
         this.magnifierZoom += 10;
         this.generateStyleObj();
@@ -330,11 +330,11 @@ export class PreviewComponent implements OnInit {
     getValidExtension() {
         return this.validExtensions?.indexOf(this.selectedDoc?.extension) > -1
     }
-    
+
     backToDocLibAction() {
         this.router.navigate(['/doc-lib']);
     }
-    
+
     // share code
     showShareDocumentDialog() {
         this.shareWithUserForm.patchValue({
@@ -348,7 +348,7 @@ export class PreviewComponent implements OnInit {
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
     }
-    
+
     hideShareDocumentDialog() {
         this.shareDocumentDialog = false;
     }
