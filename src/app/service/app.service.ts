@@ -180,7 +180,16 @@ export class AppService {
     }
 
     public getFileNameExtracted(text: any) {
-        let count = 50;
-        return text.slice(0, count) + (text.length > count ? " ... " : "");
+        let count = 34;
+        
+        if(text.length < count) return text;
+        
+        const txtArray = text.split('.');
+        const ext = txtArray.pop();
+        const rejoinedText = txtArray.join('');
+    
+        const slicedStr = rejoinedText.slice(0, count);
+        
+        return slicedStr.substring(0, slicedStr.length - 5) + '... ' + slicedStr.substring(slicedStr.length - 5) + "." +ext;
     }
 }

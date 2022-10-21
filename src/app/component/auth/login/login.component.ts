@@ -29,6 +29,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem(btoa(AppConstants.AUTH_ACCESS_TOKEN))) {
+            this.router.navigate(['/home']);
+        }
         this.createLoginForm();
     }
 

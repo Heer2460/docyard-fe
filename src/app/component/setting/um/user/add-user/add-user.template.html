@@ -27,7 +27,8 @@
                         <div class="row">
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
-                                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                                    <input class="form-control" formControlName="name" id="name" placeholder="Name"
+                                           type="text">
                                     <label for="name" class="required">Name</label>
                                     <small *ngIf="appUtility.getFormError(addUserForm, 'name', 'name', 'required')">
                                         {{ appUtility.makeErrorMessage("Name", 'required') }}
@@ -43,16 +44,18 @@
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
                                     <input autocomplete="new-password" class="form-control" formControlName="username"
-                                           id="username"
-                                           placeholder="Username" type="text">
+                                           id="username" placeholder="Username" type="text">
                                     <label for="username" class="required">Username</label>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'required')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'required')">
                                         {{ appUtility.makeErrorMessage("Username", 'required') }}
                                     </small>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'maxlength')">
-                                        {{ appUtility.makeErrorMessage("Username", 'maxlength', 35) }}
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'maxlength')">
+                                        {{ appUtility.makeErrorMessage("Username", 'maxlength', 17) }}
                                     </small>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'pattern')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'username', 'username', 'pattern')">
                                         {{ appUtility.makeErrorMessage("Username", 'onlySpace') }}
                                     </small>
                                 </div>
@@ -76,21 +79,26 @@
                             <ng-container formGroupName="passwords">
                                 <div class="col-3 mb-3">
                                     <div class="form-floating">
-                                        <input autocomplete="new-password" class="form-control" formControlName="password"
+                                        <input autocomplete="new-password" class="form-control"
+                                               formControlName="password"
                                                id="password"
                                                placeholder="Password"
                                                [attr.type]="passwordVisibility ? 'password' : 'text'">
                                         <label for="password" class="required">Password</label>
-                                        <div class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                        <div class="input-group-text cursor-pointer"
+                                             (click)="togglePasswordVisibility()">
                                             <i class="{{passwordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
                                         </div>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'required', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'required', 'password')">
                                             {{ appUtility.makeErrorMessage("Password", 'required') }}
                                         </small>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'maxlength', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'maxlength', 'password')">
                                             {{ appUtility.makeErrorMessage("Password", 'maxlength', 32) }}
                                         </small>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'minlength', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'password', 'minlength', 'password')">
                                             {{ appUtility.makeErrorMessage("Password", 'minlength', 6) }}
                                         </small>
                                         <small *ngIf="addUserForm.controls['passwords'].get('password')?.touched &&
@@ -101,22 +109,29 @@
                                 </div>
                                 <div class="col-3 mb-3">
                                     <div class="form-floating">
-                                        <input class="form-control" formControlName="confirmPassword" id="confirmPassword"
-                                               placeholder="Confirm Password" [attr.type]="confirmPasswordVisibility ? 'password' : 'text'">
+                                        <input class="form-control" formControlName="confirmPassword"
+                                               id="confirmPassword"
+                                               placeholder="Confirm Password"
+                                               [attr.type]="confirmPasswordVisibility ? 'password' : 'text'">
                                         <label for="confirmPassword" class="required">Confirm Password</label>
-                                        <div class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+                                        <div class="input-group-text cursor-pointer"
+                                             (click)="toggleConfirmPasswordVisibility()">
                                             <i class="{{confirmPasswordVisibility ? 'icon-eye' : 'icon-eye-hide'}}"></i>
                                         </div>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'required', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'required', 'password')">
                                             {{ appUtility.makeErrorMessage("Confirm Password", 'required') }}
                                         </small>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'maxlength', 'password')">
                                             {{ appUtility.makeErrorMessage("Confirm Password", 'maxlength', 32) }}
                                         </small>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'minlength', 'password')">
                                             {{ appUtility.makeErrorMessage("Confirm Password", 'minlength', 6) }}
                                         </small>
-                                        <small *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
+                                        <small
+                                            *ngIf="appUtility.getFormError(addUserForm, 'passwords', 'confirmPassword', 'match', 'password')">
                                             {{ 'Password & Confirm Password must be same' }}
                                         </small>
                                     </div>
@@ -128,7 +143,8 @@
                                     <input [float]="false" class="form-control" formControlName="phoneNumber"
                                            id="phoneNumber" onlyNumber placeholder="Phone Number" type="text">
                                     <label for="name">Phone Number</label>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
@@ -138,7 +154,8 @@
                                     <input [float]="false" class="form-control" formControlName="mobileNumber"
                                            id="mobileNumber" onlyNumber placeholder="Mobile Number" type="text">
                                     <label for="mobileNumber">Mobile Number</label>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
@@ -148,7 +165,8 @@
                             <textarea class="form-control" formControlName="address" id="address"
                                       placeholder="Address"></textarea>
                                     <label for="address">Address</label>
-                                    <small *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(addUserForm, 'address', 'address', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
                                     </small>
                                 </div>
@@ -156,16 +174,18 @@
                             <div class="col-3 mb-3">
                                 <div class="custom-file">
                                     <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
-                                    <input #file (change)="setAttachment($event)" accept="image/png, image/jpeg, image/jpg" class="form-control" id="file" onclick="this.value = null"
+                                    <input #file (change)="setAttachment($event)"
+                                           accept="image/png, image/jpeg, image/jpg" class="form-control" id="file"
+                                           onclick="this.value = null"
                                            type="file">
                                     <div class="file-viewer">
                                         <button (click)="clearFiles()" *ngIf="logoImageDataUrl" class="btn">
                                             <i class="icon-times"></i>
                                         </button>
                                         <img
-                                                *ngIf="logoImageDataUrl"
-                                                alt="Logo"
-                                                src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
+                                            *ngIf="logoImageDataUrl"
+                                            alt="Logo"
+                                            src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
                                         <i *ngIf="!logoImageDataUrl" class="icon-image"></i>
                                     </div>
                                 </div>
@@ -209,7 +229,9 @@
         </div>
         <div class="page-footer">
             <button class="btn btn-sm btn-danger" (click)="onCancelButtonClicked()">Cancel</button>
-            <button (click)="createUser()" [disabled]="addUserForm.invalid" class="btn btn-sm btn-primary" type="button">Add</button>
+            <button (click)="createUser()" [disabled]="addUserForm.invalid" class="btn btn-sm btn-primary"
+                    type="button">Add
+            </button>
         </div>
     </div>
 </section>
