@@ -99,7 +99,15 @@
                                                 <span>{{item?.updatedOnDetail}} by </span>
                                                 <a (click)="openProfile(item)" role="button">{{item?.updatedByName}}</a>
                                             </p>
-                                            <p class="file-size">{{item?.size}}</p>
+                                            <p class="file-size">
+                                                {{item?.size}}
+                                                <span *ngIf="item.folder === false" tooltipPosition="top"
+                                                     pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
+                                                     class="comments-count me-1">
+                                                    <i class="icon-comments"></i>
+                                                    <span class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                </span>
+                                            </p>
                                         </div>
                                         <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
@@ -431,10 +439,18 @@
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
-        <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
-                type="button">Share
-        </button>
+        <div class="row">
+            <div class="col-6 text-start">
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared" class="btn btn-sm btn-primary me-2">Remove Sharing
+                </button>
+            </div>
+            <div class="col-6 text-right">
+                <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+                <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                        type="button">Share
+                </button>
+            </div>
+        </div>
     </ng-template>
 </p-dialog>
 

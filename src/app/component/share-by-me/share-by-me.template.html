@@ -265,7 +265,7 @@
     <ng-template pTemplate="footer">
         <div class="row">
             <div class="col-6 text-start">
-                <button (click)="onUnShareDocument(selectedDoc)" class="btn btn-sm btn-primary me-2">Remove Sharing
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared" class="btn btn-sm btn-primary me-2">Remove Sharing
                 </button>
             </div>
             <div class="col-6 text-right">
