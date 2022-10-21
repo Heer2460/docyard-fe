@@ -91,7 +91,8 @@
                 </ng-container>
                 <ng-container *ngIf="!showGridDisplay">
                     <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
-                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" selectionMode="single"
+                             (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>
@@ -124,7 +125,6 @@
                                 </td>
                                 <td>
                                     <div class="file-types">
-
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
                                                 *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
@@ -145,7 +145,6 @@
                                         <ng-template #elseCase>
                                             <span role="button">{{row.name}}</span>
                                         </ng-template>
-
                                     </div>
                                 </td>
                                 <td>

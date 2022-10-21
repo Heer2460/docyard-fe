@@ -156,6 +156,12 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     addUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             message: this.commentForm.value.comments,
             docId: this.selectedDoc.id,
@@ -191,6 +197,12 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     updateUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             id: this.commentForm.value.id,
             message: this.commentForm.value.comments,
