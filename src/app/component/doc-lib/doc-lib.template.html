@@ -99,7 +99,15 @@
                                                 <span>{{item?.updatedOnDetail}} by </span>
                                                 <a (click)="openProfile(item)" role="button">{{item?.updatedByName}}</a>
                                             </p>
-                                            <p class="file-size">{{item?.size}}</p>
+                                            <p class="file-size">
+                                                {{item?.size}}
+                                                <span *ngIf="item.folder === false" tooltipPosition="top"
+                                                     pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
+                                                     class="comments-count me-1">
+                                                    <i class="icon-comments"></i>
+                                                    <span class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                </span>
+                                            </p>
                                         </div>
                                         <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"

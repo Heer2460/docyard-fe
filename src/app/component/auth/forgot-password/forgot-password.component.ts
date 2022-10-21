@@ -7,6 +7,7 @@ import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
 import {AppUtility} from "../../../util/app.utility";
 import {environment} from "../../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'forgot-password-component',
@@ -19,6 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     constructor(private toastService: ToastrService,
                 private fb: FormBuilder,
+                private router: Router,
                 public appService: AppService, public appUtility: AppUtility,
                 private requestsService: RequestService) {
 
@@ -41,6 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
             .subscribe(
                 (response: HttpResponse<any>) => {
                     if (response.status === 200) {
+                        this.router.navigate(['/login']);
                         this.toastService.success('Email has been sent, please reset your password.', 'Forgot Password');
                     } else {
                         this.toastService.error('The provided email is not registered in the system.', 'Forgot Password');
