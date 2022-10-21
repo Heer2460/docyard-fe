@@ -11,6 +11,7 @@ import * as FileSaver from "file-saver";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserDTO} from "../../../model/settings/um/user/user.dto";
 import {forkJoin, Subject, takeUntil} from "rxjs";
+import {Location} from "@angular/common";
 
 @Component({
     selector: 'preview-component',
@@ -36,8 +37,6 @@ export class PreviewComponent implements OnInit {
     shareDocumentDialog: boolean = false;
     createSharedLink: boolean = false;
     shareWithUserForm: FormGroup = new FormGroup({});
-    users: UserDTO[] = [];
-    destroy: Subject<boolean> = new Subject();
     departments: any[] = [];
     previewTabs = {
         properties: true,
@@ -59,7 +58,8 @@ export class PreviewComponent implements OnInit {
                 private requestsService: RequestService,
                 private router: Router,
                 private fb: FormBuilder,
-                private toastService: ToastrService,) {
+                private toastService: ToastrService,
+                private location: Location) {
         this.appService.setShowDocInfoPaneSubjectState(this.showDocInfoPane);
     }
 
@@ -91,26 +91,21 @@ export class PreviewComponent implements OnInit {
             departmentId: [null]
         });
     }
-    
+
     preloadedData(): void {
-        const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
-        forkJoin([users, departments])
-            .pipe(takeUntil(this.destroy))
-            .subscribe(
-                {
-                    next: (response: HttpResponse<any>[]) => {
-                        if (response[0].status === 200) {
-                            this.users = response[0].body.data;
-                        }
-                        if (response[1].status === 200) {
-                            this.departments = response[1].body.data;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Document Library');
+        this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.departments = response.body.data;
+                    } else {
+                        this.departments = [];
                     }
-                });
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
     
     createSharedLinkAction() {
@@ -120,13 +115,6 @@ export class PreviewComponent implements OnInit {
             return;
         }
         this.createSharedLink = !this.createSharedLink;
-    }
-    
-    copyLinkToClipboard(shareLink: any) {
-        shareLink.select();
-        document.execCommand('copy');
-        shareLink.setSelectionRange(0, 0);
-        this.toastService.success('Share Link has been copied.', 'Share Document');
     }
     
     loadDocumentLibrary(folderId: string, archived: boolean) {
@@ -183,88 +171,6 @@ export class PreviewComponent implements OnInit {
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Document Library');
-                }
-            });
-    }
-    
-    onShareTypeChange() {
-        if (this.shareWithUserForm.get('shareType')?.value === 'ANYONE') {
-            this.shareWithUserForm.get(['collaborators'])?.disable();
-            this.shareWithUserForm.get(['publicUrlLink'])?.enable();
-            let url = this.generatePublicURL();
-            this.shareWithUserForm.get(['publicUrlLink'])?.setValue(url);
-            this.shareWithUserForm.get(['collaborators'])?.setValue([]);
-        } else {
-            this.shareWithUserForm.get(['collaborators'])?.enable();
-            this.shareWithUserForm.get(['publicUrlLink'])?.disable();
-            this.shareWithUserForm.get(['publicUrlLink'])?.setValue('');
-        }
-    }
-    
-    generatePublicURL(): string {
-        let openURl = window.location.origin;
-        if (this.selectedDoc.folder) {
-            openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
-        } else {
-            openURl += '/share/document-view?guid=';
-            openURl += this.selectedDoc.versionGUId;
-            openURl += '&fromFolderShared=' + false;
-        }
-        return openURl;
-    }
-
-    onAddCollaborator(value: any) {
-        let regexp = new RegExp('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}');
-        let valid: boolean = regexp.test(value);
-        if (!valid) {
-            this.toastService.error('Email is not valid.', 'Share with Others');
-            this.shareWithUserForm.controls['collaborators'].value.pop();
-        } else {
-            if (value != this.appService.userInfo.email) {
-                let user = this.users.find(user => user.email === value);
-                if (!user) {
-                    this.shareWithUserForm.controls['collaborators'].value.pop();
-                    this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
-                }
-            } else {
-                this.shareWithUserForm.controls['collaborators'].value.pop();
-                this.toastService.error('You can\'nt share with yourself.', 'Share with Others');
-            }
-        }
-    }
-
-    onShare(data: any) {
-        if (data.shareType === 'RESTRICTED') {
-            if (data.collaborators.length <= 0) {
-                this.toastService.error('You can\'nt share without adding collaborator.', 'Share Document');
-                return;
-            }
-        }
-        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
-        let shareObj = {
-            dlDocId: this.selectedDoc.id,
-            folder: this.selectedDoc.folder,
-            shareType: data.shareType,
-            shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
-            departmentId: data.departmentId,
-            dlCollaborators: data.collaborators ? data.collaborators : [],
-            sharePermission: data.sharePermission,
-            appContextPath: window.location.origin,
-            externalUserShareLink: '',
-            userId: String(userId),
-        };
-        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, shareObj)
-            .subscribe({
-                next: (response: HttpResponse<any>) => {
-                    if (response.status === 200) {
-                        this.toastService.success('Document has been shared successfully', 'Share Document');
-                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
-                        this.hideShareDocumentDialog();
-                    }
-                },
-                error: (error: any) => {
-                    this.appService.handleError(error, 'Share Document');
                 }
             });
     }
@@ -336,21 +242,132 @@ export class PreviewComponent implements OnInit {
     }
     
     // share code
-    showShareDocumentDialog() {
+    showShareDocumentDialog(selectedDoc: any) {
         this.shareWithUserForm.patchValue({
             message: null,
             publicUrlLink: null,
             shareType: 'ANYONE',
-            collaborators: null,
+            collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        if (selectedDoc.shared) {
+            this.createSharedLink = true;
+            this.onShareTypeChange();
+        }
     }
     
     hideShareDocumentDialog() {
         this.shareDocumentDialog = false;
+    }
+
+    onShareTypeChange() {
+        if (this.shareWithUserForm.get('shareType')?.value === 'ANYONE') {
+            this.shareWithUserForm.get(['collaborators'])?.disable();
+            this.shareWithUserForm.get(['publicUrlLink'])?.enable();
+            let url = this.generatePublicURL();
+            this.shareWithUserForm.get(['publicUrlLink'])?.setValue(url);
+            this.shareWithUserForm.get(['collaborators'])?.setValue([]);
+        } else {
+            this.shareWithUserForm.get(['collaborators'])?.enable();
+            this.shareWithUserForm.get(['collaborators'])?.setValue([]);
+            this.shareWithUserForm.get(['publicUrlLink'])?.disable();
+            this.shareWithUserForm.get(['publicUrlLink'])?.setValue('');
+        }
+    }
+
+    generatePublicURL(): string {
+        let openURl = window.location.origin;
+        if (this.selectedDoc.folder) {
+            openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
+            openURl += '&name=' + window.btoa(this.selectedDoc.name || '');
+        } else {
+            openURl += '/share/document-view?guid=';
+            openURl += this.selectedDoc.versionGUId;
+            openURl += '&fromFolderShared=' + false;
+        }
+        return openURl;
+    }
+
+    onShare(data: any) {
+        if (data.shareType === 'RESTRICTED') {
+            if (data.collaborators.length <= 0) {
+                this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
+                return;
+            }
+        }
+        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.toastService.success('Document has been shared successfully', 'Share Document');
+                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                        this.hideShareDocumentDialog();
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
+    buildShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: this.selectedDoc.id,
+            folder: this.selectedDoc.folder,
+            shareType: data.shareType,
+            shareLink: this.shareLinkInput?.nativeElement.value || '',
+            message: data.message,
+            departmentId: data.departmentId,
+            dlCollaborators: data.collaborators ? data.collaborators : [],
+            sharePermission: data.sharePermission,
+            appContextPath: window.location.origin,
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
+    }
+
+    onAddCollaborator(value: any) {
+        let regexp = new RegExp('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}');
+        let valid: boolean = regexp.test(value);
+        if (!valid) {
+            this.toastService.error('Email is not valid.', 'Share with Others');
+            this.shareWithUserForm.controls['collaborators'].value.pop();
+        } else {
+            if (value != this.appService.userInfo.email) {
+                this.checkUserEmail(value);
+            } else {
+                this.shareWithUserForm.controls['collaborators'].value.pop();
+                this.toastService.error('You can\'t share with yourself.', 'Share with Others');
+            }
+        }
+    }
+
+    checkUserEmail(email: string): any {
+        this.requestsService.getRequest(ApiUrlConstants.USER_EMAIL_API_URL.replace('{email}', email))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                    } else {
+                        this.shareWithUserForm.controls['collaborators'].value.pop();
+                        this.shareWithUserForm.get(['collaborators'])?.setValue(this.shareWithUserForm.get('collaborators')?.value);
+                        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
+    }
+
+    copyLinkToClipboard(shareLink: any) {
+        shareLink.select();
+        document.execCommand('copy');
+        shareLink.setSelectionRange(0, 0);
+        this.toastService.success('Share Link has been copied.', 'Share Document');
     }
 
 }

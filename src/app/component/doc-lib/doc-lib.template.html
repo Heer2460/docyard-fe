@@ -426,10 +426,18 @@
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
-        <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
-                type="button">Share
-        </button>
+        <div class="row">
+            <div class="col-6 text-start">
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared" class="btn btn-sm btn-primary me-2">Remove Sharing
+                </button>
+            </div>
+            <div class="col-6 text-right">
+                <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+                <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                        type="button">Share
+                </button>
+            </div>
+        </div>
     </ng-template>
 </p-dialog>
 
