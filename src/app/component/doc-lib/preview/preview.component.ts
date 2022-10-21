@@ -46,8 +46,8 @@ export class PreviewComponent implements OnInit {
         {label: 'Restricted', value: 'RESTRICTED'}
     ];
     shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
+        {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
+        {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
     sharedPreview: string = '';
 
@@ -244,14 +244,14 @@ export class PreviewComponent implements OnInit {
         this.shareWithUserForm.patchValue({
             message: null,
             publicUrlLink: null,
-            shareType: 'ANYONE',
+            shareType: selectedDoc.shareType ? selectedDoc.shareType : 'ANYONE',
             collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
-        if (selectedDoc.shared) {
+        if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
             this.createSharedLink = true;
             this.onShareTypeChange();
         }
