@@ -171,7 +171,7 @@ export class AppService {
     }
 
     public getFileNameExtracted(text: any) {
-        let count = 50;
+        let count = 35;
         return text.slice(0, count) + (text.length > count ? " ... " : "");
     }
 }
