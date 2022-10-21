@@ -27,7 +27,8 @@
                         <div class="row">
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
-                                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
+                                    <input class="form-control" formControlName="name" id="name" placeholder="Name"
+                                           type="text">
                                     <label for="name" class="required">Name</label>
                                     <small *ngIf="appUtility.getFormError(editUserForm, 'name', 'name', 'required')">
                                         {{ appUtility.makeErrorMessage("Name", 'required') }}
@@ -39,7 +40,8 @@
                             </div>
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
-                                    <input autocomplete="new-password" class="form-control" formControlName="username" id="username"
+                                    <input autocomplete="new-password" class="form-control" formControlName="username"
+                                           id="username"
                                            placeholder="Username" type="text">
                                     <label for="username">Username</label>
                                 </div>
@@ -65,10 +67,12 @@
                                     <input class="form-control" formControlName="phoneNumber" id="phoneNumber"
                                            placeholder="Phone Number" type="text">
                                     <label for="name">Phone Number</label>
-                                    <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'required')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'required')">
                                         {{ appUtility.makeErrorMessage("Phone Number", 'required') }}
                                     </small>
-                                    <small *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(editUserForm, 'phoneNumber', 'phoneNumber', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Phone Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
@@ -78,19 +82,23 @@
                                     <input class="form-control" formControlName="mobileNumber" id="mobileNumber"
                                            placeholder="Mobile Number" type="text">
                                     <label for="mobileNumber">Mobile Number</label>
-                                    <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'required')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'required')">
                                         {{ appUtility.makeErrorMessage("Mobile Number", 'required') }}
                                     </small>
-                                    <small *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(editUserForm, 'mobileNumber', 'mobileNumber', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Mobile Number", 'maxlength', 17) }}
                                     </small>
                                 </div>
                             </div>
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
-                                    <textarea type="text" class="form-control" formControlName="address" id="address" placeholder="Address"></textarea>
+                                    <textarea type="text" class="form-control" formControlName="address" id="address"
+                                              placeholder="Address"></textarea>
                                     <label for="address">Address</label>
-                                    <small *ngIf="appUtility.getFormError(editUserForm, 'address', 'address', 'maxlength')">
+                                    <small
+                                        *ngIf="appUtility.getFormError(editUserForm, 'address', 'address', 'maxlength')">
                                         {{ appUtility.makeErrorMessage("Address", 'maxlength', 256) }}
                                     </small>
                                 </div>
@@ -98,16 +106,17 @@
                             <div class="col-3 mb-3">
                                 <div class="custom-file">
                                     <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
-                                    <input #file (change)="setAttachment($event)" class="form-control" id="file" onclick="this.value = null"
+                                    <input #file (change)="setAttachment($event)" class="form-control" id="file"
+                                           onclick="this.value = null"
                                            type="file">
                                     <div class="file-viewer">
                                         <button (click)="clearFiles()" *ngIf="logoImageDataUrl" class="btn">
                                             <i class="icon-times"></i>
                                         </button>
                                         <img
-                                                *ngIf="logoImageDataUrl"
-                                                alt="Logo"
-                                                src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
+                                            *ngIf="logoImageDataUrl"
+                                            alt="Logo"
+                                            src="data:image/jpeg;base64,{{logoImageDataUrl}}"/>
                                         <i *ngIf="!logoImageDataUrl" class="icon-image"></i>
                                     </div>
                                 </div>
@@ -120,7 +129,7 @@
                             <div class="col-3 mb-3">
                         <span class="p-float-label">
                             <p-dropdown [options]="groups" appendTo="body" formControlName="groupId" id="groupId"
-                                        optionLabel="name" optionValue="id"  placeholder="Select group"></p-dropdown>
+                                        optionLabel="name" optionValue="id" placeholder="Select group"></p-dropdown>
                             <label for="groupId" class="required">Group</label>
                             <small *ngIf="appUtility.getFormError(editUserForm, 'groupId', 'groupId', 'required')">
                                 {{ appUtility.makeErrorMessage("Group", 'required') }}
@@ -138,7 +147,8 @@
                             </div>
                             <div class="col-3 mb-3">
                         <span class="p-float-label">
-                            <p-dropdown inputId="status" [options]="statuses" id="status" formControlName="status" appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
+                            <p-dropdown inputId="status" [options]="statuses" id="status" formControlName="status"
+                                        appendTo="body" optionLabel="value" optionValue="value"></p-dropdown>
                             <label for="status">Status</label>
                         </span>
                             </div>
@@ -149,7 +159,9 @@
         </div>
         <div class="page-footer">
             <button class="btn btn-sm btn-danger" (click)="onCancelButtonClicked()">Cancel</button>
-            <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid" (click)="updateUser()">Update</button>
+            <button class="btn btn-sm btn-primary" type="button" [disabled]="editUserForm.invalid"
+                    (click)="updateUser()">Update
+            </button>
         </div>
     </div>
 </section>

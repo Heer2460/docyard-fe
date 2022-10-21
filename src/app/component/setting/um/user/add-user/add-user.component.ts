@@ -65,7 +65,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     title: string = 'Add';
 
-    constructor(private fb: FormBuilder,private confirmationService: ConfirmationService,
+    constructor(private fb: FormBuilder, private confirmationService: ConfirmationService,
                 private requestsService: RequestService,
                 private appService: AppService,
                 public appUtility: AppUtility,
@@ -109,7 +109,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     buildForms() {
         this.addUserForm = this.fb.group({
-            username: [null, [Validators.required, Validators.maxLength(17),Validators.pattern(/^[a-zA-Z0-9._-]*$/)]],
+            username: [null, [Validators.required, Validators.maxLength(17), Validators.pattern(/^[a-zA-Z0-9._-]*$/)]],
             name: [null, [Validators.required, Validators.maxLength(32), Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
             email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
             phoneNumber: [null, [Validators.maxLength(17)]],
@@ -183,7 +183,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     onCancelButtonClicked() {
-        if(this.addUserForm.dirty){
+        if (this.addUserForm.dirty) {
             this.confirmationService.confirm({
                 message: 'Form shall be closed without saving data. Do you want to proceed?',
                 accept: () => {
@@ -191,7 +191,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
                     this.router.navigate(['/setting/um/user']);
                 }
             });
-        }else{
+        } else {
             this.router.navigate(['/setting/um/user']);
         }
     }
@@ -204,7 +204,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy.next(true);
     }
-
 
 
 }

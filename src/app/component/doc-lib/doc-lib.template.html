@@ -174,12 +174,17 @@
                                             </ng-template>
                                         </div>
                                         <div class="quick-actions">
-                                            <div *ngIf="row.folder === false" tooltipPosition="top"
-                                                 pTooltip="{{row.dlDocumentCommentDTOList?.length}} Comments"
-                                                 class="comments-count me-1">
-                                                <i class="icon-comments"></i>
-                                                <span class="comments-count">{{row.dlDocumentCommentDTOList?.length}}</span>
-                                            </div>
+                                            <ng-container *ngIf="row.folder === false">
+                                                <div *ngIf="row.dlDocumentCommentDTOList?.length > 0"
+                                                     tooltipPosition="top"
+                                                     pTooltip="{{row.dlDocumentCommentDTOList?.length}} Comments"
+                                                     class="comments-count me-1">
+                                                    <i class="icon-comments"></i>
+                                                    <span class="comments-count">
+                                                    {{row.dlDocumentCommentDTOList?.length}}
+                                                </span>
+                                                </div>
+                                            </ng-container>
                                             <!-- <button tooltipPosition="top" pTooltip="Share Link"
                                                      class="btn btn-transparent" (click)="showShareDocumentDialog(row)">
                                                  <i class="icon-share"></i>
