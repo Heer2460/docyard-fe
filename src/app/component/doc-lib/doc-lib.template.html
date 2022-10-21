@@ -33,7 +33,7 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li (click)="menu.toggle($event)" class="breadcrumb-item">
                                             <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" [popup]="true"
@@ -79,7 +79,7 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img alt="{{item.extension}}"
                                                          src="./assets/images/svg/icons/{{item.extension}}.svg">
                                                 </ng-container>
@@ -101,12 +101,12 @@
                                             </p>
                                             <p class="file-size">
                                                 {{item?.size}}
-                                                <span *ngIf="item.folder === false" tooltipPosition="top"
+                                                <span *ngIf="item.folder === false" class="comments-count me-1"
                                                       pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
-                                                      class="comments-count me-1">
+                                                      tooltipPosition="top">
                                                     <i class="icon-comments"></i>
                                                     <span
-                                                        class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                            class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
                                                 </span>
                                             </p>
                                         </div>
@@ -163,7 +163,7 @@
                                         <div class="file-types">
                                             <ng-container *ngIf="row.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                        *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
                                                     <img alt="{{row.extension}}"
                                                          src="./assets/images/svg/icons/{{row.extension}}.svg">
                                                 </ng-container>
@@ -185,17 +185,17 @@
                                         <div class="quick-actions">
                                             <ng-container *ngIf="row.folder === false">
                                                 <div *ngIf="row.dlDocumentCommentDTOList?.length > 0"
-                                                     tooltipPosition="top"
+                                                     class="comments-count me-1"
                                                      pTooltip="{{row.dlDocumentCommentDTOList?.length}} Comments"
-                                                     class="comments-count me-1">
+                                                     tooltipPosition="top">
                                                     <i class="icon-comments"></i>
                                                     <span class="comments-count">
                                                     {{row.dlDocumentCommentDTOList?.length}}
                                                 </span>
                                                 </div>
-                                                <button *ngIf="row.shared != null" tooltipPosition="top"
+                                                <button *ngIf="row.shared != null" class="btn btn-transparent"
                                                         pTooltip="Shared"
-                                                        class="btn btn-transparent">
+                                                        tooltipPosition="top">
                                                     <i class="icon-share"></i>
                                                 </button>
                                             </ng-container>
@@ -241,7 +241,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'" [docTabs]="previewTabs"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'"
                              [selectedDoc]="selectedDoc">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
@@ -277,7 +277,7 @@
                                 <div class="file-metadata">
                                     <div class="file-icon-container">
                                         <ng-container
-                                            *ngIf="validExtensions.indexOf(file?.orgFile.name.split('.').pop()) > -1; else otherFileElseCase">
+                                                *ngIf="validExtensions.indexOf(file?.orgFile.name.split('.').pop()) > -1; else otherFileElseCase">
                                             <img alt="{{file?.orgFile.name.split('.').pop()}}"
                                                  src="./assets/images/svg/icons/{{file?.orgFile.name.split('.').pop()}}.svg">
                                         </ng-container>
@@ -390,16 +390,25 @@
                 <label for="shareType">General Access</label>
             </span>
         </div>
-        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
+        <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
             <label for="collaborators">Invite People</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission"
-                        optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>

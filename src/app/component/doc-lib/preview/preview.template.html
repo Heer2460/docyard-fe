@@ -118,9 +118,18 @@
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission"
-                        optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>

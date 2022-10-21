@@ -43,8 +43,8 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         {label: 'Restricted', value: 'RESTRICTED'}
     ];
     shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
+        {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
+        {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
 
     constructor(public appService: AppService,
@@ -291,7 +291,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.shareWithUserForm.patchValue({
             message: null,
             publicUrlLink: null,
-            shareType: selectedDoc.shareType,
+            shareType: selectedDoc.shareType ? selectedDoc.shareType : 'ANYONE',
             collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
