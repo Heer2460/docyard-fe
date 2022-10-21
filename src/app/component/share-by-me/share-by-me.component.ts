@@ -101,8 +101,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             {
                 label: 'Download',
                 icon: 'icon-download',
-                command: () => {
-                }
+                command: () => {}
             }
         ];
     }
@@ -177,7 +176,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         if (rowData.parentId == null) {
             rowData.parentId = '';
         }
-        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}`, '_blank');
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('sbm')}`, '_blank');
     }
 
     setGridDisplay() {
@@ -211,8 +210,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
-        console.log(breadcrumb)
-        console.log(index)
         if (breadcrumb.id) {
             this.loadShareByMeData(breadcrumb.id);
             this.breadcrumbs.pop();
