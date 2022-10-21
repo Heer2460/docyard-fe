@@ -12,7 +12,7 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
