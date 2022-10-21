@@ -182,7 +182,7 @@ export class AppService {
     public getFileNameExtracted(text: any) {
         let count = 34;
         
-        if(text.length < count) return;
+        if(text.length < count) return text;
         
         const txtArray = text.split('.');
         const ext = txtArray.pop();
