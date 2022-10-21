@@ -102,10 +102,11 @@
                                             <p class="file-size">
                                                 {{item?.size}}
                                                 <span *ngIf="item.folder === false" tooltipPosition="top"
-                                                     pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
-                                                     class="comments-count me-1">
+                                                      pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
+                                                      class="comments-count me-1">
                                                     <i class="icon-comments"></i>
-                                                    <span class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                    <span
+                                                        class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
                                                 </span>
                                             </p>
                                         </div>
@@ -192,11 +193,12 @@
                                                     {{row.dlDocumentCommentDTOList?.length}}
                                                 </span>
                                                 </div>
+                                                <button *ngIf="row.shared != null" tooltipPosition="top"
+                                                        pTooltip="Shared"
+                                                        class="btn btn-transparent">
+                                                    <i class="icon-share"></i>
+                                                </button>
                                             </ng-container>
-                                            <!-- <button tooltipPosition="top" pTooltip="Share Link"
-                                                     class="btn btn-transparent" (click)="showShareDocumentDialog(row)">
-                                                 <i class="icon-share"></i>
-                                             </button>-->
                                         </div>
                                     </div>
                                 </td>
@@ -441,7 +443,8 @@
     <ng-template pTemplate="footer">
         <div class="row">
             <div class="col-6 text-start">
-                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared" class="btn btn-sm btn-primary me-2">Remove Sharing
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared"
+                        class="btn btn-sm btn-primary me-2">Remove Sharing
                 </button>
             </div>
             <div class="col-6 text-right">
