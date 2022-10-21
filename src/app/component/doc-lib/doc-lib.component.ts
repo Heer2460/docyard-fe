@@ -688,8 +688,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.controls['collaborators'].value.pop();
         } else {
             if (value != this.appService.userInfo.email) {
-                /*const abc = this.checkUserEmail(value);
-                console.log('abc', abc);*/
+                // this.checkUserEmail(value);
                 let user = this.users.find(user => user.email === value);
                 if (!user) {
                     this.shareWithUserForm.controls['collaborators'].value.pop();
@@ -707,17 +706,21 @@ export class DocLibComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
-                        return true;
+                        console.log('In 200')
                     } else {
-                        return false;
-                        this.shareWithUserForm.controls['collaborators'].value.pop();
-                        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
+                        this.removeCollaborator();
+                        console.log('In 204')
                     }
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Department');
                 }
             });
+    }
+
+    removeCollaborator() {
+        this.shareWithUserForm.controls['collaborators'].value.pop();
+        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
     }
 
     copyLinkToClipboard(shareLink: any) {

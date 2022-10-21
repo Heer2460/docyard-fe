@@ -87,7 +87,7 @@
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>

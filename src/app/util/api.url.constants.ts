@@ -31,6 +31,7 @@ export class ApiUrlConstants {
     public static GET_RECENT_DOCUMENT_API_URL = '/dl/dl-document/recent/owner/';
     public static GET_ALL_DL_DOCUMENT_API_URL = '/dl/dl-document/?folderId={folderId}&archived={archived}';
     public static GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL = '/dl/dl-document/owner/{ownerId}?folderId={folderId}&archived={archived}';
+    public static GET_ALL_SHARED_PREVIEW_DL_DOCUMENT_API_URL = '/dl/dl-document/folder/{folderId}?archived={archived}';
     public static GET_ALL_FAVOURITE_DL_DOCUMENT_BY_OWNER_API_URL = '/dl/dl-document/favourite/owner/{ownerId}?folderId={folderId}&archived={archived}';
     public static CREATE_FOLDER_API_URL = '/dl/dl-document/folder';
     public static DL_DOCUMENT_API_URL = '/dl/dl-document/{dlDocumentId}';
@@ -50,6 +51,7 @@ export class ApiUrlConstants {
     public static DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL = '/dl/un-auth/folder/{folderId}';
     public static DOWNLOAD_UN_AUTH_DL_DOCUMENT_API_URL = '/dl/un-auth/document/download/{dlDocumentId}';
     public static GET_ALL_SBM_DL_DOCUMENT_BY_USER_API_URL = '/dl/dl-document/shared-by-me/user/{userId}?folderId={folderId}';
+    public static GET_ALL_SWM_DL_DOCUMENT_BY_USER_API_URL = '/dl/dl-document/shared-with-me/user/{userId}?folderId={folderId}';
 
 
 }

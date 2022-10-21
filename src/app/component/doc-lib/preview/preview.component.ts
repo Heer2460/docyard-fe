@@ -52,6 +52,7 @@ export class PreviewComponent implements OnInit {
         {label: 'VIEW', value: 'VIEW'},
         {label: 'COMMENT', value: 'COMMENT'}
     ];
+    sharedPreview: string = '';
 
     constructor(public appService: AppService,
                 private activatedRoute: ActivatedRoute,
@@ -69,7 +70,10 @@ export class PreviewComponent implements OnInit {
         this.setInitialProps();
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.queryParams = params;
-            const folderId = this.queryParams.folderId ? this.queryParams.folderId : 0
+            if (this.queryParams.shared) {
+                this.sharedPreview = window.atob(this.queryParams.shared);
+            }
+            const folderId = this.queryParams.folderId ? this.queryParams.folderId : '0'
             this.loadDocumentLibrary(folderId, false);
         })
     
@@ -126,9 +130,7 @@ export class PreviewComponent implements OnInit {
     }
     
     loadDocumentLibrary(folderId: string, archived: boolean) {
-        let loggedInUserId = this.appService.getLoggedInUserId();
-        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
-            .replace('{ownerId}', String(loggedInUserId))
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_SHARED_PREVIEW_DL_DOCUMENT_API_URL
             .replace("{folderId}", folderId)
             .replace("{archived}", String(archived)))
             .subscribe({
@@ -142,13 +144,13 @@ export class PreviewComponent implements OnInit {
                     }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Document Library');
+                    this.appService.handleError(error, 'Preview Document');
                 }
             });
     }
 
     favouriteDocument(row: any) {
-        const isChecked = !row.favorite;
+        const isChecked = !row.favourite;
         let url = ApiUrlConstants.DL_DOCUMENT_API_URL.replace("{dlDocumentId}", String(row.id)) + '/?favourite=' + isChecked;
         this.requestsService.putRequest(url, {})
             .subscribe({
@@ -159,6 +161,8 @@ export class PreviewComponent implements OnInit {
                             } else {
                                 this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
                             }
+                            const folderId = this.queryParams.folderId ? this.queryParams.folderId : '0'
+                            this.loadDocumentLibrary(folderId, false);
                         }
                     },
                     error: (error: any) => {
@@ -208,7 +212,7 @@ export class PreviewComponent implements OnInit {
         }
         return openURl;
     }
-    
+
     onAddCollaborator(value: any) {
         let regexp = new RegExp('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}');
         let valid: boolean = regexp.test(value);
@@ -228,7 +232,7 @@ export class PreviewComponent implements OnInit {
             }
         }
     }
-    
+
     onShare(data: any) {
         if (data.shareType === 'RESTRICTED') {
             if (data.collaborators.length <= 0) {
