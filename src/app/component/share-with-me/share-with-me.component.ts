@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, MenuItem} from "primeng/api";
+import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
@@ -22,7 +22,6 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
 
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
     menuItems: MenuItem[] = [];
-    shareDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = false;
@@ -41,22 +40,13 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         comments: true,
         sharing: true,
     };
-    shareTypes = [
-        {label: 'Anyone with the link', value: 'ANYONE'},
-        {label: 'Restricted', value: 'RESTRICTED'}
-    ];
-    shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
-    ];
 
     constructor(public appService: AppService,
                 private router: Router,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
-                private toastService: ToastrService,
-                private confirmationService: ConfirmationService) {
+                private toastService: ToastrService) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
@@ -243,15 +233,6 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setShowDocInfoPaneSubjectState(false);
-    }
-
-    createSharedLinkAction() {
-        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
-            this.createSharedLink = false;
-            this.toastService.error('You can\'t generate link', 'Share Document');
-            return;
-        }
-        this.createSharedLink = !this.createSharedLink;
     }
 
     openProfile(data: any) {

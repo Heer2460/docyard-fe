@@ -25,6 +25,7 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     activeTabIndex: number = 0;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
+    commentar: boolean = false;
     @Input() _selectedDoc: any = null;
 
     constructor(public appService: AppService,
@@ -116,7 +117,9 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     loadDlDocumentDetails(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1) {
-            this.getShareDocDetails(this.selectedDoc.id);
+            if (this.selectedDoc.dlShareId) {
+                this.getShareDocDetails(this.selectedDoc.dlShareId);
+            }
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
                 .subscribe({
@@ -156,9 +159,9 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
             .subscribe({
                 next: (response: any) => {
                     if (response.status === 200) {
-                        // this.comments = response.body.data;
+                        this.commentar = response.body.data.accessRight === 'COMMENT';
                     } else {
-                        // this.comments = [];
+                        this.commentar = false;
                     }
                 },
                 error: (error: any) => {

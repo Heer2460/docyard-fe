@@ -71,22 +71,24 @@
             </ng-template>
             <ng-template pTemplate="content">
                 <div class="comments-wrapper">
-                    <ng-container [formGroup]="commentForm">
-                        <div class="form-floating mb-2">
+                    <ng-container *ngIf="commentar">
+                        <ng-container [formGroup]="commentForm">
+                            <div class="form-floating mb-2">
                             <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"
                                       id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">Comments</label>
+                                <label for="floatingTextarea">Comments</label>
+                            </div>
+                        </ng-container>
+                        <div class="text-end">
+                            <ng-container *ngIf="!enableEditComment">
+                                <button class="btn btn-sm btn-primary btn-post" (click)="addUserComment()">Post</button>
+                            </ng-container>
+                            <ng-container *ngIf="enableEditComment">
+                                <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update
+                                </button>
+                            </ng-container>
                         </div>
                     </ng-container>
-                    <div class="text-end">
-                        <ng-container *ngIf="!enableEditComment">
-                            <button class="btn btn-sm btn-primary btn-post" (click)="addUserComment()">Post</button>
-                        </ng-container>
-                        <ng-container *ngIf="enableEditComment">
-                            <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserComment()">Update
-                            </button>
-                        </ng-container>
-                    </div>
                     <ul *ngFor="let comment of comments">
                         <li *ngIf="!enableEditComment">
                             <div class="user-details-and-actions">
