@@ -137,8 +137,10 @@ export class GroupComponent implements OnInit {
         if (this.searchGroupForm.invalid) {
             return;
         }
+        let roles = this.searchGroupForm.value.roles == null ? '' : this.searchGroupForm.value.roles;
+
         let url = ApiUrlConstants.GROUP_API_URL + 'search?code=' + this.searchGroupForm.value.code +
-            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status + '&role=' + this.searchGroupForm.value.roles;
+            '&name=' + this.searchGroupForm.value.name + '&status=' + this.searchGroupForm.value.status + '&role=' + roles;
         this.requestsService.getRequest(url)
             .subscribe({
                 next: (response: HttpResponse<any>) => {
@@ -244,7 +246,7 @@ export class GroupComponent implements OnInit {
         this.searchGroupForm.patchValue({
             code: '',
             name: '',
-            roles: '',
+            roles: null,
             status: '',
         });
         this.visibleSearchGroupDialog = true;
@@ -254,7 +256,7 @@ export class GroupComponent implements OnInit {
         this.searchGroupForm.patchValue({
             code: '',
             name: '',
-            roles: '',
+            roles: null,
             status: '',
         });
         this.searchGroupForm.markAsUntouched();
@@ -271,6 +273,9 @@ export class GroupComponent implements OnInit {
     }
 
     showAddGroupPopupAction() {
+        this.addGroupForm.reset();
+
+        this.addGroupForm.markAsUntouched();
         this.addGroupForm.patchValue({
             code: '',
             name: '',
@@ -278,7 +283,6 @@ export class GroupComponent implements OnInit {
             role: null,
             status: 'Active',
         });
-        this.addGroupForm.markAsUntouched();
         this.visibleAddGroupDialog = true;
     }
 
@@ -304,7 +308,7 @@ export class GroupComponent implements OnInit {
             code: '',
             name: '',
             remarks: '',
-            role: '',
+            role: null,
             status: 'Active',
         });
         this.addGroupForm.markAsUntouched();
