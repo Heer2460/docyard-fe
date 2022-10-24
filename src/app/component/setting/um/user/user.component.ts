@@ -208,7 +208,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.RESET_PASSWORD.value,
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
@@ -265,7 +265,7 @@ export class UserComponent implements OnInit {
                 {
                     label: 'Reset Password',
                     icon: 'icon-edit',
-                    visible: this.roleActions.RESET_PASSWORD.value,
+                    visible: this.roleActions.USER_EDIT.value,
                     command: () => this.showResetPasswordDialogAction(this.selectedUser)
                 },
                 {
