@@ -12,7 +12,7 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {BehaviorSubject, forkJoin, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
@@ -61,14 +61,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
         comments: true,
         sharing: true,
     };
-    destroy: Subject<boolean> = new Subject();
     shareTypes = [
         {label: 'Anyone with the link', value: 'ANYONE'},
         {label: 'Restricted', value: 'RESTRICTED'}
     ];
     shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
+        {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
+        {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
 
     constructor(public appService: AppService,
@@ -98,24 +97,19 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
-        forkJoin([users, departments])
-            .pipe(takeUntil(this.destroy))
-            .subscribe(
-                {
-                    next: (response: HttpResponse<any>[]) => {
-                        if (response[0].status === 200) {
-                            this.users = response[0].body.data;
-                        }
-                        if (response[1].status === 200) {
-                            this.departments = response[1].body.data;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Document Library');
+        this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.departments = response.body.data;
+                    } else {
+                        this.departments = [];
                     }
-                });
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     buildDocumentActions() {
@@ -604,13 +598,17 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.shareWithUserForm.patchValue({
             message: null,
             publicUrlLink: null,
-            shareType: 'ANYONE',
+            shareType: selectedDoc.shareType ? selectedDoc.shareType : 'ANYONE',
             collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
+            this.createSharedLink = true;
+            this.onShareTypeChange();
+        }
     }
 
     hideShareDocumentDialog() {
@@ -628,6 +626,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.get(['collaborators'])?.setValue([]);
         } else {
             this.shareWithUserForm.get(['collaborators'])?.enable();
+            this.shareWithUserForm.get(['collaborators'])?.setValue([]);
             this.shareWithUserForm.get(['publicUrlLink'])?.disable();
             this.shareWithUserForm.get(['publicUrlLink'])?.setValue('');
         }
@@ -693,16 +692,29 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.controls['collaborators'].value.pop();
         } else {
             if (value != this.appService.userInfo.email) {
-                let user = this.users.find(user => user.email === value);
-                if (!user) {
-                    this.shareWithUserForm.controls['collaborators'].value.pop();
-                    this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
-                }
+                this.checkUserEmail(value);
             } else {
                 this.shareWithUserForm.controls['collaborators'].value.pop();
-                this.toastService.error('You can\'nt share with yourself.', 'Share with Others');
+                this.toastService.error('You can\'t share with yourself.', 'Share with Others');
             }
         }
+    }
+
+    checkUserEmail(email: string): any {
+        this.requestsService.getRequest(ApiUrlConstants.USER_EMAIL_API_URL.replace('{email}', email))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                    } else {
+                        this.shareWithUserForm.controls['collaborators'].value.pop();
+                        this.shareWithUserForm.get(['collaborators'])?.setValue(this.shareWithUserForm.get('collaborators')?.value);
+                        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     copyLinkToClipboard(shareLink: any) {
@@ -712,9 +724,42 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.toastService.success('Share Link has been copied.', 'Share Document');
     }
 
+    onUnShareDocument(data: any) {
+        this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_REMOVE_SHARE_API_URL, this.buildRemoveShareRequest(data))
+            .subscribe({
+                    next: (response: HttpResponse<any>) => {
+                        if (response.status === 200) {
+                            this.toastService.success('Document has been removed successfully.', 'Sharing removed');
+                            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                            this.hideShareDocumentDialog();
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Remove Share Document');
+                    }
+                }
+            );
+    }
+
+    buildRemoveShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: data.id,
+            folder: data.folder,
+            shareType: 'NO_SHARING',
+            shareLink: '',
+            message: '',
+            departmentId: '',
+            dlCollaborators: [],
+            sharePermission: '',
+            appContextPath: '',
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
+    }
+
     ngOnDestroy(): void {
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SELECTED_FOLDER_BREADCRUMB));
-        this.destroy.next(true);
     }
 }

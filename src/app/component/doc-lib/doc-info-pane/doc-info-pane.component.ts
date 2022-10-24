@@ -118,7 +118,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
     }
 
-    loadDlDocumentDetails(event: any) {
+    loadDlDocumentComments(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1 && this.selectedDoc) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
@@ -156,6 +156,12 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     addUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             message: this.commentForm.value.comments,
             docId: this.selectedDoc.id,
@@ -169,7 +175,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                     if (response.status === 200) {
                         this.commentForm.reset();
                         this.toastService.success('Comment added successfully', 'Comment');
-                        this.loadDlDocumentDetails({index: 1});
+                        this.loadDlDocumentComments({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -191,6 +197,12 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     updateUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             id: this.commentForm.value.id,
             message: this.commentForm.value.comments,
@@ -206,7 +218,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.commentForm.reset();
                         this.enableEditComment = false;
                         this.toastService.success('Comment updated successfully', 'Comment');
-                        this.loadDlDocumentDetails({index: 1});
+                        this.loadDlDocumentComments({index: 1});
                     }
                 },
                 error: (error: any) => {
@@ -224,7 +236,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             .subscribe({
                 next: (response: any) => {
                     if (response.status === 200) {
-                        this.loadDlDocumentDetails({index: 1});
+                        this.loadDlDocumentComments({index: 1});
                     }
                 },
                 error: (error: any) => {

@@ -9,7 +9,7 @@ import {MenuItem} from "primeng/api";
 import {AppConstants} from "../../../util/app.constants";
 
 @Component({
-    selector: 'swm-info-pane-component',
+    selector: 'doc-info-pane-component',
     templateUrl: './swm-doc-info-pane.template.html',
     styleUrls: ['./swm-doc-info-pane.component.less']
 })
@@ -116,6 +116,7 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     loadDlDocumentDetails(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1) {
+            this.getShareDocDetails(this.selectedDoc.id);
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
                 .subscribe({
@@ -150,7 +151,29 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
         }
     }
 
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        // this.comments = response.body.data;
+                    } else {
+                        // this.comments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
     addUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             message: this.commentForm.value.comments,
             docId: this.selectedDoc.id,
@@ -186,6 +209,12 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     updateUserComment() {
+        let comments = this.commentForm.value.comments;
+        let trimmedComments = comments.trim();
+        if (trimmedComments.length == 0) {
+            this.toastService.warning('Empty comment can\'t be posted.', 'Comment');
+            return;
+        }
         let data = {
             id: this.commentForm.value.id,
             message: this.commentForm.value.comments,

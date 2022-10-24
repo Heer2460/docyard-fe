@@ -166,12 +166,30 @@ export class AppService {
         }
     }
 
+    public getSWMSelectedFolderId(): any {
+        const swmSelFolderId: number = Number(localStorage.getItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_ID)));
+        if (swmSelFolderId) {
+            return swmSelFolderId;
+        } else {
+            return 0;
+        }
+    }
+
     public getLoggedInUserId(): number {
         return Number.parseInt(localStorage.getItem(window.btoa('loggedInUserId')) + '');
     }
 
     public getFileNameExtracted(text: any) {
-        let count = 50;
-        return text.slice(0, count) + (text.length > count ? " ... " : "");
+        let count = 34;
+        
+        if(text.length < count) return text;
+        
+        const txtArray = text.split('.');
+        const ext = txtArray.pop();
+        const rejoinedText = txtArray.join('');
+    
+        const slicedStr = rejoinedText.slice(0, count);
+        
+        return slicedStr.substring(0, slicedStr.length - 5) + '... ' + slicedStr.substring(slicedStr.length - 5) + "." +ext;
     }
 }

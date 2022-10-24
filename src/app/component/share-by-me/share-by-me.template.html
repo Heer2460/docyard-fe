@@ -87,7 +87,7 @@
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -219,9 +219,18 @@
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission"
-                        optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
@@ -265,7 +274,7 @@
     <ng-template pTemplate="footer">
         <div class="row">
             <div class="col-6 text-start">
-                <button (click)="onUnShareDocument(selectedDoc)" class="btn btn-sm btn-primary me-2">Remove Sharing
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared" class="btn btn-sm btn-primary me-2">Remove Sharing
                 </button>
             </div>
             <div class="col-6 text-right">

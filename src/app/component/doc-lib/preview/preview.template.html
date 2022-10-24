@@ -4,17 +4,18 @@
             <ng-container imagePreviewActions>
                 <div class="row actions-row">
                     <div class="col-6">
-                        <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()">
+                        <button (click)="downloadFile()" class="btn btn-sm btn-secondary me-2">
                             <i class="icon-download"></i>
                             Download
                         </button>
-                        <button class="btn btn-sm btn-secondary me-2" (click)="showShareDocumentDialog()">
+                        <button (click)="showShareDocumentDialog(selectedDoc)" *ngIf="sharedPreview !== 'swm'"
+                                class="btn btn-sm btn-secondary me-2">
                             <i class="icon-share"></i>
                             Share
                         </button>
                     </div>
                     <div class="col-6 d-flex align-items-center justify-content-end">
-                        <button class="btn btn-sm btn-transparent ms-4" (click)="backToDocLibAction()">
+                        <button (click)="backToDocLibAction()" class="btn btn-sm btn-transparent ms-4">
                             <i class="icon-times"></i>
                         </button>
                     </div>
@@ -22,35 +23,36 @@
             </ng-container>
         </nav-component>
         <section class="main-page-wrapper">
-            <div class="left" [ngClass]="showDocInfoPane ? 'collapsed': ''">
+            <div [ngClass]="showDocInfoPane ? 'collapsed': ''" class="left">
                 <div class="image-container">
                     <ng-container
-                        *ngIf="getValidExtension(); else otherFileElseCase">
+                            *ngIf="getValidExtension(); else otherFileElseCase">
                         <ng-container *ngIf="checkValidImageFile(); else elseFileCase">
-                            <img class="file-type-thumbnail"
-                                 src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
-                                 alt="{{selectedDoc.extension}}">
+                            <img alt="{{selectedDoc.extension}}"
+                                 class="file-type-thumbnail"
+                                 src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg">
                         </ng-container>
                         <ng-template #elseFileCase>
                             <div class="file-and-msg-prev-container">
-                                <img class="file-type-thumbnail"
-                                     src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
-                                     alt="{{selectedDoc.extension}}">
-                                <p>We’re sorry, we can’t preview this file type in your web browser. To view this content please download and open it on your device.</p>
+                                <img alt="{{selectedDoc.extension}}"
+                                     class="file-type-thumbnail"
+                                     src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg">
+                                <p>We’re sorry, we can’t preview this file type in your web browser. To view this
+                                    content please download and open it on your device.</p>
                             </div>
                         </ng-template>
                     </ng-container>
                     <ng-template #otherFileElseCase>
-                        <img class="file-type-thumbnail" src="./assets/images/svg/icons/other.svg" alt="other">
+                        <img alt="other" class="file-type-thumbnail" src="./assets/images/svg/icons/other.svg">
                     </ng-template>
 
                 </div>
                 <div class="image-controls">
                     <div class="controllers">
-                        <button class="btn btn-control btn-prev" (click)="openPrevFileAction()">
+                        <button (click)="openPrevFileAction()" *ngIf="!sharedPreview" class="btn btn-control btn-prev">
                             <i class="icon-arrow-left"></i>
                         </button>
-                        <button class="btn btn-control btn-next" (click)="openNextFileAction()">
+                        <button (click)="openNextFileAction()" *ngIf="!sharedPreview" class="btn btn-control btn-next">
                             <i class="icon-arrow-right"></i>
                         </button>
                     </div>
@@ -58,17 +60,19 @@
                         <div class="metadata">
                             <div class="image-meta">
                                 <p class="image-name">{{selectedDoc?.name}}</p>
-                                <button class="btn btn-star" (click)="favouriteDocument(selectedDoc)">
-                                    <i class="icon-star-filled" *ngIf="selectedDoc?.favourite"></i>
-                                    <i class="icon-star" *ngIf="!selectedDoc?.favourite"></i>
+                                <button (click)="favouriteDocument(selectedDoc)" *ngIf="sharedPreview !== 'swm'"
+                                        class="btn btn-star">
+                                    <i *ngIf="selectedDoc?.favourite" class="icon-star-filled"></i>
+                                    <i *ngIf="!selectedDoc?.favourite" class="icon-star"></i>
                                 </button>
                             </div>
-                            <p class="image-counter">{{currentDocIndex + 1}} of {{dlDocuments.length}}</p>
+                            <p *ngIf="!sharedPreview" class="image-counter">{{currentDocIndex + 1}}
+                                of {{dlDocuments.length}}</p>
                         </div>
-                        <div class="image-magnifier" *ngIf="checkValidImageFile()">
+                        <div *ngIf="checkValidImageFile()" class="image-magnifier">
                             <ul>
                                 <li>
-                                    <button class="btn btn-zoom-out" (click)="magnifierZoomOutAction()">
+                                    <button (click)="magnifierZoomOutAction()" class="btn btn-zoom-out">
                                         <i class="icon-minus"></i>
                                     </button>
                                 </li>
@@ -76,7 +80,7 @@
                                     {{magnifierZoom + 100}}%
                                 </li>
                                 <li>
-                                    <button class="btn btn-zoom-in" (click)="magnifierZoomInAction()">
+                                    <button (click)="magnifierZoomInAction()" class="btn btn-zoom-in">
                                         <i class="icon-plus"></i>
                                     </button>
                                 </li>
@@ -107,15 +111,25 @@
                 <label for="shareType">General Access</label>
             </span>
         </div>
-        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
+        <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
             <label for="collaborators">Invite People</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission" optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
@@ -135,7 +149,8 @@
             <div class="mb-3">
                 <label>Share link</label>
                 <div class="form-check form-switch">
-                    <input (change)="onShareTypeChange();createSharedLinkAction()" [checked]="createSharedLink" class="form-check-input" id="shareLinkSwitch"
+                    <input (change)="onShareTypeChange();createSharedLinkAction()" [checked]="createSharedLink"
+                           class="form-check-input" id="shareLinkSwitch"
                            role="switch"
                            type="checkbox">
                     <label class="form-check-label" for="shareLinkSwitch">

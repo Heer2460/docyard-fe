@@ -38,15 +38,13 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     shareWithUserForm: FormGroup = new FormGroup({});
     createSharedLink: boolean = false;
     departments: any[] = [];
-    users: UserDTO[] = [];
-    destroy: Subject<boolean> = new Subject();
     shareTypes = [
         {label: 'Anyone with the link', value: 'ANYONE'},
         {label: 'Restricted', value: 'RESTRICTED'}
     ];
     shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
+        {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
+        {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
 
     constructor(public appService: AppService,
@@ -70,24 +68,19 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
-        forkJoin([users, departments])
-            .pipe(takeUntil(this.destroy))
-            .subscribe(
-                {
-                    next: (response: HttpResponse<any>[]) => {
-                        if (response[0].status === 200) {
-                            this.users = response[0].body.data;
-                        }
-                        if (response[1].status === 200) {
-                            this.departments = response[1].body.data;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Shared By Me');
+        this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.departments = response.body.data;
+                    } else {
+                        this.departments = [];
                     }
-                });
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     buildDocumentActions() {
@@ -101,8 +94,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             {
                 label: 'Download',
                 icon: 'icon-download',
-                command: () => {
-                }
+                command: () => {}
             }
         ];
     }
@@ -177,7 +169,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         if (rowData.parentId == null) {
             rowData.parentId = '';
         }
-        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}`, '_blank');
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('sbm')}`, '_blank');
     }
 
     setGridDisplay() {
@@ -211,8 +203,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
-        console.log(breadcrumb)
-        console.log(index)
         if (breadcrumb.id) {
             this.loadShareByMeData(breadcrumb.id);
             this.breadcrumbs.pop();
@@ -301,14 +291,14 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.shareWithUserForm.patchValue({
             message: null,
             publicUrlLink: null,
-            shareType: 'ANYONE',
+            shareType: selectedDoc.shareType ? selectedDoc.shareType : 'ANYONE',
             collaborators: [],
             sharePermission: 'VIEW',
             departmentId: null
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
-        if (selectedDoc.shared) {
+        if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
             this.createSharedLink = true;
             this.onShareTypeChange();
         }
@@ -318,7 +308,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.shareDocumentDialog = false;
     }
 
-    // share demo code
     onShareTypeChange() {
         if (this.shareWithUserForm.get('shareType')?.value === 'ANYONE') {
             this.shareWithUserForm.get(['collaborators'])?.disable();
@@ -328,6 +317,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.get(['collaborators'])?.setValue([]);
         } else {
             this.shareWithUserForm.get(['collaborators'])?.enable();
+            this.shareWithUserForm.get(['collaborators'])?.setValue([]);
             this.shareWithUserForm.get(['publicUrlLink'])?.disable();
             this.shareWithUserForm.get(['publicUrlLink'])?.setValue('');
         }
@@ -338,12 +328,9 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         if (this.selectedDoc.folder) {
             openURl += '/share/folder?id=' + window.btoa(this.selectedDoc?.id || '');
             openURl += '&name=' + window.btoa(this.selectedDoc.name || '');
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(btoa('tenantId')));
         } else {
             openURl += '/share/document-view?guid=';
             openURl += this.selectedDoc.versionGUId;
-            // openURl += this.selectedDoc?.versionName;
-            // openURl += '&tenantId=' + window.atob(localStorage.getItem(window.btoa('tenantId')));
             openURl += '&fromFolderShared=' + false;
         }
         return openURl;
@@ -356,21 +343,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 return;
             }
         }
-        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
-        let shareObj = {
-            dlDocId: this.selectedDoc.id,
-            folder: this.selectedDoc.folder,
-            shareType: data.shareType,
-            shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
-            departmentId: data.departmentId,
-            dlCollaborators: data.collaborators ? data.collaborators : [],
-            sharePermission: data.sharePermission,
-            appContextPath: window.location.origin,
-            externalUserShareLink: '',
-            userId: String(userId),
-        };
-        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, shareObj)
+        this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
@@ -385,6 +358,23 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             });
     }
 
+    buildShareRequest(data: any) {
+        let userId = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
+        return {
+            dlDocId: this.selectedDoc.id,
+            folder: this.selectedDoc.folder,
+            shareType: data.shareType,
+            shareLink: this.shareLinkInput?.nativeElement.value || '',
+            message: data.message,
+            departmentId: data.departmentId,
+            dlCollaborators: data.collaborators ? data.collaborators : [],
+            sharePermission: data.sharePermission,
+            appContextPath: window.location.origin,
+            externalUserShareLink: '',
+            userId: String(userId),
+        };
+    }
+
     onAddCollaborator(value: any) {
         let regexp = new RegExp('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}');
         let valid: boolean = regexp.test(value);
@@ -393,16 +383,29 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             this.shareWithUserForm.controls['collaborators'].value.pop();
         } else {
             if (value != this.appService.userInfo.email) {
-                let user = this.users.find(user => user.email === value);
-                if (!user) {
-                    this.shareWithUserForm.controls['collaborators'].value.pop();
-                    this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
-                }
+                this.checkUserEmail(value);
             } else {
                 this.shareWithUserForm.controls['collaborators'].value.pop();
-                this.toastService.error('You can\'nt share with yourself.', 'Share with Others');
+                this.toastService.error('You can\'t share with yourself.', 'Share with Others');
             }
         }
+    }
+
+    checkUserEmail(email: string): any {
+        this.requestsService.getRequest(ApiUrlConstants.USER_EMAIL_API_URL.replace('{email}', email))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                    } else {
+                        this.shareWithUserForm.controls['collaborators'].value.pop();
+                        this.shareWithUserForm.get(['collaborators'])?.setValue(this.shareWithUserForm.get('collaborators')?.value);
+                        this.toastService.error('Your are sharing outside the team, this is not allowed.', 'Share with Others');
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     copyLinkToClipboard(shareLink: any) {
@@ -412,18 +415,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.toastService.success('Share Link has been copied.', 'Share Document');
     }
 
-    ngOnDestroy(): void {
-        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID));
-        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_BREADCRUMB));
-        this.destroy.next(true);
-    }
-
     onUnShareDocument(data: any) {
         this.requestsService.deleteRequest(ApiUrlConstants.DL_DOCUMENT_REMOVE_SHARE_API_URL, this.buildRemoveShareRequest(data))
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been removed successfully.', 'Remove');
+                            this.toastService.success('Document has been removed successfully.', 'Sharing removed');
                             this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
                             this.hideShareDocumentDialog();
                         }
@@ -450,5 +447,10 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             externalUserShareLink: '',
             userId: String(userId),
         };
+    }
+
+    ngOnDestroy(): void {
+        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_ID));
+        localStorage.removeItem(window.btoa(AppConstants.SBM_SELECTED_FOLDER_BREADCRUMB));
     }
 }
