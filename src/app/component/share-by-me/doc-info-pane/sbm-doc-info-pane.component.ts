@@ -23,9 +23,9 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
+    selectedShareDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
-    @Input() _selectedDoc: any = null;
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -35,6 +35,8 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
             this.showDocInfoPane = value;
         });
     }
+
+    @Input() _selectedDoc: any = null;
 
     get selectedDoc(): any {
         return this._selectedDoc;
@@ -55,26 +57,18 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
             {
                 label: 'Viewer',
                 icon: 'icon-eye',
-                command: () => {
-                }
+                command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                // styleClass: 'p-menuitem-active',
             },
             {
                 label: 'Comment',
                 icon: 'icon-edit',
-                command: () => {
-                }
+                command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
             },
-            /*{
-                label: 'Editor',
-                icon: 'icon-edit',
-                command: () => {
-                }
-            },*/
             {
                 label: 'Remove',
                 icon: 'icon-trash',
-                command: () => {
-                }
+                command: () => this.removeSharing(this.selectedShareDoc)
             }
         ];
     }
@@ -88,6 +82,102 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
             id: [''],
             comments: [''],
         });
+    }
+
+    activeMenu(event: any) {
+        // console.log(event);
+        // let menuitem = document.getElementsByClassName("p-menuitem-link");
+        // console.log(menuitem);
+    }
+
+    onMenuClicked(data: any) {
+        this.selectedShareDoc = data;
+        // console.log(data);
+        if (this.selectedShareDoc.accessRight == 'VIEW' || this.selectedShareDoc.accessRight == 'VIEWER') {
+            this.sharingMenuItems = [
+                {
+                    label: 'Comment',
+                    icon: 'icon-edit',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        } else if (this.selectedShareDoc.accessRight == 'COMMENT' || this.selectedShareDoc.accessRight == 'COMMENTOR') {
+            this.sharingMenuItems = [
+                {
+                    label: 'Viewer',
+                    icon: 'icon-eye',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        } else {
+            this.sharingMenuItems = [
+                {
+                    label: 'Viewer',
+                    icon: 'icon-eye',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                },
+                {
+                    label: 'Comment',
+                    icon: 'icon-edit',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        }
+    }
+
+    updateSharingPermission(shareData: any, permission: string) {
+        if (this.selectedDoc && shareData) {
+            let url = ApiUrlConstants.DL_DOCUMENT_SHARE_UPDATE_PERMISSION_API_URL
+                .replace("{dlDocId}", String(this.selectedDoc.id))
+                .replace("{collId}", String(shareData.dlCollId))
+                .replace("{accessRight}", permission);
+            this.requestsService.putRequest(url, {})
+                .subscribe({
+                        next: (response: HttpResponse<any>) => {
+                            if (response.status === 200) {
+                                this.toastService.success('Document permission has been updated', 'Update Permission');
+                                this.loadDlDocumentDetails({index: 2});
+                            }
+                        },
+                        error: (error: any) => {
+                            this.appService.handleError(error, 'Update Permission');
+                        }
+                    }
+                );
+        }
+    }
+
+    removeSharing(shareData: any) {
+        if (this.selectedDoc && shareData && shareData.dlCollId) {
+            this.requestsService.deleteRequest(ApiUrlConstants.REMOVE_COLLABORATOR_SHARE_API_URL
+                .replace('{dlDocId}', String(this.selectedDoc.id)).replace('{collabId}', String(shareData.dlCollId)))
+                .subscribe({
+                    next: (response: any) => {
+                        if (response.status === 200) {
+                            this.toastService.success(response.body.message, 'Remove Collaborator');
+                            this.loadDlDocumentDetails({index: 2});
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Remove Collaborator');
+                    }
+                });
+        }
     }
 
     getMetaDocumentByID() {
