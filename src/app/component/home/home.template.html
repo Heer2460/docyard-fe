@@ -24,7 +24,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Images"
                                              [style.width.%]="dashboardStats?.imageProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.imageProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.imageProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -46,7 +47,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Videos"
                                              [style.width.%]="dashboardStats?.videosProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.videosProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.videosProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -68,7 +70,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Documents"
                                              [style.width.%]="dashboardStats?.docsProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.docsProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.docsProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -90,7 +93,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Others"
                                              [style.width.%]="dashboardStats?.othersProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.othersProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.othersProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -119,7 +123,7 @@
                                              alt="icon">
                                     </div>
                                     <div class="file-details">
-                                        <p class="title">{{gridItem?.name}}</p>
+                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name}}</p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
                                             <a role="button"

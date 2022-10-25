@@ -194,4 +194,11 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/profile']);
         }
     }
+
+    openFile(rowData: any) {
+        if (rowData.parentId == null) {
+            rowData.parentId = '';
+        }
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('doclib')}`, '_blank');
+    }
 }
