@@ -1,10 +1,10 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
 import {ApiUrlConstants} from "../../util/api.url.constants";
-import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpEventType, HttpResponse} from "@angular/common/http";
 import {RequestService} from "../../service/request.service";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
@@ -25,6 +25,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     @ViewChild('fileUpload') fileUpload: ElementRef | undefined;
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
+    @ViewChildren('folderName') folderName: ElementRef | undefined;
 
     filesToUpload: any[] = [];
 
@@ -338,6 +339,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
         if (breadcrumb.id) {
+            this.dlFolderId = breadcrumb.id;
+            localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), breadcrumb.id);
             this.loadDocumentLibrary(breadcrumb.id, false);
             this.breadcrumbs.pop();
         } else if (index == 1) {
@@ -566,7 +569,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
                         let folderId = Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)));
                         this.loadDocumentLibrary(String(folderId), false);
                     }
-                }, error: err => {
+                }, error: (err: any) => {
+                    const errorMsg = err.error ? JSON.parse(err.error).message : 'Upload files of size greater than 200MB.';
+                    this.toastService.error(errorMsg, 'Upload file');
                     oncomplete(err);
                 }
             });

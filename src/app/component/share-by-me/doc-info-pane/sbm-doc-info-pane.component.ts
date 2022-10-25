@@ -84,15 +84,8 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
         });
     }
 
-    activeMenu(event: any) {
-        // console.log(event);
-        // let menuitem = document.getElementsByClassName("p-menuitem-link");
-        // console.log(menuitem);
-    }
-
     onMenuClicked(data: any) {
         this.selectedShareDoc = data;
-        // console.log(data);
         if (this.selectedShareDoc.accessRight == 'VIEW' || this.selectedShareDoc.accessRight == 'VIEWER') {
             this.sharingMenuItems = [
                 {
