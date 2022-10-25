@@ -339,7 +339,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     onShare(data: any) {
         if (data.shareType === 'RESTRICTED') {
             if (data.collaborators.length <= 0) {
-                this.toastService.error('You can\'nt share without adding collaborator.', 'Share Document');
+                this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
         }
