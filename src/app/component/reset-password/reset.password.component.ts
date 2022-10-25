@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
                             if (error.status === 404) {
                                 this.toastService.error('Invalid Link, please generate again.', 'Reset Password');
                             } else {
-                                this.appService.handleError(error, 'reset-password');
+                                this.appService.handleError(error, 'Reset Password');
                             }
                         }
                     );
@@ -98,7 +98,7 @@ export class ResetPasswordComponent implements OnInit {
                             }
                         },
                         (error: any) => {
-                            this.appService.handleError(error, 'reset-password');
+                            this.appService.handleError(error, 'Reset Password');
                         }
                     );
             } else {
