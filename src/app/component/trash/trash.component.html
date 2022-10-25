@@ -148,7 +148,12 @@
                                     <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
-                                <td></td>
+                                <td>
+                                    <div>
+                                        <span *ngIf="row.favourite"><i class="icon-star-filled"></i></span>
+                                        <span *ngIf="!row.favourite"><i class="icon-star"></i></span>
+                                    </div>
+                                </td>
                                 <td>
                                     <button class="btn btn-tiered-menu"
                                             (click)="menu.toggle($event);onMenuClicked(row)">

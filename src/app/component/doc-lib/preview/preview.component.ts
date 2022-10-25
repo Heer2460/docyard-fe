@@ -10,6 +10,7 @@ import {AppUtility} from "../../../util/app.utility";
 import * as FileSaver from "file-saver";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Location} from "@angular/common";
+import {RoleActionConstants} from "../../../util/role.actions.constants";
 
 @Component({
     selector: 'preview-component',
@@ -41,6 +42,12 @@ export class PreviewComponent implements OnInit {
         comments: true,
         sharing: true,
     };
+    routePreviewConstants = {
+        SBM: 'sbm',
+        SWM: 'swm',
+        SEARCH: 'search',
+        DOCLIB: 'doclib',
+    };
     shareTypes = [
         {label: 'Anyone with the link', value: 'ANYONE'},
         {label: 'Restricted', value: 'RESTRICTED'}
@@ -68,11 +75,11 @@ export class PreviewComponent implements OnInit {
         this.setInitialProps();
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.queryParams = params;
+            const folderId = this.queryParams.folderId ? this.queryParams.folderId : '0'
+            this.loadDocumentLibrary(folderId, false);
             if (this.queryParams.shared) {
                 this.sharedPreview = window.atob(this.queryParams.shared);
             }
-            const folderId = this.queryParams.folderId ? this.queryParams.folderId : '0'
-            this.loadDocumentLibrary(folderId, false);
         })
 
         this.buildForms();
@@ -236,7 +243,23 @@ export class PreviewComponent implements OnInit {
     }
 
     backToDocLibAction() {
-        this.router.navigate(['/doc-lib']);
+        switch (this.sharedPreview) {
+            case 'doclib':
+                this.router.navigate(['/doc-lib']);
+                break;
+            case 'search':
+                this.router.navigate(['/search']);
+                break;
+            case 'sbm':
+                this.router.navigate(['/shared-by-me']);
+                break;
+            case 'swm':
+                this.router.navigate(['/shared-with-me']);
+                break;
+            default:
+                this.router.navigate(['/home']);
+        }
+
     }
 
     // share code

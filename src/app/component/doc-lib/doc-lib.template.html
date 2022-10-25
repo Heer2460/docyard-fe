@@ -101,16 +101,18 @@
                                             </p>
                                             <p class="file-size">
                                                 {{item?.size}}
-                                                <span *ngIf="item.folder === false" class="comments-count me-1"
+                                                <span *ngIf="item.folder === false && item.dlDocumentCommentDTOList?.length > 0"
+                                                      class="comments-count me-1"
                                                       pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
                                                       tooltipPosition="top">
                                                     <i class="icon-comments"></i>
                                                     <span
-                                                            class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                            class="comments-count ms-1">{{item.dlDocumentCommentDTOList?.length}}</span>
                                                 </span>
                                             </p>
                                         </div>
-                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)"
+                                                class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -323,7 +325,7 @@
         <div class="row">
             <div class="col mb-3">
                 <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text" id="folderName">
+                    <input class="form-control" formControlName="name" id="folderName" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'required')">

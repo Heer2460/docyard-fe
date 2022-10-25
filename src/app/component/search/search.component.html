@@ -12,13 +12,13 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let index = index; let lastIndex = last">
-                                    <li class="breadcrumb-item" [ngClass]="breadcrumb.active ? 'active' : ''">
+                                        *ngFor="let breadcrumb of breadcrumbs; let index = index; let lastIndex = last">
+                                    <li [ngClass]="breadcrumb.active ? 'active' : ''" class="breadcrumb-item">
                                         <ng-container *ngIf="lastIndex; else elseBlock">
                                             <a>{{breadcrumb.label}}</a>
                                         </ng-container>
                                         <ng-template #elseBlock>
-                                            <a role="button" (click)="navigateToRoute(breadcrumb)">
+                                            <a (click)="navigateToRoute(breadcrumb)" role="button">
                                                 {{breadcrumb.label}}
                                             </a>
                                         </ng-template>
@@ -28,12 +28,12 @@
                         </div>
                     </ng-container>
                     <div class="btn-group input-group-display-listing">
-                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? 'active': ''"
-                                (click)="setGridDisplay()">
+                        <button (click)="setGridDisplay()" [ngClass]="showGridDisplay ? 'active': ''"
+                                class="btn btn-primary">
                             <i class="icon-display-grid"></i>
                         </button>
-                        <button class="btn btn-primary" [ngClass]="showGridDisplay ? '': 'active'"
-                                (click)="setListDisplay()">
+                        <button (click)="setListDisplay()" [ngClass]="showGridDisplay ? '': 'active'"
+                                class="btn btn-primary">
                             <i class="icon-display-listing"></i>
                         </button>
                     </div>
@@ -49,16 +49,16 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
-                                                    <img src="./assets/images/svg/icons/{{item.extension}}.svg"
-                                                         alt="{{item.extension}}">
+                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                    <img alt="{{item.extension}}"
+                                                         src="./assets/images/svg/icons/{{item.extension}}.svg">
                                                 </ng-container>
                                                 <ng-template #otherFileElseCase>
-                                                    <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                    <img alt="other" src="./assets/images/svg/icons/other.svg">
                                                 </ng-template>
                                             </ng-container>
                                             <img *ngIf="item.folder == true"
-                                                 src="./assets/images/svg/icons/folder.svg" alt="icon">
+                                                 alt="icon" src="./assets/images/svg/icons/folder.svg">
                                         </div>
                                         <div class="file-details">
                                             <p class="title" role="button">{{item?.name}}</p>
@@ -68,9 +68,9 @@
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event)">
-                                            <p-tieredMenu #menu [model]="menuItems" appendTo="body"
-                                                          [popup]="true"></p-tieredMenu>
+                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                            <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                          appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
                                         </button>
                                     </div>
@@ -80,13 +80,13 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!showGridDisplay">
-                    <p-table styleClass="doc-data-table" [value]="dlDocuments" [paginator]="true"
-                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
+                    <p-table [paginator]="true" [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10"
+                             [value]="dlDocuments" styleClass="doc-data-table">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>
                                     <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
                                         <label class="form-check-label" for="flexCheckDefault"></label>
                                     </div>
                                 </th>
@@ -103,35 +103,40 @@
                                 <th class="actions-th"></th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-row>
+                        <ng-template let-row pTemplate="body">
                             <tr>
                                 <td>
                                     <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.selected"
-                                               [attr.id]="'checkbox-' + row.id">
-                                        <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
+                                        <input [attr.id]="'checkbox-' + row.id" [checked]="row.selected" class="form-check-input"
+                                               type="checkbox">
+                                        <label [attr.for]="'checkbox-' + row.id" class="form-check-label"></label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
-                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
-                                                <img src="./assets/images/svg/icons/{{row.extension}}.svg"
-                                                     alt="{{row.extension}}">
+                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                                <img alt="{{row.extension}}"
+                                                     src="./assets/images/svg/icons/{{row.extension}}.svg">
                                             </ng-container>
                                             <ng-template #otherFileElseCase>
-                                                <img src="./assets/images/svg/icons/other.svg" alt="other">
+                                                <img alt="other" src="./assets/images/svg/icons/other.svg">
                                             </ng-template>
                                         </ng-container>
-                                        <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
-                                             alt="icon">
-                                        <span role="button" (click)="navigateToDocLib(row.id)">{{row.name}}</span>
+                                        <img *ngIf="row.folder == true" alt="icon"
+                                             src="./assets/images/svg/icons/folder.svg">
+                                        <ng-container *ngIf="row.folder == true; else elseCase">
+                                            <span (click)="navigateToDocLib(row.id)" role="button">{{row.name}}</span>
+                                        </ng-container>
+                                        <ng-template #elseCase>
+                                            <span (click)="openFile(row)" role="button">{{row.name}}</span>
+                                        </ng-template>
                                     </div>
                                 </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author">{{row.updatedByName}}</a>
+                                    <a class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
@@ -144,10 +149,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-tiered-menu"
-                                            (click)="menu.toggle($event);onMenuClicked(row)">
-                                        <p-tieredMenu appendTo="body" #menu [model]="menuItems"
-                                                      [popup]="true"></p-tieredMenu>
+                                    <button (click)="menu.toggle($event);onMenuClicked(row)"
+                                            class="btn btn-tiered-menu">
+                                        <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                      appendTo="body"></p-tieredMenu>
                                         <i class="icon-menu-horizontal"></i>
                                     </button>
                                 </td>
@@ -169,33 +174,3 @@
         </div>
     </div>
 </section>
-<p-dialog [(visible)]="renameDocumentDialog" [modal]="true" styleClass="">
-    <ng-template pTemplate="header">
-        <div class="header-title">
-            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
-            <span>Rename {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
-        </div>
-    </ng-template>
-    <form [formGroup]="renameDocumentForm">
-        <div class="row">
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input class="form-control" formControlName="name" id="name" placeholder="Name" type="text">
-                    <label>Name</label>
-                </div>
-                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'required')">
-                    {{ appUtility.makeErrorMessage("Name", 'required') }}
-                </small>
-                <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
-                </small>
-            </div>
-        </div>
-    </form>
-    <ng-template pTemplate="footer">
-        <button (click)="hideRenameDocumentPopup()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="onRenameDocument()" [disabled]="renameDocumentForm.invalid" class="btn btn-sm btn-primary"
-                type="button">Update
-        </button>
-    </ng-template>
-</p-dialog>
