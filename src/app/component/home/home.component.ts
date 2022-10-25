@@ -153,7 +153,7 @@ export class HomeComponent implements OnInit {
     onRenameDocument() {
         let data = {
             id: this.selectedDoc.id,
-            title: this.renameDocumentForm.value.name,
+            name: this.renameDocumentForm.value.name,
             updatedBy: localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID))
         };
         this.requestsService.putRequest(ApiUrlConstants.DL_DOCUMENT_RENAME_API_URL, data)
