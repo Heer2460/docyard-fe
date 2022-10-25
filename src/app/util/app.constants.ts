@@ -20,6 +20,9 @@ export class AppConstants {
     public static SELECTED_SHARED_FOLDER_ID = 'selectedSharedFolderId';
     public static SELECTED_SHARED_FOLDER_BREADCRUMB = 'selectedSharedFolderBreadcrumb';
 
+    public static FAV_SELECTED_FOLDER_ID = 'selectedFavFolderId';
+    public static FAV_SELECTED_FOLDER_BREADCRUMB = 'selectedFavFolderBreadcrumb';
+
     public static VALID_EXTENSIONS = ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'png', 'gif', 'jpg', 'bmp', 'jpeg', 'flv', 'txt', 'html', 'xhtml', 'pdf', 'sql', 'rar', 'zip', '7z', 'svg', 'psd'];
 
     //Frequently used route

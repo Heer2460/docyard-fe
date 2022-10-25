@@ -110,7 +110,7 @@
                                                 </span>
                                             </p>
                                         </div>
-                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -323,7 +323,7 @@
         <div class="row">
             <div class="col mb-3">
                 <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
+                    <input class="form-control" formControlName="name" placeholder="Name" type="text" id="folderName">
                     <label>Name</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'required')">
