@@ -256,6 +256,9 @@ export class PreviewComponent implements OnInit {
             case 'swm':
                 this.router.navigate(['/shared-with-me']);
                 break;
+            case 'recent':
+                this.router.navigate(['/home']);
+                break;
             default:
                 this.router.navigate(['/home']);
         }

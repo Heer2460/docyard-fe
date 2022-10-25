@@ -7,6 +7,8 @@ import {LayoutModule} from "../layout/layout.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DropdownModule} from "primeng/dropdown";
+import {ChipsModule} from "primeng/chips";
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         DialogModule,
         ReactiveFormsModule,
         ConfirmDialogModule,
+        DropdownModule,
+        ChipsModule,
     ]
 })
 export class HomeModule {
