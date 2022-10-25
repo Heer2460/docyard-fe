@@ -734,7 +734,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been removed successfully.', 'Sharing removed');
+                            this.toastService.success('Sharing removed successfully.', 'Sharing removed');
                             this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
                             this.hideShareDocumentDialog();
                         }

@@ -420,7 +420,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been removed successfully.', 'Sharing removed');
+                            this.toastService.success('Sharing removed successfully.', 'Sharing removed');
                             this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
                             this.hideShareDocumentDialog();
                         }

@@ -49,12 +49,6 @@ export class UserComponent implements OnInit {
             visible: this.roleActions.USER_EDIT.value,
             command: () => this.onEditOptionSelected(this.selectedUser)
         },
-        // { BUG 16
-        //     label: 'Reset Password',
-        //     icon: 'icon-edit',
-        //     visible: this.roleActions.RESET_PASSWORD.value,
-        //     command: () => this.showResetPasswordDialogAction(this.selectedUser)
-        // },
         {
             label: 'Reset Password',
             icon: 'icon-edit',

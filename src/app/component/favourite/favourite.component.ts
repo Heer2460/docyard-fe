@@ -442,7 +442,7 @@ export class FavouriteComponent implements OnInit {
             .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.toastService.success('Document has been removed successfully.', 'Sharing removed');
+                            this.toastService.success('Sharing removed successfully.', 'Sharing removed');
                             this.dlFolderId = this.dlFolderId ? this.dlFolderId : '0';
                             this.loadAllFavouriteDlDocuments(this.dlFolderId, false);
                             this.hideShareDocumentDialog();
