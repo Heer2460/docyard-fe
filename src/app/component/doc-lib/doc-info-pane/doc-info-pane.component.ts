@@ -23,6 +23,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
+    selectedShareDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
     @Input() _selectedDoc: any = null;
@@ -69,12 +70,6 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 command: () => {
                 }
             },
-            /*{
-                label: 'Editor',
-                icon: 'icon-edit',
-                command: () => {
-                }
-            },*/
             {
                 label: 'Remove',
                 icon: 'icon-trash',
@@ -93,6 +88,95 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
             id: [''],
             comments: [''],
         });
+    }
+
+    onMenuClicked(data: any) {
+        this.selectedShareDoc = data;
+        if (this.selectedShareDoc.accessRight == 'VIEW') {
+            this.sharingMenuItems = [
+                {
+                    label: 'Comment',
+                    icon: 'icon-edit',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENT')
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        } else if (this.selectedShareDoc.accessRight == 'COMMENT') {
+            this.sharingMenuItems = [
+                {
+                    label: 'Viewer',
+                    icon: 'icon-eye',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEW'),
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        } else {
+            this.sharingMenuItems = [
+                {
+                    label: 'Viewer',
+                    icon: 'icon-eye',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEW'),
+                },
+                {
+                    label: 'Comment',
+                    icon: 'icon-edit',
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENT')
+                },
+                {
+                    label: 'Remove',
+                    icon: 'icon-trash',
+                    command: () => this.removeSharing(this.selectedShareDoc)
+                }
+            ];
+        }
+    }
+
+    updateSharingPermission(shareData: any, permission: string) {
+        if (this.selectedDoc && shareData) {
+            let url = ApiUrlConstants.DL_DOCUMENT_SHARE_UPDATE_PERMISSION_API_URL
+                .replace("{dlDocId}", String(this.selectedDoc.id))
+                .replace("{collId}", String(shareData.dlCollId))
+                .replace("{accessRight}", permission);
+            this.requestsService.putRequest(url, {})
+                .subscribe({
+                        next: (response: HttpResponse<any>) => {
+                            if (response.status === 200) {
+                                this.toastService.success('Document permission has been updated', 'Update Permission');
+                                this.loadDlDocumentComments({index: 2});
+                            }
+                        },
+                        error: (error: any) => {
+                            this.appService.handleError(error, 'Update Permission');
+                        }
+                    }
+                );
+        }
+    }
+
+    removeSharing(shareData: any) {
+        if (this.selectedDoc && shareData && shareData.dlCollId) {
+            this.requestsService.deleteRequest(ApiUrlConstants.REMOVE_COLLABORATOR_SHARE_API_URL
+                .replace('{dlDocId}', String(this.selectedDoc.id)).replace('{collabId}', String(shareData.dlCollId)))
+                .subscribe({
+                    next: (response: any) => {
+                        if (response.status === 200) {
+                            this.toastService.success(response.body.message, 'Remove Collaborator');
+                            this.loadDlDocumentComments({index: 2});
+                        }
+                    },
+                    error: (error: any) => {
+                        this.appService.handleError(error, 'Remove Collaborator');
+                    }
+                });
+        }
     }
 
     getMetaDocumentByID() {

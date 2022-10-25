@@ -57,13 +57,13 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
             {
                 label: 'Viewer',
                 icon: 'icon-eye',
-                command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEW'),
                 // styleClass: 'p-menuitem-active',
             },
             {
                 label: 'Comment',
                 icon: 'icon-edit',
-                command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
+                command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENT')
             },
             {
                 label: 'Remove',
@@ -86,12 +86,12 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
 
     onMenuClicked(data: any) {
         this.selectedShareDoc = data;
-        if (this.selectedShareDoc.accessRight == 'VIEW' || this.selectedShareDoc.accessRight == 'VIEWER') {
+        if (this.selectedShareDoc.accessRight == 'VIEW') {
             this.sharingMenuItems = [
                 {
                     label: 'Comment',
                     icon: 'icon-edit',
-                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENT')
                 },
                 {
                     label: 'Remove',
@@ -99,12 +99,12 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
                     command: () => this.removeSharing(this.selectedShareDoc)
                 }
             ];
-        } else if (this.selectedShareDoc.accessRight == 'COMMENT' || this.selectedShareDoc.accessRight == 'COMMENTOR') {
+        } else if (this.selectedShareDoc.accessRight == 'COMMENT') {
             this.sharingMenuItems = [
                 {
                     label: 'Viewer',
                     icon: 'icon-eye',
-                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEW'),
                 },
                 {
                     label: 'Remove',
@@ -117,12 +117,12 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
                 {
                     label: 'Viewer',
                     icon: 'icon-eye',
-                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEWER'),
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'VIEW'),
                 },
                 {
                     label: 'Comment',
                     icon: 'icon-edit',
-                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENTOR')
+                    command: () => this.updateSharingPermission(this.selectedShareDoc, 'COMMENT')
                 },
                 {
                     label: 'Remove',

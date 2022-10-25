@@ -26,7 +26,6 @@ export class SearchComponent implements OnInit {
     showGridDisplay: boolean = false;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     renameDocumentForm: FormGroup = new FormGroup({});
-    renameDocumentDialog: boolean = false;
     breadcrumbs: BreadcrumbDTO[] = [
         {
             label: 'Home',
@@ -92,36 +91,10 @@ export class SearchComponent implements OnInit {
             });
     }
 
-    loadDocumentLibrary(folderId: string, archived: boolean) {
-        let loggedInUserId = this.appService.getLoggedInUserId();
-        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
-            .replace('{ownerId}', String(loggedInUserId))
-            .replace("{folderId}", folderId)
-            .replace("{archived}", String(archived)))
-            .subscribe({
-                next: (response: HttpResponse<any>) => {
-                    if (response.status === 200) {
-                        this.dlDocuments = response.body.data;
-                    } else {
-                        this.dlDocuments = [];
-                    }
-                },
-                error: (error: any) => {
-                    this.appService.handleError(error, 'Document Library');
-                }
-            });
-    }
-
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
         if (this.selectedDoc.folder == true) {
-            this.menuItems = [
-                {
-                    label: 'Rename',
-                    icon: 'icon-edit',
-                    command: () => this.showRenameDocumentPopup(this.selectedDoc)
-                },
-            ];
+            this.menuItems = [];
         } else {
             this.menuItems = [
                 {
@@ -131,6 +104,13 @@ export class SearchComponent implements OnInit {
                 },
             ];
         }
+    }
+
+    openFile(rowData: any) {
+        if (rowData.parentId == null) {
+            rowData.parentId = '';
+        }
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('search')}`, '_blank');
     }
 
     setGridDisplay() {
@@ -184,39 +164,5 @@ export class SearchComponent implements OnInit {
                     }
                 }
             );
-    }
-
-    showRenameDocumentPopup(data: any) {
-        this.renameDocumentForm.patchValue({name: ''});
-        this.renameDocumentForm.markAsUntouched();
-        this.renameDocumentForm.patchValue({name: data.title});
-        this.renameDocumentDialog = true;
-    }
-
-    hideRenameDocumentPopup() {
-        this.renameDocumentDialog = false;
-    }
-
-    onRenameDocument() {
-        let data = {
-            id: this.selectedDoc.id,
-            name: this.renameDocumentForm.value.name,
-            updatedBy: localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID))
-        };
-        this.requestsService.putRequest(ApiUrlConstants.DL_DOCUMENT_RENAME_API_URL, data)
-            .subscribe({
-                    next: (response: HttpResponse<any>) => {
-                        if (response.status === 200) {
-                            this.appService.successUpdateMessage('Document');
-                            this.hideRenameDocumentPopup();
-                            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Document');
-                    }
-                }
-            );
-
     }
 }

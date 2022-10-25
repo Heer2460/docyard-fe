@@ -150,10 +150,9 @@
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
-                                    <div class="form-check form-check-only form-check-star">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.favourite"
-                                               [attr.id]="'stared-' + row.id">
-                                        <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
+                                    <div>
+                                        <span *ngIf="row.favourite"><i class="icon-star-filled"></i></span>
+                                        <span *ngIf="!row.favourite"><i class="icon-star"></i></span>
                                     </div>
                                 </td>
                                 <td>

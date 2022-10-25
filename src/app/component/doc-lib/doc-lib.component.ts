@@ -302,9 +302,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
     openFile(rowData: any) {
         if (rowData.parentId == null) {
             rowData.parentId = '';
-
         }
-        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}`, '_blank');
+        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('doclib')}`, '_blank');
     }
 
     setGridDisplay() {
