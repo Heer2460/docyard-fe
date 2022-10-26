@@ -53,7 +53,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
     shareWithUserForm: FormGroup = new FormGroup({});
-    showMessageBox: boolean = false;
     createSharedLink: boolean = false;
     departments: any[] = [];
     users: UserDTO[] = [];
@@ -185,8 +184,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
     hideAddFolderPopup() {
         this.visibleAddFolderDialog = false;
     }
-
-    // updloading
 
     uploadFolder(event: any) {
         // console.log('Dir: ', event.target.files);
@@ -496,8 +493,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
-    // uploading files code start
-
     onUploadFilesInitialize() {
         let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
         uploadInput.click();
@@ -511,11 +506,16 @@ export class DocLibComponent implements OnInit, OnDestroy {
         }
         if (files && files.length > 0) {
             for (let file of files) {
-                let obj: any = {};
-                obj['orgFile'] = file;
-                obj['progress'] = 0;
-                obj['uploaded'] = false;
-                this.files.push(obj);
+                let fileSize = (file.size / 1024) / 1024;
+                if (fileSize > 200) {
+                    this.toastService.error("Size of file named '" + file.name + "' is more than 200 mb.");
+                } else {
+                    let obj: any = {};
+                    obj['orgFile'] = file;
+                    obj['progress'] = 0;
+                    obj['uploaded'] = false;
+                    this.files.push(obj);
+                }
             }
             this.startUploadingFiles();
         }
