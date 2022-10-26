@@ -197,7 +197,7 @@
                              [selectedDoc]="selectedDoc">
     </doc-info-pane-component>
 </section>
-<p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-sm">
+<p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-md">
     <ng-template pTemplate="header">
         <div class="header-title">
             <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
@@ -213,7 +213,7 @@
             </span>
         </div>
         <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
-            <label for="collaborators">Invite People</label>
+            <label for="collaborators">Enter Email</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
@@ -232,10 +232,10 @@
                 </ng-template>
             </p-dropdown>
         </div>
-        <div class="form-floating mb-3">
+        <!--<div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
             <label for="message">Message</label>
-        </div>
+        </div>-->
         <div>
             <span class="p-float-label">
                 <p-dropdown [filter]="true" [options]="departments" [showClear]="true"

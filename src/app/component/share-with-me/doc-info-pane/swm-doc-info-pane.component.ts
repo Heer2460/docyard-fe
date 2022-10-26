@@ -159,7 +159,16 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
             .subscribe({
                 next: (response: any) => {
                     if (response.status === 200) {
-                        this.commentar = response.body.data.accessRight === 'COMMENT';
+                        if (response.body.data.shareType === 'ANYONE') {
+                            this.commentar = response.body.data.accessRight === 'COMMENT';
+                        } else if (response.body.data.shareType === 'RESTRICTED') {
+                            const data = response.body.data.dlShareCollaboratorDTOList.find((item: { dlCollaboratorEmail: any; }) => item.dlCollaboratorEmail === this.appService.userInfo.email);
+                            if (data) {
+                                this.commentar = data.accessRight === 'COMMENT';
+                            } else {
+                                this.commentar = false;
+                            }
+                        }
                     } else {
                         this.commentar = false;
                     }

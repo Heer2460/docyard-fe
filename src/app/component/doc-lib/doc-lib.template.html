@@ -244,7 +244,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'" [fromPage]="'doclib'"
                              [selectedDoc]="selectedDoc">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
@@ -394,7 +394,7 @@
             </span>
         </div>
         <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
-            <label for="collaborators">Invite People</label>
+            <label for="collaborators">Enter Email</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
@@ -413,10 +413,10 @@
                 </ng-template>
             </p-dropdown>
         </div>
-        <div class="form-floating mb-3">
+        <!--<div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
             <label for="message">Message</label>
-        </div>
+        </div>-->
         <div>
             <span class="p-float-label">
                 <p-dropdown [filter]="true" [options]="departments" [showClear]="true"

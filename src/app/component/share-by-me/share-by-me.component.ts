@@ -12,8 +12,6 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {forkJoin, Subject, takeUntil} from "rxjs";
-import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
     selector: 'share-by-me-component',
@@ -94,7 +92,8 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             {
                 label: 'Download',
                 icon: 'icon-download',
-                command: () => {}
+                command: () => {
+                }
             }
         ];
     }
@@ -270,6 +269,15 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
+
+    // share code
+
     createSharedLinkAction() {
         if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
             this.createSharedLink = false;
@@ -279,14 +287,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.createSharedLink = !this.createSharedLink;
     }
 
-    openProfile(data: any) {
-        let loggedInUserId = this.appService.getLoggedInUserId();
-        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
-            this.router.navigate(['/profile']);
-        }
-    }
-
-    // share code
     showShareDocumentDialog(selectedDoc: any) {
         this.shareWithUserForm.patchValue({
             message: null,
@@ -298,10 +298,41 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        this.onShareTypeChange();
         if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
             this.createSharedLink = true;
-            this.onShareTypeChange();
         }
+        if (selectedDoc.dlShareId) {
+            this.getShareDocDetails(selectedDoc.dlShareId);
+        }
+    }
+
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.patchShareFormValue(response.body.data);
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
+    patchShareFormValue(data: any) {
+        let array: any[] = [];
+        if (data.shareType === 'RESTRICTED' && data.dlShareCollaboratorDTOList.length > 0) {
+            array = data.dlShareCollaboratorDTOList.map((item: any) => item.dlCollaboratorEmail);
+        }
+        this.shareWithUserForm.patchValue({
+            message: data.shareNotes ? data.shareNotes : '',
+            shareType: data.shareType ? data.shareType : 'ANYONE',
+            collaborators: data.dlShareCollaboratorDTOList.length > 0 ? array : [],
+            sharePermission: data.accessRight ? data.accessRight : 'VIEW',
+            departmentId: data.departmentId ? data.departmentId : null
+        });
     }
 
     hideShareDocumentDialog() {
@@ -342,6 +373,9 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
+        } else if (data.shareType === 'ANYONE' && !this.createSharedLink) {
+            this.toastService.error('You can\'t share without creating a share link.', 'Share Document');
+            return;
         }
         this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
@@ -365,7 +399,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
             folder: this.selectedDoc.folder,
             shareType: data.shareType,
             shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
+            // message: data.message,
             departmentId: data.departmentId,
             dlCollaborators: data.collaborators ? data.collaborators : [],
             sharePermission: data.sharePermission,

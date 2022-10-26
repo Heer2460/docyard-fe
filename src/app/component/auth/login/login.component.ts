@@ -94,6 +94,9 @@ export class LoginComponent implements OnInit {
                                     },
                                     error: (error: any) => {
                                         this.appService.handleError(error, 'Sign In User');
+                                        localStorage.removeItem(window.btoa(AppConstants.AUTH_ACCESS_TOKEN));
+                                        localStorage.removeItem(window.btoa(AppConstants.AUTH_REFRESH_TOKEN));
+                                        localStorage.removeItem(window.btoa(AppConstants.AUTH_EXPIRES_IN));
                                     }
                                 });
                         } else {

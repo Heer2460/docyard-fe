@@ -64,11 +64,11 @@
                                             <p class="title" role="button">{{item?.name}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
-                                                <a role="button" routerLink="/link">{{item?.updatedByName}}</a>
+                                                <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -136,7 +136,7 @@
                                 </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}} by </span>
-                                    <a class="author" role="button">{{row.updatedByName}}</a>
+                                    <a class="author" role="button" (click)="openProfile(row)">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>

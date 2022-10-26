@@ -287,7 +287,7 @@ export class HomeComponent implements OnInit {
 
     patchShareFormValue(data: any) {
         let array: any[] = [];
-        if (data.dlShareCollaboratorDTOList.length > 0) {
+        if (data.shareType === 'RESTRICTED' && data.dlShareCollaboratorDTOList.length > 0) {
             array = data.dlShareCollaboratorDTOList.map((item: any) => item.dlCollaboratorEmail);
         }
         this.shareWithUserForm.patchValue({
@@ -339,6 +339,9 @@ export class HomeComponent implements OnInit {
                 this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
+        } else if (data.shareType === 'ANYONE' && !this.createSharedLink) {
+            this.toastService.error('You can\'t share without creating a share link.', 'Share Document');
+            return;
         }
         this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
@@ -362,7 +365,7 @@ export class HomeComponent implements OnInit {
             folder: this.selectedDoc.folder,
             shareType: data.shareType,
             shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
+            // message: data.message,
             departmentId: data.departmentId,
             dlCollaborators: data.collaborators ? data.collaborators : [],
             sharePermission: data.sharePermission,

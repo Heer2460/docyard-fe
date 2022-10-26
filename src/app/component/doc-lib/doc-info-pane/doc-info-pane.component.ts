@@ -26,12 +26,14 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     selectedShareDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
+    commentar: boolean = false;
     @Input() _selectedDoc: any = null;
     @Input() docTabs: any = {
         properties: false,
         comments: false,
         sharing: false,
     };
+    @Input() fromPage: string = '';
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -205,6 +207,15 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     loadDlDocumentComments(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1 && this.selectedDoc) {
+            if (this.fromPage === 'preview') {
+                if (this.selectedDoc.dlShareId) {
+                    this.getShareDocDetails(this.selectedDoc.dlShareId);
+                } else {
+                    this.commentar = true;
+                }
+            } else {
+                this.commentar = true;
+            }
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
                 .subscribe({
@@ -237,6 +248,31 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                     });
             }
         }
+    }
+
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        if (response.body.data.shareType === 'ANYONE') {
+                            this.commentar = response.body.data.accessRight === 'COMMENT';
+                        } else if (response.body.data.shareType === 'RESTRICTED') {
+                            const data = response.body.data.dlShareCollaboratorDTOList.find((item: { dlCollaboratorEmail: any; }) => item.dlCollaboratorEmail === this.appService.userInfo.email);
+                            if (data) {
+                                this.commentar = data.accessRight === 'COMMENT';
+                            } else {
+                                this.commentar = false;
+                            }
+                        }
+                    } else {
+                        this.commentar = false;
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
     }
 
     addUserComment() {
