@@ -11,12 +11,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ChangePasswordDTO} from "../../model/settings/um/change.password.dto";
 
 @Component({
-    selector: 'login-component',
-    templateUrl: './reset.password.template.html',
-    styleUrls: [
-        './login.css',
-        './reset.password.css'
-    ]
+    selector: 'reset-password-component',
+    templateUrl: './reset-password.template.html',
+    styleUrls: ['./reset-password.component.less']
 })
 export class ResetPasswordComponent implements OnInit {
 
