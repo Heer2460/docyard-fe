@@ -8,7 +8,8 @@
                             <i class="icon-download"></i>
                             Download
                         </button>
-                        <button (click)="showShareDocumentDialog()" *ngIf="sharedPreview !== 'swm'"
+                        <button (click)="showShareDocumentDialog(selectedDoc)"
+                                *ngIf="sharedPreview !== routePreviewConstants.SWM"
                                 class="btn btn-sm btn-secondary me-2">
                             <i class="icon-share"></i>
                             Share
@@ -49,12 +50,15 @@
                 </div>
                 <div class="image-controls">
                     <div class="controllers">
-                        <button (click)="openPrevFileAction()" *ngIf="!sharedPreview" class="btn btn-control btn-prev">
-                            <i class="icon-arrow-left"></i>
-                        </button>
-                        <button (click)="openNextFileAction()" *ngIf="!sharedPreview" class="btn btn-control btn-next">
-                            <i class="icon-arrow-right"></i>
-                        </button>
+                        <ng-container
+                                *ngIf="sharedPreview !== routePreviewConstants.SBM && sharedPreview !== routePreviewConstants.SWM">
+                            <button (click)="openPrevFileAction()" class="btn btn-control btn-prev">
+                                <i class="icon-arrow-left"></i>
+                            </button>
+                            <button (click)="openNextFileAction()" class="btn btn-control btn-next">
+                                <i class="icon-arrow-right"></i>
+                            </button>
+                        </ng-container>
                     </div>
                     <div class="image-control-pane">
                         <div class="metadata">
@@ -66,7 +70,8 @@
                                     <i *ngIf="!selectedDoc?.favourite" class="icon-star"></i>
                                 </button>
                             </div>
-                            <p *ngIf="!sharedPreview" class="image-counter">{{currentDocIndex + 1}}
+                            <p *ngIf="sharedPreview !== routePreviewConstants.SBM && sharedPreview !== routePreviewConstants.SWM"
+                               class="image-counter">{{currentDocIndex + 1}}
                                 of {{dlDocuments.length}}</p>
                         </div>
                         <div *ngIf="checkValidImageFile()" class="image-magnifier">
@@ -118,9 +123,18 @@
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission"
-                        optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>

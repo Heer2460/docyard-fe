@@ -17,7 +17,7 @@
     </ng-container>
     <img *ngIf="selectedDoc?.folder == true"
          src="./assets/images/svg/icons/folder.svg" alt="icon">
-    <p-accordion (onOpen)="loadDlDocumentDetails($event)">
+    <p-accordion (onOpen)="loadDlDocumentComments($event)">
         <p-accordionTab [selected]="activeTabIndex === 0" *ngIf="docTabs.properties">
             <ng-template pTemplate="header">
                 <div>
@@ -140,7 +140,8 @@
                                     <p class="text-muted">{{sh.accessRight}}</p>
                                 </div>
                             </div>
-                            <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event)">
+                            <button class="btn btn-tiered-menu" (click)="uploadMenu.toggle($event);onMenuClicked(sh)"
+                                    *ngIf="sh.accessRight != 'OWNER'">
                                 <p-tieredMenu appendTo="body" #uploadMenu [model]="sharingMenuItems"
                                               [popup]="true">
                                 </p-tieredMenu>

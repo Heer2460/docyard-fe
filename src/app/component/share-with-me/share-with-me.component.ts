@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, MenuItem} from "primeng/api";
+import {MenuItem} from "primeng/api";
 import {AppService} from "../../service/app.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AppUtility} from "../../util/app.utility";
@@ -12,8 +12,6 @@ import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
-import {forkJoin, Subject, takeUntil} from "rxjs";
-import {UserDTO} from "../../model/settings/um/user/user.dto";
 
 @Component({
     selector: 'share-with-me-component',
@@ -24,7 +22,6 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
 
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
     menuItems: MenuItem[] = [];
-    shareDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
     showDocInfoPane: boolean = false;
@@ -38,29 +35,18 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     shareWithUserForm: FormGroup = new FormGroup({});
     createSharedLink: boolean = false;
     departments: any[] = [];
-    users: UserDTO[] = [];
-    destroy: Subject<boolean> = new Subject();
     previewTabs = {
         properties: true,
         comments: true,
         sharing: true,
     };
-    shareTypes = [
-        {label: 'Anyone with the link', value: 'ANYONE'},
-        {label: 'Restricted', value: 'RESTRICTED'}
-    ];
-    shareSecurityTypes = [
-        {label: 'VIEW', value: 'VIEW'},
-        {label: 'COMMENT', value: 'COMMENT'}
-    ];
 
     constructor(public appService: AppService,
                 private router: Router,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
-                private toastService: ToastrService,
-                private confirmationService: ConfirmationService) {
+                private toastService: ToastrService) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
@@ -75,24 +61,19 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     }
 
     preloadedData(): void {
-        const users = this.requestsService.getRequest(ApiUrlConstants.USER_API_URL + 'search?status=Active');
-        const departments = this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active');
-        forkJoin([users, departments])
-            .pipe(takeUntil(this.destroy))
-            .subscribe(
-                {
-                    next: (response: HttpResponse<any>[]) => {
-                        if (response[0].status === 200) {
-                            this.users = response[0].body.data;
-                        }
-                        if (response[1].status === 200) {
-                            this.departments = response[1].body.data;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.appService.handleError(error, 'Shared with me');
+        this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.departments = response.body.data;
+                    } else {
+                        this.departments = [];
                     }
-                });
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Department');
+                }
+            });
     }
 
     buildDocumentActions() {
@@ -100,7 +81,8 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             {
                 label: 'Download',
                 icon: 'icon-download',
-                command: () => {}
+                command: () => {
+                }
             }
         ];
     }
@@ -253,15 +235,6 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
-    createSharedLinkAction() {
-        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
-            this.createSharedLink = false;
-            this.toastService.error('You can\'t generate link', 'Share Document');
-            return;
-        }
-        this.createSharedLink = !this.createSharedLink;
-    }
-
     openProfile(data: any) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
@@ -272,6 +245,5 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         localStorage.removeItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_BREADCRUMB));
-        this.destroy.next(true);
     }
 }

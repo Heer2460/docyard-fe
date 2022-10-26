@@ -101,15 +101,19 @@
                                             </p>
                                             <p class="file-size">
                                                 {{item?.size}}
-                                                <span *ngIf="item.folder === false" tooltipPosition="top"
-                                                     pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
-                                                     class="comments-count me-1">
+                                                <span
+                                                    *ngIf="item.folder === false && item.dlDocumentCommentDTOList?.length > 0"
+                                                    class="comments-count me-1"
+                                                    pTooltip="{{item.dlDocumentCommentDTOList?.length}} Comments"
+                                                    tooltipPosition="top">
                                                     <i class="icon-comments"></i>
-                                                    <span class="comments-count">{{item.dlDocumentCommentDTOList?.length}}</span>
+                                                    <span
+                                                        class="comments-count ms-1">{{item.dlDocumentCommentDTOList?.length}}</span>
                                                 </span>
                                             </p>
                                         </div>
-                                        <button (click)="menu.toggle($event)" class="btn btn-tiered-menu-vertical">
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)"
+                                                class="btn btn-tiered-menu-vertical">
                                             <p-tieredMenu #menu [model]="menuItems" [popup]="true"
                                                           appendTo="body"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -184,19 +188,20 @@
                                         <div class="quick-actions">
                                             <ng-container *ngIf="row.folder === false">
                                                 <div *ngIf="row.dlDocumentCommentDTOList?.length > 0"
-                                                     tooltipPosition="top"
+                                                     class="comments-count me-1"
                                                      pTooltip="{{row.dlDocumentCommentDTOList?.length}} Comments"
-                                                     class="comments-count me-1">
+                                                     tooltipPosition="top">
                                                     <i class="icon-comments"></i>
                                                     <span class="comments-count">
                                                     {{row.dlDocumentCommentDTOList?.length}}
                                                 </span>
                                                 </div>
+                                                <button *ngIf="row.shared != null" class="btn btn-transparent"
+                                                        pTooltip="Shared"
+                                                        tooltipPosition="top">
+                                                    <i class="icon-share"></i>
+                                                </button>
                                             </ng-container>
-                                            <!-- <button tooltipPosition="top" pTooltip="Share Link"
-                                                     class="btn btn-transparent" (click)="showShareDocumentDialog(row)">
-                                                 <i class="icon-share"></i>
-                                             </button>-->
                                         </div>
                                     </div>
                                 </td>
@@ -239,7 +244,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'" [docTabs]="previewTabs"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'"
                              [selectedDoc]="selectedDoc">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
@@ -321,7 +326,7 @@
         <div class="row">
             <div class="col mb-3">
                 <div class="form-floating">
-                    <input class="form-control" formControlName="name" placeholder="Name" type="text">
+                    <input class="form-control" formControlName="name" id="folderName" placeholder="Name" type="text">
                     <label>Name</label>
                 </div>
                 <small *ngIf="appUtility.getFormError(addFolderForm, 'name', 'name', 'required')">
@@ -388,16 +393,25 @@
                 <label for="shareType">General Access</label>
             </span>
         </div>
-        <div class="mb-3" *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'">
+        <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
             <label for="collaborators">Invite People</label>
             <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
                      [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
         </div>
         <div class="share-rights-dropdown mb-3">
             <label class="mr-5px">Permissions:</label>
-            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission"
-                        optionLabel="label"
-                        optionValue="value"></p-dropdown>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
@@ -439,10 +453,19 @@
         </ng-container>
     </ng-container>
     <ng-template pTemplate="footer">
-        <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
-        <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
-                type="button">Share
-        </button>
+        <div class="row">
+            <div class="col-6 text-start">
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared"
+                        class="btn btn-sm btn-primary me-2">Remove Sharing
+                </button>
+            </div>
+            <div class="col-6 text-right">
+                <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+                <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                        type="button">Share
+                </button>
+            </div>
+        </div>
     </ng-template>
 </p-dialog>
 

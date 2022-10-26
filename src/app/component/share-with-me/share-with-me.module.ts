@@ -34,7 +34,6 @@ import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
         DropdownModule,
         CheckboxModule,
         CalendarModule,
-        DocInfoPaneModule
     ]
 })
 export class ShareWithMeModule {

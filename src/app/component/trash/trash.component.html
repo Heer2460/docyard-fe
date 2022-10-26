@@ -7,12 +7,14 @@
                         <h3 class="title">{{title}}</h3>
                     </ng-container>
                     <div class="action-items">
-                        <button class="btn btn-sm btn-secondary" (click)="onConfirmDialogueOpen(dlDocuments, 'restore', false)"
-                        [disabled]="dlDocuments.length < 1">
+                        <button class="btn btn-sm btn-secondary"
+                                (click)="onConfirmDialogueOpen(dlDocuments, 'restore', false)"
+                                [disabled]="dlDocuments.length < 1">
                             <i class="icon-restore"></i>
                             Restore All
                         </button>
-                        <button class="btn btn-sm btn-danger" (click)="onConfirmDialogueOpen(dlDocuments,'delete', false)"
+                        <button class="btn btn-sm btn-danger"
+                                (click)="onConfirmDialogueOpen(dlDocuments,'delete', false)"
                                 [disabled]="dlDocuments.length < 1">
                             <i class="icon-trash"></i>
                             Delete All
@@ -121,7 +123,6 @@
                                 </td>
                                 <td>
                                     <div class="file-types">
-
                                         <ng-container *ngIf="row.folder == false">
                                             <ng-container
                                                 *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
@@ -134,14 +135,12 @@
                                         </ng-container>
                                         <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
                                              alt="icon">
-
                                         <ng-container *ngIf="row.folder == true; else elseCase">
                                             <span role="button">{{row.name}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
                                             <span role="button">{{row.name}}</span>
                                         </ng-template>
-
                                     </div>
                                 </td>
                                 <td>
@@ -150,10 +149,9 @@
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
-                                    <div class="form-check form-check-only form-check-star">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.favourite"
-                                               [attr.id]="'stared-' + row.id">
-                                        <label class="form-check-label" [attr.for]="'stared-' + row.id"></label>
+                                    <div>
+                                        <span *ngIf="row.favourite"><i class="icon-star-filled"></i></span>
+                                        <span *ngIf="!row.favourite"><i class="icon-star"></i></span>
                                     </div>
                                 </td>
                                 <td>

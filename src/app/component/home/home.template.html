@@ -24,7 +24,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Images"
                                              [style.width.%]="dashboardStats?.imageProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.imageProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.imageProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -46,7 +47,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Videos"
                                              [style.width.%]="dashboardStats?.videosProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.videosProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.videosProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -68,7 +70,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Documents"
                                              [style.width.%]="dashboardStats?.docsProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.docsProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.docsProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -90,7 +93,8 @@
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-label="Others"
                                              [style.width.%]="dashboardStats?.othersProps?.occupiedPercentage"
-                                             [attr.aria-valuenow]="dashboardStats?.othersProps?.occupiedPercentage" aria-valuemin="0"
+                                             [attr.aria-valuenow]="dashboardStats?.othersProps?.occupiedPercentage"
+                                             aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -119,7 +123,7 @@
                                              alt="icon">
                                     </div>
                                     <div class="file-details">
-                                        <p class="title">{{gridItem?.name}}</p>
+                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name}}</p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
                                             <a role="button"
@@ -172,6 +176,96 @@
         <button class="btn btn-sm btn-primary" type="button" [disabled]="renameDocumentForm.invalid"
                 (click)="onRenameDocument()">Update
         </button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="shareDocumentDialog" [modal]="true" styleClass="p-dialog-md">
+    <ng-template pTemplate="header">
+        <div class="header-title">
+            <i [ngClass]="selectedDoc.folder == true ? 'icon-folder' : 'icon-file'" class="icon-file"></i>
+            <span>Share {{ selectedDoc.folder == true ? 'Folder' : 'File' }}</span>
+        </div>
+    </ng-template>
+    <ng-container [formGroup]="shareWithUserForm">
+        <div class="mb-3">
+            <span class="p-float-label">
+                <p-dropdown (onChange)="onShareTypeChange()" [options]="shareTypes"
+                            formControlName="shareType" id="shareType"></p-dropdown>
+                <label for="shareType">General Access</label>
+            </span>
+        </div>
+        <div *ngIf="shareWithUserForm.get('shareType')?.value !== 'ANYONE'" class="mb-3">
+            <label for="collaborators">Invite People</label>
+            <p-chips (onAdd)="onAddCollaborator($event.value)" [addOnTab]="true"
+                     [allowDuplicate]="false" formControlName="collaborators" id="collaborators"></p-chips>
+        </div>
+        <div class="share-rights-dropdown mb-3">
+            <label class="mr-5px">Permissions:</label>
+            <p-dropdown [options]="shareSecurityTypes" appendTo="body" formControlName="sharePermission">
+                <ng-template let-item pTemplate="selectedItem">
+                    {{item.label}}
+                </ng-template>
+                <ng-template let-caption pTemplate="item">
+                    <div [pTooltip]="caption.detail">
+                        <li>
+                            <span class="item-value1">{{caption.label}}</span>
+                        </li>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" formControlName="message" id="message" placeholder="message"></textarea>
+            <label for="message">Message</label>
+        </div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [filter]="true" [options]="departments" [showClear]="true"
+                            appendTo="body" filterBy="name" formControlName="departmentId"
+                            id="departmentId" optionLabel="name" optionValue="id"
+                            placeholder="Select department"></p-dropdown>
+                <label class="required" for="departmentId">Department</label>
+            </span>
+        </div>
+        <hr>
+        <ng-container *ngIf="shareWithUserForm.get('shareType')?.value === 'ANYONE'">
+            <div class="mb-3">
+                <label>Share link</label>
+                <div class="form-check form-switch">
+                    <input (change)="onShareTypeChange();createSharedLinkAction()" [checked]="createSharedLink"
+                           class="form-check-input" id="shareLinkSwitch"
+                           role="switch"
+                           type="checkbox">
+                    <label class="form-check-label" for="shareLinkSwitch">
+                        <span>Create shared link</span>
+                    </label>
+                </div>
+            </div>
+            <ng-container *ngIf="createSharedLink">
+                <div class="input-group mb-1">
+                    <input #shareLinkInput [readOnly]="true" class="form-control" formControlName="publicUrlLink"
+                           type="text">
+                    <div class="input-group-text">
+                        <button (click)="copyLinkToClipboard(shareLinkInput)" class="btn btn-sm btn-transparent">Copy
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    <ng-template pTemplate="footer">
+        <div class="row">
+            <div class="col-6 text-start">
+                <button (click)="onUnShareDocument(selectedDoc)" *ngIf="selectedDoc?.shared"
+                        class="btn btn-sm btn-primary me-2">Remove Sharing
+                </button>
+            </div>
+            <div class="col-6 text-right">
+                <button (click)="hideShareDocumentDialog()" class="btn btn-sm btn-danger me-2">Cancel</button>
+                <button (click)="onShare(shareWithUserForm.value)" class="btn btn-sm btn-primary"
+                        type="button">Share
+                </button>
+            </div>
+        </div>
     </ng-template>
 </p-dialog>
 <p-confirmDialog #cd styleClass="dialog-danger">
