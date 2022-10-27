@@ -14,6 +14,7 @@ import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
 import {BehaviorSubject} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
+import {DocInfoPaneComponent} from "./doc-info-pane/doc-info-pane.component";
 
 @Component({
     selector: 'doc-lib-component',
@@ -26,6 +27,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
     @ViewChildren('folderName') folderName: ElementRef | undefined;
+    @ViewChild(DocInfoPaneComponent) docPane: any;
 
     filesToUpload: any[] = [];
 
@@ -56,6 +58,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     createSharedLink: boolean = false;
     departments: any[] = [];
     users: UserDTO[] = [];
+    loadDocument: boolean = false;
     previewTabs = {
         properties: true,
         comments: true,
@@ -213,6 +216,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.appService.handleError(error, 'Document Library');
                 }
             });
+    }
+
+    receiveCommentState($event: boolean) {
+        this.loadDocument = $event;
+        if (this.loadDocument) {
+            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+        }
     }
 
     onMenuClicked(data: DlDocumentDTO) {

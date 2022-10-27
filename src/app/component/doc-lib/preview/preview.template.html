@@ -94,9 +94,15 @@
                     </div>
                 </div>
             </div>
-            <doc-info-pane-component [_selectedDoc]="selectedDoc" [docTabs]="previewTabs"
-                                     [ngClass]="showDocInfoPane ? '': 'collapsed'" [fromPage]="'preview'">
-            </doc-info-pane-component>
+            <ng-container *ngIf="sharedPreview === routePreviewConstants.SWM; else elseCase">
+                <swm-doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'"
+                                             [selectedDoc]="selectedDoc"></swm-doc-info-pane-component>
+            </ng-container>
+            <ng-template #elseCase>
+                <doc-info-pane-component [_selectedDoc]="selectedDoc" [docTabs]="previewTabs"
+                                         [fromPage]="'preview'" [ngClass]="showDocInfoPane ? '': 'collapsed'">
+                </doc-info-pane-component>
+            </ng-template>
         </section>
     </div>
 </div>

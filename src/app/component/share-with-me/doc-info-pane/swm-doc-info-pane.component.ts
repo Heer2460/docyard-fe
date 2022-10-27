@@ -9,7 +9,7 @@ import {MenuItem} from "primeng/api";
 import {AppConstants} from "../../../util/app.constants";
 
 @Component({
-    selector: 'doc-info-pane-component',
+    selector: 'swm-doc-info-pane-component',
     templateUrl: './swm-doc-info-pane.template.html',
     styleUrls: ['./swm-doc-info-pane.component.less']
 })

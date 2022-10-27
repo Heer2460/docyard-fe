@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
@@ -34,6 +34,8 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         sharing: false,
     };
     @Input() fromPage: string = '';
+
+    @Output() documentEvent = new EventEmitter<boolean>();
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -207,6 +209,8 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     loadDlDocumentComments(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1 && this.selectedDoc) {
+            this.enableEditComment = false;
+            this.commentForm.reset();
             if (this.fromPage === 'preview') {
                 if (this.selectedDoc.dlShareId) {
                     this.getShareDocDetails(this.selectedDoc.dlShareId);
@@ -296,6 +300,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.commentForm.reset();
                         this.toastService.success('Comment added successfully', 'Comment');
                         this.loadDlDocumentComments({index: 1});
+                        this.sendCommentState(true);
                     }
                 },
                 error: (error: any) => {
@@ -357,12 +362,17 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 next: (response: any) => {
                     if (response.status === 200) {
                         this.loadDlDocumentComments({index: 1});
+                        this.sendCommentState(true);
                     }
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Comment');
                 }
             });
+    }
+
+    sendCommentState(value: boolean) {
+        this.documentEvent.emit(value)
     }
 
 }

@@ -9,6 +9,7 @@ import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {ChipsModule} from "primeng/chips";
+import {SwmDocInfoPaneModule} from "../../share-with-me/doc-info-pane/swm-doc-info-pane.module";
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {ChipsModule} from "primeng/chips";
         ReactiveFormsModule,
         DropdownModule,
         ChipsModule,
+        SwmDocInfoPaneModule,
     ]
 })
 export class PreviewModule {

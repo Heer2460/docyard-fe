@@ -245,7 +245,7 @@
         </div>
     </div>
     <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'" [fromPage]="'doclib'"
-                             [selectedDoc]="selectedDoc">
+                             [selectedDoc]="selectedDoc" (documentEvent)="receiveCommentState($event)">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
         <div class="file-uploader-container">
