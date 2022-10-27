@@ -9,7 +9,7 @@ import {RequestService} from "../../service/request.service";
 import {DlDocumentDTO} from "../../model/settings/doc-handling/dl-document.dto";
 import {AppConstants} from "../../util/app.constants";
 import {BreadcrumbDTO} from "../../model/breadcrumb.dto";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
 import {BehaviorSubject} from "rxjs";
@@ -79,7 +79,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
                 private toastService: ToastrService,
-                private confirmationService: ConfirmationService) {
+                private confirmationService: ConfirmationService,
+                private activatedRoute: ActivatedRoute) {
         this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
             this.showDocInfoPane = value;
         });
@@ -94,9 +95,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.updateCollapsedBreadcrumbItems();
         this.preloadedData();
-        /* this.shareWithUserForm.controls['collaborators'].valueChanges.subscribe((value) => {
-             this.showMessageBox = value.length > 0;
-         })*/
+
+        this.activatedRoute.queryParams.subscribe((params: any) => {
+            if (params.location) {
+                const locationValue = window.atob(params.location);
+                console.log(locationValue)
+            }
+        })
     }
 
     preloadedData(): void {

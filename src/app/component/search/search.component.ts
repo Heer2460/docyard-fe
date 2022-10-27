@@ -102,8 +102,21 @@ export class SearchComponent implements OnInit {
                     icon: 'icon-download',
                     command: () => this.downloadFile(this.selectedDoc)
                 },
+                {
+                    label: 'Go to folder location',
+                    icon: 'icon-folder',
+                    command: () => this.folderLocation(this.selectedDoc)
+                }
             ];
         }
+    }
+
+    folderLocation(data: any) {
+        if (data.parentId == null) {
+            data.parentId = '0';
+        }
+        localStorage.setItem(window.btoa(AppConstants.SELECTED_FOLDER_ID), data.parentId);
+        this.router.navigate(['/doc-lib'], {queryParams: {location: window.btoa('true')}});
     }
 
     openFile(rowData: any) {
