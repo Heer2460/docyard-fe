@@ -113,15 +113,6 @@ export class PreviewComponent implements OnInit {
             });
     }
 
-    createSharedLinkAction() {
-        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
-            this.createSharedLink = false;
-            this.toastService.error('You can\'t generate link', 'Share Document');
-            return;
-        }
-        this.createSharedLink = !this.createSharedLink;
-    }
-
     loadDocumentLibrary(folderId: string, archived: boolean) {
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_SHARED_PREVIEW_DL_DOCUMENT_API_URL
             .replace("{folderId}", folderId)
@@ -266,6 +257,16 @@ export class PreviewComponent implements OnInit {
     }
 
     // share code
+
+    createSharedLinkAction() {
+        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
+            this.createSharedLink = false;
+            this.toastService.error('You can\'t generate link', 'Share Document');
+            return;
+        }
+        this.createSharedLink = !this.createSharedLink;
+    }
+
     showShareDocumentDialog(selectedDoc: any) {
         this.shareWithUserForm.patchValue({
             message: null,
@@ -277,10 +278,41 @@ export class PreviewComponent implements OnInit {
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        this.onShareTypeChange();
         if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
             this.createSharedLink = true;
-            this.onShareTypeChange();
         }
+        if (selectedDoc.dlShareId) {
+            this.getShareDocDetails(selectedDoc.dlShareId);
+        }
+    }
+
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.patchShareFormValue(response.body.data);
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
+    patchShareFormValue(data: any) {
+        let array: any[] = [];
+        if (data.shareType === 'RESTRICTED' && data.dlShareCollaboratorDTOList.length > 0) {
+            array = data.dlShareCollaboratorDTOList.map((item: any) => item.dlCollaboratorEmail);
+        }
+        this.shareWithUserForm.patchValue({
+            message: data.shareNotes ? data.shareNotes : '',
+            shareType: data.shareType ? data.shareType : 'ANYONE',
+            collaborators: data.dlShareCollaboratorDTOList.length > 0 ? array : [],
+            sharePermission: data.accessRight ? data.accessRight : 'VIEW',
+            departmentId: data.departmentId ? data.departmentId : null
+        });
     }
 
     hideShareDocumentDialog() {
@@ -321,6 +353,9 @@ export class PreviewComponent implements OnInit {
                 this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
+        } else if (data.shareType === 'ANYONE' && !this.createSharedLink) {
+            this.toastService.error('You can\'t share without creating a share link.', 'Share Document');
+            return;
         }
         this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
@@ -344,7 +379,7 @@ export class PreviewComponent implements OnInit {
             folder: this.selectedDoc.folder,
             shareType: data.shareType,
             shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
+            // message: data.message,
             departmentId: data.departmentId,
             dlCollaborators: data.collaborators ? data.collaborators : [],
             sharePermission: data.sharePermission,

@@ -113,6 +113,13 @@ export class SearchComponent implements OnInit {
         window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('search')}`, '_blank');
     }
 
+    openProfile(data: any) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
+            this.router.navigate(['/profile']);
+        }
+    }
+
     setGridDisplay() {
         this.showGridDisplay = true;
     }

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {AppService} from "../../../service/app.service";
 import {ApiUrlConstants} from "../../../util/api.url.constants";
 import {HttpResponse} from "@angular/common/http";
@@ -26,12 +26,16 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     selectedShareDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
+    commentar: boolean = false;
     @Input() _selectedDoc: any = null;
     @Input() docTabs: any = {
         properties: false,
         comments: false,
         sharing: false,
     };
+    @Input() fromPage: string = '';
+
+    @Output() documentEvent = new EventEmitter<boolean>();
 
     constructor(public appService: AppService,
                 private requestsService: RequestService,
@@ -205,6 +209,17 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     loadDlDocumentComments(event: any) {
         this.activeTabIndex = event.index;
         if (event.index == 1 && this.selectedDoc) {
+            this.enableEditComment = false;
+            this.commentForm.reset();
+            if (this.fromPage === 'preview') {
+                if (this.selectedDoc.dlShareId) {
+                    this.getShareDocDetails(this.selectedDoc.dlShareId);
+                } else {
+                    this.commentar = true;
+                }
+            } else {
+                this.commentar = true;
+            }
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
                 .subscribe({
@@ -239,6 +254,31 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
         }
     }
 
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        if (response.body.data.shareType === 'ANYONE') {
+                            this.commentar = response.body.data.accessRight === 'COMMENT';
+                        } else if (response.body.data.shareType === 'RESTRICTED') {
+                            const data = response.body.data.dlShareCollaboratorDTOList.find((item: { dlCollaboratorEmail: any; }) => item.dlCollaboratorEmail === this.appService.userInfo.email);
+                            if (data) {
+                                this.commentar = data.accessRight === 'COMMENT';
+                            } else {
+                                this.commentar = false;
+                            }
+                        }
+                    } else {
+                        this.commentar = false;
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
     addUserComment() {
         let comments = this.commentForm.value.comments;
         let trimmedComments = comments.trim();
@@ -260,6 +300,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                         this.commentForm.reset();
                         this.toastService.success('Comment added successfully', 'Comment');
                         this.loadDlDocumentComments({index: 1});
+                        this.sendCommentState(true);
                     }
                 },
                 error: (error: any) => {
@@ -321,12 +362,17 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 next: (response: any) => {
                     if (response.status === 200) {
                         this.loadDlDocumentComments({index: 1});
+                        this.sendCommentState(true);
                     }
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Comment');
                 }
             });
+    }
+
+    sendCommentState(value: boolean) {
+        this.documentEvent.emit(value)
     }
 
 }

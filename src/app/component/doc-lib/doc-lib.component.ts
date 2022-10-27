@@ -14,6 +14,7 @@ import {ToastrService} from "ngx-toastr";
 import * as FileSaver from 'file-saver';
 import {BehaviorSubject} from "rxjs";
 import {UserDTO} from "../../model/settings/um/user/user.dto";
+import {DocInfoPaneComponent} from "./doc-info-pane/doc-info-pane.component";
 
 @Component({
     selector: 'doc-lib-component',
@@ -26,6 +27,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     @ViewChild('folderUpload') folderUpload: ElementRef | undefined;
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
     @ViewChildren('folderName') folderName: ElementRef | undefined;
+    @ViewChild(DocInfoPaneComponent) docPane: any;
 
     filesToUpload: any[] = [];
 
@@ -53,10 +55,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
     breadcrumbCollapsedItems: any[] = [];
     title: string = 'Document Library';
     shareWithUserForm: FormGroup = new FormGroup({});
-    showMessageBox: boolean = false;
     createSharedLink: boolean = false;
     departments: any[] = [];
     users: UserDTO[] = [];
+    loadDocument: boolean = false;
     previewTabs = {
         properties: true,
         comments: true,
@@ -186,8 +188,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.visibleAddFolderDialog = false;
     }
 
-    // updloading
-
     uploadFolder(event: any) {
         // console.log('Dir: ', event.target.files);
 
@@ -216,6 +216,13 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.appService.handleError(error, 'Document Library');
                 }
             });
+    }
+
+    receiveCommentState($event: boolean) {
+        this.loadDocument = $event;
+        if (this.loadDocument) {
+            this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+        }
     }
 
     onMenuClicked(data: DlDocumentDTO) {
@@ -279,7 +286,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 .subscribe({
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
-                            this.appService.successAddMessage('Document Library');
+                            this.toastService.success('Folder created successfully', 'Document Library');
                             this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
                             this.hideAddFolderPopup();
                         }
@@ -496,8 +503,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
-    // uploading files code start
-
     onUploadFilesInitialize() {
         let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
         uploadInput.click();
@@ -511,11 +516,16 @@ export class DocLibComponent implements OnInit, OnDestroy {
         }
         if (files && files.length > 0) {
             for (let file of files) {
-                let obj: any = {};
-                obj['orgFile'] = file;
-                obj['progress'] = 0;
-                obj['uploaded'] = false;
-                this.files.push(obj);
+                let fileSize = (file.size / 1024) / 1024;
+                if (fileSize > 200) {
+                    this.toastService.error("Size of file named '" + file.name + "' is more than 200 mb.");
+                } else {
+                    let obj: any = {};
+                    obj['orgFile'] = file;
+                    obj['progress'] = 0;
+                    obj['uploaded'] = false;
+                    this.files.push(obj);
+                }
             }
             this.startUploadingFiles();
         }
@@ -581,14 +591,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         })
     }
 
-    createSharedLinkAction() {
-        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
-            this.createSharedLink = false;
-            this.toastService.error('You can\'t generate link', 'Share Document');
-            return;
-        }
-        this.createSharedLink = !this.createSharedLink;
-    }
 
     openProfile(data: any) {
         let loggedInUserId = this.appService.getLoggedInUserId();
@@ -598,6 +600,16 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     // share code
+
+    createSharedLinkAction() {
+        if (this.shareWithUserForm.get('shareType')?.value !== 'ANYONE') {
+            this.createSharedLink = false;
+            this.toastService.error('You can\'t generate link', 'Share Document');
+            return;
+        }
+        this.createSharedLink = !this.createSharedLink;
+    }
+
     showShareDocumentDialog(selectedDoc: any) {
         this.shareWithUserForm.patchValue({
             message: null,
@@ -609,10 +621,41 @@ export class DocLibComponent implements OnInit, OnDestroy {
         });
         this.createSharedLink = false;
         this.shareDocumentDialog = true;
+        this.onShareTypeChange();
         if (selectedDoc.shared && selectedDoc.shareType === 'ANYONE') {
             this.createSharedLink = true;
-            this.onShareTypeChange();
         }
+        if (selectedDoc.dlShareId) {
+            this.getShareDocDetails(selectedDoc.dlShareId);
+        }
+    }
+
+    getShareDocDetails(id: any) {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_SHARE_DETAIL_API_URL.replace('{dlDocumentId}', id))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.patchShareFormValue(response.body.data);
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Share Document');
+                }
+            });
+    }
+
+    patchShareFormValue(data: any) {
+        let array: any[] = [];
+        if (data.shareType === 'RESTRICTED' && data.dlShareCollaboratorDTOList.length > 0) {
+            array = data.dlShareCollaboratorDTOList.map((item: any) => item.dlCollaboratorEmail);
+        }
+        this.shareWithUserForm.patchValue({
+            message: data.shareNotes ? data.shareNotes : '',
+            shareType: data.shareType ? data.shareType : 'ANYONE',
+            collaborators: data.dlShareCollaboratorDTOList.length > 0 ? array : [],
+            sharePermission: data.accessRight ? data.accessRight : 'VIEW',
+            departmentId: data.departmentId ? data.departmentId : null
+        });
     }
 
     hideShareDocumentDialog() {
@@ -655,6 +698,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 this.toastService.error('You can\'t share without adding collaborator.', 'Share Document');
                 return;
             }
+        } else if (data.shareType === 'ANYONE' && !this.createSharedLink) {
+            this.toastService.error('You can\'t share without creating a share link.', 'Share Document');
+            return;
         }
         this.requestsService.postRequest(ApiUrlConstants.DL_DOCUMENT_SHARE_API_URL, this.buildShareRequest(data))
             .subscribe({
@@ -678,7 +724,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             folder: this.selectedDoc.folder,
             shareType: data.shareType,
             shareLink: this.shareLinkInput?.nativeElement.value || '',
-            message: data.message,
+            // message: data.message,
             departmentId: data.departmentId,
             dlCollaborators: data.collaborators ? data.collaborators : [],
             sharePermission: data.sharePermission,
