@@ -55,6 +55,7 @@ export class ApiUrlConstants {
     public static GET_DL_DOCUMENT_SHARE_DETAIL_API_URL = '/dl/share/{dlDocumentId}';
     public static REMOVE_COLLABORATOR_SHARE_API_URL = '/dl/share/dl-document/{dlDocId}/collaborator/{collabId}';
     public static DL_DOCUMENT_SHARE_UPDATE_PERMISSION_API_URL = '/dl/share/update-access-permission?dlDocId={dlDocId}&collId={collId}&accessRight={accessRight}';
+    public static GET_DL_DOCUMENT_HIERARCHY_API_URL = '/dl/dl-document/hierarchy/{dlDocumentId}';
 
 
 }

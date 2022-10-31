@@ -99,7 +99,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.activatedRoute.queryParams.subscribe((params: any) => {
             if (params.location) {
                 const locationValue = window.atob(params.location);
-                console.log(locationValue)
+                if (locationValue && (this.appService.getSelectedFolderId() != 0 || this.appService.getSelectedFolderId() != '0')) {
+                    this.getDocumentHierarchy();
+                }
             }
         })
     }
@@ -118,6 +120,50 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.appService.handleError(error, 'Department');
                 }
             });
+    }
+
+    getDocumentHierarchy() {
+        this.requestsService.getRequest(ApiUrlConstants.GET_DL_DOCUMENT_HIERARCHY_API_URL.replace("{dlDocumentId}", this.appService.getSelectedFolderId()))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.breadcrumbs = [];
+                        this.breadcrumbs = this.getDefaultBreadcrumb();
+                        response.body.data.forEach((item: any) => {
+                            this.breadcrumbs.push({
+                                label: item.title,
+                                id: item.id,
+                                active: false
+                            });
+                        });
+                        this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+                        this.updateCollapsedBreadcrumbItems();
+                    } else {
+                        this.breadcrumbs = [];
+                        this.breadcrumbs = this.getDefaultBreadcrumb();
+                        this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
+                        this.updateCollapsedBreadcrumbItems();
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    getDefaultBreadcrumb(): BreadcrumbDTO[] {
+        return [
+            {
+                label: 'Home',
+                route: '/home',
+                active: false
+            },
+            {
+                label: 'Document Library',
+                route: '/doc-lib',
+                active: false
+            }
+        ];
     }
 
     buildDocumentActions() {
