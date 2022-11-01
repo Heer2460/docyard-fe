@@ -72,6 +72,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
         {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
+    uploadPaths: any[] = [];
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -201,7 +202,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 label: 'File',
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
-            }
+            },
+            // {
+            //     label: 'Folder',
+            //     icon: 'icon-folder-plus',
+            //     command: () => this.onUploadFolderInitialize()
+            // }
         ];
     }
 
@@ -237,16 +243,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     hideAddFolderPopup() {
         this.visibleAddFolderDialog = false;
-    }
-
-    uploadFolder(event: any) {
-        // console.log('Dir: ', event.target.files);
-
-        // for (let i = 0; i < event.target.files.length; i++) {
-        //     const file = event.target.files[i];
-        //     const path = file.webkitRelativePath.split('/');
-        //
-        // }
     }
 
     loadDocumentLibrary(folderId: string, archived: boolean) {
@@ -554,6 +550,8 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
+    // upload files code begins
+
     onUploadFilesInitialize() {
         let uploadInput: HTMLElement = document.getElementById('files') as HTMLElement;
         uploadInput.click();
@@ -642,6 +640,98 @@ export class DocLibComponent implements OnInit, OnDestroy {
         })
     }
 
+    // upload files code end
+
+    // upload folder code begins
+
+    onUploadFolderInitialize() {
+        let uploadInput: HTMLElement = document.getElementById('folder') as HTMLElement;
+        uploadInput.click();
+    }
+
+    onUploadFolder(event: any) {
+        console.log('Dir: ', event.target.files);
+
+        for (let i = 0; i < event.target.files.length; i++) {
+            const file = event.target.files[i];
+            const path = file.webkitRelativePath.split('/');
+            console.log(path);
+        }
+    }
+
+    // net code
+
+    /*filesPicked(event: any) {
+        const folders = event.target.files;
+        console.log(folders);
+        this.uploadPaths = [];
+        Array.prototype.forEach.call(folders, file => {
+            this.uploadPaths.push(file.webkitRelativePath);
+        });
+        console.log(this.uploadPaths);
+        for (let i = 0; i < folders.length; i++) {
+            folders[i].isFile = true;
+            folders[i].isDirectory = false;
+        }
+        setTimeout(() => {
+            console.log(this.buildTree(folders, 'abcZ'));
+        }, 2000);
+    }
+
+    private parseFileEntry(fileEntry: any) {
+        console.log(fileEntry)
+        return new Promise((resolve, reject) => {
+            fileEntry.file(
+                (file: any) => {
+                    resolve(file);
+                },
+                (err: any) => {
+                    reject(err);
+                }
+            );
+        });
+    }
+
+    private parseDirectoryEntry(directoryEntry: any) {
+        const directoryReader = directoryEntry.createReader();
+        return new Promise((resolve, reject) => {
+            directoryReader.readEntries(
+                (entries: any) => {
+                    resolve(this.buildTree(entries, directoryEntry.name));
+                },
+                (err: any) => {
+                    reject(err);
+                }
+            );
+        });
+    }
+
+    private buildTree(entry: any, name: any) {
+        const entries:any [] = entry;
+        console.log('entries:', entries)
+        const tree = {name, files: [], directories: []};
+        const promises: any[] = [];
+        Array.from(entries).forEach((entry: any) => {
+            if (entry.isFile) {
+                const promise = this.parseFileEntry(entry).then(file => {
+                    // @ts-ignore
+                    tree.files.push(file);
+                });
+                promises.push(promise);
+            } else if (entry.isDirectory) {
+                const promise = this.parseDirectoryEntry(entry).then(directory => {
+                    // @ts-ignore
+                    tree.directories.push(directory);
+                });
+                promises.push(promise);
+            }});
+        return Promise.all(promises).then(() => tree);
+    }*/
+
+    // net code
+
+
+    // upload folder code begins
 
     openProfile(data: any) {
         let loggedInUserId = this.appService.getLoggedInUserId();
