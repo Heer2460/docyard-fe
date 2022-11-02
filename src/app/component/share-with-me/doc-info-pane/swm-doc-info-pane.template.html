@@ -99,7 +99,7 @@
                                         <span class="text-muted">{{comment.postedOn}}</span>
                                     </p>
                                 </div>
-                                <div class="comment-actions btn-group btn-group-sm">
+                                <div class="comment-actions btn-group btn-group-sm" *ngIf="commentar">
                                     <button class="btn btn-sm btn-primary" (click)="onEditComment(comment)">
                                         <i class="icon-edit"></i>
                                     </button>

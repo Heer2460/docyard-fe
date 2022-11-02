@@ -484,6 +484,6 @@
 <ng-container>
     <input #fileUpload (change)="onUploadProcessStarted($event)" [hidden]="true" [multiple]="true" class="form-control"
            id="files" onclick="this.value = null" type="file">
-    <input #folderUpload (change)="uploadFolder($event)" [hidden]="true" class="form-control"
+    <input #folderUpload (change)="onUploadFolder($event)" [hidden]="true" class="form-control"
            directory id="folder" multiple onclick="this.value = null" type="file" webkitdirectory>
 </ng-container>
