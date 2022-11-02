@@ -598,6 +598,22 @@ export class DocLibComponent implements OnInit, OnDestroy {
     onCancelClick(index: number) {
         this.cancelAllUploads.next(index);
         this.files.splice(index, 1);
+        this.getAverageProgress();
+
+
+        /*let fileList: any = document.getElementById('files') as unknown as File;
+        console.log(fileList.files)
+        fileList.files[index] = null;
+        // fileList.files = [];
+        console.log(fileList.files)*/
+
+        /*console.log(this.fileUpload?.nativeElement.files);
+        if (this.fileUpload) {
+            !this.fileUpload ? undefined : this.fileUpload.nativeElement.files = [];
+        }
+        console.log(this.fileUpload?.nativeElement.files);*/
+
+        // this.fileUpload?.nativeElement.files[index] = this.fileUpload ? this.fileUpload.nativeElement.files[index] : undefined;
     }
 
     getAverageProgress() {
@@ -605,7 +621,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.files.forEach((file) => {
             totalProgress += file.progress;
         });
-        this.averageProgress = Math.round(totalProgress / this.files.length);
+        this.averageProgress = this.files.length > 0 ? Math.round(totalProgress / this.files.length) : 0;
     }
 
     makeUploadRequest(file: any, oncomplete: (response: any) => void, onprogress: (progress: any) => void,
