@@ -93,12 +93,12 @@
                              [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>
+                                <!--<th>
                                     <div class="form-check form-check-only">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault"></label>
                                     </div>
-                                </th>
+                                </th>-->
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
@@ -114,13 +114,13 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-row>
                             <tr>
-                                <td>
+                                <!--<td>
                                     <div class="form-check form-check-only">
                                         <input class="form-check-input" type="checkbox" [checked]="row.selected"
                                                [attr.id]="'checkbox-' + row.id">
                                         <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == false">
@@ -166,7 +166,7 @@
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td [attr.colspan]="6" class="text-center">
+                                <td [attr.colspan]="5" class="text-center">
                                     No trash data found
                                 </td>
                             </tr>
