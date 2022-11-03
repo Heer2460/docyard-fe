@@ -7,6 +7,7 @@ import { NotificationComponent } from './notification/notification.component';
 import {DialogModule} from "primeng/dialog";
 import {AppSettingComponent} from "./app-setting/app-setting.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {CustomDirectiveModule} from "../../../shared/directive/custom.directive.module";
 
 
 
@@ -25,7 +26,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         CommonModule,
         TieredMenuModule,
         DialogModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CustomDirectiveModule
     ]
 })
 export class NavModule { }
