@@ -73,6 +73,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
     uploadPaths: any[] = [];
+    inputFile: any;
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -558,7 +559,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     onUploadProcessStarted(event: any) {
-        let files: any [] = event.target.files;
+        let files: any [] = [...event.target.files];
         if (files.length > 10) {
             this.toastService.error('Maximum 10 files allowed', 'Upload file');
             return;
@@ -576,6 +577,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.files.push(obj);
                 }
             }
+            this.cancelAllUploads.next(-1);
             this.startUploadingFiles();
         }
     }
@@ -599,21 +601,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.cancelAllUploads.next(index);
         this.files.splice(index, 1);
         this.getAverageProgress();
-
-
-        /*let fileList: any = document.getElementById('files') as unknown as File;
-        console.log(fileList.files)
-        fileList.files[index] = null;
-        // fileList.files = [];
-        console.log(fileList.files)*/
-
-        /*console.log(this.fileUpload?.nativeElement.files);
-        if (this.fileUpload) {
-            !this.fileUpload ? undefined : this.fileUpload.nativeElement.files = [];
-        }
-        console.log(this.fileUpload?.nativeElement.files);*/
-
-        // this.fileUpload?.nativeElement.files[index] = this.fileUpload ? this.fileUpload.nativeElement.files[index] : undefined;
     }
 
     getAverageProgress() {
