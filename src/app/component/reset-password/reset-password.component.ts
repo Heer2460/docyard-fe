@@ -18,7 +18,8 @@ import {ChangePasswordDTO} from "../../model/settings/um/change.password.dto";
 export class ResetPasswordComponent implements OnInit {
 
     resetPasswordForm: FormGroup = new FormGroup({});
-    menus: any = [];
+    passwordVisibility: boolean = true;
+    confirmPasswordVisibility: boolean = true;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -29,6 +30,14 @@ export class ResetPasswordComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private router: Router) {
         this.buildForms();
+    }
+    
+    togglePasswordVisibility() {
+        this.passwordVisibility = !this.passwordVisibility;
+    }
+    
+    toggleConfirmPasswordVisibility() {
+        this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
     }
 
     ngOnInit() {
