@@ -73,7 +73,6 @@ export class DocLibComponent implements OnInit, OnDestroy {
         {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
     uploadPaths: any[] = [];
-    inputFile: any;
 
     constructor(public appService: AppService,
                 private router: Router,
