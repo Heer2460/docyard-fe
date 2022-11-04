@@ -115,13 +115,16 @@
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updatedOn">Updated
-                                    <p-sortIcon field="updatedOn"></p-sortIcon>
+                                <th pSortableColumn="updatedOnDetail">Modified
+                                    <p-sortIcon field="updatedOnDetail"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedByName">Modified By
+                                    <p-sortIcon field="updatedByName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
                                 </th>
-                                <th></th>
+                                <!--<th></th>-->
                                 <th class="actions-th"></th>
                             </tr>
                         </ng-template>
@@ -160,14 +163,16 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOnDetail}} by </span>
-                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
+                                    <span>{{row.updatedOnDetail}}</span>
+                                </td>
+                                <td>
+                                    <a (click)="openProfile(row)" class="author text-dark" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
-                                <td>
+                                <!--<td>
                                     <div class="form-check form-check-only form-check-star">
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <button (click)="menu.toggle($event);onMenuClicked(row)"
                                             class="btn btn-tiered-menu">
