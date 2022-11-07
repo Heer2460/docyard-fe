@@ -111,8 +111,11 @@
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updatedOn">Updated
-                                    <p-sortIcon field="updatedOn"></p-sortIcon>
+                                <th pSortableColumn="updatedOnDetail">Modified at
+                                    <p-sortIcon field="updatedOnDetail"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedByName">Modified By
+                                    <p-sortIcon field="updatedByName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
@@ -155,8 +158,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
+                                    <span>{{row.updatedOnDetail}}</span>
+                                </td>
+                                <td>
+                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
@@ -179,7 +184,7 @@
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td [attr.colspan]="5" class="text-center">
+                                <td [attr.colspan]="6" class="text-center">
                                     No records found
                                 </td>
                             </tr>

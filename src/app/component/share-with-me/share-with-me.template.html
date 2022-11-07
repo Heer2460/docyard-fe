@@ -114,7 +114,7 @@
                                 <th pSortableColumn="sharedByName">Shared By
                                     <p-sortIcon field="sharedByName"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updatedOnDetail">Modified
+                                <th pSortableColumn="updatedOnDetail">Modified at
                                     <p-sortIcon field="updatedOnDetail"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="updatedByName">Modified By
@@ -161,12 +161,14 @@
                                         </ng-template>
                                     </div>
                                 </td>
-                                <td>{{row?.sharedByName}}</td>
+                                <td>
+                                    <a class="author" role="button">{{row?.sharedByName}}</a>
+                                </td>
                                 <td>
                                     <span>{{row.updatedOnDetail}}</span>
                                 </td>
                                 <td>
-                                    <a (click)="openProfile(row)" class="author text-dark" role="button">{{row.updatedByName}}</a>
+                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>
