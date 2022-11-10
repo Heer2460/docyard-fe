@@ -1,8 +1,8 @@
 export const environment = {
-    production: false,
+    production: true,
     http_protocol: 'http',
     http_separator: '://',
-    api_end_point_url: '192.168.78.87',
+    api_end_point_url: '192.168.36.68',
     api_end_point_port: '8080',
     api_context_path: '',
     api_access_client: 'docyard',
