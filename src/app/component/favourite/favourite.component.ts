@@ -248,7 +248,7 @@ export class FavouriteComponent implements OnInit {
 
     selectGrid(data: any) {
         this.selectedDoc = data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
 
     openProfile(data: any) {

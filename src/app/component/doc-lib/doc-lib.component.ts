@@ -545,10 +545,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
     }
+
     selectGrid(data: any) {
         this.selectedDoc = data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
+
     // upload files code begins
     
     onUploadFilesInitialize() {
