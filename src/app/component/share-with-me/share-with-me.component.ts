@@ -39,7 +39,6 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         comments: true,
         sharing: true,
     };
-    docInfoPane: boolean = false;
     
     constructor(public appService: AppService,
                 private router: Router,
@@ -50,7 +49,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit(): void {
-        this.docInfoPane = this.appService.getDocInfoPaneState();
+        this.appService.setDocInfoPaneState(false);
         this.buildDocumentActions();
         this.loadShareWithMeData(this.appService.getSWMSelectedFolderId());
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
@@ -225,13 +224,11 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setDocInfoPaneState(true);
-        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
     
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
-        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
 
     selectGrid(data: any) {

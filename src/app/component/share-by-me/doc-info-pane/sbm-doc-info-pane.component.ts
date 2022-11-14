@@ -22,7 +22,6 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
     users: any[] = [];
     comments: any[] = [];
     sharingDetails: any[] = [];
-    showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
@@ -34,7 +33,6 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
                 private requestsService: RequestService,
                 private fb: FormBuilder,
                 private toastService: ToastrService) {
-        this.showDocInfoPane = this.appService.getDocInfoPaneState();
     }
 
     @Input() _selectedDoc: any = null;
@@ -194,7 +192,7 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     toggleDocInfoPane() {
-        this.appService.setDocInfoPaneState(!this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(!this.appService.docInfoPaneState);
     }
 
     loadDlDocumentDetails(event: any) {

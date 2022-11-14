@@ -49,7 +49,6 @@ export class FavouriteComponent implements OnInit {
         {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
     
-    docInfoPane: boolean = false;
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -60,7 +59,7 @@ export class FavouriteComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.docInfoPane = this.appService.getDocInfoPaneState();
+        this.appService.setDocInfoPaneState(false);
         this.buildDocumentActions();
         this.loadAllFavouriteDlDocuments('0', false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
@@ -241,13 +240,11 @@ export class FavouriteComponent implements OnInit {
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setDocInfoPaneState(true);
-        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
 
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
-        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
 
     selectGrid(data: any) {

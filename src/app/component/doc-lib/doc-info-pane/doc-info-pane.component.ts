@@ -199,9 +199,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     toggleDocInfoPane() {
-        this.appService.setDocInfoPaneState(
-            !this.appService.getDocInfoPaneState()
-        );
+        this.appService.setDocInfoPaneState(!this.appService.docInfoPaneState);
     }
 
     loadDlDocumentComments(event: any) {

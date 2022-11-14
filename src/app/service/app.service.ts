@@ -16,6 +16,7 @@ export class AppService {
     
     public showMenuBSubject = new BehaviorSubject(false);
     public showRightPaneSubject = new BehaviorSubject(false);
+    docInfoPaneState: boolean = false;
     
     routes: RoutesDTO[] = [];
     
@@ -32,13 +33,17 @@ export class AppService {
     }
     
     setDocInfoPaneState(state: boolean) {
-        const localState: any = JSON.stringify(state);
-        localStorage.setItem(btoa(AppConstants.DOC_INFO_PANE), localState);
+        this.docInfoPaneState = state;
+        
+        /*const localState: any = JSON.stringify(state);
+        localStorage.setItem(btoa(AppConstants.DOC_INFO_PANE), localState);*/
     }
     
     getDocInfoPaneState(): boolean {
-        const localState: any = localStorage.getItem(btoa(AppConstants.DOC_INFO_PANE));
-        return Boolean(JSON.parse(localState));
+        return this.docInfoPaneState;
+        
+        /*const localState: any = localStorage.getItem(btoa(AppConstants.DOC_INFO_PANE));
+        return Boolean(JSON.parse(localState));*/
     }
     
     handleError(error: any, title: string, fromLogin?: boolean) {

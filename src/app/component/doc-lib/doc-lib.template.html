@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div [ngClass]="docInfoPane ? 'collapsed' : ''" class="left">
+    <div [ngClass]="appService.docInfoPaneState ? 'collapsed' : ''" class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -98,7 +98,7 @@
                                                 <p (click)="openFolder(item)" class="title" role="button">{{item?.name | truncate: 40}}</p>
                                             </ng-container>
                                             <ng-template #elseCase>
-                                                <span (click)="openFile(item)" role="button">{{item.name | truncate: 40}}</span>
+                                                <p class="title" (click)="openFile(item)" role="button">{{item.name | truncate: 40}}</p>
                                             </ng-template>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
@@ -243,7 +243,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="docInfoPane ? '': 'collapsed'" [fromPage]="'doclib'"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="appService.docInfoPaneState ? '': 'collapsed'" [fromPage]="'doclib'"
                              [selectedDoc]="selectedDoc" (documentEvent)="receiveCommentState($event)">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">
