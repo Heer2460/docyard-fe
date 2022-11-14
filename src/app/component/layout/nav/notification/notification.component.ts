@@ -28,7 +28,6 @@ export class NotificationComponent implements OnInit {
     listen() {
         const messaging = getMessaging();
         onMessage(messaging, (payload) => {
-            //console.log('Message received. ', payload);
             this.notifications.push({
                 label: payload?.notification?.body,
                 icon: 'icon-bell',
