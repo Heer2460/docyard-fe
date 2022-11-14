@@ -17,4 +17,7 @@ export class StorageViewerComponent implements OnInit {
         this.usedSpace = this.appService.userInfo.spaceUsed;
     }
 
+    navigateToWebsite() {
+        window.open('https://www.infotechgroup.com/contact-us/');
+    }
 }

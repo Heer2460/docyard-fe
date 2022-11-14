@@ -8,13 +8,13 @@
                 <img src="../../../../assets/images/login-logo.png" alt="Brand logo">
             </div>
             <form (ngSubmit)="login(loginFrom.value)" [formGroup]="loginFrom">
-                <div class="form-floating">
+                <!--<div class="form-floating">
                     <input type="text" class="form-control" id="businessCode" placeholder="Business code">
                     <label for="businessCode">Business code</label>
                     <div class="input-group-text">
                         <i class="icon-qr-code"></i>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-floating mt-3">
                     <input type="text" class="form-control" id="username" formControlName="username" placeholder="Username">
                     <label for="username" class="required">Username</label>
@@ -51,10 +51,10 @@
                 </div>
             </form>
             <hr>
-            <p class="text-center">
+            <!--<p class="text-center">
                 Don’t have an account yet?
                 <a role="button" class="fw-bold">Sign Up</a>
-            </p>
+            </p>-->
         </div>
     </div>
 </div>

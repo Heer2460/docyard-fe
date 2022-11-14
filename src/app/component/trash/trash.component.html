@@ -70,7 +70,7 @@
                                                  src="./assets/images/svg/icons/folder.svg" alt="icon">
                                         </div>
                                         <div class="file-details">
-                                            <p class="title" role="button">{{item?.name}}</p>
+                                            <p class="title" role="button">{{item?.name | truncate: 40}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
                                                 <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
@@ -93,12 +93,15 @@
                              [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th></th>
+                                <!--<th></th>-->
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updatedOn">Updated
-                                    <p-sortIcon field="updatedOn"></p-sortIcon>
+                                <th pSortableColumn="updatedOnDetail">Modified at
+                                    <p-sortIcon field="updatedOnDetail"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedByName">Modified By
+                                    <p-sortIcon field="updatedByName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
@@ -126,16 +129,18 @@
                                 <td>
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button">{{row.name | truncate: 50}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button">{{row.name | truncate: 50}}</span>
                                         </ng-template>
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOnDetail}} by </span>
-                                    <a role="button" class="author" (click)="openProfile(row)">{{row.updatedByName}}</a>
+                                    <span>{{row.updatedOnDetail}}</span>
+                                </td>
+                                <td>
+                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
                                 <td>

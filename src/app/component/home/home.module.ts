@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DropdownModule} from "primeng/dropdown";
 import {ChipsModule} from "primeng/chips";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {ChipsModule} from "primeng/chips";
         ConfirmDialogModule,
         DropdownModule,
         ChipsModule,
+        CustomDirectiveModule,
     ]
 })
 export class HomeModule {

@@ -439,9 +439,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             if (isChecked) {
-                                this.toastService.success(row.title + ' has been starred successfully.', 'Document Library');
+                                this.toastService.success(row.title.substr(0, 30) + '...' + ' has been starred successfully.', 'Document Library');
                             } else {
-                                this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
+                                this.toastService.success(row.title.substr(0, 30) + '...' + ' has been un-starred successfully.', 'Document Library');
                             }
                         }
                     },
@@ -545,7 +545,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
     }
-    
+    selectGrid(data: any) {
+        this.selectedDoc = data;
+        this.appService.setShowDocInfoPaneSubjectState(true);
+    }
     // upload files code begins
     
     onUploadFilesInitialize() {
@@ -554,7 +557,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
     
     onUploadProcessStarted(event: any) {
-        let files: any [] = event.target.files;
+        let files: any [] = [...event.target.files];
         if (files.length > 10) {
             this.toastService.error('Maximum 10 files allowed', 'Upload file');
             return;
@@ -563,7 +566,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             for (let file of files) {
                 let fileSize = (file.size / 1024) / 1024;
                 if (fileSize > 200) {
-                    this.toastService.error("Size of file named '" + file.name + "' is more than 200 mb.");
+                    this.toastService.error("Size of file named '" + file.name.substr(0, 30) + '...' + "' is more than 200 mb.");
                 } else {
                     let obj: any = {};
                     obj['orgFile'] = file;
@@ -572,6 +575,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     this.files.push(obj);
                 }
             }
+            this.cancelAllUploads.next(-1);
             this.startUploadingFiles();
         }
     }
@@ -594,6 +598,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     onCancelClick(index: number) {
         this.cancelAllUploads.next(index);
         this.files.splice(index, 1);
+        this.getAverageProgress();
     }
     
     getAverageProgress() {
@@ -601,7 +606,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.files.forEach((file) => {
             totalProgress += file.progress;
         });
-        this.averageProgress = Math.round(totalProgress / this.files.length);
+        this.averageProgress = this.files.length > 0 ? Math.round(totalProgress / this.files.length) : 0;
     }
     
     makeUploadRequest(file: any, oncomplete: (response: any) => void, onprogress: (progress: any) => void,

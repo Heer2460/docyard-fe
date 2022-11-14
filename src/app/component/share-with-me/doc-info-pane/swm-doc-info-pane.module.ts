@@ -4,6 +4,7 @@ import {SwmDocInfoPaneComponent} from './swm-doc-info-pane.component';
 import {AccordionModule} from "primeng/accordion";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TieredMenuModule} from "primeng/tieredmenu";
+import {CustomDirectiveModule} from "../../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {TieredMenuModule} from "primeng/tieredmenu";
         CommonModule,
         AccordionModule,
         ReactiveFormsModule,
-        TieredMenuModule
+        TieredMenuModule,
+        CustomDirectiveModule
     ]
 })
 export class SwmDocInfoPaneModule {

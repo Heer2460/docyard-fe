@@ -77,7 +77,7 @@
                         <ng-container [formGroup]="commentForm">
                             <div class="form-floating mb-2">
                             <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"
-                                      id="floatingTextarea"></textarea>
+                                      id="floatingTextarea" onlyAlphaNumeric></textarea>
                                 <label for="floatingTextarea">Comments</label>
                             </div>
                         </ng-container>

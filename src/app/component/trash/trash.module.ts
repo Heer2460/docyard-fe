@@ -10,6 +10,7 @@ import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TrashComponent} from "./trash.component";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {TrashComponent} from "./trash.component";
         DocInfoPaneModule,
         DialogModule,
         ReactiveFormsModule,
+        CustomDirectiveModule,
     ]
 })
 export class TrashModule {

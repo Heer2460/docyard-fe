@@ -26,11 +26,11 @@
                                     <ng-container *ngIf="index >= breadcrumbs.length -breadcrumbItemsToShow">
                                         <li [ngClass]="breadcrumb.active ? 'active' : ''" class="breadcrumb-item">
                                             <ng-container *ngIf="lastIndex; else elseBlock">
-                                                <a>{{breadcrumb.label}}</a>
+                                                <a>{{breadcrumb.label | truncate: 20}}</a>
                                             </ng-container>
                                             <ng-template #elseBlock>
                                                 <a (click)="navigateToRoute(breadcrumb, index)" role="button">
-                                                    {{breadcrumb.label}}
+                                                    {{breadcrumb.label | truncate: 20}}
                                                 </a>
                                             </ng-template>
                                         </li>
@@ -57,7 +57,7 @@
                         <div class="row row-items">
                             <ng-container *ngFor="let item of dlDocuments">
                                 <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
-                                    <div class="file-card">
+                                    <div class="file-card" (click)="selectGrid(item)">
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
@@ -76,7 +76,12 @@
                                                  src="./assets/images/svg/icons/folder-shared-filled.svg">
                                         </div>
                                         <div class="file-details">
-                                            <p (click)="openFolder(item)" class="title" role="button">{{item?.name}}</p>
+                                            <ng-container *ngIf="item.folder == true; else elseCase">
+                                                <p (click)="openFolder(item)" class="title" role="button">{{item?.name | truncate: 40}}</p>
+                                            </ng-container>
+                                            <ng-template #elseCase>
+                                                <span (click)="openFile(item)" role="button">{{item.name | truncate: 40}}</span>
+                                            </ng-template>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
                                                 <a (click)="openProfile(item)" role="button">{{item?.updatedByName}}</a>
@@ -102,12 +107,18 @@
                              styleClass="doc-data-table">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th></th>
+                                <!--<th></th>-->
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="updatedOn">Updated
-                                    <p-sortIcon field="updatedOn"></p-sortIcon>
+                                <th pSortableColumn="sharedByName">Shared By
+                                    <p-sortIcon field="sharedByName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedOnDetail">Modified at
+                                    <p-sortIcon field="updatedOnDetail"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedByName">Modified By
+                                    <p-sortIcon field="updatedByName"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="size">Size
                                     <p-sortIcon field="size"></p-sortIcon>
@@ -137,15 +148,20 @@
                                 <td>
                                     <div class="file-types">
                                         <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span (click)="openFolder(row)" role="button">{{row.name}}</span>
+                                            <span (click)="openFolder(row)" role="button">{{row.name | truncate: 50}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span (click)="openFile(row)" role="button">{{row.name}}</span>
+                                            <span (click)="openFile(row)" role="button">{{row.name | truncate: 50}}</span>
                                         </ng-template>
                                     </div>
                                 </td>
                                 <td>
-                                    <span>{{row.updatedOnDetail}} by </span>
+                                    <a class="author" role="button">{{row?.sharedByName}}</a>
+                                </td>
+                                <td>
+                                    <span>{{row.updatedOnDetail}}</span>
+                                </td>
+                                <td>
                                     <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
                                 </td>
                                 <td>{{row.size}}</td>
