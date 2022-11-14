@@ -25,7 +25,6 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     shareDocumentDialog: boolean = false;
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
-    showDocInfoPane: boolean = false;
     showGridDisplay: boolean = false;
     dlFolderId: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
@@ -51,13 +50,10 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
                 private toastService: ToastrService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
     }
 
     ngOnInit(): void {
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
         this.buildDocumentActions();
         this.buildForms();
         this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
@@ -261,12 +257,12 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
 
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
 
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
     }
 
     openProfile(data: any) {

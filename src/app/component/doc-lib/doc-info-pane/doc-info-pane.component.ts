@@ -19,7 +19,6 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     users: any[] = [];
     comments: any[] = [];
     sharingDetails: any[] = [];
-    showDocInfoPane: boolean = false;
     enableEditComment: boolean = false;
     sharingMenuItems: MenuItem[] = [];
     activeTabIndex: number = 0;
@@ -41,9 +40,6 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 private requestsService: RequestService,
                 private fb: FormBuilder,
                 private toastService: ToastrService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
     }
 
     get selectedDoc(): any {
@@ -203,7 +199,9 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     toggleDocInfoPane() {
-        this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(
+            !this.appService.getDocInfoPaneState()
+        );
     }
 
     loadDlDocumentComments(event: any) {

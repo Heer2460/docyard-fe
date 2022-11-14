@@ -1,32 +1,32 @@
 @import "../../../assets/less/_mixin";
 
+.file-types {
+	display: flex;
+	align-items: center;
+	
+	img {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+		margin-right: 10px;
+	}
+	
+	span {
+		.mixin-transition(@duration: 150ms);
+		
+		&:hover {
+			color: hsl(var(--color-blue-03));
+		}
+		
+	}
+	
+}
+
 .types-and-quick-actions-container {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	
-	.file-types {
-		display: flex;
-		align-items: center;
-		
-		img {
-			width: 40px;
-			height: 40px;
-			object-fit: contain;
-			margin-right: 10px;
-		}
-		
-		span {
-			.mixin-transition(@duration: 150ms);
-			
-			&:hover {
-				color: hsl(var(--color-blue-03));
-			}
-			
-		}
-		
-	}
 	
 	.quick-actions {
 		display: flex;

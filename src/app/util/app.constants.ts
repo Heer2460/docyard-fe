@@ -1,5 +1,7 @@
 export class AppConstants {
-
+    
+    public static DOC_INFO_PANE = 'docInfoPane';
+    
     //Application auth constants
     public static AUTH_ACCESS_TOKEN = 'access_token';
     public static AUTH_REFRESH_TOKEN = 'refresh_token';

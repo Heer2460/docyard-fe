@@ -39,13 +39,11 @@ export class DocumentViewComponent implements OnInit {
                 private requestsService: RequestService,
                 private router: Router,
                 private toastService: ToastrService,) {
-        this.appService.setShowDocInfoPaneSubjectState(this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(this.showDocInfoPane);
     }
 
     ngOnInit(): void {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
+        this.showDocInfoPane = this.appService.getDocInfoPaneState();
         this.setInitialProps();
         this.activatedRoute.queryParams.subscribe((params: any) => {
             const guId = params.guid;

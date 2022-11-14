@@ -356,3 +356,45 @@
 	
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	
+	:host {
+		
+		.card {
+			
+			.card-body {
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				
+				.profile-container {
+					width: 180px;
+					margin-top: 20px;
+					margin-bottom: 20px;
+				}
+				
+				.content-container {
+					align-items: flex-start;
+					flex-direction: column;
+					
+					.left-container {
+						width: 100%;
+						flex-direction: row;
+						border-bottom: 1px dashed hsl(var(--color-blue-01));
+					}
+					
+					.right-container {
+						width: 100%;
+						border-left: 0;
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+}
+

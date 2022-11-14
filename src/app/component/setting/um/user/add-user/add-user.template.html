@@ -173,7 +173,7 @@
                             </div>
                             <div class="col-3 mb-3">
                                 <div class="custom-file">
-                                    <label for="file">{{files[0]?.data?.name ?? 'Choose file'}}</label>
+                                    <label for="file">{{files[0]?.data?.name ?? 'Choose profile image'}}</label>
                                     <input #file (change)="setAttachment($event)"
                                            accept="image/png, image/jpeg, image/jpg" class="form-control" id="file"
                                            onclick="this.value = null"

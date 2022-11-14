@@ -32,9 +32,7 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
                 private requestsService: RequestService,
                 private fb: FormBuilder,
                 private toastService: ToastrService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
+        this.showDocInfoPane = this.appService.getDocInfoPaneState();
     }
 
     get selectedDoc(): any {
@@ -111,7 +109,7 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     toggleDocInfoPane() {
-        this.appService.setShowDocInfoPaneSubjectState(!this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(!this.showDocInfoPane);
     }
 
     loadDlDocumentDetails(event: any) {

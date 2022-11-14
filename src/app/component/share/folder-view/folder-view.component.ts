@@ -43,13 +43,11 @@ export class FolderViewComponent implements OnInit {
                 private requestsService: RequestService,
                 private router: Router,
                 private toastService: ToastrService,) {
-        this.appService.setShowDocInfoPaneSubjectState(this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(this.showDocInfoPane);
     }
 
     ngOnInit(): void {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
+        this.showDocInfoPane = this.appService.getDocInfoPaneState();
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.params = params;
             if (params.id) {
@@ -142,12 +140,12 @@ export class FolderViewComponent implements OnInit {
 
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
 
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
     }
 
     getFolderById(folderId: any) {

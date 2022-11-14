@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div [ngClass]="showDocInfoPane ? 'collapsed' : ''" class="left">
+    <div [ngClass]="appService.getDocInfoPaneState() ? 'collapsed' : ''" class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -132,12 +132,7 @@
                              styleClass="doc-data-table">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>
-                                    <div class="form-check form-check-only">
-                                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
-                                        <label class="form-check-label" for="flexCheckDefault"></label>
-                                    </div>
-                                </th>
+                                <th></th>
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
@@ -154,30 +149,24 @@
                         <ng-template let-row pTemplate="body">
                             <tr [pSelectableRow]="row">
                                 <td>
-                                    <div class="form-check form-check-only">
-                                        <input [attr.id]="'checkbox-' + row.id" [checked]="row.selected"
-                                               class="form-check-input"
-                                               type="checkbox">
-                                        <label [attr.for]="'checkbox-' + row.id" class="form-check-label"></label>
-                                    </div>
+                                    <ng-container *ngIf="row.folder == false">
+                                        <ng-container
+                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                            <img alt="{{row.extension}}"
+                                                 src="./assets/images/svg/icons/{{row.extension}}.svg">
+                                        </ng-container>
+                                        <ng-template #otherFileElseCase>
+                                            <img alt="other" src="./assets/images/svg/icons/other.svg">
+                                        </ng-template>
+                                    </ng-container>
+                                    <img *ngIf="row.folder == true && row.shared == null" alt="icon"
+                                         src="./assets/images/svg/icons/folder.svg">
+                                    <img *ngIf="row.folder == true && row.shared != null" alt="icon"
+                                         src="./assets/images/svg/icons/folder-shared-filled.svg">
                                 </td>
                                 <td>
                                     <div class="types-and-quick-actions-container">
                                         <div class="file-types">
-                                            <ng-container *ngIf="row.folder == false">
-                                                <ng-container
-                                                    *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
-                                                    <img alt="{{row.extension}}"
-                                                         src="./assets/images/svg/icons/{{row.extension}}.svg">
-                                                </ng-container>
-                                                <ng-template #otherFileElseCase>
-                                                    <img alt="other" src="./assets/images/svg/icons/other.svg">
-                                                </ng-template>
-                                            </ng-container>
-                                            <img *ngIf="row.folder == true && row.shared == null" alt="icon"
-                                                 src="./assets/images/svg/icons/folder.svg">
-                                            <img *ngIf="row.folder == true && row.shared != null" alt="icon"
-                                                 src="./assets/images/svg/icons/folder-shared-filled.svg">
                                             <ng-container *ngIf="row.folder == true; else elseCase">
                                                 <span (click)="openFolder(row)" role="button">{{row.name}}</span>
                                             </ng-container>
@@ -244,7 +233,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="showDocInfoPane ? '': 'collapsed'" [fromPage]="'doclib'"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="appService.getDocInfoPaneState() ? '': 'collapsed'" [fromPage]="'doclib'"
                              [selectedDoc]="selectedDoc" (documentEvent)="receiveCommentState($event)">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">

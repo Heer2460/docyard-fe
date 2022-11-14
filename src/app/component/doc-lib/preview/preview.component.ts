@@ -65,13 +65,11 @@ export class PreviewComponent implements OnInit {
                 private fb: FormBuilder,
                 private toastService: ToastrService,
                 private location: Location) {
-        this.appService.setShowDocInfoPaneSubjectState(this.showDocInfoPane);
+        this.appService.setDocInfoPaneState(this.showDocInfoPane);
     }
 
     ngOnInit(): void {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
+        this.showDocInfoPane = this.appService.getDocInfoPaneState();
         this.setInitialProps();
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.queryParams = params;

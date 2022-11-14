@@ -27,10 +27,8 @@ export class LayoutComponent implements OnInit {
         this.appService.showRightPaneSubject.subscribe((value: boolean) => {
             this.showRightPane = value;
         });
-
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
+    
+        this.showDocInfoPane = this.appService.getDocInfoPaneState();
     }
 
 }

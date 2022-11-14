@@ -25,7 +25,6 @@ export class FavouriteComponent implements OnInit {
     menuItems: MenuItem[] = [];
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
-    showDocInfoPane: boolean = true;
     showGridDisplay: boolean = false;
     dlFolderId: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
@@ -56,13 +55,10 @@ export class FavouriteComponent implements OnInit {
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
                 private toastService: ToastrService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
     }
 
     ngOnInit(): void {
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
         this.buildDocumentActions();
         this.loadAllFavouriteDlDocuments('0', false);
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
@@ -242,12 +238,12 @@ export class FavouriteComponent implements OnInit {
 
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
 
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
     }
 
     openProfile(data: any) {

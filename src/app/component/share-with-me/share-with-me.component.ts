@@ -19,12 +19,11 @@ import * as FileSaver from 'file-saver';
     styleUrls: ['./share-with-me.component.less']
 })
 export class ShareWithMeComponent implements OnInit, OnDestroy {
-
+    
     @ViewChild('shareLinkInput') shareLinkInput: ElementRef | undefined;
     menuItems: MenuItem[] = [];
     dlDocuments: any[] = [];
     selectedDoc: DlDocumentDTO = new DlDocumentDTO();
-    showDocInfoPane: boolean = false;
     showGridDisplay: boolean = false;
     dlFolderId: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
@@ -40,26 +39,23 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         comments: true,
         sharing: true,
     };
-
+    
     constructor(public appService: AppService,
                 private router: Router,
                 private fb: FormBuilder,
                 public appUtility: AppUtility,
                 private requestsService: RequestService,
                 private toastService: ToastrService) {
-        this.appService.showDocInfoPaneSubject.subscribe((value: boolean) => {
-            this.showDocInfoPane = value;
-        });
     }
-
+    
     ngOnInit(): void {
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
         this.buildDocumentActions();
         this.loadShareWithMeData(this.appService.getSWMSelectedFolderId());
         this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
         this.preloadedData();
     }
-
+    
     preloadedData(): void {
         this.requestsService.getRequest(ApiUrlConstants.DEPARTMENT_API_URL + 'search?code=&name=&status=Active')
             .subscribe({
@@ -75,7 +71,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
                 }
             });
     }
-
+    
     buildDocumentActions() {
         this.menuItems = [
             {
@@ -86,7 +82,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             }
         ];
     }
-
+    
     loadShareWithMeData(folderId: string) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         this.requestsService.getRequest(ApiUrlConstants.GET_ALL_SWM_DL_DOCUMENT_BY_USER_API_URL
@@ -105,7 +101,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
                 }
             });
     }
-
+    
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
         if (this.selectedDoc.folder == true) {
@@ -120,7 +116,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             ];
         }
     }
-
+    
     openFolder(rowData: any) {
         this.dlFolderId = rowData.id;
         if (this.dlFolderId != '') {
@@ -128,22 +124,22 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             this.updateBreadcrumb(rowData);
         }
     }
-
+    
     openFile(rowData: any) {
         if (rowData.parentId == null) {
             rowData.parentId = '';
         }
         window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('swm')}`, '_blank');
     }
-
+    
     setGridDisplay() {
         this.showGridDisplay = true;
     }
-
+    
     setListDisplay() {
         this.showGridDisplay = false;
     }
-
+    
     updateBreadcrumb(rowData: any) {
         this.breadcrumbs[this.breadcrumbs.length - 1].active = false;
         this.breadcrumbs.push({
@@ -153,10 +149,10 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         });
         this.setBreadcrumbAndSelectedItemToLocalStorage();
     }
-
+    
     updateCollapsedBreadcrumbItems() {
         if (this.breadcrumbs.length < this.breadcrumbItemsToShow) return;
-
+        
         if (this.breadcrumbs.length > this.breadcrumbItemsToShow) {
             this.breadcrumbCollapsedItems = this.breadcrumbs.slice(0, this.breadcrumbs.length - this.breadcrumbItemsToShow);
             this.breadcrumbCollapsedItems = this.breadcrumbCollapsedItems.map((item: BreadcrumbDTO, index: number) => ({
@@ -165,7 +161,7 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             }))
         }
     }
-
+    
     navigateToRoute(breadcrumb: BreadcrumbDTO, index: number) {
         if (breadcrumb.id) {
             this.loadShareWithMeData(breadcrumb.id);
@@ -176,15 +172,15 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
         } else {
             this.router.navigate([breadcrumb.route]);
         }
-
+        
         this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
         this.breadcrumbs[this.breadcrumbs.length - 1].active = true;
         this.setBreadcrumbAndSelectedItemToLocalStorage();
     }
-
+    
     getBreadCrumbsFromLocalStorage(): BreadcrumbDTO[] {
         const breadcrumbs: any = localStorage.getItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_BREADCRUMB));
-
+        
         if (breadcrumbs) {
             return JSON.parse(breadcrumbs);
         } else {
@@ -202,14 +198,14 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
             ];
         }
     }
-
+    
     setBreadcrumbAndSelectedItemToLocalStorage() {
         this.updateCollapsedBreadcrumbItems();
         localStorage.setItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_ID), this.dlFolderId);
         localStorage.setItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
-
-
+    
+    
     downloadFile(data: any) {
         this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
             .subscribe({
@@ -224,24 +220,24 @@ export class ShareWithMeComponent implements OnInit, OnDestroy {
                 }
             });
     }
-
+    
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
-        this.appService.setShowDocInfoPaneSubjectState(true);
+        this.appService.setDocInfoPaneState(true);
     }
-
+    
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
-        this.appService.setShowDocInfoPaneSubjectState(false);
+        this.appService.setDocInfoPaneState(false);
     }
-
+    
     openProfile(data: any) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {
             this.router.navigate(['/profile']);
         }
     }
-
+    
     ngOnDestroy(): void {
         localStorage.removeItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_ID));
         localStorage.removeItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_BREADCRUMB));

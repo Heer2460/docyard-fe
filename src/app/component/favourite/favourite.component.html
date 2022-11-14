@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div class="left" [ngClass]="showDocInfoPane ? 'collapsed' : ''">
+    <div class="left" [ngClass]="appService.getDocInfoPaneState() ? 'collapsed' : ''">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -19,7 +19,7 @@
                         <div class="breadcrumbs-container">
                             <ol class="breadcrumb">
                                 <ng-container
-                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                        *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
                                     <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
                                         <li class="breadcrumb-item" (click)="menu.toggle($event)">
                                             <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" appendTo="body"
@@ -66,7 +66,7 @@
                                         <div class="icon-thumbnail">
                                             <ng-container *ngIf="item.folder == false">
                                                 <ng-container
-                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                        *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
                                                     <img src="./assets/images/svg/icons/{{item.extension}}.svg"
                                                          alt="{{item.extension}}">
                                                 </ng-container>
@@ -85,7 +85,8 @@
                                             </p>
                                             <p class="file-size">{{item?.size}}</p>
                                         </div>
-                                        <button class="btn btn-tiered-menu-vertical" (click)="menu.toggle($event);onMenuClicked(item)">
+                                        <button class="btn btn-tiered-menu-vertical"
+                                                (click)="menu.toggle($event);onMenuClicked(item)">
                                             <p-tieredMenu #menu [model]="menuItems" appendTo="body"
                                                           [popup]="true"></p-tieredMenu>
                                             <i class="icon-menu-vertical"></i>
@@ -102,12 +103,7 @@
                              (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>
-                                    <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault"></label>
-                                    </div>
-                                </th>
+                                <th></th>
                                 <th pSortableColumn="name">Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
@@ -124,28 +120,22 @@
                         <ng-template pTemplate="body" let-row>
                             <tr [pSelectableRow]="row">
                                 <td>
-                                    <div class="form-check form-check-only">
-                                        <input class="form-check-input" type="checkbox" [checked]="row.selected"
-                                               [attr.id]="'checkbox-' + row.id">
-                                        <label class="form-check-label" [attr.for]="'checkbox-' + row.id"></label>
-                                    </div>
+                                    <ng-container *ngIf="row.folder == false">
+                                        <ng-container
+                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                            <img src="./assets/images/svg/icons/{{row.extension}}.svg"
+                                                 alt="{{row.extension}}">
+                                        </ng-container>
+                                        <ng-template #otherFileElseCase>
+                                            <img src="../../../assets/images/svg/icons/other.svg" alt="other">
+                                        </ng-template>
+                                    </ng-container>
+                                    <img *ngIf="row.folder == true"
+                                         src="../../../assets/images/svg/icons/folder.svg"
+                                         alt="icon">
                                 </td>
                                 <td>
                                     <div class="file-types">
-                                        <ng-container *ngIf="row.folder == false">
-                                            <ng-container
-                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
-                                                <img src="./assets/images/svg/icons/{{row.extension}}.svg"
-                                                     alt="{{row.extension}}">
-                                            </ng-container>
-                                            <ng-template #otherFileElseCase>
-                                                <img src="../../../assets/images/svg/icons/other.svg" alt="other">
-                                            </ng-template>
-                                        </ng-container>
-                                        <img *ngIf="row.folder == true"
-                                             src="../../../assets/images/svg/icons/folder.svg"
-                                             alt="icon">
-
                                         <ng-container *ngIf="row.folder == true; else elseCase">
                                             <span role="button" (click)="openFolder(row)">{{row.name}}</span>
                                         </ng-container>
@@ -192,7 +182,8 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [ngClass]="showDocInfoPane ? '': 'collapsed'" [docTabs]="previewTabs" [fromPage]="'favourite'"
+    <doc-info-pane-component [ngClass]="appService.getDocInfoPaneState() ? '': 'collapsed'" [docTabs]="previewTabs"
+                             [fromPage]="'favourite'"
                              [selectedDoc]="selectedDoc"></doc-info-pane-component>
     <!--    <file-uploader-component></file-uploader-component>-->
 </section>
