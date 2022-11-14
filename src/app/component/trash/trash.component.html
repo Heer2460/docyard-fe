@@ -70,7 +70,7 @@
                                                  src="./assets/images/svg/icons/folder.svg" alt="icon">
                                         </div>
                                         <div class="file-details">
-                                            <p class="title" role="button">{{item?.name}}</p>
+                                            <p class="title" role="button">{{item?.name | truncate: 40}}</p>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
                                                 <a role="button" (click)="openProfile(item)">{{item?.updatedByName}}</a>
@@ -139,10 +139,10 @@
                                         <img *ngIf="row.folder == true" src="./assets/images/svg/icons/folder.svg"
                                              alt="icon">
                                         <ng-container *ngIf="row.folder == true; else elseCase">
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button">{{row.name | truncate: 50}}</span>
                                         </ng-container>
                                         <ng-template #elseCase>
-                                            <span role="button">{{row.name}}</span>
+                                            <span role="button">{{row.name | truncate: 50}}</span>
                                         </ng-template>
                                     </div>
                                 </td>

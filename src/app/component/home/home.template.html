@@ -123,7 +123,7 @@
                                              alt="icon">
                                     </div>
                                     <div class="file-details">
-                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name}}</p>
+                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name | truncate: 40}}</p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
                                             <a role="button"
@@ -166,7 +166,7 @@
                     {{ appUtility.makeErrorMessage("Name", 'required') }}
                 </small>
                 <small *ngIf="appUtility.getFormError(renameDocumentForm, 'name', 'name', 'maxlength')">
-                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 17) }}
+                    {{ appUtility.makeErrorMessage('Name', 'maxlength', 255) }}
                 </small>
             </div>
         </div>

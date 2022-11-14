@@ -12,6 +12,7 @@ import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {ChipsModule} from "primeng/chips";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {ChipsModule} from "primeng/chips";
         ReactiveFormsModule,
         DropdownModule,
         ChipsModule,
+        CustomDirectiveModule,
     ]
 })
 export class FavouriteModule {

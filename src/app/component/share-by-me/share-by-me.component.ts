@@ -269,6 +269,11 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
+    selectGrid(data: any) {
+        this.selectedDoc = data;
+        this.appService.setShowDocInfoPaneSubjectState(true);
+    }
+
     openProfile(data: any) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         if (data.updatedBy === Number.parseInt(String(loggedInUserId))) {

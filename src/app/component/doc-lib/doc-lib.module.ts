@@ -14,6 +14,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
 import {TooltipModule} from "primeng/tooltip";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import {TooltipModule} from "primeng/tooltip";
         DropdownModule,
         CheckboxModule,
         CalendarModule,
-        TooltipModule
+        TooltipModule,
+        CustomDirectiveModule
     ]
 })
 export class DocLibModule {

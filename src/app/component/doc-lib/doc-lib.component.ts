@@ -443,9 +443,9 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     next: (response: HttpResponse<any>) => {
                         if (response.status === 200) {
                             if (isChecked) {
-                                this.toastService.success(row.title + ' has been starred successfully.', 'Document Library');
+                                this.toastService.success(row.title.substr(0, 30) + '...' + ' has been starred successfully.', 'Document Library');
                             } else {
-                                this.toastService.success(row.title + ' has been un-starred successfully.', 'Document Library');
+                                this.toastService.success(row.title.substr(0, 30) + '...' + ' has been un-starred successfully.', 'Document Library');
                             }
                         }
                     },
@@ -550,6 +550,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
         this.appService.setShowDocInfoPaneSubjectState(false);
     }
 
+    selectGrid(data: any) {
+        this.selectedDoc = data;
+        this.appService.setShowDocInfoPaneSubjectState(true);
+    }
+
     // upload files code begins
 
     onUploadFilesInitialize() {
@@ -567,7 +572,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
             for (let file of files) {
                 let fileSize = (file.size / 1024) / 1024;
                 if (fileSize > 200) {
-                    this.toastService.error("Size of file named '" + file.name + "' is more than 200 mb.");
+                    this.toastService.error("Size of file named '" + file.name.substr(0, 30) + '...' + "' is more than 200 mb.");
                 } else {
                     let obj: any = {};
                     obj['orgFile'] = file;

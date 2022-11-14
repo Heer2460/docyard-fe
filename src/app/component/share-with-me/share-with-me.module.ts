@@ -14,6 +14,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
 import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
         DropdownModule,
         CheckboxModule,
         CalendarModule,
+        CustomDirectiveModule,
     ]
 })
 export class ShareWithMeModule {
