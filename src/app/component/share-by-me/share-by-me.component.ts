@@ -43,6 +43,8 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
         {label: 'VIEW', value: 'VIEW', detail: 'Download, View'},
         {label: 'COMMENT', value: 'COMMENT', detail: 'Download, View, Comment'}
     ];
+    
+    docInfoPane: boolean = false;
 
     constructor(public appService: AppService,
                 private router: Router,
@@ -53,7 +55,7 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.appService.setDocInfoPaneState(false);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
         this.buildDocumentActions();
         this.buildForms();
         this.loadShareByMeData(this.appService.getSBMSelectedFolderId());
@@ -258,11 +260,13 @@ export class ShareByMeComponent implements OnInit, OnDestroy {
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setDocInfoPaneState(true);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
 
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
 
     selectGrid(data: any) {

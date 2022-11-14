@@ -205,6 +205,9 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     loadDlDocumentComments(event: any) {
+        //When no document selected then return
+        //And don't call api
+        if(!this.selectedDoc.id) return;
         this.activeTabIndex = event.index;
         if (event.index == 1 && this.selectedDoc) {
             this.enableEditComment = false;

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'banner-upgrade-component',
-  templateUrl: './banner-upgrade.template.html',
-  styleUrls: ['./banner-upgrade.component.less']
+  selector: 'powered-by-component',
+  templateUrl: './powered-by.template.html',
+  styleUrls: ['./powered-by.component.less']
 })
 export class BannerUpgradeComponent implements OnInit {
 

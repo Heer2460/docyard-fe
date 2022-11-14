@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div [ngClass]="appService.getDocInfoPaneState() ? 'collapsed' : ''" class="left">
+    <div [ngClass]="docInfoPane ? 'collapsed' : ''" class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -243,7 +243,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="appService.getDocInfoPaneState() ? '': 'collapsed'" [fromPage]="'doclib'"
+    <doc-info-pane-component [docTabs]="previewTabs" [ngClass]="docInfoPane ? '': 'collapsed'" [fromPage]="'doclib'"
                              [selectedDoc]="selectedDoc" (documentEvent)="receiveCommentState($event)">
     </doc-info-pane-component>
     <ng-container *ngIf="files.length > 0">

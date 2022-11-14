@@ -30,6 +30,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     @ViewChild(DocInfoPaneComponent) docPane: any;
     
     filesToUpload: any[] = [];
+    docInfoPane: boolean = false;
     
     addFolderForm: FormGroup = new FormGroup({});
     renameDocumentForm: FormGroup = new FormGroup({});
@@ -84,7 +85,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit(): void {
-        this.appService.setDocInfoPaneState(false);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
         this.buildDocumentActions();
         this.buildOptionItems();
         this.buildForms();
@@ -539,18 +540,20 @@ export class DocLibComponent implements OnInit, OnDestroy {
     onRowSelect(event: any) {
         this.selectedDoc = event.data;
         this.appService.setDocInfoPaneState(true);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
     
     onRowUnselect(event: any) {
         this.selectedDoc = new DlDocumentDTO();
         this.appService.setDocInfoPaneState(false);
+        this.docInfoPane = this.appService.getDocInfoPaneState();
     }
-
+    
     selectGrid(data: any) {
         this.selectedDoc = data;
         this.appService.setDocInfoPaneState(true);
     }
-
+    
     // upload files code begins
     
     onUploadFilesInitialize() {

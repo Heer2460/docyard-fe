@@ -11,7 +11,10 @@ import {AppConstants} from "../../../util/app.constants";
 @Component({
     selector: 'doc-info-pane-component',
     templateUrl: './sbm-doc-info-pane.template.html',
-    styleUrls: ['./sbm-doc-info-pane.component.less']
+    styleUrls: [
+        '../../doc-lib/doc-info-pane/doc-info-pane.component.less',
+        './sbm-doc-info-pane.component.less'
+    ]
 })
 export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
 
@@ -195,6 +198,9 @@ export class SbmDocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     loadDlDocumentDetails(event: any) {
+        //When no document selected then return
+        //And don't call api
+        if(!this.selectedDoc.id) return;
         this.activeTabIndex = event.index;
         if (event.index == 1) {
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;

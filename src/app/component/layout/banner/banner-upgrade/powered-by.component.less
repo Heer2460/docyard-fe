@@ -1,0 +1,28 @@
+@import "../../../../../assets/less/_vars";
+
+&:host {
+    display: block;
+    
+    .banner-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 15px;
+        background-color: hsl(var(--color-green-03));
+        
+        p {
+            text-align: center;
+            color: @color-white;
+            margin: 0 15px 0 0;
+            font-size: 12px;
+        }
+        
+        img {
+            max-width: 100px;
+        }
+        
+    }
+    
+}
+

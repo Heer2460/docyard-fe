@@ -1,5 +1,5 @@
 <section class="main-page-wrapper">
-    <div [ngClass]="appService.getDocInfoPaneState() ? 'collapsed' : ''" class="left">
+    <div [ngClass]="docInfoPane ? 'collapsed' : ''" class="left">
         <div>
             <header class="page-header">
                 <div class="title-and-action-items">
@@ -194,7 +194,7 @@
             <ng-content select=[pageFooter]></ng-content>
         </div>
     </div>
-    <swm-doc-info-pane-component [ngClass]="appService.getDocInfoPaneState() ? '': 'collapsed'"
+    <swm-doc-info-pane-component [ngClass]="docInfoPane ? '': 'collapsed'"
                              [selectedDoc]="selectedDoc">
     </swm-doc-info-pane-component>
 </section>

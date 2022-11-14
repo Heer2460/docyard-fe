@@ -11,7 +11,10 @@ import {AppConstants} from "../../../util/app.constants";
 @Component({
     selector: 'swm-doc-info-pane-component',
     templateUrl: './swm-doc-info-pane.template.html',
-    styleUrls: ['./swm-doc-info-pane.component.less']
+    styleUrls: [
+        '../../doc-lib/doc-info-pane/doc-info-pane.component.less',
+        './swm-doc-info-pane.component.less'
+    ]
 })
 export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
 
@@ -113,6 +116,9 @@ export class SwmDocInfoPaneComponent implements OnInit, OnChanges {
     }
 
     loadDlDocumentDetails(event: any) {
+        //When no document selected then return
+        //And don't call api
+        if(!this.selectedDoc.id) return;
         this.activeTabIndex = event.index;
         if (event.index == 1) {
             if (this.selectedDoc.dlShareId) {
