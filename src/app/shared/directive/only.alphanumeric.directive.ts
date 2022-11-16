@@ -31,7 +31,6 @@ export class OnlyAlphanumericDirective {
             && e.keyCode != 52 && e.keyCode != 56 && e.keyCode != 57 && e.keyCode != 48 && e.keyCode != 188 && e.keyCode != 222
             && e.keyCode != 32
         ) {
-            console.log(e.keyCode)
             e.preventDefault();
         }
     }
