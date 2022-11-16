@@ -98,7 +98,7 @@
                                                 <p (click)="openFolder(item)" class="title" role="button">{{item?.name | truncate: 40}}</p>
                                             </ng-container>
                                             <ng-template #elseCase>
-                                                <p class="title" (click)="openFile(item)" role="button">{{item.name | truncate: 40}}</p>
+                                                <p class="title" (click)="openFile(item)" role="button">{{item.name | truncate: 40}}<span *ngIf="item?.name.length > 40">{{item?.name.substring(item?.name.lastIndexOf('.') + 1)}}</span></p>
                                             </ng-template>
                                             <p class="date-and-author">
                                                 <span>{{item?.updatedOnDetail}} by </span>
@@ -179,7 +179,7 @@
                                                 <span (click)="openFolder(row)" role="button">{{row.name | truncate: 50}}</span>
                                             </ng-container>
                                             <ng-template #elseCase>
-                                                <span (click)="openFile(row)" role="button">{{row.name | truncate: 50}}</span>
+                                                <span (click)="openFile(row)" role="button">{{row.name | truncate: 50}}</span><span *ngIf="row?.name.length > 50">{{row?.name.substring(row?.name.lastIndexOf('.') + 1)}}</span>
                                             </ng-template>
                                         </div>
                                         <div class="quick-actions">
