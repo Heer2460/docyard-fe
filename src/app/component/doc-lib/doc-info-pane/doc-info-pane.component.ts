@@ -25,7 +25,7 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
     selectedShareDoc: any;
     validExtensions: string[] = AppConstants.VALID_EXTENSIONS;
     commentForm: FormGroup = new FormGroup({});
-    commentar: boolean = false;
+    commentary: boolean = false;
     @Input() _selectedDoc: any = null;
     @Input() docTabs: any = {
         properties: false,
@@ -214,10 +214,10 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 if (this.selectedDoc.dlShareId) {
                     this.getShareDocDetails(this.selectedDoc.dlShareId);
                 } else {
-                    this.commentar = true;
+                    this.commentary = true;
                 }
             } else {
-                this.commentar = true;
+                this.commentary = true;
             }
             let url = ApiUrlConstants.DL_DOCUMENT_COMMENT_API_URL + '?documentId=' + this.selectedDoc.id;
             this.requestsService.getRequest(url)
@@ -259,17 +259,17 @@ export class DocInfoPaneComponent implements OnInit, OnChanges {
                 next: (response: any) => {
                     if (response.status === 200) {
                         if (response.body.data.shareType === 'ANYONE') {
-                            this.commentar = response.body.data.accessRight === 'COMMENT';
+                            this.commentary = response.body.data.accessRight === 'COMMENT';
                         } else if (response.body.data.shareType === 'RESTRICTED') {
                             const data = response.body.data.dlShareCollaboratorDTOList.find((item: { dlCollaboratorEmail: any; }) => item.dlCollaboratorEmail === this.appService.userInfo.email);
                             if (data) {
-                                this.commentar = data.accessRight === 'COMMENT';
+                                this.commentary = data.accessRight === 'COMMENT';
                             } else {
-                                this.commentar = false;
+                                this.commentary = false;
                             }
                         }
                     } else {
-                        this.commentar = false;
+                        this.commentary = false;
                     }
                 },
                 error: (error: any) => {

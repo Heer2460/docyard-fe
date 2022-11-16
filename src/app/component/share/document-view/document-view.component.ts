@@ -54,7 +54,7 @@ export class DocumentViewComponent implements OnInit {
     }
 
     getDocumentByGuId(guId: string) {
-        this.requestsService.getUnAuthRequest(ApiUrlConstants.DL_DOCUMENT_UN_AUTH_FILE_DETAIL_API_URL + guId)
+        this.requestsService.getUnAuthRequest(ApiUrlConstants.DL_DOCUMENT_UN_AUTH_FILE_DETAIL_API_URL + guId + '?shared=true')
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
