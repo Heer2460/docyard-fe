@@ -21,7 +21,6 @@ import {DlDocumentDTO} from "../../../model/settings/doc-handling/dl-document.dt
 })
 export class FolderViewComponent implements OnInit {
 
-    showDocInfoPane: boolean = false;
     defaultZoom: number = 0;
     dlDocuments: any[] = [];
     selectedDoc: any;
@@ -43,11 +42,10 @@ export class FolderViewComponent implements OnInit {
                 private requestsService: RequestService,
                 private router: Router,
                 private toastService: ToastrService,) {
-        this.appService.setDocInfoPaneState(this.showDocInfoPane);
     }
 
     ngOnInit(): void {
-        this.showDocInfoPane = this.appService.getDocInfoPaneState();
+        this.appService.setDocInfoPaneState(false);
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.params = params;
             if (params.id) {
@@ -55,15 +53,7 @@ export class FolderViewComponent implements OnInit {
                 this.dlFolderId = folderId;
                 this.getFolderById(folderId);
             }
-        })
-        this.breadcrumbs = [
-            {
-                label: this.params ? window.atob(this.params.name) : '',
-                route: '',
-                active: false
-            }
-        ];
-        // this.breadcrumbs = this.getBreadCrumbsFromLocalStorage();
+        });
         this.updateCollapsedBreadcrumbItems();
     }
 
@@ -149,11 +139,20 @@ export class FolderViewComponent implements OnInit {
     }
 
     getFolderById(folderId: any) {
-        this.requestsService.getUnAuthRequest(ApiUrlConstants.DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL.replace('{folderId}', folderId))
+        this.requestsService.getUnAuthRequest(
+            ApiUrlConstants.DL_DOCUMENT_UN_AUTH_FOLDER_DETAIL_API_URL
+                .replace('{folderId}', folderId) + '?shared=true')
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.dlDocuments = response.body.data;
+                        this.breadcrumbs = [
+                            {
+                                label: this.params ? window.atob(this.params.name) : '',
+                                route: '',
+                                active: false
+                            }
+                        ];
                     } else {
                         this.dlDocuments = [];
                     }

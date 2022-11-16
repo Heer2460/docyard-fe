@@ -7,7 +7,8 @@
                     <div class="row actions-row">
                         <div class="col-6"></div>
                         <div class="col-6 d-flex align-items-center justify-content-end">
-                            <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()">
+                            <button class="btn btn-sm btn-secondary me-2" (click)="downloadFile()"
+                                    *ngIf="selectedDoc">
                                 <i class="icon-download"></i>
                                 Download
                             </button>
@@ -20,7 +21,7 @@
             <div class="left" [ngClass]="showDocInfoPane ? 'collapsed': ''">
                 <div class="image-container">
                     <ng-container
-                            *ngIf="getValidExtension(); else otherFileElseCase">
+                        *ngIf="getValidExtension(); else otherFileElseCase">
                         <ng-container *ngIf="checkValidImageFile(); else elseFileCase">
                             <img class="file-type-thumbnail"
                                  src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
@@ -31,7 +32,10 @@
                                 <img class="file-type-thumbnail"
                                      src="./assets/images/svg/icons/{{selectedDoc.extension}}.svg"
                                      alt="{{selectedDoc.extension}}">
-                                <p>We’re sorry, we can’t preview this file type in your web browser. To view this content please download and open it on your device.</p>
+                                <p>
+                                    We’re sorry, we can’t preview this file type in your web browser. To view this
+                                    content please download and open it on your device.
+                                </p>
                             </div>
                         </ng-template>
                     </ng-container>
