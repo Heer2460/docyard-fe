@@ -21,7 +21,6 @@ import {DlDocumentDTO} from "../../../model/settings/doc-handling/dl-document.dt
 })
 export class FolderViewComponent implements OnInit {
 
-    showDocInfoPane: boolean = false;
     defaultZoom: number = 0;
     dlDocuments: any[] = [];
     selectedDoc: any;
@@ -43,11 +42,10 @@ export class FolderViewComponent implements OnInit {
                 private requestsService: RequestService,
                 private router: Router,
                 private toastService: ToastrService,) {
-        this.appService.setDocInfoPaneState(this.showDocInfoPane);
     }
 
     ngOnInit(): void {
-        this.showDocInfoPane = this.appService.getDocInfoPaneState();
+        this.appService.setDocInfoPaneState(false);
         this.activatedRoute.queryParams.subscribe((params: any) => {
             this.params = params;
             if (params.id) {
