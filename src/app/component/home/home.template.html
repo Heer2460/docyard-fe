@@ -3,7 +3,7 @@
         <div>
             <header class="page-header">
                 <h3 class="title">Home</h3>
-                <p class="desc">Hello {{userInfo?.name}}, Welcome back!</p>
+                <p class="desc">Hello <strong>{{userInfo?.name}}</strong>, Welcome back!</p>
             </header>
             <div class="page-body">
                 <div class="home-template">
@@ -123,7 +123,10 @@
                                              alt="icon">
                                     </div>
                                     <div class="file-details">
-                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name | truncate: 40}}<span *ngIf="gridItem?.name.length > 40">{{gridItem?.name.substring(gridItem?.name.lastIndexOf('.') + 1)}}</span></p>
+                                        <p class="title" role="button"
+                                           (click)="openFile(gridItem)">{{gridItem?.name | truncate: 40}}<span
+                                            *ngIf="gridItem?.name.length > 40">{{gridItem?.name.substring(gridItem?.name.lastIndexOf('.') + 1)}}</span>
+                                        </p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
                                             <a role="button"
