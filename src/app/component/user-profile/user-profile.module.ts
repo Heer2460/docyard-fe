@@ -12,6 +12,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
+import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {MultiSelectModule} from "primeng/multiselect";
         ReactiveFormsModule,
         DropdownModule,
         MultiSelectModule,
+        CustomDirectiveModule,
     ]
 })
 export class UserProfileModule { }
