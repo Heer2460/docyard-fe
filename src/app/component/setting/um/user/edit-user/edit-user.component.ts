@@ -217,7 +217,7 @@ export class EditUserComponent implements OnInit {
     }
 
     onCancelButtonClicked() {
-        if(this.editUserForm.dirty){
+        if (this.editUserForm.dirty || this.editUserForm.touched) {
             this.confirmationService.confirm({
                 message: 'Form shall be closed without saving data. Do you want to proceed?',
                 accept: () => {
@@ -225,7 +225,7 @@ export class EditUserComponent implements OnInit {
                     this.router.navigate(['/setting/um/user']);
                 }
             });
-        }else{
+        } else {
             this.router.navigate(['/setting/um/user']);
         }
     }

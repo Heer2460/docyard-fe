@@ -272,7 +272,7 @@ export class DeptComponent implements OnInit {
 
     hideUpdatePopupAction() {
         this.confirmationHeader = "Update Department";
-        if(this.updateDepartmentForm.dirty){
+        if (this.updateDepartmentForm.dirty) {
             this.confirmationService.confirm({
                 message: 'Form shall be closed without saving data. Do you want to proceed?',
                 accept: () => {
@@ -280,7 +280,7 @@ export class DeptComponent implements OnInit {
                     this.updateDialog = false;
                 }
             });
-        }else{
+        } else {
             this.updateDialog = false;
         }
     }
