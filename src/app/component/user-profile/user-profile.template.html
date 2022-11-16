@@ -95,7 +95,8 @@
                             <p>
                                 <span>{{activity.userName}}</span>
                                 <span class="text-muted">{{activity.action}}</span>
-                                <span>{{activity.docName}}</span>
+                                <span *ngIf="activity?.docName">{{activity?.docName | truncate: 50}}<span *ngIf="activity?.docName.length > 50">{{activity?.docName.substring(activity?.docName.lastIndexOf('.') + 1)}}</span>
+                                </span>
                                 <span class="text-muted">{{activity.activityPerformedOn}}</span>
                             </p>
                         </li>

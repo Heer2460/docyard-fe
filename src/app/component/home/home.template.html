@@ -123,7 +123,7 @@
                                              alt="icon">
                                     </div>
                                     <div class="file-details">
-                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name | truncate: 40}}</p>
+                                        <p class="title" role="button" (click)="openFile(gridItem)">{{gridItem?.name | truncate: 40}}<span *ngIf="gridItem?.name.length > 40">{{gridItem?.name.substring(gridItem?.name.lastIndexOf('.') + 1)}}</span></p>
                                         <p class="date-and-author">
                                             <span>{{gridItem?.updatedOn | date:'mediumDate'}} by </span>
                                             <a role="button"
