@@ -25,23 +25,23 @@
                     <tbody>
                     <tr>
                         <th>Name</th>
-                        <td>{{selectedUser.name}}</td>
+                        <td>{{selectedUser.userProfile.name}}</td>
                     </tr>
                     <tr>
                         <th>Username</th>
-                        <td>{{selectedUser.username}}</td>
+                        <td>{{selectedUser.userName}}</td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td>{{selectedUser.email}}</td>
+                        <td>{{selectedUser.userProfile.email}}</td>
                     </tr>
                     <tr>
                         <th>Mobile Number</th>
-                        <td>{{selectedUser.mobileNumber}}</td>
+                        <td>{{selectedUser.userProfile.mobileNumber}}</td>
                     </tr>
                     <tr>
                         <th>Phone Number</th>
-                        <td>{{selectedUser.phoneNumber}}</td>
+                        <td>{{selectedUser.userProfile.phoneNumber}}</td>
                     </tr>
                     <tr>
                         <th>Group</th>
@@ -53,7 +53,7 @@
                     </tr>
                     <tr>
                         <th>Address</th>
-                        <td>{{selectedUser.address}}</td>
+                        <td>{{selectedUser.userProfile.address}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
@@ -61,9 +61,9 @@
                     </tr>
                     <tr>
                         <th>Profile Picture</th>
-                        <td><img *ngIf="selectedUser?.profilePhoto" alt="Logo"
+                        <td><img *ngIf="selectedUser.userProfile?.profilePhoto" alt="Logo"
                                  class="img-table-view p-0"
-                                 src="data:image/jpeg;base64,{{selectedUser.profilePhoto}}"/>
+                                 src="data:image/jpeg;base64,{{selectedUser.userProfile.profilePhoto}}"/>
                         </td>
                     </tr>
                     </tbody>

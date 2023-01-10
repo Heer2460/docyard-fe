@@ -1,38 +1,28 @@
 import {BaseDTO} from "../../../base.dto";
+import {UserProfileDTO} from "./user.profile.dto";
 
 export class UserDTO extends BaseDTO {
 
     id: null | undefined;
-    username: string | undefined;
-    name: string | undefined;
-    email: string | undefined;
-    phoneNumber: string | undefined;
-    mobileNumber: string | undefined;
+    userName: string | undefined;
     groupId: null | undefined;
     groupName: null | undefined;
     departmentIds: null | undefined;
-    address: string | undefined;
     password: string | undefined;
-    profilePhoto: string | undefined;
     logo: string | undefined;
     status: string | undefined;
+    userProfile: UserProfileDTO = new UserProfileDTO();
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
 
     convertToDTO(data: any) {
         this.id = data.id;
-        this.username = data.username;
-        this.name = data.name;
-        this.email = data.email;
-        this.phoneNumber = data.phoneNumber;
-        this.mobileNumber = data.mobileNumber;
+        this.userName = data.username;
         this.groupId = data.groupId;
         this.departmentIds = data.departmentIds;
-        this.address = data.address;
         this.password = data.passwords.password;
-        this.profilePhoto = data.profilePhoto;
         this.status = data.status;
-
+        this.userProfile = this.userProfile.convertToNewDTO(data);
         this.createdOn = data.createdOn ? data.createdOn : new Date();
         this.updatedOn = new Date();
         this.createdBy = data.createdBy ? data.createdBy : 0;
@@ -42,11 +32,9 @@ export class UserDTO extends BaseDTO {
     convertToNewDTO(data: any): UserDTO {
         let userDTO: UserDTO = new UserDTO();
         userDTO.id = null;
-        userDTO.email = '';
         userDTO.createdOn = new Date();
         userDTO.createdBy = 0;
         userDTO.convertToDTO(data);
         return userDTO;
     }
-
 }

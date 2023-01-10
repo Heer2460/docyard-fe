@@ -61,8 +61,8 @@
                     </ng-template>
                     <ng-template let-row pTemplate="body">
                         <tr>
-                            <td>{{row.username}}</td>
-                            <td>{{row.name}}</td>
+                            <td>{{row.userName}}</td>
+                            <td>{{row.userProfile.name}}</td>
                             <td>{{row.groupId | filterObject: groups : 'single' }}</td>
                             <td>{{row.departmentIds | filterObject: departments : 'multiple' }}</td>
                             <td>{{row.status}}</td>

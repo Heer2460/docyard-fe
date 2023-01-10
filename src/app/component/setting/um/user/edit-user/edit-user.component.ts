@@ -141,17 +141,17 @@ export class EditUserComponent implements OnInit {
     }
     populateUserForm(userDto: UserDTO) {
         this.editUserForm.get('id')?.setValue(userDto.id);
-        this.editUserForm.get('username')?.setValue(userDto.username);
-        this.editUserForm.get('name')?.setValue(userDto.name);
-        this.editUserForm.get('email')?.setValue(userDto.email);
-        this.editUserForm.get('phoneNumber')?.setValue(userDto.phoneNumber);
-        this.editUserForm.get('mobileNumber')?.setValue(userDto.mobileNumber);
+        this.editUserForm.get('username')?.setValue(userDto.userName);
+        this.editUserForm.get('name')?.setValue(userDto.userProfile.name);
+        this.editUserForm.get('email')?.setValue(userDto.userProfile.email);
+        this.editUserForm.get('phoneNumber')?.setValue(userDto.userProfile.phoneNumber);
+        this.editUserForm.get('mobileNumber')?.setValue(userDto.userProfile.mobileNumber);
         this.editUserForm.get('groupId')?.setValue(userDto.groupId);
         this.editUserForm.get('departmentIds')?.setValue(this.setDepartmentIds(userDto.departmentIds));
-        this.editUserForm.get('address')?.setValue(userDto?.address);
+        this.editUserForm.get('address')?.setValue(userDto.userProfile?.address);
         this.editUserForm.get('status')?.setValue(userDto.status);
-        this.editUserForm.get('profilePhoto')?.setValue(userDto.profilePhoto);
-        userDto.profilePhoto ? this.logoImageDataUrl = userDto.profilePhoto : this.logoImageDataUrl = '';
+        this.editUserForm.get('profilePhoto')?.setValue(userDto.userProfile.profilePhoto);
+        userDto.userProfile.profilePhoto ? this.logoImageDataUrl = userDto.userProfile.profilePhoto : this.logoImageDataUrl = '';
         this.editUserForm.markAllAsTouched();
     }
 

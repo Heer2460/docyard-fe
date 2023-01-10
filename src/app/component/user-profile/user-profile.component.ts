@@ -83,8 +83,8 @@ export class UserProfileComponent implements OnInit {
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {
                         this.selectedUserProfile = response.body.data;
-                        if (this.selectedUserProfile.profilePhoto) {
-                            this.profileImage = this.selectedUserProfile?.profilePhoto;
+                        if (this.selectedUserProfile.userProfile.profilePhoto) {
+                            this.profileImage = this.selectedUserProfile.userProfile?.profilePhoto;
                         }
                     }
                 }, error: (error: any) => {
