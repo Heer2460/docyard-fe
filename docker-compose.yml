@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+    docyard-fe:
+        image: docyard-fe
+        container_name: docyard-fe
+        build: .
+        ports:
+            - "80:80"
+        networks:
+            - docyard
+networks:
+    docyard:
+
