@@ -15,6 +15,7 @@ import {ToastrService} from "ngx-toastr";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
 import {ConfirmationService} from "primeng/api";
+import {AppConstants} from "../../../../../util/app.constants";
 
 @Component({
     selector: 'edit-user-component',
@@ -173,6 +174,7 @@ export class EditUserComponent implements OnInit {
         }
         let userDTO: UserDTO = new UserDTO();
         userDTO.convertToDTO(this.editUserForm.getRawValue());
+        userDTO.updatedBy = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
         this.requestsService.putRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
             .subscribe({
                 next: (response: HttpResponse<any>) => {

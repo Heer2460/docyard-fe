@@ -96,6 +96,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         this.preloadedData();
+        this.showAllUsers();
         this.buildForms();
     }
 
@@ -171,6 +172,24 @@ export class UserComponent implements OnInit {
             status: ['Active'],
         });
 
+    }
+
+    showAllUsers() {
+        let url = ApiUrlConstants.USER_API_URL;
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.users = response.body.data;
+                    } else {
+                        this.users = [];
+                        this.message = 'No user found.'
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'User');
+                }
+            });
     }
 
     hideSearchPopupAction() {

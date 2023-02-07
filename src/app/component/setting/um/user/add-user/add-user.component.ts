@@ -16,6 +16,7 @@ import {GroupDTO} from "../../../../../model/settings/um/group/group.dto";
 import {DepartmentDTO} from "../../../../../model/settings/ref/department/department.dto";
 import {RoleActionConstants} from "../../../../../util/role.actions.constants";
 import {BreadcrumbDTO} from "../../../../../model/breadcrumb.dto";
+import {AppConstants} from "../../../../../util/app.constants";
 
 
 @Component({
@@ -35,6 +36,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
     roleActions = RoleActionConstants;
     passwordVisibility: boolean = true;
     confirmPasswordVisibility: boolean = true;
+    userId: any;
+    selectedUser: UserDTO = new UserDTO();
+    editUserForm: FormGroup = new FormGroup({});
 
     breadcrumbs: BreadcrumbDTO[] = [
         {
@@ -136,6 +140,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
         let userDTO: UserDTO = new UserDTO();
         userDTO = userDTO.convertToNewDTO(this.addUserForm.getRawValue());
         userDTO.password = this.appService.encryptUsingAES256(userDTO.password);
+        userDTO.createdBy = Number(localStorage.getItem(window.btoa(AppConstants.AUTH_USER_ID)));
         if (userDTO) {
             this.requestsService.postRequestMultipartFormAndData(ApiUrlConstants.USER_API_URL, this.files, userDTO)
                 .subscribe({
@@ -204,6 +209,4 @@ export class AddUserComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy.next(true);
     }
-
-
 }

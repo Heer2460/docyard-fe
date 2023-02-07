@@ -80,6 +80,7 @@ export class RoleComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
+        this.getAllRoles();
     }
 
     buildForms() {
@@ -181,6 +182,25 @@ export class RoleComponent implements OnInit {
             return;
         }
         this.showSearchPopupAction();
+    }
+
+    getAllRoles(){
+        let url = ApiUrlConstants.ROLE_API_URL;
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.roles = response.body.data;
+                    } else {
+                        this.roles = [];
+                        this.message = 'No role found.'
+                    }
+                    this.hideSearchPopupAction();
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Role');
+                }
+            });
     }
 
 }

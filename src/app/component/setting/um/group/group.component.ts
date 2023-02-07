@@ -104,6 +104,7 @@ export class GroupComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForms();
+        this.getAllGroups();
         this.getAllRoles();
     }
 
@@ -372,6 +373,25 @@ export class GroupComponent implements OnInit {
             return;
         }
         this.showSearchPopupAction();
+    }
+
+    getAllGroups(){
+        let url = ApiUrlConstants.GROUP_API_URL;
+        this.requestsService.getRequest(url)
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.groups = response.body.data;
+                    } else {
+                        this.groups = [];
+                        this.message = 'No group found.';
+                    }
+                    this.hideSearchPopupAction();
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Group');
+                }
+            });
     }
 
 }
