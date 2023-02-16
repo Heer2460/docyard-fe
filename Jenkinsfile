@@ -9,7 +9,7 @@ pipeline {
         stage('Build Code') {
             steps {
                 // first time need to run npm install command
-                 npm install
+                 bat 'npm install'
                  bat 'ng build --configuration production --aot --vendor-chunk --common-chunk --delete-output-path --build-optimizer --output-hashing=all --source-map=false'
             }
         }
