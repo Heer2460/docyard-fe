@@ -30,7 +30,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     @ViewChild(DocInfoPaneComponent) docPane: any;
 
     filesToUpload: any[] = [];
-    
+
     addFolderForm: FormGroup = new FormGroup({});
     renameDocumentForm: FormGroup = new FormGroup({});
     addFileForm: FormGroup = new FormGroup({});
@@ -198,11 +198,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 icon: 'icon-file-plus',
                 command: () => this.onUploadFilesInitialize()
             },
-            // {
-            //     label: 'Folder',
-            //     icon: 'icon-folder-plus',
-            //     command: () => this.onUploadFolderInitialize()
-            // }
+             {
+                 label: 'Folder',
+                 icon: 'icon-folder-plus',
+                 command: () => this.onUploadFolderInitialize()
+             }
         ];
     }
 
@@ -276,6 +276,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     icon: 'icon-share',
                     visible: !!this.selectedDoc.id,
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
+                },
+                {
+                    label: 'Download',
+                    icon: 'icon-download',
+                    command: () => this.downloadFolder(this.selectedDoc)
                 },
                 {
                     label: 'Rename',
@@ -528,6 +533,21 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, data.name);
                     this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    downloadFolder(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_FOLDER_API_URL.replace("{dlDocumentId}", data.id,))
+            .subscribe({
+                next: (response: any) => {
+                    let mimeType = AppUtility.getMimeTypeByFileName(data.name+".zip");
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, data.name+".zip");
+                    this.toastService.success('Folder downloaded successfully.', 'Document Library');
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Document Library');
