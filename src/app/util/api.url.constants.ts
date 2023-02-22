@@ -40,6 +40,8 @@ export class ApiUrlConstants {
     public static GET_ALL_TRASH_DL_DOCUMENTS_API_URL = '/dl/dl-document/trash/owner/';
     public static DOWNLOAD_DL_DOCUMENT_API_URL = '/dl/dl-document/download/{dlDocumentId}';
     public static DOWNLOAD_DL_FOLDER_API_URL = '/dl/dl-document/download/folder/{dlDocumentId}';
+    public static DOWNLOAD_IMAGE_TO_DOCX_DL_DOCUMENT_API_URL = '/dl/dl-document/convert/docx/download/{dlDocumentId}';
+    public static DOWNLOAD_IMAGE_TO_TXT_DL_DOCUMENT_API_URL = '/dl/dl-document/convert/txt/download/{dlDocumentId}';
     public static UPLOAD_FILES_API_URL = '/dl/dl-document/upload';
     public static RESTORE_DOCUMENT_API_URL = '/dl/dl-document/restore-archived';
     public static DL_DOCUMENT_COMMENT_API_URL = '/dl/dl-doc-comment/';

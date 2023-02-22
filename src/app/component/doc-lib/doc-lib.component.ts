@@ -312,6 +312,32 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     command: () => this.showRenameDocumentPopup(this.selectedDoc)
                 },
                 {
+                    label: 'Convert',
+                    icon: 'icon-edit',
+                    items: [
+                        {
+                            label: 'Word document(.docx)',
+                            icon: 'icon-edit',
+                            command: () => this.imageToWordFile(this.selectedDoc)
+                        },
+                       /* {
+                            label: 'Power Point(.ppt)',
+                            icon: 'icon-edit',
+                            command: () => console.log('cccc')
+                        },
+                        {
+                            label: 'Excel(.xlsx)',
+                            icon: 'icon-edit',
+                            command: () => console.log('cccc')
+                        },*/
+                        {
+                            label: 'Text file(.txt)',
+                            icon: 'icon-edit',
+                            command: () => this.imageToTextFile(this.selectedDoc)
+                        }
+                    ]
+                },
+                {
                     label: 'Delete',
                     icon: 'icon-trash',
                     command: () => this.onItemDeleteAction(this.selectedDoc)
@@ -548,6 +574,38 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, data.name+".zip");
                     this.toastService.success('Folder downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    imageToWordFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_DOCX_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+            .subscribe({
+                next: (response: any) => {
+                    let fileName = data.title+".docx";
+                    let mimeType = AppUtility.getMimeTypeByFileName(fileName);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, fileName);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    imageToTextFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_TXT_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+            .subscribe({
+                next: (response: any) => {
+                    let fileName = data.title+".txt";
+                    let mimeType = AppUtility.getMimeTypeByFileName(fileName);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, fileName);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Document Library');
