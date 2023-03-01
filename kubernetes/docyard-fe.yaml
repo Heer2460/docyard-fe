@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: docyard-fe
+    labels:
+        app: docyard-fe
+spec:
+    type: LoadBalancer    #NodePort   #
+    selector:
+        app: docyard-fe
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+          name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: docyard-fe # name of micro-service
+spec:
+    selector:
+        matchLabels:
+            app: docyard-fe
+    replicas: 1         # how many pods you run
+    template:
+        metadata:
+            labels:
+                app: docyard-fe
+        spec:
+            containers:
+                - name: docyard-fe
+                  image: engrabdulrauf4u/docyard-fe
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 80
