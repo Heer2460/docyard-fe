@@ -320,16 +320,16 @@ export class DocLibComponent implements OnInit, OnDestroy {
                             icon: 'icon-edit',
                             command: () => this.imageToWordFile(this.selectedDoc)
                         },
-                       /* {
+                        {
                             label: 'Power Point(.ppt)',
                             icon: 'icon-edit',
-                            command: () => console.log('cccc')
+                            command: () => this.imageToPowerPointFile(this.selectedDoc)
                         },
-                        {
-                            label: 'Excel(.xlsx)',
-                            icon: 'icon-edit',
-                            command: () => console.log('cccc')
-                        },*/
+                        /*   {
+                               label: 'Excel(.xlsx)',
+                               icon: 'icon-edit',
+                               command: () => console.log('cccc')
+                           },*/
                         {
                             label: 'Text file(.txt)',
                             icon: 'icon-edit',
@@ -602,6 +602,22 @@ export class DocLibComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".txt";
+                    let mimeType = AppUtility.getMimeTypeByFileName(fileName);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, fileName);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    imageToPowerPointFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_PP_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+            .subscribe({
+                next: (response: any) => {
+                    let fileName = data.title+".pptx";
                     let mimeType = AppUtility.getMimeTypeByFileName(fileName);
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, fileName);
