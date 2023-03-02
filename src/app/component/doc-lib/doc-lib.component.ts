@@ -325,11 +325,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                             icon: 'icon-edit',
                             command: () => this.imageToPowerPointFile(this.selectedDoc)
                         },
-                        /*   {
+                           {
                                label: 'Excel(.xlsx)',
                                icon: 'icon-edit',
-                               command: () => console.log('cccc')
-                           },*/
+                               command: () => this.imageToExcelFile(this.selectedDoc)
+                           },
                         {
                             label: 'Text file(.txt)',
                             icon: 'icon-edit',
@@ -618,6 +618,22 @@ export class DocLibComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".pptx";
+                    let mimeType = AppUtility.getMimeTypeByFileName(fileName);
+                    let blob = new Blob([response], {type: mimeType});
+                    FileSaver.saveAs(blob, fileName);
+                    this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    imageToExcelFile(data: any) {
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_EXCEL_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+            .subscribe({
+                next: (response: any) => {
+                    let fileName = data.title+".xlsx";
                     let mimeType = AppUtility.getMimeTypeByFileName(fileName);
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, fileName);
