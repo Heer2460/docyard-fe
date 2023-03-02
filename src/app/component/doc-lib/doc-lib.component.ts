@@ -674,6 +674,35 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     // upload folder code begins
 
+    makeFolderUploadRequest(event: any) {
+        debugger
+        let files: any [] = event.target.files;
+        let folderName = files[0].webkitRelativePath.split('/')[0];
+        let subscription = this.requestsService.postRequestMultipartFormAndFolderUpload(ApiUrlConstants.UPLOAD_FOLDER_API_URL,folderName,
+            files, {
+                "createdBy": this.appService.userInfo.id,
+                "updatedBy": this.appService.userInfo.id,
+                "ownerId": this.appService.userInfo.id,
+                "folderId": Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)))
+            })
+            .subscribe({
+                next: (event: any) => {
+                    if (event.type == HttpEventType.UploadProgress) {
+                        let progress = Math.round(100 * event.loaded / event.total);
+
+                    } else if (event.type == HttpEventType.Response) {
+
+                        let folderId = Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)));
+                        this.loadDocumentLibrary(String(folderId), false);
+                    }
+                }, error: (err: any) => {
+                    const errorMsg = err.error ? JSON.parse(err.error).message : 'Upload files of size greater than 200MB.';
+                    this.toastService.error(errorMsg, 'Upload file');
+                }
+            });
+    }
+
+
     onUploadFolderInitialize() {
         let uploadInput: HTMLElement = document.getElementById('folder') as HTMLElement;
         uploadInput.click();

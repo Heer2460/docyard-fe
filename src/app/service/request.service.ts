@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {AppConstants} from "../util/app.constants";
 import {BaseDTO} from "../model/base.dto";
+import {AppUtility} from "../util/app.utility";
 
 @Injectable({
     providedIn: 'root'
@@ -130,6 +131,30 @@ export class RequestService {
         }));
         if (file) {
             formData.append('doc', file.orgFile, file.orgFile.name);
+        }
+
+        return this.http.post(this.getBEAPIServer() + url, formData, {
+            headers: headers,
+            reportProgress: true,
+            observe: 'events',
+            responseType: 'text'
+        });
+    }
+
+    postRequestMultipartFormAndFolderUpload(url: any,path:any, files: any, data: any) {
+        let headers = this.getBasicMultipartHeaders();
+        let formData: FormData = new FormData();
+        formData.append('reqObj', new Blob([JSON.stringify(data)], {
+            type: 'application/json'
+        }));
+        if (files) {
+            debugger
+            let blob = new Blob([files], {type: undefined});
+            formData.append('path', path);
+            for (let i = 0 ; i < files.length ; i++) {
+                formData.append("doc", files[i],files[i].name);
+            }
+           // formData.append('doc', files);
         }
 
         return this.http.post(this.getBEAPIServer() + url, formData, {
