@@ -768,10 +768,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
                         let folderId = Number(localStorage.getItem(window.btoa(AppConstants.SELECTED_FOLDER_ID)));
                         this.loadDocumentLibrary(String(folderId), false);
+                        this.toastService.success('Folder uploaded successfully.', 'Document Library');
                     }
+
                 }, error: (err: any) => {
                     const errorMsg = err.error ? JSON.parse(err.error).message : 'Upload files of size greater than 200MB.';
-                    this.toastService.error(errorMsg, 'Upload file');
+                    this.toastService.error(errorMsg, 'Upload folder failed');
                 }
             });
     }
