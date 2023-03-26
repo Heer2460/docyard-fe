@@ -35,6 +35,7 @@ export class ApiUrlConstants {
     public static GET_ALL_FAVOURITE_DL_DOCUMENT_BY_OWNER_API_URL = '/dl/dl-document/favourite/owner/{ownerId}?folderId={folderId}&archived={archived}';
     public static CREATE_FOLDER_API_URL = '/dl/dl-document/folder';
     public static DL_DOCUMENT_API_URL = '/dl/dl-document/{dlDocumentId}';
+    public static DL_DOCUMENT_VIEW_FILE_URL = '/dl/dl-document/file/view/{dlDocumentId}';
     public static DL_DOCUMENT_ARCHIVED_API_URL = '/dl/dl-document/archive/{dlDocumentId}?archive={archived}';
     public static DL_DOCUMENT_RENAME_API_URL = '/dl/dl-document/rename/';
     public static GET_ALL_TRASH_DL_DOCUMENTS_API_URL = '/dl/dl-document/trash/owner/';
@@ -48,6 +49,7 @@ export class ApiUrlConstants {
     public static UPLOAD_FOLDER_API_URL = '/dl/dl-document/upload/folder';
     public static RESTORE_DOCUMENT_API_URL = '/dl/dl-document/restore-archived';
     public static DL_DOCUMENT_COMMENT_API_URL = '/dl/dl-doc-comment/';
+    public static DL_DOCUMENT_TAG_API_URL = '/dl/dl-doc-tag/';
     public static DL_DOCUMENT_DELETE_API_URL = '/dl/dl-document/delete';
     public static DL_DOCUMENT_SEARCH_API_URL = '/dl/dl-document/search/{userid}?searchKey={searchKey}';
     public static DL_DOCUMENT_SHARE_API_URL = '/dl/share/';

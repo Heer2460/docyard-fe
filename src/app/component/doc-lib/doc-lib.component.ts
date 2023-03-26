@@ -302,6 +302,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     command: () => this.showShareDocumentDialog(this.selectedDoc)
                 },
                 {
+                    label: 'View',
+                    icon: 'icon-edit',
+                    visible: !!this.selectedDoc.id,
+                    command: () => this.openFile(this.selectedDoc)
+                },
+                {
                     label: 'Download',
                     icon: 'icon-download',
                     command: () => this.downloadFile(this.selectedDoc)
@@ -378,14 +384,21 @@ export class DocLibComponent implements OnInit, OnDestroy {
             this.updateBreadcrumb(rowData);
         }
     }
-
     openFile(rowData: any) {
         if (rowData.parentId == null) {
             rowData.parentId = '';
         }
-        window.open(`/preview?id=${rowData.id}&folderId=${rowData.parentId}&shared=${window.btoa('doclib')}`, '_blank');
+         this.requestsService.getRequestFile(ApiUrlConstants.DL_DOCUMENT_VIEW_FILE_URL.replace("{dlDocumentId}", rowData.id))
+            .subscribe({
+                next: (response: any) => {
+                    var url = 'assets\\files\\'+rowData.name;
+                    window.open(url);
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
     }
-
     setGridDisplay() {
         this.showGridDisplay = true;
     }

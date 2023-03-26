@@ -118,6 +118,60 @@
                 </div>
             </ng-template>
         </p-accordionTab>
+        <p-accordionTab [selected]="activeTabIndex === 1" [disabled]="selectedDoc?.folder" *ngIf="docTabs.comments">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="icon-comments"></i>
+                    <span>Tags</span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="comments-wrapper">
+                    <ng-container *ngIf="commentary">
+                        <ng-container [formGroup]="commentForm">
+                            <div class="form-floating mb-2">
+                            <textarea class="form-control" formControlName="comments" placeholder="Leave a comment here"
+                                      id="floatingTextarea" onlyAlphaNumeric></textarea>
+                                <label for="floatingTextarea">Tags</label>
+                            </div>
+                        </ng-container>
+                        <div class="text-end">
+                            <ng-container *ngIf="!enableEditComment">
+                                <button class="btn btn-sm btn-primary btn-post" (click)="addUserTag()">Post</button>
+                            </ng-container>
+                            <ng-container *ngIf="enableEditComment">
+                                <button class="btn btn-sm btn-primary  btn-post" (click)="updateUserTag()">Update
+                                </button>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <ul *ngFor="let comment of comments">
+                        <li *ngIf="!enableEditComment">
+                            <div class="user-details-and-actions">
+                                <div class="user-details">
+                                    <img src="./assets/images/svg/user-image-placeholder.svg" alt="user image">
+                                    <p>
+                                        <span>{{comment.nameOfUser}}</span>
+                                        <span class="text-muted">{{comment.postedOn}}</span>
+                                    </p>
+                                </div>
+                                <div class="comment-actions btn-group btn-group-sm">
+                                    <button class="btn btn-sm btn-primary" (click)="onEditComment(comment)">
+                                        <i class="icon-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" (click)="onDeleteTag(comment)">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="comment-box">
+                                <p>{{comment.message}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </p-accordionTab>
         <p-accordionTab [selected]="activeTabIndex === 2" *ngIf="docTabs.sharing">
             <ng-template pTemplate="header">
                 <div>
