@@ -5,6 +5,7 @@ export class DlDocumentDTO extends BaseDTO {
     id: null | undefined;
     name: string | undefined;
     title: string | undefined;
+    extension: string = '';
     parentId: null | undefined;
     daysArchived: number = 0;
     shared: boolean = false;
@@ -17,6 +18,7 @@ export class DlDocumentDTO extends BaseDTO {
         this.id = data.id;
         this.name = data.name;
         this.shared = data.shared;
+        this.extension = data.extension;
         this.daysArchived = data.daysArchived ? data.daysArchived : 0;
         this.title = data.name;
         this.createdOn = data.createdOn ? data.createdOn : new Date();

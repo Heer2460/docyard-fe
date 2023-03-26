@@ -269,6 +269,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
 
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
+        var OCRSupportedFiles = ['png','jpg','jpeg','pdf'];
         if (this.selectedDoc.folder == true) {
             this.menuItems = [
                 {
@@ -318,37 +319,40 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     command: () => this.showRenameDocumentPopup(this.selectedDoc)
                 },
                 {
-                    label: 'Convert',
-                    icon: 'icon-edit',
-                    items: [
-                        {
-                            label: 'Word document(.docx)',
-                            icon: 'icon-edit',
-                            command: () => this.imageToWordFile(this.selectedDoc)
-                        },
-                        {
-                            label: 'Power Point(.ppt)',
-                            icon: 'icon-edit',
-                            command: () => this.imageToPowerPointFile(this.selectedDoc)
-                        },
-                           {
-                               label: 'Excel(.xlsx)',
-                               icon: 'icon-edit',
-                               command: () => this.imageToExcelFile(this.selectedDoc)
-                           },
-                        {
-                            label: 'Text file(.txt)',
-                            icon: 'icon-edit',
-                            command: () => this.imageToTextFile(this.selectedDoc)
-                        }
-                    ]
-                },
-                {
                     label: 'Delete',
                     icon: 'icon-trash',
                     command: () => this.onItemDeleteAction(this.selectedDoc)
                 },
             ];
+
+            if(OCRSupportedFiles.indexOf(this.selectedDoc.extension) != -1) {
+                this.menuItems.push( {
+                    label: 'Convert',
+                        icon: 'icon-edit',
+                    items: [
+                    {
+                        label: 'Word document(.docx)',
+                        icon: 'icon-edit',
+                        command: () => this.imageToWordFile(this.selectedDoc)
+                    },
+                    {
+                        label: 'Power Point(.ppt)',
+                        icon: 'icon-edit',
+                        command: () => this.imageToPowerPointFile(this.selectedDoc)
+                    },
+                    {
+                        label: 'Excel(.xlsx)',
+                        icon: 'icon-edit',
+                        command: () => this.imageToExcelFile(this.selectedDoc)
+                    },
+                    {
+                        label: 'Text file(.txt)',
+                        icon: 'icon-edit',
+                        command: () => this.imageToTextFile(this.selectedDoc)
+                    }
+                ]
+                })
+            }
         }
     }
 
@@ -595,7 +599,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     imageToWordFile(data: any) {
-        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_DOCX_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_DOCX_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id).replace("{extension}", data.extension))
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".docx";
@@ -611,7 +615,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     imageToTextFile(data: any) {
-        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_TXT_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_TXT_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id).replace("{extension}", data.extension))
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".txt";
@@ -627,7 +631,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     imageToPowerPointFile(data: any) {
-        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_PP_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_PP_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id).replace("{extension}", data.extension))
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".pptx";
@@ -643,7 +647,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
     }
 
     imageToExcelFile(data: any) {
-        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_EXCEL_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_IMAGE_TO_EXCEL_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id).replace("{extension}", data.extension))
             .subscribe({
                 next: (response: any) => {
                     let fileName = data.title+".xlsx";
