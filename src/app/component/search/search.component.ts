@@ -45,6 +45,7 @@ export class SearchComponent implements OnInit {
     ];
     title: string = 'Search';
     searchValue: string = '';
+    searchType: string = '';
 
     constructor(private appService: AppService,
                 private requestsService: RequestService,
@@ -57,8 +58,16 @@ export class SearchComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {
+            this.searchType = params['type'];
             this.searchValue = params['value'];
-            if (this.searchValue) {
+
+            if(this.searchType==='tag') {
+                this.searchDocumentsWithTag(this.searchValue);
+            } else if(this.searchType==='favorites') {
+                this.searchFavoritesDocuments(this.searchValue);
+            }else if(this.searchType==='shared') {
+                this.searchSharedDocuments(this.searchValue);
+            } else if (this.searchValue) {
                 this.searchAllDocuments(this.searchValue);
             }
         });
@@ -71,12 +80,67 @@ export class SearchComponent implements OnInit {
         });
     }
 
-
     searchAllDocuments(searchKey: string) {
         let loggedInUserId = this.appService.getLoggedInUserId();
         this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_API_URL
             .replace('{userid}', String(loggedInUserId))
             .replace('{searchKey}', searchKey))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    searchDocumentsWithTag(tagValue: string) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_TAG_API_URL
+            .replace('{userid}', String(loggedInUserId))
+            .replace('{tagValue}', tagValue))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    searchFavoritesDocuments(value: string) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_FAVORITES_API_URL
+            .replace('{userid}', String(loggedInUserId))
+            .replace('{flagValue}', value))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+    searchSharedDocuments(value: string) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.DL_DOCUMENT_SEARCH_SHARED_API_URL
+            .replace('{userid}', String(loggedInUserId))
+            .replace('{flagValue}', value))
             .subscribe({
                 next: (response: HttpResponse<any>) => {
                     if (response.status === 200) {

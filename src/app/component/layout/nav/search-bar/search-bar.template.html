@@ -1,10 +1,35 @@
-<div class="input-group">
+<div class="input-group me-1">
     <div class="input-group-text">
         <button class="btn btn-outline-light">
             <i class="icon-search"></i>
         </button>
     </div>
-    <input type="text" class="form-control" placeholder="Search here" onlyAlphaNumeric (keydown.enter)="navigateToSearch($event)">
+    <input type="text" class="form-control" placeholder="Search" onlyAlphaNumeric (keydown.enter)="navigateToSearch($event)">
+</div>
+
+<div class="input-group me-3">
+    <div class="input-group-text">
+        <button class="btn btn-outline-light">
+            <i class="icon-search"></i>
+        </button>
+    </div>
+    <input type="text" class="form-control" placeholder="Tags" onlyAlphaNumeric (keydown.enter)="navigateToTagSearch($event)">
+</div>
+
+<div class="form-check form-check-only me-1">
+    <input (change)="favoritesCheckAction()" [checked]="isFavoriteChecked"
+        class="form-check-input"
+        id="favoritesCheck"
+        type="checkbox">
+    <label class="form-check-label" for="favoritesCheck">F</label>
+</div>
+
+<div class="form-check form-check-only me-1">
+    <input (change)="sharedCheckAction()" [checked]="isSharedChecked"
+           class="form-check-input"
+           id="sharedCheck"
+           type="checkbox">
+    <label class="form-check-label" for="sharedCheck">S</label>
 </div>
 
 <button class="btn btn-search-popup" (click)="showSearchBarDialog()">
