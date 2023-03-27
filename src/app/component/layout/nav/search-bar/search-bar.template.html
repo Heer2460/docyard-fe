@@ -16,20 +16,23 @@
     <input type="text" class="form-control" placeholder="Tags" onlyAlphaNumeric (keydown.enter)="navigateToTagSearch($event)">
 </div>
 
-<div class="form-check form-check-only me-1">
-    <input (change)="favoritesCheckAction()" [checked]="isFavoriteChecked"
-        class="form-check-input"
-        id="favoritesCheck"
-        type="checkbox">
-    <label class="form-check-label" for="favoritesCheck">F</label>
-</div>
-
-<div class="form-check form-check-only me-1">
-    <input (change)="sharedCheckAction()" [checked]="isSharedChecked"
-           class="form-check-input"
-           id="sharedCheck"
-           type="checkbox">
-    <label class="form-check-label" for="sharedCheck">S</label>
+<div class="header-checkboxes">
+    <div class="form-check form-check-inline">
+        <input (change)="favoritesCheckAction()" [checked]="isFavoriteChecked"
+            class="form-check-input"
+               type="checkbox"
+               id="favoritesCheck"
+               value="">
+        <label class="form-check-label" for="favoritesCheck">Favorite</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input (change)="sharedCheckAction()" [checked]="isSharedChecked"
+            class="form-check-input"
+               type="checkbox"
+               id="sharedCheck"
+               value="">
+        <label class="form-check-label" for="sharedCheck">Shared</label>
+    </div>
 </div>
 
 <button class="btn btn-search-popup" (click)="showSearchBarDialog()">
