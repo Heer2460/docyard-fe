@@ -292,7 +292,12 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     label: 'Delete',
                     icon: 'icon-trash',
                     command: () => this.onItemDeleteAction(this.selectedDoc)
-                }
+                },
+                {
+                    label: 'Archive',
+                    icon: 'icon-edit',
+                    command: () => this.archiveDocument(this.selectedDoc)
+                },
             ];
         } else {
             this.menuItems = [
@@ -322,6 +327,11 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     label: 'Delete',
                     icon: 'icon-trash',
                     command: () => this.onItemDeleteAction(this.selectedDoc)
+                },
+                {
+                    label: 'Archive',
+                    icon: 'icon-edit',
+                    command: () => this.archiveDocument(this.selectedDoc)
                 },
             ];
 
@@ -655,6 +665,22 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     let blob = new Blob([response], {type: mimeType});
                     FileSaver.saveAs(blob, fileName);
                     this.toastService.success('Document downloaded successfully.', 'Document Library');
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+    archiveDocument(data: any) {
+        this.requestsService.putRequest(ApiUrlConstants.ARCHIVE_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id), {})
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        this.toastService.success('Document Archived successfully.', 'Document Library');
+                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                    } else {
+                        this.appService.handleError('', 'Document Library');
+                    }
                 },
                 error: (error: any) => {
                     this.appService.handleError(error, 'Document Library');
