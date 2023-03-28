@@ -1,0 +1,200 @@
+<section class="main-page-wrapper">
+    <div [ngClass]="appService.docInfoPaneState ? 'collapsed' : ''" class="left">
+        <div>
+            <header class="page-header">
+                <div class="title-and-action-items">
+                    <ng-container>
+                        <h3 class="title">{{title}}</h3>
+                    </ng-container>
+                    <div class="action-items">
+
+                    </div>
+                </div>
+                <div class="container-breadcrumb-and-list-view">
+                    <ng-container *ngIf="breadcrumbs.length > 0">
+                        <div class="breadcrumbs-container">
+                            <ol class="breadcrumb">
+                                <ng-container
+                                    *ngFor="let breadcrumb of breadcrumbs; let firstIndex = first; let lastIndex = last; let index = index;">
+                                    <ng-container *ngIf="breadcrumbs.length > breadcrumbItemsToShow && firstIndex">
+                                        <li (click)="menu.toggle($event)" class="breadcrumb-item">
+                                            <p-tieredMenu #menu [model]="breadcrumbCollapsedItems" [popup]="true"
+                                                          appendTo="body"></p-tieredMenu>
+                                            <i class="icon-menu-horizontal" role="button"></i>
+                                        </li>
+                                    </ng-container>
+                                    <ng-container *ngIf="index >= breadcrumbs.length -breadcrumbItemsToShow">
+                                        <li [ngClass]="breadcrumb.active ? 'active' : ''" class="breadcrumb-item">
+                                            <ng-container *ngIf="lastIndex; else elseBlock">
+                                                <a>{{breadcrumb.label | truncate: 20}}</a>
+                                            </ng-container>
+                                            <ng-template #elseBlock>
+                                                <a (click)="navigateToRoute(breadcrumb, index)" role="button">
+                                                    {{breadcrumb.label | truncate: 20}}
+                                                </a>
+                                            </ng-template>
+                                        </li>
+                                    </ng-container>
+                                </ng-container>
+                            </ol>
+                        </div>
+                    </ng-container>
+                    <div class="btn-group input-group-display-listing">
+                        <button (click)="setGridDisplay()" [ngClass]="showGridDisplay ? 'active': ''"
+                                class="btn btn-primary">
+                            <i class="icon-display-grid"></i>
+                        </button>
+                        <button (click)="setListDisplay()" [ngClass]="showGridDisplay ? '': 'active'"
+                                class="btn btn-primary">
+                            <i class="icon-display-listing"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <div class="page-body">
+                <ng-container *ngIf="showGridDisplay">
+                    <div class="grid-view-container">
+                        <div class="row row-items">
+                            <ng-container *ngFor="let item of dlDocuments">
+                                <div class="col-sm-6 col-lg-6 col-xl-3 col-item">
+                                    <div class="file-card" (click)="selectGrid(item)">
+                                        <div class="icon-thumbnail">
+                                            <ng-container *ngIf="item.folder == false">
+                                                <ng-container
+                                                    *ngIf="validExtensions.indexOf(item.extension) > -1; else otherFileElseCase">
+                                                    <img alt="{{item.extension}}"
+                                                         src="./assets/images/svg/icons/{{item.extension}}.svg">
+                                                </ng-container>
+                                                <ng-template #otherFileElseCase>
+                                                    <img alt="other" src="./assets/images/svg/icons/other.svg">
+                                                </ng-template>
+                                            </ng-container>
+                                            <img *ngIf="item.folder == true && item.shared == null"
+                                                 alt="icon" src="./assets/images/svg/icons/folder.svg">
+                                            <img *ngIf="item.folder == true && item.shared != null"
+                                                 alt="icon"
+                                                 src="./assets/images/svg/icons/folder-shared-filled.svg">
+                                        </div>
+                                        <div class="file-details">
+                                            <ng-container *ngIf="item.folder == true; else elseCase">
+                                                <p (click)="openFolder(item)" class="title" role="button">{{item?.name | truncate: 40}}</p>
+                                            </ng-container>
+                                            <ng-template #elseCase>
+                                                <span (click)="openFile(item)" role="button">{{item.name | truncate: 40}}<span *ngIf="item?.name.length > 40">{{item?.name.substring(item?.name.lastIndexOf('.') + 1)}}</span></span>
+                                            </ng-template>
+                                            <p class="date-and-author">
+                                                <span>{{item?.updatedOnDetail}} by </span>
+                                                <a (click)="openProfile(item)" role="button">{{item?.updatedByName}}</a>
+                                            </p>
+                                            <p class="file-size">{{item?.size}}</p>
+                                        </div>
+                                        <button (click)="menu.toggle($event);onMenuClicked(item)" class="btn btn-tiered-menu-vertical">
+                                            <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                          appendTo="body"></p-tieredMenu>
+                                            <i class="icon-menu-vertical"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!showGridDisplay">
+                    <p-table (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+                             [paginator]="true"
+                             [rowsPerPageOptions]="[10, 20, 40, 60, 80, 100]" [rows]="10" [value]="dlDocuments"
+                             selectionMode="single"
+                             styleClass="doc-data-table">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th></th>
+                                <th pSortableColumn="name">Name
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="sharedByName">Shared By
+                                    <p-sortIcon field="sharedByName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedOnDetail">Modified at
+                                    <p-sortIcon field="updatedOnDetail"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="updatedByName">Modified By
+                                    <p-sortIcon field="updatedByName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="size">Size
+                                    <p-sortIcon field="size"></p-sortIcon>
+                                </th>
+                                <th></th>
+                                <th class="actions-th"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template let-row pTemplate="body">
+                            <tr [pSelectableRow]="row">
+                                <td>
+                                    <ng-container *ngIf="row.folder == false">
+                                        <ng-container
+                                                *ngIf="validExtensions.indexOf(row.extension) > -1; else otherFileElseCase">
+                                            <img alt="{{row.extension}}"
+                                                 src="./assets/images/svg/icons/{{row.extension}}.svg">
+                                        </ng-container>
+                                        <ng-template #otherFileElseCase>
+                                            <img alt="other" src="./assets/images/svg/icons/other.svg">
+                                        </ng-template>
+                                    </ng-container>
+                                    <img *ngIf="row.folder == true && row.shared == null" alt="icon"
+                                         src="./assets/images/svg/icons/folder.svg">
+                                    <img *ngIf="row.folder == true && row.shared != null" alt="icon"
+                                         src="./assets/images/svg/icons/folder-shared-filled.svg">
+                                </td>
+                                <td>
+                                    <div class="file-types">
+                                        <ng-container *ngIf="row.folder == true; else elseCase">
+                                            <span (click)="openFolder(row)" role="button">{{row.name | truncate: 50}}</span>
+                                        </ng-container>
+                                        <ng-template #elseCase>
+                                            <span (click)="openFile(row)" role="button">{{row.name | truncate: 50}}<span *ngIf="row?.name.length > 50">{{row?.name.substring(row?.name.lastIndexOf('.') + 1)}}</span></span>
+                                        </ng-template>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="author" role="button">{{row?.sharedByName}}</a>
+                                </td>
+                                <td>
+                                    <span>{{row.updatedOnDetail}}</span>
+                                </td>
+                                <td>
+                                    <a (click)="openProfile(row)" class="author" role="button">{{row.updatedByName}}</a>
+                                </td>
+                                <td>{{row.size}}</td>
+                                <td>
+                                    <div class="form-check form-check-only form-check-star">
+                                    </div>
+                                </td>
+                                <td>
+                                    <button (click)="menu.toggle($event);onMenuClicked(row)"
+                                            class="btn btn-tiered-menu">
+                                        <p-tieredMenu #menu [model]="menuItems" [popup]="true"
+                                                      appendTo="body"></p-tieredMenu>
+                                        <i class="icon-menu-horizontal"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td [attr.colspan]="6" class="text-center">
+                                    No records found
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </ng-container>
+            </div>
+        </div>
+        <div class="page-footer">
+            <ng-content select=[pageFooter]></ng-content>
+        </div>
+    </div>
+    <ar-doc-info-pane-component [ngClass]="appService.docInfoPaneState ? '': 'collapsed'"
+                             [selectedDoc]="selectedDoc">
+    </ar-doc-info-pane-component>
+</section>

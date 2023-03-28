@@ -35,6 +35,14 @@ export class AppRouteConstants {
 
         },
         {
+            label: 'Archived',
+            route: '/archived',
+            icon: 'icon-shared-with-me',
+            expended: false,
+            active: false,
+
+        },
+        {
             label: 'Starred',
             route: '/favourite',
             icon: 'icon-star',

@@ -57,6 +57,16 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'archived',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./component/archived/archived.module').then(m => m.ArchivedModule)
+            }
+        ]
+    },
+    {
         path: 'preview',
         children: [
             {
