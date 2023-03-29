@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ShareWithMeRoutingModule} from "./archived-routing.module";
+import {ArchivedRoutingModule} from "./archived-routing.module";
 import {ArchivedComponent} from "./archived.component";
 import {TieredMenuModule} from "primeng/tieredmenu";
 import {LayoutModule} from "../layout/layout.module";
@@ -13,7 +13,6 @@ import {ChipsModule} from "primeng/chips";
 import {DropdownModule} from "primeng/dropdown";
 import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
-import {DocInfoPaneModule} from "../doc-lib/doc-info-pane/doc-info-pane.module";
 import {CustomDirectiveModule} from "../../shared/directive/custom.directive.module";
 
 @NgModule({
@@ -22,7 +21,7 @@ import {CustomDirectiveModule} from "../../shared/directive/custom.directive.mod
     ],
     imports: [
         CommonModule,
-        ShareWithMeRoutingModule,
+        ArchivedRoutingModule,
         TieredMenuModule,
         LayoutModule,
         ArDocInfoPaneModule,

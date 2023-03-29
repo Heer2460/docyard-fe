@@ -105,17 +105,14 @@ export class ArchivedComponent implements OnInit, OnDestroy {
 
     onMenuClicked(data: DlDocumentDTO) {
         this.selectedDoc = data;
-        if (this.selectedDoc.folder == true) {
-            this.menuItems = [];
-        } else {
-            this.menuItems = [
-                {
-                    label: 'Download',
-                    icon: 'icon-download',
-                    command: () => this.downloadFile(this.selectedDoc)
-                }
-            ];
-        }
+
+        this.menuItems = [
+            {
+                label: 'Un-Archive',
+                icon: 'icon-download',
+                command: () => this.unArchiveDocument(this.selectedDoc)
+            }
+        ];
     }
 
     openFolder(rowData: any) {
@@ -206,18 +203,39 @@ export class ArchivedComponent implements OnInit, OnDestroy {
         localStorage.setItem(window.btoa(AppConstants.SWM_SELECTED_FOLDER_BREADCRUMB), JSON.stringify(this.breadcrumbs));
     }
 
-
-    downloadFile(data: any) {
-        this.requestsService.getRequestFile(ApiUrlConstants.DOWNLOAD_DL_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id))
+    unArchiveDocument(data: any) {
+        this.requestsService.putRequest(ApiUrlConstants.UN_ARCHIVE_DOCUMENT_API_URL.replace("{dlDocumentId}", data.id), {})
             .subscribe({
                 next: (response: any) => {
-                    let mimeType = AppUtility.getMimeTypeByFileName(data.name);
-                    let blob = new Blob([response], {type: mimeType});
-                    FileSaver.saveAs(blob, data.name);
-                    this.toastService.success('Document downloaded successfully.', 'Download Document');
+                    if (response.status === 200) {
+                        this.toastService.success('Document un-archived successfully.', 'Document Library');
+                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), true);
+                    } else {
+                        this.appService.handleError('', 'Document Library');
+                    }
                 },
                 error: (error: any) => {
-                    this.appService.handleError(error, 'Download Document');
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    loadDocumentLibrary(folderId: string, archived: boolean) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.getRequest(ApiUrlConstants.GET_ALL_DL_DOCUMENT_BY_OWNER_API_URL
+            .replace('{ownerId}', String(loggedInUserId))
+            .replace("{folderId}", folderId)
+            .replace("{archived}", String(archived)))
+            .subscribe({
+                next: (response: HttpResponse<any>) => {
+                    if (response.status === 200) {
+                        this.dlDocuments = response.body.data;
+                    } else {
+                        this.dlDocuments = [];
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
                 }
             });
     }

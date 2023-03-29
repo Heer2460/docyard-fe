@@ -46,6 +46,7 @@ export class ApiUrlConstants {
     public static DOWNLOAD_IMAGE_TO_PP_DL_DOCUMENT_API_URL = '/dl/dl-document/convert/ppt/download/{dlDocumentId}/{extension}';
     public static DOWNLOAD_IMAGE_TO_EXCEL_DL_DOCUMENT_API_URL = '/dl/dl-document/convert/excel/download/{dlDocumentId}/{extension}';
     public static ARCHIVE_DOCUMENT_API_URL = '/dl/dl-document/archive/{dlDocumentId}';
+    public static UN_ARCHIVE_DOCUMENT_API_URL = '/dl/dl-document/un-archive/{dlDocumentId}';
     public static UPLOAD_FILES_API_URL = '/dl/dl-document/upload';
     public static UPLOAD_FOLDER_API_URL = '/dl/dl-document/upload/folder';
     public static RESTORE_DOCUMENT_API_URL = '/dl/dl-document/restore-archived';
