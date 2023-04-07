@@ -334,7 +334,7 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 },
                 {
                     label: 'Archive',
-                    icon: 'icon-edit',
+                    icon: 'icon-archive',
                     command: () => this.archiveDocument(this.selectedDoc)
                 },
             ];

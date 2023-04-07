@@ -37,7 +37,7 @@ export class AppRouteConstants {
         {
             label: 'Archived',
             route: '/archived',
-            icon: 'icon-shared-with-me',
+            icon: 'icon-un-archive',
             expended: false,
             active: false,
 

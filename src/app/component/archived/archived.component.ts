@@ -109,7 +109,7 @@ export class ArchivedComponent implements OnInit, OnDestroy {
         this.menuItems = [
             {
                 label: 'Un-Archive',
-                icon: 'icon-download',
+                icon: 'icon-un-archive',
                 command: () => this.unArchiveDocument(this.selectedDoc)
             }
         ];
