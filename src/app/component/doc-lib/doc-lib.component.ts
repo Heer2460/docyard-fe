@@ -300,6 +300,10 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 },
             ];
         } else {
+            let checkedIn = this.selectedDoc.checkedIn;
+            let checkedInBy = this.selectedDoc.checkedInBy;
+            let loggedInUserId = this.appService.getLoggedInUserId();
+
             this.menuItems = [
                 {
                     label: 'Share',
@@ -362,6 +366,26 @@ export class DocLibComponent implements OnInit, OnDestroy {
                     }
                 ]
                 })
+            }
+
+            if(checkedIn !== null && checkedIn) {
+                if(checkedInBy === loggedInUserId) {
+                    this.menuItems.push(
+                        {
+                            label: 'Check-Out',
+                            icon: 'icon-edit',
+                            command: () => this.checkInOutDocument(this.selectedDoc, false)
+                        }
+                    )
+                }
+            } else {
+                this.menuItems.push(
+                    {
+                        label: 'Check-In',
+                        icon: 'icon-edit',
+                        command: () => this.checkInOutDocument(this.selectedDoc, true)
+                    }
+                    )
             }
         }
     }
@@ -677,6 +701,30 @@ export class DocLibComponent implements OnInit, OnDestroy {
                 next: (response: any) => {
                     if (response.status === 200) {
                         this.toastService.success('Document Archived successfully.', 'Document Library');
+                        this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
+                    } else {
+                        this.appService.handleError('', 'Document Library');
+                    }
+                },
+                error: (error: any) => {
+                    this.appService.handleError(error, 'Document Library');
+                }
+            });
+    }
+
+    checkInOutDocument(data: any, flag: boolean) {
+        let loggedInUserId = this.appService.getLoggedInUserId();
+        this.requestsService.putRequest(ApiUrlConstants.DOCUMENT_CHECK_IN_OUT_API_URL
+            .replace("{dlDocumentId}", data.id)
+            .replace("{userId}", String(loggedInUserId))
+            .replace("{flag}", String(flag)), {})
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status === 200) {
+                        if(flag)
+                            this.toastService.success('You have successfully checked-in.', 'Document Library');
+                        else
+                            this.toastService.success('You have successfully checked-out.', 'Document Library');
                         this.loadDocumentLibrary(this.appService.getSelectedFolderId(), false);
                     } else {
                         this.appService.handleError('', 'Document Library');

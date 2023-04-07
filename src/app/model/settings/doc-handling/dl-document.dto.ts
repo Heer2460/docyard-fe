@@ -13,6 +13,8 @@ export class DlDocumentDTO extends BaseDTO {
     versionGUId?: number;
     createdOn: Date = new Date();
     updatedOn: Date = new Date();
+    checkedInBy: number | undefined;
+    checkedIn?: boolean;
 
     convertToDTO(data: any) {
         this.id = data.id;
@@ -25,6 +27,8 @@ export class DlDocumentDTO extends BaseDTO {
         this.updatedOn = new Date();
         this.createdBy = data.createdBy ? data.createdBy : 0;
         this.updatedBy = 0;
+        this.checkedIn = data.checkedIn;
+        this.checkedInBy = data.checkedInBy;
     }
 
     convertToNewDTO(data: any): DlDocumentDTO {
